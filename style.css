@@ -137,6 +137,22 @@ h2.section-title em{
   position:absolute;inset:0;width:100%;height:100%;
   border:0;z-index:0;background:#fff;pointer-events:auto;
 }
+/* Applewatch 3D layered directly beneath the full-width PLAY KURICHI? button */
+.hero-applewatch{
+  position:absolute;
+  bottom:0;left:50%;transform:translateX(-50%);
+  width:min(420px,90vw);
+  height:360px;
+  border:0;z-index:4;
+  background:transparent;
+  pointer-events:auto;
+}
+@media (max-width:768px){
+  .hero-applewatch{width:90vw;height:280px}
+}
+@media (max-width:480px){
+  .hero-applewatch{height:240px}
+}
 /* PLAY KURICHI? button covering Built-with-Spline badge */
 .spline-cover-btn{
   position:absolute;
