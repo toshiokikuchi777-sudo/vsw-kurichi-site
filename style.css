@@ -379,7 +379,7 @@ section{padding:110px 0;position:relative}
 
 /* ---------- News ---------- */
 #news{background:var(--cream)}
-.news-grid{display:grid;grid-template-columns:1.1fr 1fr;gap:64px;align-items:start}
+.news-grid{display:grid;grid-template-columns:1fr;gap:64px;align-items:start;max-width:820px;margin:0 auto}
 .news-main{display:flex;flex-direction:column;gap:18px}
 .news-item{
   display:grid;grid-template-columns:140px 1fr auto;align-items:center;gap:22px;
