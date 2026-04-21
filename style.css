@@ -148,10 +148,13 @@ h2.section-title em{
   pointer-events:auto;
 }
 @media (max-width:768px){
-  .hero-applewatch{width:90vw;height:280px}
+  .hero-applewatch{width:100vw;height:380px}
 }
 @media (max-width:480px){
-  .hero-applewatch{height:240px}
+  .hero-applewatch{width:100vw;height:340px}
+}
+@media (max-width:375px){
+  .hero-applewatch{height:300px}
 }
 /* PLAY KURICHI? button covering Built-with-Spline badge */
 .spline-cover-btn{
