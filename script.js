@@ -1,3 +1,12 @@
+// ===== Press ticker seamless loop (duplicate items) =====
+(() => {
+  const list = document.querySelector('.press-ticker-list');
+  if (!list) return;
+  const clone = list.cloneNode(true);
+  // Unwrap: append children of clone into original list
+  while (clone.firstElementChild) list.appendChild(clone.firstElementChild);
+})();
+
 // ===== Scroll-triggered fade-up =====
 const io = new IntersectionObserver((entries) => {
   entries.forEach(e => {

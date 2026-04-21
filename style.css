@@ -731,6 +731,80 @@ iframe{max-width:100%}
   .spline-float{display:none}
 }
 
+/* ---------- Press Ticker (below hero) ---------- */
+#press-ticker{
+  padding:14px 0;
+  background:#fff;
+  border-top:1px solid var(--line);
+  border-bottom:1px solid var(--line);
+  font-size:12px;
+  color:#5a4d45;
+}
+.press-ticker-wrap{
+  display:flex;align-items:center;gap:16px;
+}
+.press-ticker-label{
+  flex-shrink:0;
+  font-family:"Montserrat",sans-serif;
+  font-weight:800;
+  letter-spacing:.2em;
+  font-size:11px;
+  color:var(--tomato);
+  padding:4px 10px;
+  border:1px solid var(--tomato);
+  border-radius:4px;
+}
+.press-ticker-list{
+  list-style:none;margin:0;padding:0;flex:1;overflow:hidden;position:relative;
+  mask-image:linear-gradient(to right, transparent 0, #000 24px, #000 calc(100% - 24px), transparent 100%);
+  -webkit-mask-image:linear-gradient(to right, transparent 0, #000 24px, #000 calc(100% - 24px), transparent 100%);
+}
+.press-ticker-list{
+  display:flex;gap:40px;white-space:nowrap;
+  animation:press-marquee 60s linear infinite;
+}
+.press-ticker-list:hover{animation-play-state:paused}
+.press-ticker-list li{display:inline-flex}
+.press-ticker-list a{
+  display:inline-flex;align-items:center;gap:10px;
+  color:var(--char);
+  transition:color .2s ease;
+}
+.press-ticker-list a:hover{color:var(--tomato)}
+.press-ticker-list time{
+  font-family:"Montserrat",sans-serif;
+  font-weight:700;color:var(--tomato);letter-spacing:.05em;font-size:11px;
+}
+.press-ticker-list .cat{
+  font-family:"Montserrat",sans-serif;
+  font-size:9px;letter-spacing:.1em;font-weight:700;
+  padding:2px 8px;border-radius:999px;background:var(--cream-2);color:var(--char);
+}
+.press-ticker-more{
+  flex-shrink:0;
+  font-size:11px;font-weight:700;color:var(--char);
+  border-left:1px solid var(--line);padding-left:14px;
+  transition:color .2s ease;
+}
+.press-ticker-more:hover{color:var(--tomato)}
+@keyframes press-marquee{
+  from{transform:translateX(0)}
+  to{transform:translateX(-50%)}
+}
+@media (max-width:768px){
+  #press-ticker{padding:10px 0;font-size:11px}
+  .press-ticker-wrap{gap:10px}
+  .press-ticker-label{font-size:10px;padding:3px 8px}
+  .press-ticker-list{gap:28px;animation-duration:45s}
+  .press-ticker-list a{gap:6px}
+  .press-ticker-list time{font-size:10px}
+  .press-ticker-list .cat{display:none}
+  .press-ticker-more{font-size:10px;padding-left:10px}
+}
+@media (max-width:480px){
+  .press-ticker-more{display:none}
+}
+
 /* ---------- Clips (vertical video) ---------- */
 #clips{background:var(--cream)}
 .clips-grid{
