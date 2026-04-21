@@ -59,14 +59,44 @@ h2.section-title em{
 /* ---------- Nav ---------- */
 .nav{
   position:fixed;top:0;left:0;right:0;z-index:100;
+  background:transparent;
+  border-bottom:0;
+}
+.nav-inner{
   backdrop-filter:saturate(140%) blur(14px);
   -webkit-backdrop-filter:saturate(140%) blur(14px);
-  background:rgba(255,247,230,.78);
-  border-bottom:1px solid var(--line);
+  background:rgba(255,247,230,.5);
+  border-radius:0;
+}
+/* Nickname marquee under nav */
+.nav-marquee{
+  overflow:hidden;
+  background:transparent;
+  padding:6px 0;
+  pointer-events:none;
+}
+.nav-marquee-track{
+  display:flex;gap:32px;white-space:nowrap;
+  font-family:"Playfair Display","Noto Sans JP",serif;
+  font-style:italic;
+  font-size:14px;
+  color:var(--char);
+  opacity:.7;
+  animation:nav-marq 45s linear infinite;
+  width:max-content;
+}
+.nav-marquee-track .dot{color:var(--tomato);font-size:10px;display:inline-flex;align-items:center}
+@keyframes nav-marq{
+  from{transform:translateX(0)}
+  to{transform:translateX(-50%)}
+}
+@media (max-width:768px){
+  .nav-marquee-track{font-size:11px;gap:20px;animation-duration:35s}
 }
 .nav-inner{
   display:flex;align-items:center;justify-content:space-between;
   height:68px;
+  padding-left:24px;padding-right:24px;max-width:1240px;margin:0 auto;
 }
 .brand{
   display:flex;align-items:center;gap:10px;font-weight:900;
