@@ -3,21 +3,20 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>#ハリチ — HARICHI | Coming Soon | VSW</title>
-<meta name="description" content="NY発・大阪生まれのクリームチーズバーガー『#クリチ』から、次の一品『#ハリチ (HARICHI)』が誕生します。ひと口で、毎日にハリを。" />
+<title>#HARICHI ハリチくん 組み立てフィギュア — shi-gu-mi × #クリチ | VSW</title>
+<meta name="description" content="『#HARICHI（ハリチくん）』はVsw株式会社と株式会社エーゾーンが手がけるペーパーアート『shi-gu-mi＋』の新作。52ピースの紙パーツで#クリチのマスコット“ハリチくん”を組み立てる、NY発・大阪生まれのクラフト体験。" />
 <meta name="robots" content="index,follow">
 
-<!-- Open Graph -->
-<meta property="og:type" content="website">
+<meta property="og:type" content="product">
 <meta property="og:site_name" content="VSW / #クリチ">
-<meta property="og:title" content="#ハリチ — HARICHI | Coming Soon | VSW">
-<meta property="og:description" content="NY発・大阪生まれの『#クリチ』から、次の一品『#ハリチ』が誕生します。ひと口で、毎日にハリを。">
+<meta property="og:title" content="#HARICHI ハリチくん 組み立てフィギュア — shi-gu-mi × #クリチ">
+<meta property="og:description" content="52ピースの紙パーツで組み立てる、#クリチのマスコット『ハリチくん』。顔パーツの交換で色も表情も自由自在。">
 <meta property="og:url" content="https://toshiokikuchi777-sudo.github.io/vsw-kurichi-site/harichi.html">
-<meta property="og:image" content="https://toshiokikuchi777-sudo.github.io/vsw-kurichi-site/assets/hero-got-kurichi.jpg">
+<meta property="og:image" content="https://toshiokikuchi777-sudo.github.io/vsw-kurichi-site/assets/harichi/portrait-2.webp">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="#ハリチ — HARICHI | Coming Soon | VSW">
-<meta name="twitter:description" content="NY発・大阪生まれの『#クリチ』から、次の一品『#ハリチ』が誕生します。">
-<meta name="twitter:image" content="https://toshiokikuchi777-sudo.github.io/vsw-kurichi-site/assets/hero-got-kurichi.jpg">
+<meta name="twitter:title" content="#HARICHI ハリチくん 組み立てフィギュア — shi-gu-mi × #クリチ">
+<meta name="twitter:description" content="52ピースの紙パーツで組み立てる、#クリチのマスコット『ハリチくん』。">
+<meta name="twitter:image" content="https://toshiokikuchi777-sudo.github.io/vsw-kurichi-site/assets/harichi/portrait-2.webp">
 <link rel="canonical" href="https://toshiokikuchi777-sudo.github.io/vsw-kurichi-site/harichi.html">
 
 <link rel="icon" type="image/gif" href="assets/favicon.gif">
@@ -26,141 +25,112 @@
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&family=Playfair+Display:ital,wght@0,700;1,700&family=Montserrat:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 <style>
-  /* ===== #ハリチ teaser page ===== */
-  .hari-wrap{background:linear-gradient(180deg,#fff7e2 0%,#fffaf0 40%,#fff 100%);min-height:100vh}
+  /* ===== #HARICHI product page ===== */
+  :root{--hari-red:#e62d2e;--hari-peach:#f2a9a0;--hari-cream:#fff5e9}
+  .hari-page{background:var(--hari-cream)}
 
-  /* Hero */
-  .hari-hero{
-    padding:140px 0 80px;text-align:center;position:relative;overflow:hidden;
-  }
-  .hari-hero::before{
-    content:"";position:absolute;inset:0;
-    background:
-      radial-gradient(ellipse 80% 60% at 20% 10%,rgba(230,57,70,.10),transparent 60%),
-      radial-gradient(ellipse 70% 60% at 85% 90%,rgba(247,191,25,.18),transparent 60%);
-    pointer-events:none;z-index:0;
-  }
-  .hari-hero .container{position:relative;z-index:1}
-  .hari-badge{
-    display:inline-block;padding:8px 18px;border-radius:999px;
-    background:var(--tomato);color:#fff;font-family:"Montserrat",sans-serif;
-    font-weight:800;font-size:11px;letter-spacing:.24em;margin-bottom:22px;
-    box-shadow:0 10px 24px -10px rgba(230,57,70,.5);
-  }
-  .hari-title{
-    font-family:"Playfair Display","Noto Sans JP",serif;
-    font-size:clamp(56px,11vw,140px);line-height:1;margin:0 0 12px;
-    color:var(--char);letter-spacing:-.02em;
-  }
-  .hari-title .hash{color:var(--tomato)}
-  .hari-title em{
-    display:block;font-style:italic;color:var(--tomato);
-    font-size:clamp(24px,4vw,52px);margin-top:14px;letter-spacing:.02em;
-  }
-  .hari-tag{
-    font-family:"Montserrat",sans-serif;letter-spacing:.3em;
-    font-size:13px;color:#6b5e54;font-weight:600;
-    margin:18px 0 6px;
-  }
-  .hari-lead{
-    font-size:clamp(18px,2.2vw,24px);color:var(--char);font-weight:700;
-    margin:26px 0 0;line-height:1.7;
-  }
-  .hari-lead .accent{color:var(--tomato)}
+  /* Candy-stripe top band */
+  .hari-stripe{height:36px;background:repeating-linear-gradient(90deg,var(--hari-red) 0 24px,#fff 24px 48px)}
 
-  /* Concept block */
-  .hari-section{padding:80px 0;position:relative}
-  .hari-section.alt{background:var(--char);color:#fdf6e3}
-  .hari-section.alt h2{color:#fdf6e3}
-  .hari-section.alt p{color:#e8dcc6}
+  /* HERO */
+  .hari-hero{position:relative;padding:60px 0 40px;background:var(--hari-peach);overflow:hidden}
+  .hari-hero::before{content:"";position:absolute;inset:0;background:
+    radial-gradient(circle at 10% 20%,rgba(255,255,255,.4),transparent 40%),
+    radial-gradient(circle at 90% 80%,rgba(255,255,255,.3),transparent 45%);
+    pointer-events:none}
+  .hari-hero-inner{display:grid;grid-template-columns:1.1fr 1fr;gap:60px;align-items:center;position:relative;z-index:1}
+  .hari-eyebrow{font-family:"Montserrat",sans-serif;letter-spacing:.3em;font-size:12px;font-weight:700;color:#fff;background:rgba(0,0,0,.65);display:inline-block;padding:8px 16px;border-radius:999px;margin-bottom:20px}
+  .hari-hero h1{font-family:"Montserrat","Noto Sans JP",sans-serif;font-weight:900;font-size:88px;line-height:.95;letter-spacing:-.02em;color:#1a1613;margin:0 0 10px}
+  .hari-hero h1 em{font-style:normal;color:var(--hari-red)}
+  .hari-hero-sub{font-family:"Noto Sans JP",sans-serif;font-weight:700;font-size:22px;color:#3b2d24;margin:0 0 18px}
+  .hari-hero-lead{font-size:15px;line-height:2;color:#4a3a30;max-width:520px;margin-bottom:28px}
+  .hari-hero-visual{position:relative}
+  .hari-hero-visual img{width:100%;max-width:480px;border-radius:24px;display:block;margin-left:auto;box-shadow:0 30px 60px -20px rgba(0,0,0,.25)}
+  .hari-badges{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:24px}
+  .hari-badge{font-family:"Montserrat",sans-serif;font-size:11px;letter-spacing:.18em;font-weight:700;padding:8px 14px;border-radius:999px;background:#fff;color:#1a1613;border:1.5px solid #1a1613}
+  .hari-badge.red{background:var(--hari-red);color:#fff;border-color:var(--hari-red)}
+  .hari-cta-row{display:flex;flex-wrap:wrap;gap:12px}
+  .hari-btn{display:inline-flex;align-items:center;gap:8px;padding:16px 28px;border-radius:999px;font-weight:800;font-size:14px;letter-spacing:.06em;text-decoration:none;transition:transform .2s ease}
+  .hari-btn:hover{transform:translateY(-2px)}
+  .hari-btn.primary{background:#1a1613;color:#fff}
+  .hari-btn.ghost{background:#fff;color:#1a1613;border:1.5px solid #1a1613}
 
-  .hari-narrow{max-width:720px;margin:0 auto;text-align:center}
-  .hari-narrow h2{
-    font-family:"Playfair Display","Noto Sans JP",serif;
-    font-size:clamp(30px,4.5vw,48px);line-height:1.3;margin:0 0 24px;
-  }
-  .hari-narrow h2 em{color:var(--tomato);font-style:italic}
-  .hari-narrow p{
-    font-size:16px;line-height:2;color:#5a4d45;margin:0 0 1.4em;
-  }
-  .hari-section.alt .hari-narrow p{color:#e8dcc6}
+  /* Spec bar */
+  .hari-spec{background:#1a1613;color:#fff;padding:28px 0}
+  .hari-spec-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:20px;text-align:center}
+  .hari-spec-item{padding:6px 10px}
+  .hari-spec-label{font-family:"Montserrat",sans-serif;font-size:10px;letter-spacing:.25em;color:var(--hari-peach);font-weight:700;display:block;margin-bottom:6px}
+  .hari-spec-value{font-family:"Montserrat",sans-serif;font-size:18px;font-weight:800;letter-spacing:.02em}
+  .hari-spec-value small{font-size:12px;font-weight:500;opacity:.8}
 
-  /* 3 pillar cards */
-  .hari-pillars{
-    display:grid;grid-template-columns:repeat(3,1fr);gap:22px;
-    max-width:1080px;margin:50px auto 0;
-  }
-  .hari-pillar{
-    background:#fff;border-radius:20px;padding:34px 26px;text-align:center;
-    border:1px solid rgba(26,22,19,.08);
-    box-shadow:0 30px 60px -40px rgba(26,22,19,.2);
-    transition:transform .3s ease;
-  }
-  .hari-pillar:hover{transform:translateY(-4px)}
-  .hari-pillar .ico{
-    font-size:40px;display:block;margin-bottom:12px;
-  }
-  .hari-pillar h3{
-    font-size:18px;margin:0 0 10px;color:var(--tomato);
-    font-family:"Playfair Display",serif;letter-spacing:.02em;
-  }
-  .hari-pillar p{font-size:14px;line-height:1.85;color:#5a4d45;margin:0}
+  /* Section */
+  .hari-sec{padding:90px 0}
+  .hari-sec.alt{background:#fff}
+  .hari-sec-head{text-align:center;margin-bottom:50px}
+  .hari-sec-eyebrow{font-family:"Montserrat",sans-serif;font-size:12px;letter-spacing:.3em;font-weight:700;color:var(--hari-red);display:block;margin-bottom:14px}
+  .hari-sec h2{font-family:"Noto Sans JP",sans-serif;font-weight:900;font-size:40px;line-height:1.3;color:#1a1613;margin:0 auto;max-width:760px}
+  .hari-sec h2 em{font-style:normal;color:var(--hari-red)}
+  .hari-sec-lead{font-size:15px;line-height:2;color:#4a3a30;max-width:640px;margin:22px auto 0}
 
-  /* Countdown / CTA */
-  .hari-cta{text-align:center;padding:60px 0 40px}
-  .hari-cta .hari-sub{
-    font-family:"Montserrat",sans-serif;letter-spacing:.26em;
-    font-size:12px;color:var(--tomato);font-weight:700;margin-bottom:14px;
-  }
-  .hari-cta h3{
-    font-family:"Playfair Display","Noto Sans JP",serif;
-    font-size:clamp(26px,4vw,40px);margin:0 0 28px;
-  }
-  .hari-ctas{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
-  .hari-btn{
-    display:inline-flex;align-items:center;gap:10px;
-    padding:16px 32px;border-radius:999px;font-weight:800;
-    text-decoration:none;font-size:14px;letter-spacing:.08em;
-    font-family:"Montserrat",sans-serif;
-    transition:transform .2s, box-shadow .2s;
-  }
-  .hari-btn.primary{background:var(--tomato);color:#fff;box-shadow:0 14px 30px -12px rgba(230,57,70,.5)}
-  .hari-btn.ghost{background:transparent;color:var(--char);border:2px solid var(--char)}
-  .hari-btn:hover{transform:translateY(-2px);box-shadow:0 20px 40px -14px rgba(26,22,19,.35)}
+  /* Features 3-col */
+  .hari-features{display:grid;grid-template-columns:repeat(3,1fr);gap:28px}
+  .hari-feat{background:var(--hari-cream);border:1.5px solid #1a1613;border-radius:20px;padding:34px 28px;position:relative}
+  .hari-feat-num{position:absolute;top:-16px;left:24px;background:var(--hari-red);color:#fff;font-family:"Montserrat",sans-serif;font-weight:900;font-size:14px;padding:6px 14px;border-radius:999px;letter-spacing:.1em}
+  .hari-feat h3{font-size:20px;font-weight:800;margin:8px 0 12px;color:#1a1613}
+  .hari-feat p{font-size:14px;line-height:1.9;color:#4a3a30;margin:0}
 
-  /* "HARICHI" big marquee-ish banner */
-  .hari-banner{
-    overflow:hidden;border-top:1px solid rgba(255,255,255,.1);
-    border-bottom:1px solid rgba(255,255,255,.1);
-    background:var(--char);padding:30px 0;
-  }
-  .hari-banner-track{
-    display:flex;gap:60px;white-space:nowrap;
-    animation:hari-scroll 22s linear infinite;
-    font-family:"Playfair Display",serif;font-style:italic;
-    font-size:clamp(36px,6vw,80px);color:#fdf6e3;letter-spacing:-.01em;
-  }
-  .hari-banner-track span{flex-shrink:0}
-  .hari-banner-track span em{color:var(--tomato);font-style:italic}
-  @keyframes hari-scroll{
-    0%{transform:translateX(0)}
-    100%{transform:translateX(-50%)}
-  }
+  /* Assembly wide image */
+  .hari-assembly{background:#fff;padding:90px 0}
+  .hari-assembly img{width:100%;border-radius:16px;display:block;box-shadow:0 20px 50px -20px rgba(0,0,0,.18)}
+  .hari-assembly-caption{text-align:center;margin-top:22px;font-size:13px;color:#6a5a50;letter-spacing:.04em}
 
-  /* Responsive */
-  @media (max-width:768px){
-    .hari-hero{padding:110px 0 50px}
-    .hari-pillars{grid-template-columns:1fr;gap:14px}
-    .hari-section{padding:50px 0}
-    .hari-narrow p{line-height:1.85;font-size:15px}
-  }
+  /* Parts + package gallery */
+  .hari-gallery{display:grid;grid-template-columns:1.4fr 1fr;gap:24px;align-items:start}
+  .hari-gallery img{width:100%;border-radius:18px;display:block;box-shadow:0 20px 50px -20px rgba(0,0,0,.2)}
+  .hari-gallery-stack{display:grid;gap:24px}
 
-  @media (prefers-reduced-motion:reduce){
-    .hari-banner-track{animation:none}
+  /* Variants band */
+  .hari-variants{background:var(--hari-red);color:#fff;padding:70px 0;text-align:center}
+  .hari-variants h2{color:#fff}
+  .hari-variants h2 em{color:#ffe6a1}
+  .hari-variants p{font-size:15px;line-height:2;margin:18px auto 0;max-width:620px}
+  .hari-variants .hari-sec-eyebrow{color:#ffe6a1}
+
+  /* Purchase band */
+  .hari-buy{background:#1a1613;color:#fff;padding:80px 0;text-align:center}
+  .hari-buy h2{color:#fff;font-size:36px}
+  .hari-buy-price{font-family:"Montserrat",sans-serif;font-size:64px;font-weight:900;color:var(--hari-red);margin:16px 0 4px;letter-spacing:-.02em}
+  .hari-buy-price small{font-size:20px;color:#fff;opacity:.7;font-weight:600;margin-left:8px}
+  .hari-buy-note{font-size:13px;color:#b6a99e;margin-bottom:28px}
+
+  /* Info table */
+  .hari-info{max-width:720px;margin:40px auto 0;background:#fff;border:1.5px solid #1a1613;border-radius:20px;overflow:hidden}
+  .hari-info dl{margin:0;display:grid;grid-template-columns:180px 1fr}
+  .hari-info dt{background:var(--hari-cream);padding:16px 22px;font-size:12px;font-weight:700;letter-spacing:.15em;color:#1a1613;border-bottom:1px solid #e8ddc6;font-family:"Montserrat","Noto Sans JP",sans-serif}
+  .hari-info dd{margin:0;padding:16px 22px;font-size:14px;color:#3b2d24;border-bottom:1px solid #e8ddc6;line-height:1.8}
+  .hari-info dl > *:nth-last-child(-n+2){border-bottom:0}
+
+  /* Mobile */
+  @media (max-width:900px){
+    .hari-hero{padding:40px 0 30px}
+    .hari-hero-inner{grid-template-columns:1fr;gap:34px}
+    .hari-hero h1{font-size:56px}
+    .hari-hero-sub{font-size:17px}
+    .hari-hero-visual img{max-width:320px;margin:0 auto}
+    .hari-spec-grid{grid-template-columns:repeat(2,1fr);gap:14px;text-align:left}
+    .hari-spec-item{border-left:2px solid var(--hari-red);padding-left:12px}
+    .hari-sec{padding:60px 0}
+    .hari-sec h2{font-size:28px}
+    .hari-features{grid-template-columns:1fr;gap:20px}
+    .hari-gallery{grid-template-columns:1fr}
+    .hari-buy-price{font-size:48px}
+    .hari-info dl{grid-template-columns:1fr}
+    .hari-info dt{padding:12px 18px;border-bottom:0}
+    .hari-info dd{padding:10px 18px 16px}
   }
 </style>
 </head>
-<body>
+<body class="hari-page">
 
 <nav class="nav">
   <div class="container nav-inner">
@@ -175,120 +145,184 @@
       <a href="press/index.html">Press</a>
       <a href="blog/index.html">Blog</a>
       <a href="business/index.html">Business</a>
+      <a href="index.html#shop">Shop</a>
     </div>
     <a href="https://vswferdinand.base.shop/" target="_blank" rel="noopener" class="cta">Online Shop →</a>
-    <button class="nav-toggle" aria-label="menu">☰</button>
   </div>
 </nav>
 
-<div class="hari-wrap">
+<div class="hari-stripe"></div>
 
-  <!-- HERO -->
-  <header class="hari-hero">
-    <div class="container">
-      <span class="hari-badge">COMING SOON</span>
-      <h1 class="hari-title">
-        <span class="hash">#</span>ハリチ<em>HARICHI</em>
-      </h1>
-      <div class="hari-tag">VSW / A NEW CHAPTER FROM #KURICHI</div>
-      <p class="hari-lead">
-        ひと口で、毎日に<span class="accent">ハリ</span>を。<br>
-        クリチの次は、<span class="accent">ハリチ</span>。
+<!-- HERO -->
+<header class="hari-hero">
+  <div class="container hari-hero-inner">
+    <div>
+      <span class="hari-eyebrow">shi-gu-mi＋ × #クリチ</span>
+      <h1>#<em>HARICHI</em></h1>
+      <p class="hari-hero-sub">ハリチくん 組み立てフィギュア</p>
+      <div class="hari-badges">
+        <span class="hari-badge red">PAPER ART</span>
+        <span class="hari-badge">52 PIECES</span>
+        <span class="hari-badge">LEVEL 2 / 5</span>
+        <span class="hari-badge">AGE 15+</span>
+      </div>
+      <p class="hari-hero-lead">
+        NY発・大阪生まれのクリームチーズバーガー「#クリチ」から飛び出した、赤×白ストライプがトレードマークのマスコット<strong>ハリチくん</strong>。<br>
+        株式会社エーゾーンのペーパーアートブランド<strong>「shi-gu-mi＋」</strong>との公式コラボで、52ピースの紙パーツから自分の手で組み立てる一体を作りました。接着剤も特別な道具もいりません。ピンセットとカッター、そして少しの集中時間があれば、あなたの指先で小さなハリチくんが立ち上がります。
       </p>
+      <div class="hari-cta-row">
+        <a href="https://vswferdinand.base.shop/" target="_blank" rel="noopener" class="hari-btn primary">🛒 オンラインで購入する</a>
+        <a href="https://www.instagram.com/harichi_kurichiland/" target="_blank" rel="noopener" class="hari-btn ghost">📷 Instagram @harichi_kurichiland</a>
+        <a href="#about" class="hari-btn ghost">詳しく見る ↓</a>
+      </div>
     </div>
-  </header>
-
-  <!-- "HARICHI" SCROLLING BANNER -->
-  <div class="hari-banner" aria-hidden="true">
-    <div class="hari-banner-track">
-      <span>#HARICHI &nbsp;·&nbsp; <em>coming soon</em> &nbsp;·&nbsp; NY BORN, OSAKA MADE &nbsp;·&nbsp;</span>
-      <span>#HARICHI &nbsp;·&nbsp; <em>coming soon</em> &nbsp;·&nbsp; NY BORN, OSAKA MADE &nbsp;·&nbsp;</span>
-      <span>#HARICHI &nbsp;·&nbsp; <em>coming soon</em> &nbsp;·&nbsp; NY BORN, OSAKA MADE &nbsp;·&nbsp;</span>
+    <div class="hari-hero-visual">
+      <img src="assets/harichi/portrait-2.webp" alt="#HARICHI ハリチくん パッケージ表" loading="eager">
     </div>
   </div>
+</header>
 
-  <!-- CONCEPT -->
-  <section class="hari-section">
-    <div class="container">
-      <div class="hari-narrow">
-        <h2>「#クリチ」の、<em>その先へ。</em></h2>
-        <p>
-          NY発・大阪生まれのクリームチーズバーガー <strong>「#クリチ」</strong>。<br>
-          パンのフェスでのブロンズ受賞、そしてシルバーへ。<br>
-          全国へ、そして世界へと広がっていく私たちの旅は、いま新しい一章を迎えます。
-        </p>
-        <p>
-          その名は、<strong>「#ハリチ」。</strong><br>
-          <em>クリ</em>ームチーズの"クリチ"に続く、VSW の新シリーズです。
-        </p>
+<!-- SPEC BAR -->
+<section class="hari-spec">
+  <div class="container">
+    <div class="hari-spec-grid">
+      <div class="hari-spec-item">
+        <span class="hari-spec-label">SIZE</span>
+        <span class="hari-spec-value">59 × 36 × 31<small> mm</small></span>
+      </div>
+      <div class="hari-spec-item">
+        <span class="hari-spec-label">PIECES</span>
+        <span class="hari-spec-value">52<small> pcs</small></span>
+      </div>
+      <div class="hari-spec-item">
+        <span class="hari-spec-label">MATERIAL</span>
+        <span class="hari-spec-value">PAPER</span>
+      </div>
+      <div class="hari-spec-item">
+        <span class="hari-spec-label">PRICE</span>
+        <span class="hari-spec-value">¥1,650<small> 税込</small></span>
+      </div>
+      <div class="hari-spec-item">
+        <span class="hari-spec-label">AGE</span>
+        <span class="hari-spec-value">15+</span>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- 3 PILLARS -->
-  <section class="hari-section alt">
-    <div class="container">
-      <div class="hari-narrow">
-        <h2>3つの <em>HARI</em>.</h2>
-        <p>「ハリチ」には、3つの"ハリ"を込めました。</p>
+<!-- ABOUT / FEATURES -->
+<section class="hari-sec" id="about">
+  <div class="container">
+    <div class="hari-sec-head">
+      <span class="hari-sec-eyebrow">ABOUT #HARICHI</span>
+      <h2>紙一枚から、<em>#クリチ</em>の世界を<br>自分の手で立ち上げる。</h2>
+      <p class="hari-sec-lead">
+        ハリチくんは、#クリチ のキャラクターが紙の中から立ち上がる「ペーパーアート」。<br>
+        ピクセルのような直線で構成されたボクセル造形が、紙素材と出会うことで、ぬくもりのあるクラフト体験に生まれ変わります。
+      </p>
+    </div>
+    <div class="hari-features">
+      <div class="hari-feat">
+        <span class="hari-feat-num">01</span>
+        <h3>接着剤なしで組める</h3>
+        <p>52ピースすべてがパズルのように噛み合う構造設計。刃物でパーツを切り出し、番号順にはめ込むだけ。初めての方でも 60〜90 分でゴールにたどり着けます。</p>
       </div>
-      <div class="hari-pillars">
-        <div class="hari-pillar">
-          <span class="ico">✨</span>
-          <h3>張りのある食感</h3>
-          <p>噛んだ瞬間、ふわっと弾ける新しい歯ごたえ。<br>クリチのとろけとは違う、パリッと・プリッとしたハリ感を追求しました。</p>
-        </div>
-        <div class="hari-pillar">
-          <span class="ico">💛</span>
-          <h3>ハリのある毎日へ</h3>
-          <p>忙しい日々に、ひと口で気分を引き上げる。<br>食べると背筋が伸びるような、毎日の"スイッチ"になる一品を目指します。</p>
-        </div>
-        <div class="hari-pillar">
-          <span class="ico">🗽</span>
-          <h3>NY × OSAKA の哲学</h3>
-          <p>ニューヨークの自由な発想と、大阪のクラフトマンシップ。<br>"#クリチ"で培った世界観を、さらに進化させた次のかたちです。</p>
-        </div>
+      <div class="hari-feat">
+        <span class="hari-feat-num">02</span>
+        <h3>顔パーツを交換できる</h3>
+        <p>ハリチくんは「顔パーツの交換」で色やユニフォームの雰囲気を変えられるのが最大の特徴。NEW YORK LIFE、LA、NAKA-MEGURO、TATTOO ARTIST … あなたの推しハリチを見つけてください。</p>
+      </div>
+      <div class="hari-feat">
+        <span class="hari-feat-num">03</span>
+        <h3>NY × 大阪 × 紙</h3>
+        <p>NY の赤×白ストライプのホットドッグ屋台から着想したユニフォームを、大阪発のクリームチーズカルチャーと掛け合わせ、日本の紙文化「組子」の精神で仕上げた、VSW らしい一品。</p>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- STORY -->
-  <section class="hari-section">
-    <div class="container">
-      <div class="hari-narrow">
-        <h2>ハリチという、<em>小さな革命。</em></h2>
-        <p>
-          私たちは、"おいしさ"を一歩先へ進めたいと考えています。<br>
-          パンの定義を変えた「#クリチ」のように、<br>
-          「#ハリチ」もまた、あなたの日常にちょっとした事件を起こせる一品になる。<br>
-          そう信じて、キッチンで、ラボで、試作を重ねています。
-        </p>
-        <p>
-          具体的な中身は、まだ秘密。<br>
-          でも、ひとつだけお約束できるのは ——<br>
-          <strong>食べた瞬間、「ハリがある」と言いたくなる。</strong><br>
-          そんな体験をお届けします。
-        </p>
+<!-- ASSEMBLY INSTRUCTIONS -->
+<section class="hari-assembly">
+  <div class="container">
+    <div class="hari-sec-head">
+      <span class="hari-sec-eyebrow">ASSEMBLING INSTRUCTIONS</span>
+      <h2>15ステップで、<em>ハリチくん</em>が立ち上がる。</h2>
+      <p class="hari-sec-lead">
+        A面・B面あわせて15ステップの組み立て図が付属。日本語・英語の両方で手順を確認できます。最後の <strong>Step 15 — 完成</strong> の瞬間、あなたの机の上に小さなハリチくんが現れます。
+      </p>
+    </div>
+    <img src="assets/harichi/wide-1.webp" alt="ハリチくん 組み立て手順（Assembling Instructions）" loading="lazy">
+    <p class="hari-assembly-caption">▲ 組み立て方 / Assembling Instructions / 組立方 — 3言語対応の手順書付属</p>
+  </div>
+</section>
+
+<!-- PARTS + PACKAGE GALLERY -->
+<section class="hari-sec alt">
+  <div class="container">
+    <div class="hari-sec-head">
+      <span class="hari-sec-eyebrow">PARTS &amp; PACKAGE</span>
+      <h2>52ピースの<em>紙のパズル</em>。</h2>
+      <p class="hari-sec-lead">
+        ハリチくんの本体（赤×白ストライプ）と、表情を変えられる顔パーツ4種。すべてが一枚の厚紙から切り出せるよう丁寧に設計されています。
+      </p>
+    </div>
+    <div class="hari-gallery">
+      <img src="assets/harichi/hero.webp" alt="ハリチくん 紙パーツシート（全52ピース）" loading="lazy">
+      <div class="hari-gallery-stack">
+        <img src="assets/harichi/portrait-1.webp" alt="ハリチくん パッケージ裏面 / 注意書き">
+        <img src="assets/harichi/wide-2.webp" alt="shi-gu-mi＋ 商品情報・注意書き">
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- CTA -->
-  <section class="hari-section alt">
-    <div class="container">
-      <div class="hari-cta">
-        <div class="hari-sub">STAY TUNED</div>
-        <h3>続報は、SNS で。</h3>
-        <div class="hari-ctas">
-          <a href="https://www.instagram.com/vsw_creamcheese/" target="_blank" rel="noopener" class="hari-btn primary">📸 Instagram をフォロー</a>
-          <a href="https://www.instagram.com/kurichi.jp/" target="_blank" rel="noopener" class="hari-btn primary">🧀 @kurichi.jp</a>
-          <a href="index.html#top" class="hari-btn ghost">← TOP へ戻る</a>
-        </div>
-      </div>
+<!-- VARIANTS -->
+<section class="hari-variants">
+  <div class="container">
+    <span class="hari-sec-eyebrow">WE'RE ROCKING THESE UNIFORMS</span>
+    <h2>顔を変えれば、<em>性格</em>も変わる。</h2>
+    <p>
+      NEW YORK LIFE / LA / NAKA-MEGURO / TATTOO ARTIST — <br>
+      ハリチくんは街ごとに違うユニフォームをまといます。顔パーツを差し替えて、あなたの好きな街のハリチくんを呼び出してください。
+    </p>
+    <div class="hari-cta-row" style="justify-content:center;margin-top:28px">
+      <a href="https://www.instagram.com/harichi_kurichiland/" target="_blank" rel="noopener" class="hari-btn ghost" style="background:#fff;color:var(--hari-red);border-color:#fff">📷 @harichi_kurichiland をフォロー</a>
     </div>
-  </section>
+  </div>
+</section>
 
-</div>
+<!-- PURCHASE -->
+<section class="hari-buy" id="buy">
+  <div class="container">
+    <span class="hari-sec-eyebrow" style="color:var(--hari-peach)">GET #HARICHI</span>
+    <h2>あなたの机に、<em style="color:var(--hari-red)">#クリチ</em> の相棒を。</h2>
+    <p class="hari-buy-price">¥1,650<small>（税込）</small></p>
+    <p class="hari-buy-note">JAN: 4580423515832 / Designed in Japan, Made in China</p>
+    <div class="hari-cta-row" style="justify-content:center">
+      <a href="https://vswferdinand.base.shop/" target="_blank" rel="noopener" class="hari-btn primary" style="background:var(--hari-red)">🛒 オンラインショップで購入</a>
+      <a href="index.html#contact" class="hari-btn ghost" style="background:transparent;color:#fff;border-color:#fff">法人・卸のお問い合わせ</a>
+    </div>
+
+    <!-- INFO TABLE -->
+    <div class="hari-info">
+      <dl>
+        <dt>商品名</dt><dd>shi-gu-mix #KURICHI ハリチくん 組み立てフィギュア</dd>
+        <dt>ブランド</dt><dd>shi-gu-mi＋ Paper Art（株式会社エーゾーン）× VSW／#クリチ</dd>
+        <dt>サイズ</dt><dd>約 59 × 36 × 31 mm</dd>
+        <dt>ピース数</dt><dd>52 ピース</dd>
+        <dt>難易度</dt><dd>LEVEL 2 / 5（バーガー2個分）</dd>
+        <dt>対象年齢</dt><dd>15 才以上</dd>
+        <dt>素材</dt><dd>紙</dd>
+        <dt>価格</dt><dd>¥1,650（税込）</dd>
+        <dt>製造元</dt><dd>株式会社エーゾーン（Azone Co., Ltd.）</dd>
+        <dt>発売元</dt><dd>Vsw 株式会社</dd>
+        <dt>原産国</dt><dd>Designed in Japan / Made in China</dd>
+        <dt>JANコード</dt><dd>4580423515832</dd>
+        <dt>お問い合わせ</dt><dd>株式会社エーゾーン info@azone.biz</dd>
+      </dl>
+    </div>
+  </div>
+</section>
 
 <footer>
   <div class="container">
@@ -299,6 +333,5 @@
   </div>
 </footer>
 
-<script src="script.js"></script>
 </body>
 </html>
