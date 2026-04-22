@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://toshiokikuchi777-sudo.github.io/vsw-kurichi-site/sitemap.xml

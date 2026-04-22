@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>404 Not Found | VSW #クリチ</title>
+<meta name="robots" content="noindex">
+<link rel="icon" type="image/gif" href="assets/favicon.gif">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&family=Playfair+Display:ital,wght@0,700;1,700&family=Montserrat:wght@800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+  body{background:var(--cream);min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:40px 20px}
+  .e404{max-width:520px}
+  .e404 .big{
+    font-family:"Playfair Display",serif;
+    font-size:clamp(100px,20vw,180px);font-weight:900;
+    line-height:1;color:var(--tomato);
+    letter-spacing:-.04em;margin:0;
+  }
+  .e404 .big em{font-style:italic;color:var(--cheese)}
+  .e404 h1{
+    font-family:"Playfair Display","Noto Sans JP",serif;
+    font-size:28px;margin:20px 0 12px;color:var(--char)
+  }
+  .e404 p{color:#5a4d45;line-height:1.8;font-size:15px;margin:0 0 28px}
+  .e404 .ctas{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+  .e404 .btn-primary,.e404 .btn-ghost{
+    padding:14px 24px;border-radius:999px;font-weight:700;letter-spacing:.04em;
+    font-family:"Montserrat",sans-serif;text-decoration:none;font-size:13px;
+    transition:transform .2s ease,background .2s ease;display:inline-flex;align-items:center;gap:6px;
+  }
+  .e404 .btn-primary{background:var(--tomato);color:#fff;box-shadow:0 10px 24px -8px rgba(230,57,70,.55)}
+  .e404 .btn-primary:hover{transform:translateY(-2px);background:#c72f3c}
+  .e404 .btn-ghost{background:transparent;color:var(--char);border:1.5px solid var(--char)}
+  .e404 .btn-ghost:hover{background:var(--char);color:#fff}
+</style>
+</head>
+<body>
+  <div class="e404">
+    <p class="big">4<em>0</em>4</p>
+    <h1>ページが見つかりません</h1>
+    <p>お探しのページは移動・削除されたか、URLが正しくない可能性があります。<br>#クリチ を探しにトップへ戻りましょう。</p>
+    <div class="ctas">
+      <a href="/" class="btn-primary">トップに戻る →</a>
+      <a href="/press/" class="btn-ghost">Press Release</a>
+      <a href="/blog/" class="btn-ghost">Blog</a>
+    </div>
+  </div>
+</body>
+</html>
