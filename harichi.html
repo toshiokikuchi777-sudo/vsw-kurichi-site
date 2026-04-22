@@ -111,6 +111,34 @@
   .hari-info dd{margin:0;padding:16px 22px;font-size:14px;color:#3b2d24;border-bottom:1px solid #e8ddc6;line-height:1.8}
   .hari-info dl > *:nth-last-child(-n+2){border-bottom:0}
 
+  /* ===== INSTAGRAM REELS ===== */
+  .hari-ig-sec{background:linear-gradient(135deg,#f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%);padding:90px 0;position:relative;overflow:hidden}
+  .hari-ig-sec .hari-sec-eyebrow{color:#ffd84a}
+  .hari-ig-sec h2{color:#fff}
+  .hari-ig-sec h2 em{color:#ffd84a}
+  .hari-ig-sec .hari-sec-lead{color:rgba(255,255,255,.95)}
+
+  .hari-ig-profile{max-width:640px;margin:40px auto 40px;background:#fff;border-radius:24px;padding:30px;display:grid;grid-template-columns:110px 1fr;gap:24px;align-items:center;box-shadow:0 30px 60px -25px rgba(0,0,0,.4);text-decoration:none;color:#1a1613;transition:transform .3s ease}
+  .hari-ig-profile:hover{transform:translateY(-4px)}
+  .hari-ig-avatar{width:110px;height:110px;border-radius:50%;background:linear-gradient(135deg,#f09433,#dc2743,#bc1888);padding:4px;display:flex;align-items:center;justify-content:center}
+  .hari-ig-avatar img{width:100%;height:100%;border-radius:50%;object-fit:cover;border:3px solid #fff}
+  .hari-ig-info h3{margin:0 0 6px;font-size:22px;font-weight:800}
+  .hari-ig-info .handle{font-family:"Montserrat",sans-serif;font-size:13px;color:#8e4c8e;font-weight:700;letter-spacing:.04em;display:block;margin-bottom:14px}
+  .hari-ig-info p{margin:0 0 14px;font-size:13px;line-height:1.7;color:#4a3a30}
+  .hari-ig-btn{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,#f09433,#dc2743,#bc1888);color:#fff;font-weight:700;font-size:13px;padding:10px 20px;border-radius:999px;letter-spacing:.04em}
+
+  .hari-ig-reels{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;max-width:1080px;margin:0 auto}
+  .hari-ig-reels blockquote.instagram-media{margin:0 !important;min-width:0 !important;width:100% !important;border-radius:14px !important;overflow:hidden;box-shadow:0 20px 40px -15px rgba(0,0,0,.35) !important}
+  .hari-ig-placeholder{aspect-ratio:9/16;background:rgba(255,255,255,.08);border:2px dashed rgba(255,255,255,.35);border-radius:14px;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.75);font-size:12px;text-align:center;padding:20px;line-height:1.7}
+
+  @media (max-width:900px){
+    .hari-ig-sec{padding:60px 0}
+    .hari-ig-profile{grid-template-columns:80px 1fr;padding:20px;gap:16px}
+    .hari-ig-avatar{width:80px;height:80px}
+    .hari-ig-info h3{font-size:17px}
+    .hari-ig-reels{grid-template-columns:1fr;max-width:380px}
+  }
+
   /* ===== 3D VIEWER ===== */
   .hari-3d-sec{background:linear-gradient(180deg,var(--hari-peach) 0%,#ffd6cf 100%);padding:90px 0;position:relative;overflow:hidden}
   .hari-3d-sec::before{content:"";position:absolute;inset:0;background:
@@ -428,6 +456,52 @@
     </div>
   </div>
 </section>
+
+<!-- INSTAGRAM REELS -->
+<section class="hari-ig-sec" id="instagram">
+  <div class="container">
+    <div class="hari-sec-head">
+      <span class="hari-sec-eyebrow">INSTAGRAM REELS</span>
+      <h2>ハリチくんは、<em>今日もどこかで</em> 動いている。</h2>
+      <p class="hari-sec-lead">
+        公式アカウント <strong>@harichi_kurichiland</strong> では、ハリチくんの街歩き・#クリチとの2ショット・組み立てReelなどを毎週更新中。<br>
+        気になった街角のハリチくんを、ぜひフォローで追いかけてください。
+      </p>
+    </div>
+
+    <!-- Profile card CTA -->
+    <a href="https://www.instagram.com/harichi_kurichiland/" target="_blank" rel="noopener" class="hari-ig-profile">
+      <div class="hari-ig-avatar">
+        <img src="assets/harichi/gallery/g15.jpg" alt="@harichi_kurichiland プロフィール画像">
+      </div>
+      <div class="hari-ig-info">
+        <h3>ハリチ君の世界 ｜ KURICHI LAND</h3>
+        <span class="handle">@harichi_kurichiland</span>
+        <p>赤・黄・緑のハリチくんたちが、NY・大阪・中目黒を旅する公式Instagram。新作Reelや未公開カット、イベント告知を随時配信。</p>
+        <span class="hari-ig-btn">📷 フォローする →</span>
+      </div>
+    </a>
+
+    <!-- Reels grid (3 slots) -->
+    <div class="hari-ig-reels">
+      <div class="hari-ig-placeholder">
+        🎬 最新Reel①<br>
+        <small>（@harichi_kurichiland より<br>準備中）</small>
+      </div>
+      <div class="hari-ig-placeholder">
+        🎬 最新Reel②<br>
+        <small>（@harichi_kurichiland より<br>準備中）</small>
+      </div>
+      <div class="hari-ig-placeholder">
+        🎬 最新Reel③<br>
+        <small>（@harichi_kurichiland より<br>準備中）</small>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Instagram embed script (for when Reel blockquotes are inserted) -->
+<script async src="//www.instagram.com/embed.js"></script>
 
 <!-- Lightbox targets -->
 <div id="lb02" class="lb"><a href="#gallery" class="lb-bg"></a><a href="#gallery" class="lb-close">×</a><img src="assets/harichi/gallery/g02.jpg" alt=""></div>
