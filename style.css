@@ -692,6 +692,7 @@ footer{background:var(--char);color:#c9bdb0;padding:70px 0 30px;font-size:13px}
 
   /* Hero */
   .hero{min-height:92vh}
+  .hero-content .reveal{display:none} /* mobile: hide "VSW CREAMCHEESE BURGER / #クリチ食べた?" text overlay */
   .hero-content{padding:110px 0 60px}
   .hero-content .reveal{padding:22px 22px;max-width:none;border-radius:18px}
   .hero h1{font-size:clamp(48px,12vw,80px)}
