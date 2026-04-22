@@ -81,7 +81,22 @@ document.querySelectorAll('form.form-row').forEach(f => {
   f.addEventListener('submit', ev => {
     ev.preventDefault();
     const btn = f.querySelector('button');
-    btn.innerText = 'Thanks!';
+    const input = f.querySelector('input');
+    const original = btn.innerText;
+    btn.innerText = 'Thanks! ✓';
     btn.disabled = true;
+    if (input) input.value = '';
+    setTimeout(() => {
+      btn.innerText = original;
+      btn.disabled = false;
+    }, 3200);
+  });
+});
+
+// ===== Close mobile menu on nav link click =====
+document.querySelectorAll('.nav-links a').forEach(a => {
+  a.addEventListener('click', () => {
+    const links = document.querySelector('.nav-links');
+    if (links && window.innerWidth <= 960) links.removeAttribute('style');
   });
 });
