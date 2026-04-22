@@ -12,11 +12,11 @@
 <meta property="og:title" content="#HARICHI ハリチくん 組み立てフィギュア — shi-gu-mi × #クリチ">
 <meta property="og:description" content="52ピースの紙パーツで組み立てる、#クリチのマスコット『ハリチくん』。顔パーツの交換で色も表情も自由自在。">
 <meta property="og:url" content="https://toshiokikuchi777-sudo.github.io/vsw-kurichi-site/harichi.html">
-<meta property="og:image" content="https://toshiokikuchi777-sudo.github.io/vsw-kurichi-site/assets/harichi/portrait-2.webp">
+<meta property="og:image" content="https://toshiokikuchi777-sudo.github.io/vsw-kurichi-site/assets/harichi/gallery/g01.jpg">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="#HARICHI ハリチくん 組み立てフィギュア — shi-gu-mi × #クリチ">
 <meta name="twitter:description" content="52ピースの紙パーツで組み立てる、#クリチのマスコット『ハリチくん』。">
-<meta name="twitter:image" content="https://toshiokikuchi777-sudo.github.io/vsw-kurichi-site/assets/harichi/portrait-2.webp">
+<meta name="twitter:image" content="https://toshiokikuchi777-sudo.github.io/vsw-kurichi-site/assets/harichi/gallery/g01.jpg">
 <link rel="canonical" href="https://toshiokikuchi777-sudo.github.io/vsw-kurichi-site/harichi.html">
 
 <link rel="icon" type="image/gif" href="assets/favicon.gif">
@@ -45,7 +45,7 @@
   .hari-hero-sub{font-family:"Noto Sans JP",sans-serif;font-weight:700;font-size:22px;color:#3b2d24;margin:0 0 18px}
   .hari-hero-lead{font-size:15px;line-height:2;color:#4a3a30;max-width:520px;margin-bottom:28px}
   .hari-hero-visual{position:relative}
-  .hari-hero-visual img{width:100%;max-width:480px;border-radius:24px;display:block;margin-left:auto;box-shadow:0 30px 60px -20px rgba(0,0,0,.25)}
+  .hari-hero-visual img{width:100%;max-width:560px;border-radius:24px;display:block;margin-left:auto;box-shadow:0 30px 60px -20px rgba(0,0,0,.35);aspect-ratio:3/4;object-fit:cover}
   .hari-badges{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:24px}
   .hari-badge{font-family:"Montserrat",sans-serif;font-size:11px;letter-spacing:.18em;font-weight:700;padding:8px 14px;border-radius:999px;background:#fff;color:#1a1613;border:1.5px solid #1a1613}
   .hari-badge.red{background:var(--hari-red);color:#fff;border-color:var(--hari-red)}
@@ -109,6 +109,37 @@
   .hari-info dt{background:var(--hari-cream);padding:16px 22px;font-size:12px;font-weight:700;letter-spacing:.15em;color:#1a1613;border-bottom:1px solid #e8ddc6;font-family:"Montserrat","Noto Sans JP",sans-serif}
   .hari-info dd{margin:0;padding:16px 22px;font-size:14px;color:#3b2d24;border-bottom:1px solid #e8ddc6;line-height:1.8}
   .hari-info dl > *:nth-last-child(-n+2){border-bottom:0}
+
+  /* ===== ASSEMBLED GALLERY ===== */
+  .hari-gallery-sec{background:linear-gradient(180deg,#fff 0%,var(--hari-cream) 100%);padding:100px 0}
+  .hari-gallery-hero{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin:50px 0 24px}
+  .hari-gallery-hero img{width:100%;height:100%;object-fit:cover;display:block;border-radius:18px;box-shadow:0 20px 50px -20px rgba(0,0,0,.22);aspect-ratio:4/5;transition:transform .5s ease}
+  .hari-gallery-hero a{overflow:hidden;border-radius:18px;display:block}
+  .hari-gallery-hero a:hover img{transform:scale(1.04)}
+
+  /* Masonry-ish grid via CSS columns */
+  .hari-gallery-masonry{column-count:4;column-gap:18px;margin-top:24px}
+  .hari-gallery-masonry a{display:block;margin:0 0 18px;border-radius:14px;overflow:hidden;break-inside:avoid;box-shadow:0 12px 30px -15px rgba(0,0,0,.18);transition:transform .4s ease,box-shadow .4s ease;position:relative}
+  .hari-gallery-masonry a:hover{transform:translateY(-4px);box-shadow:0 20px 40px -15px rgba(0,0,0,.28)}
+  .hari-gallery-masonry img{width:100%;display:block;transition:transform .6s ease}
+  .hari-gallery-masonry a:hover img{transform:scale(1.06)}
+  .hari-gallery-count{display:inline-block;background:#1a1613;color:#fff;font-family:"Montserrat",sans-serif;font-size:11px;letter-spacing:.22em;font-weight:700;padding:8px 18px;border-radius:999px;margin-top:30px}
+
+  /* Lightbox (pure CSS via :target) */
+  .lb{position:fixed;inset:0;background:rgba(0,0,0,.92);display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .25s ease;z-index:9999;padding:30px}
+  .lb:target{opacity:1;pointer-events:auto}
+  .lb img{max-width:96vw;max-height:92vh;object-fit:contain;border-radius:8px;box-shadow:0 30px 80px rgba(0,0,0,.6)}
+  .lb-close{position:absolute;top:24px;right:28px;color:#fff;font-size:32px;text-decoration:none;font-weight:300;line-height:1;opacity:.8;transition:opacity .2s ease}
+  .lb-close:hover{opacity:1}
+  .lb-bg{position:absolute;inset:0;cursor:zoom-out}
+
+  @media (max-width:1100px){.hari-gallery-masonry{column-count:3}}
+  @media (max-width:700px){
+    .hari-gallery-sec{padding:60px 0}
+    .hari-gallery-hero{grid-template-columns:1fr;gap:14px;margin:30px 0 16px}
+    .hari-gallery-masonry{column-count:2;column-gap:10px}
+    .hari-gallery-masonry a{margin-bottom:10px;border-radius:10px}
+  }
 
   /* Mobile */
   @media (max-width:900px){
@@ -177,7 +208,7 @@
       </div>
     </div>
     <div class="hari-hero-visual">
-      <img src="assets/harichi/portrait-2.webp" alt="#HARICHI ハリチくん パッケージ表" loading="eager">
+      <img src="assets/harichi/gallery/g01.jpg" alt="#HARICHI ハリチくん 組み立て完成 3体（赤・黄・緑）" loading="eager">
     </div>
   </div>
 </header>
@@ -290,6 +321,81 @@
     </div>
   </div>
 </section>
+
+<!-- ASSEMBLED GALLERY -->
+<section class="hari-gallery-sec" id="gallery">
+  <div class="container">
+    <div class="hari-sec-head">
+      <span class="hari-sec-eyebrow">HARICHI-KUN GALLERY</span>
+      <h2>組み立てた瞬間、<em>ハリチくん</em>が<br>あなたの日常に住みはじめる。</h2>
+      <p class="hari-sec-lead">
+        赤・黄・緑 — 顔パーツを差し替えて並べると、３体の性格がそれぞれ立ち上がります。<br>
+        カフェのテーブル、#クリチのお皿の横、窓辺 … どこに置いても絵になる小さな相棒たち。
+      </p>
+    </div>
+
+    <!-- Featured 2-up -->
+    <div class="hari-gallery-hero">
+      <a href="#lb03"><img src="assets/harichi/gallery/g03.jpg" alt="ハリチくん 3体（赤・黄・緑）"></a>
+      <a href="#lb08"><img src="assets/harichi/gallery/g08.jpg" alt="ハリチくん GOT #KURICHI? 手前のアップ"></a>
+    </div>
+
+    <!-- Masonry -->
+    <div class="hari-gallery-masonry">
+      <a href="#lb02"><img src="assets/harichi/gallery/g02.jpg" alt="ハリチくん 2" loading="lazy"></a>
+      <a href="#lb04"><img src="assets/harichi/gallery/g04.jpg" alt="ハリチくん 4" loading="lazy"></a>
+      <a href="#lb05"><img src="assets/harichi/gallery/g05.jpg" alt="ハリチくん 5" loading="lazy"></a>
+      <a href="#lb06"><img src="assets/harichi/gallery/g06.jpg" alt="ハリチくん 6" loading="lazy"></a>
+      <a href="#lb07"><img src="assets/harichi/gallery/g07.jpg" alt="ハリチくん 7" loading="lazy"></a>
+      <a href="#lb09"><img src="assets/harichi/gallery/g09.jpg" alt="ハリチくん 9" loading="lazy"></a>
+      <a href="#lb10"><img src="assets/harichi/gallery/g10.jpg" alt="ハリチくん 10" loading="lazy"></a>
+      <a href="#lb11"><img src="assets/harichi/gallery/g11.jpg" alt="ハリチくん 11" loading="lazy"></a>
+      <a href="#lb12"><img src="assets/harichi/gallery/g12.jpg" alt="ハリチくん 12" loading="lazy"></a>
+      <a href="#lb13"><img src="assets/harichi/gallery/g13.jpg" alt="ハリチくん 13" loading="lazy"></a>
+      <a href="#lb14"><img src="assets/harichi/gallery/g14.jpg" alt="ハリチくん 14" loading="lazy"></a>
+      <a href="#lb15"><img src="assets/harichi/gallery/g15.jpg" alt="ハリチくん 15" loading="lazy"></a>
+      <a href="#lb16"><img src="assets/harichi/gallery/g16.jpg" alt="ハリチくん 16" loading="lazy"></a>
+      <a href="#lb17"><img src="assets/harichi/gallery/g17.jpg" alt="ハリチくん 17" loading="lazy"></a>
+      <a href="#lb18"><img src="assets/harichi/gallery/g18.jpg" alt="ハリチくん 18" loading="lazy"></a>
+      <a href="#lb19"><img src="assets/harichi/gallery/g19.jpg" alt="ハリチくん 19" loading="lazy"></a>
+      <a href="#lb20"><img src="assets/harichi/gallery/g20.jpg" alt="ハリチくん 20" loading="lazy"></a>
+      <a href="#lb21"><img src="assets/harichi/gallery/g21.jpg" alt="ハリチくん 21" loading="lazy"></a>
+      <a href="#lb22"><img src="assets/harichi/gallery/g22.jpg" alt="ハリチくん 22" loading="lazy"></a>
+      <a href="#lb23"><img src="assets/harichi/gallery/g23.jpg" alt="ハリチくん 23" loading="lazy"></a>
+      <a href="#lb24"><img src="assets/harichi/gallery/g24.jpg" alt="ハリチくん 24" loading="lazy"></a>
+      <a href="#lb25"><img src="assets/harichi/gallery/g25.jpg" alt="ハリチくん 25" loading="lazy"></a>
+    </div>
+    <div style="text-align:center">
+      <span class="hari-gallery-count">25 PHOTOS · CLICK TO ZOOM</span>
+    </div>
+  </div>
+</section>
+
+<!-- Lightbox targets -->
+<div id="lb02" class="lb"><a href="#gallery" class="lb-bg"></a><a href="#gallery" class="lb-close">×</a><img src="assets/harichi/gallery/g02.jpg" alt=""></div>
+<div id="lb03" class="lb"><a href="#gallery" class="lb-bg"></a><a href="#gallery" class="lb-close">×</a><img src="assets/harichi/gallery/g03.jpg" alt=""></div>
+<div id="lb04" class="lb"><a href="#gallery" class="lb-bg"></a><a href="#gallery" class="lb-close">×</a><img src="assets/harichi/gallery/g04.jpg" alt=""></div>
+<div id="lb05" class="lb"><a href="#gallery" class="lb-bg"></a><a href="#gallery" class="lb-close">×</a><img src="assets/harichi/gallery/g05.jpg" alt=""></div>
+<div id="lb06" class="lb"><a href="#gallery" class="lb-bg"></a><a href="#gallery" class="lb-close">×</a><img src="assets/harichi/gallery/g06.jpg" alt=""></div>
+<div id="lb07" class="lb"><a href="#gallery" class="lb-bg"></a><a href="#gallery" class="lb-close">×</a><img src="assets/harichi/gallery/g07.jpg" alt=""></div>
+<div id="lb08" class="lb"><a href="#gallery" class="lb-bg"></a><a href="#gallery" class="lb-close">×</a><img src="assets/harichi/gallery/g08.jpg" alt=""></div>
+<div id="lb09" class="lb"><a href="#gallery" class="lb-bg"></a><a href="#gallery" class="lb-close">×</a><img src="assets/harichi/gallery/g09.jpg" alt=""></div>
+<div id="lb10" class="lb"><a href="#gallery" class="lb-bg"></a><a href="#gallery" class="lb-close">×</a><img src="assets/harichi/gallery/g10.jpg" alt=""></div>
+<div id="lb11" class="lb"><a href="#gallery" class="lb-bg"></a><a href="#gallery" class="lb-close">×</a><img src="assets/harichi/gallery/g11.jpg" alt=""></div>
+<div id="lb12" class="lb"><a href="#gallery" class="lb-bg"></a><a href="#gallery" class="lb-close">×</a><img src="assets/harichi/gallery/g12.jpg" alt=""></div>
+<div id="lb13" class="lb"><a href="#gallery" class="lb-bg"></a><a href="#gallery" class="lb-close">×</a><img src="assets/harichi/gallery/g13.jpg" alt=""></div>
+<div id="lb14" class="lb"><a href="#gallery" class="lb-bg"></a><a href="#gallery" class="lb-close">×</a><img src="assets/harichi/gallery/g14.jpg" alt=""></div>
+<div id="lb15" class="lb"><a href="#gallery" class="lb-bg"></a><a href="#gallery" class="lb-close">×</a><img src="assets/harichi/gallery/g15.jpg" alt=""></div>
+<div id="lb16" class="lb"><a href="#gallery" class="lb-bg"></a><a href="#gallery" class="lb-close">×</a><img src="assets/harichi/gallery/g16.jpg" alt=""></div>
+<div id="lb17" class="lb"><a href="#gallery" class="lb-bg"></a><a href="#gallery" class="lb-close">×</a><img src="assets/harichi/gallery/g17.jpg" alt=""></div>
+<div id="lb18" class="lb"><a href="#gallery" class="lb-bg"></a><a href="#gallery" class="lb-close">×</a><img src="assets/harichi/gallery/g18.jpg" alt=""></div>
+<div id="lb19" class="lb"><a href="#gallery" class="lb-bg"></a><a href="#gallery" class="lb-close">×</a><img src="assets/harichi/gallery/g19.jpg" alt=""></div>
+<div id="lb20" class="lb"><a href="#gallery" class="lb-bg"></a><a href="#gallery" class="lb-close">×</a><img src="assets/harichi/gallery/g20.jpg" alt=""></div>
+<div id="lb21" class="lb"><a href="#gallery" class="lb-bg"></a><a href="#gallery" class="lb-close">×</a><img src="assets/harichi/gallery/g21.jpg" alt=""></div>
+<div id="lb22" class="lb"><a href="#gallery" class="lb-bg"></a><a href="#gallery" class="lb-close">×</a><img src="assets/harichi/gallery/g22.jpg" alt=""></div>
+<div id="lb23" class="lb"><a href="#gallery" class="lb-bg"></a><a href="#gallery" class="lb-close">×</a><img src="assets/harichi/gallery/g23.jpg" alt=""></div>
+<div id="lb24" class="lb"><a href="#gallery" class="lb-bg"></a><a href="#gallery" class="lb-close">×</a><img src="assets/harichi/gallery/g24.jpg" alt=""></div>
+<div id="lb25" class="lb"><a href="#gallery" class="lb-bg"></a><a href="#gallery" class="lb-close">×</a><img src="assets/harichi/gallery/g25.jpg" alt=""></div>
 
 <!-- PURCHASE -->
 <section class="hari-buy" id="buy">

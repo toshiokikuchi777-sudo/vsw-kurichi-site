@@ -1155,8 +1155,9 @@ iframe{max-width:100%}
 /* ===== Harichi Spotlight ===== */
 .harichi-spot-card{display:grid;grid-template-columns:420px 1fr;gap:50px;align-items:center;background:#fff;border:2px solid #1a1613;border-radius:28px;padding:40px;text-decoration:none;color:#1a1613;box-shadow:0 30px 60px -30px rgba(0,0,0,.2);transition:transform .35s ease,box-shadow .35s ease;margin-top:30px}
 .harichi-spot-card:hover{transform:translateY(-6px);box-shadow:0 40px 70px -30px rgba(0,0,0,.28)}
-.harichi-spot-img{background:#f2a9a0;border-radius:20px;padding:22px;display:flex;align-items:center;justify-content:center;aspect-ratio:3/4}
-.harichi-spot-img img{width:100%;height:100%;object-fit:contain;display:block}
+.harichi-spot-img{background:#f2a9a0;border-radius:20px;display:flex;align-items:center;justify-content:center;aspect-ratio:3/4;overflow:hidden}
+.harichi-spot-img img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s ease}
+.harichi-spot-card:hover .harichi-spot-img img{transform:scale(1.05)}
 .harichi-spot-body h3{font-size:30px;line-height:1.4;margin:12px 0 14px;font-weight:800}
 .harichi-spot-body h3 em{font-style:normal;color:#e62d2e}
 .harichi-spot-body p{font-size:14.5px;line-height:1.95;color:#4a3a30;margin:0 0 24px}
