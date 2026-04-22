@@ -122,7 +122,9 @@ h2.section-title em{
   transition:transform .25s ease,background .25s ease;
 }
 .cta:hover{transform:translateY(-2px);background:var(--tomato)}
-.nav-toggle{display:none;background:none;border:0;cursor:pointer;padding:6px}
+.nav-toggle{display:none;background:none;border:0;cursor:pointer;padding:10px 12px;font-size:32px;line-height:1;color:var(--char);min-width:48px;min-height:48px;border-radius:10px;transition:background .2s ease}
+.nav-toggle:hover{background:rgba(0,0,0,.06)}
+.nav-toggle:active{transform:scale(.95)}
 
 /* ---------- Hero ---------- */
 .hero{
@@ -641,7 +643,7 @@ footer{background:var(--char);color:#c9bdb0;padding:70px 0 30px;font-size:13px}
 /* ---------- Responsive ---------- */
 @media (max-width:960px){
   .nav-links{display:none}
-  .nav-toggle{display:inline-block}
+  .nav-toggle{display:inline-flex;align-items:center;justify-content:center}
   .hero-grid,#story .story-grid,.news-grid{grid-template-columns:1fr;gap:48px}
   .hero{padding-top:110px}
   .product-grid,.shop-grid{grid-template-columns:repeat(2,1fr)}
