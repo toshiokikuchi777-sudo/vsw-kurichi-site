@@ -7,6 +7,29 @@
   while (clone.firstElementChild) list.appendChild(clone.firstElementChild);
 })();
 
+// ===== Product detail modal =====
+(() => {
+  const openModal = (id) => {
+    const m = document.getElementById('modal-' + id);
+    if (!m) return;
+    m.hidden = false;
+    document.body.classList.add('modal-open');
+  };
+  const closeAll = () => {
+    document.querySelectorAll('.p-modal').forEach(m => m.hidden = true);
+    document.body.classList.remove('modal-open');
+  };
+  document.querySelectorAll('.card-modal').forEach(c => {
+    c.addEventListener('click', () => openModal(c.dataset.modal));
+  });
+  document.querySelectorAll('.p-modal-close, .p-modal-bg').forEach(el => {
+    el.addEventListener('click', closeAll);
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeAll();
+  });
+})();
+
 // ===== Scroll-triggered fade-up =====
 const io = new IntersectionObserver((entries) => {
   entries.forEach(e => {

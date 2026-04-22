@@ -345,6 +345,127 @@ section{padding:110px 0;position:relative}
 .card-foot .price{color:var(--char)}
 .card-foot .more{color:var(--tomato)}
 
+/* Clickable product cards with modal */
+.card-modal{cursor:pointer}
+.card-modal:hover{transform:translateY(-10px)}
+.card-modal .more{color:var(--tomato);font-weight:700}
+
+/* Product group title */
+.product-group-title{
+  font-family:"Playfair Display","Noto Sans JP",serif;
+  font-size:26px;font-weight:700;margin:44px 0 20px;
+  display:flex;align-items:center;gap:14px;
+}
+.product-group-title span{position:relative;padding:6px 16px;border-radius:999px;background:var(--char);color:#fff;font-size:16px;letter-spacing:.08em}
+.product-group-title:first-of-type{margin-top:0}
+
+.product-grid-default .product-extra{display:none}
+.product-grid-default .product-extra.show{display:flex}
+.product-more-wrap{text-align:center;margin-top:32px}
+.product-more-btn{
+  display:inline-flex;align-items:center;gap:10px;
+  padding:14px 28px;border-radius:999px;
+  background:transparent;color:var(--char);
+  border:1.5px solid var(--char);font-weight:700;
+  font-family:"Montserrat",sans-serif;font-size:14px;letter-spacing:.06em;
+  cursor:pointer;transition:all .2s ease;
+}
+.product-more-btn:hover{background:var(--char);color:#fff}
+
+/* ---------- Product Detail Modal ---------- */
+.p-modal{
+  position:fixed;inset:0;z-index:9999;
+  display:flex;align-items:center;justify-content:center;
+  padding:24px;
+}
+.p-modal[hidden]{display:none!important}
+.p-modal-bg{position:absolute;inset:0;background:rgba(26,22,19,.7);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);cursor:pointer}
+.p-modal-body{
+  position:relative;z-index:2;
+  max-width:760px;width:100%;max-height:88vh;overflow-y:auto;
+  background:#fff;border-radius:22px;
+  padding:32px 32px 24px;
+  box-shadow:0 40px 80px -20px rgba(0,0,0,.5);
+  animation:modal-in .35s ease;
+}
+@keyframes modal-in{from{opacity:0;transform:translateY(20px) scale(.96)}to{opacity:1;transform:none}}
+.p-modal-close{
+  position:absolute;top:14px;right:14px;z-index:3;
+  width:36px;height:36px;border-radius:50%;border:0;
+  background:var(--cream-2);color:var(--char);
+  font-size:22px;cursor:pointer;line-height:1;
+  display:grid;place-items:center;
+  transition:background .2s ease,transform .2s ease;
+}
+.p-modal-close:hover{background:var(--tomato);color:#fff;transform:rotate(90deg)}
+.p-modal-header{border-bottom:1px dashed var(--line);padding-bottom:16px;margin-bottom:22px;position:relative}
+.p-modal-header h3{
+  font-family:"Playfair Display","Noto Sans JP",serif;
+  font-size:clamp(28px,4vw,40px);margin:0;line-height:1.2;color:var(--char);
+}
+.p-modal-header .sub{color:#5a4d45;font-size:15px;margin:6px 0 0}
+.p-modal-header .p-price{
+  position:absolute;top:0;right:0;
+  background:var(--tomato);color:#fff;padding:6px 14px;border-radius:999px;
+  font-family:"Montserrat",sans-serif;font-weight:800;font-size:14px;
+}
+.p-modal-header .p-price small{font-size:11px;font-weight:400;margin-left:4px}
+
+.p-modal-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:22px}
+.p-vis{
+  aspect-ratio:1/1;border-radius:16px;
+  display:grid;place-items:center;position:relative;overflow:hidden;
+}
+.p-vis-lemon{background:linear-gradient(135deg,#fff5d9 0,#ffeba0 100%)}
+.p-vis-orange{background:linear-gradient(135deg,#ffd6cc 0,#ff9a6e 100%)}
+.p-vis-soichi{background:linear-gradient(135deg,#ffe6ee 0,#ffc2d9 100%)}
+.bun-stripe{
+  width:78%;aspect-ratio:1/1;border-radius:50%;
+  box-shadow:inset 0 -14px 30px rgba(0,0,0,.18),0 30px 50px -25px rgba(0,0,0,.4);
+}
+.bun-bw{
+  background:repeating-linear-gradient(180deg,#1a1613 0 22px,#f6efdf 22px 40px);
+}
+.bun-rk{
+  background:repeating-linear-gradient(180deg,#d24a4a 0 22px,#1a1613 22px 38px);
+}
+.p-detail .p-block{margin-bottom:16px}
+.p-detail h4{
+  font-family:"Montserrat",sans-serif;font-size:12px;letter-spacing:.14em;
+  color:var(--tomato);margin:0 0 8px;font-weight:800;
+}
+.p-detail ul{margin:0;padding-left:20px}
+.p-detail li{font-size:14px;color:var(--char);line-height:1.7}
+.p-note{font-size:12px;color:#8a7a6e;margin:0;line-height:1.7;padding:10px 12px;background:var(--cream);border-radius:10px}
+
+.p-taste{
+  background:var(--cream-2);padding:18px 22px;border-radius:14px;margin-bottom:16px;
+}
+.p-taste h4{
+  font-family:"Montserrat",sans-serif;font-size:11px;letter-spacing:.18em;
+  color:var(--tomato);margin:0 0 8px;font-weight:800;
+}
+.p-taste p{margin:0;font-size:16px;line-height:1.8;color:var(--char);font-weight:700}
+
+.p-allergy{
+  font-size:12px;color:#5a4d45;line-height:1.65;
+  padding:14px 16px;background:#f9f0e0;border-radius:10px;
+  border-left:3px solid var(--tomato);
+}
+.p-allergy strong{display:block;font-size:12px;margin-bottom:6px;color:var(--char)}
+.p-allergy small{display:block;margin-top:6px;font-size:11px;color:#8a7a6e}
+
+body.modal-open{overflow:hidden}
+
+@media (max-width:640px){
+  .p-modal{padding:16px}
+  .p-modal-body{padding:22px 20px 18px;max-height:92vh}
+  .p-modal-grid{grid-template-columns:1fr;gap:16px}
+  .p-vis{aspect-ratio:4/3}
+  .p-modal-header .p-price{position:static;display:inline-block;margin-top:10px}
+  .p-taste p{font-size:14px}
+}
+
 /* ---------- Story ---------- */
 #story{background:var(--char);color:#fff;position:relative;overflow:hidden}
 #story::before{
