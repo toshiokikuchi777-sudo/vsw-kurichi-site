@@ -1,0 +1,408 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>中国事業 | #クリチ は、すでに中国で愛されはじめている。 | Vsw株式会社</title>
+<meta name="description" content="日本発のクリームチーズバーガー「#クリチ」は、すでに上海・長沙の3拠点で実出店中。現地ビジネスパートナー（株式会社トーシン）と連携し、中国市場での本格展開を進めています。" />
+<meta property="og:title" content="中国事業 | #クリチ は、すでに中国で愛されはじめている。" />
+<meta property="og:description" content="上海・長沙の3拠点で実出店中。日本発のクリームチーズバーガー「#クリチ」が中国市場で広がる。" />
+<meta property="og:image" content="https://toshiokikuchi777-sudo.github.io/vsw-kurichi-site/assets/china/changsha.jpg" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary_large_image" />
+<link rel="icon" type="image/gif" href="../assets/favicon.gif">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&family=Playfair+Display:ital,wght@0,700;1,700&family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css">
+<style>
+  /* China business page — local styles */
+  .cn-hero{
+    position:relative;
+    padding:160px 0 100px;
+    background:
+      linear-gradient(180deg,rgba(255,250,240,.92) 0%,rgba(255,250,240,.78) 60%,rgba(255,250,240,.95) 100%),
+      url('../assets/china/changsha.jpg') center/cover no-repeat;
+    border-bottom:1px solid var(--line);
+    overflow:hidden;
+  }
+  .cn-hero .container{position:relative;z-index:2}
+  .cn-hero .eyebrow{
+    display:inline-block;
+    font-family:"Montserrat",sans-serif;font-weight:800;font-size:12px;
+    letter-spacing:.24em;color:var(--tomato);margin-bottom:18px;
+    padding:6px 14px;border:1.5px solid var(--tomato);border-radius:999px;
+  }
+  .cn-hero h1{
+    font-family:"Playfair Display","Noto Sans JP",serif;
+    font-size:clamp(40px,6.5vw,84px);line-height:1.05;margin:0 0 24px;
+    letter-spacing:-.02em;
+  }
+  .cn-hero h1 em{font-style:italic;color:var(--tomato)}
+  .cn-hero .lead{
+    max-width:640px;color:#3a332e;font-size:17px;line-height:1.95;margin:0 0 32px;
+  }
+  .cn-hero .stats{
+    display:flex;gap:32px;flex-wrap:wrap;margin-top:8px;
+  }
+  .cn-hero .stat{
+    background:#fff;border:1px solid var(--line);border-radius:18px;
+    padding:18px 22px;min-width:160px;
+    box-shadow:0 14px 30px -22px rgba(0,0,0,.25);
+  }
+  .cn-hero .stat .num{
+    font-family:"Playfair Display",serif;font-size:42px;font-weight:900;color:var(--tomato);line-height:1;
+  }
+  .cn-hero .stat .lbl{
+    margin-top:6px;font-size:12px;letter-spacing:.1em;color:#5a4d45;font-weight:700;
+  }
+
+  /* Section common */
+  .cn-sec{padding:100px 0;background:#fff;border-bottom:1px solid var(--line)}
+  .cn-sec.alt{background:var(--cream)}
+  .cn-sec h2{
+    font-family:"Playfair Display","Noto Sans JP",serif;
+    font-size:clamp(28px,3.6vw,42px);line-height:1.25;margin:0 0 18px;
+  }
+  .cn-sec h2 em{font-style:italic;color:var(--tomato)}
+  .cn-sec .sec-eyebrow{
+    font-family:"Montserrat",sans-serif;font-weight:800;font-size:11px;
+    letter-spacing:.24em;color:var(--tomato);margin-bottom:10px;display:block;
+  }
+  .cn-sec .lead{max-width:680px;color:#4a3f38;font-size:15.5px;line-height:1.95;margin:0 0 48px}
+
+  /* Store grid */
+  .stores-grid{
+    display:grid;grid-template-columns:repeat(3,1fr);gap:24px;
+  }
+  .store-card{
+    background:#fff;border:1px solid var(--line);border-radius:22px;overflow:hidden;
+    box-shadow:0 18px 40px -28px rgba(0,0,0,.25);
+    transition:transform .3s ease,box-shadow .3s ease;
+    display:flex;flex-direction:column;
+  }
+  .store-card:hover{transform:translateY(-6px);box-shadow:0 30px 50px -30px rgba(0,0,0,.3)}
+  .store-card .ph{
+    aspect-ratio:4/3;overflow:hidden;background:#f3e8d0;
+  }
+  .store-card .ph img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s ease}
+  .store-card:hover .ph img{transform:scale(1.04)}
+  .store-card .body{padding:22px 22px 26px;flex:1;display:flex;flex-direction:column}
+  .store-card .badge{
+    display:inline-block;font-family:"Montserrat",sans-serif;font-weight:800;font-size:10px;
+    letter-spacing:.2em;color:#fff;background:var(--tomato);
+    padding:4px 10px;border-radius:999px;margin-bottom:12px;align-self:flex-start;
+  }
+  .store-card h3{
+    font-family:"Playfair Display","Noto Sans JP",serif;
+    font-size:22px;margin:0 0 6px;line-height:1.3;
+  }
+  .store-card .loc{
+    font-family:"Montserrat",sans-serif;font-size:11px;letter-spacing:.16em;
+    color:#8a7a6e;font-weight:700;margin-bottom:10px;
+  }
+  .store-card .desc{
+    font-size:13.5px;line-height:1.85;color:#4a3f38;margin:0;
+  }
+
+  /* Why */
+  .why-grid{
+    display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:32px;
+  }
+  .why-card{
+    background:#fff;border:1px solid var(--line);border-radius:18px;padding:28px 24px;
+  }
+  .why-card .n{
+    font-family:"Playfair Display",serif;font-size:36px;font-weight:900;color:var(--tomato);line-height:1;margin-bottom:14px;
+  }
+  .why-card h4{font-size:17px;margin:0 0 10px;line-height:1.4;color:var(--char)}
+  .why-card p{font-size:13.5px;line-height:1.85;color:#5a4d45;margin:0}
+
+  /* Strengths split */
+  .strength{
+    display:grid;grid-template-columns:1fr 1fr;gap:32px;margin-top:32px;
+  }
+  .str-card{
+    background:#fff;border:1px solid var(--line);border-radius:22px;padding:36px 32px;
+    position:relative;
+  }
+  .str-card .tag{
+    display:inline-block;font-family:"Montserrat",sans-serif;font-weight:800;font-size:10px;
+    letter-spacing:.2em;color:var(--tomato);background:var(--cream);
+    padding:5px 12px;border-radius:999px;margin-bottom:14px;
+  }
+  .str-card h3{
+    font-family:"Playfair Display","Noto Sans JP",serif;font-size:22px;margin:0 0 12px;line-height:1.35;
+  }
+  .str-card ul{margin:14px 0 0;padding-left:18px}
+  .str-card li{font-size:13.5px;line-height:1.85;color:#4a3f38;margin:6px 0}
+
+  /* Roadmap */
+  .roadmap{
+    display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:32px;
+    counter-reset:phase;
+  }
+  .rm-card{
+    background:#fff;border:1px solid var(--line);border-radius:20px;padding:26px;
+    position:relative;
+  }
+  .rm-card .ph{
+    font-family:"Montserrat",sans-serif;font-weight:800;font-size:11px;
+    letter-spacing:.22em;color:var(--tomato);
+  }
+  .rm-card h4{font-size:18px;margin:8px 0 10px;line-height:1.4}
+  .rm-card p{font-size:13.5px;line-height:1.85;color:#4a3f38;margin:0}
+  .rm-card.now{background:var(--tomato);color:#fff;border-color:var(--tomato)}
+  .rm-card.now .ph{color:#ffd9c8}
+  .rm-card.now p{color:#ffe8de}
+
+  /* CTA band */
+  .cn-cta{
+    background:var(--char);color:#fff;padding:80px 0;text-align:center;
+  }
+  .cn-cta h2{
+    font-family:"Playfair Display","Noto Sans JP",serif;
+    font-size:clamp(26px,3.4vw,40px);margin:0 0 14px;line-height:1.3;
+  }
+  .cn-cta h2 em{color:var(--cheese);font-style:italic}
+  .cn-cta p{color:#d8cdc4;max-width:520px;margin:0 auto 28px;font-size:15px;line-height:1.85}
+  .cn-cta .btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+  .cn-cta .btn-primary,.cn-cta .btn-ghost{
+    padding:14px 26px;border-radius:999px;font-weight:800;letter-spacing:.06em;
+    font-family:"Montserrat",sans-serif;text-decoration:none;font-size:13px;
+    transition:transform .25s ease,background .25s ease;display:inline-flex;align-items:center;gap:6px;
+  }
+  .cn-cta .btn-primary{background:var(--tomato);color:#fff}
+  .cn-cta .btn-primary:hover{transform:translateY(-2px);background:#c72f3c}
+  .cn-cta .btn-ghost{background:transparent;color:#fff;border:1.5px solid #fff}
+  .cn-cta .btn-ghost:hover{background:#fff;color:var(--char)}
+
+  /* Responsive */
+  @media (max-width:960px){
+    .stores-grid,.why-grid,.roadmap{grid-template-columns:1fr 1fr}
+    .strength{grid-template-columns:1fr}
+  }
+  @media (max-width:768px){
+    .cn-hero{padding:130px 0 70px}
+    .cn-hero .stats{gap:14px}
+    .cn-hero .stat{padding:14px 16px;min-width:140px}
+    .cn-hero .stat .num{font-size:34px}
+    .cn-sec{padding:64px 0}
+    .stores-grid,.why-grid,.roadmap{grid-template-columns:1fr;gap:18px}
+    .str-card{padding:26px 22px}
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="container nav-inner">
+    <a href="../index.html#top" class="brand">
+      <span class="brand-mark" style="background-image:url('../assets/3d/vsw-logo-animated.gif')"></span>
+      <span>VSW</span>
+    </a>
+    <div class="nav-links">
+      <a href="../index.html#products">Products</a>
+      <a href="../index.html#story">Story</a>
+      <a href="../kurichiland.html">3D World</a>
+      <a href="../press/index.html">Press</a>
+      <a href="../blog/index.html">Blog</a>
+      <a href="index.html">Business</a>
+      <a href="china.html" class="active" style="color:var(--tomato)">China</a>
+      <a href="../index.html#shop">Shop</a>
+    </div>
+    <a href="../index.html#contact" class="cta">Contact →</a>
+    <button class="nav-toggle" aria-label="menu">☰</button>
+  </div>
+</nav>
+
+<!-- ===== HERO ===== -->
+<section class="cn-hero">
+  <div class="container">
+    <span class="eyebrow">CHINA BUSINESS</span>
+    <h1>#クリチ は、<br>すでに中国で<br><em>愛されはじめている。</em></h1>
+    <p class="lead">
+      日本発のクリームチーズバーガー「#クリチ」は、構想や計画ではなく、<strong>すでに中国で実出店中</strong>です。
+      上海・長沙の3拠点で、現地のお客様に「酷莉琪 吃了吗？（クリチ食べた？）」の世界観をお届けしています。
+    </p>
+    <div class="stats">
+      <div class="stat">
+        <div class="num">3</div>
+        <div class="lbl">STORES IN OPERATION</div>
+      </div>
+      <div class="stat">
+        <div class="num">2</div>
+        <div class="lbl">CITIES (上海 / 長沙)</div>
+      </div>
+      <div class="stat">
+        <div class="num">1</div>
+        <div class="lbl">LOCAL PARTNER</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== ALREADY IN CHINA — Stores ===== -->
+<section class="cn-sec">
+  <div class="container">
+    <span class="sec-eyebrow">ALREADY IN CHINA</span>
+    <h2>すでに、現地で<em>動いている</em>3拠点。</h2>
+    <p class="lead">
+      「これから検討する」ではなく、「すでにお客様の手に届いている」。
+      中国本土の主要都市・大型商業施設にて、実際の店舗・POPUPとして稼働中です。
+    </p>
+
+    <div class="stores-grid">
+      <article class="store-card">
+        <div class="ph"><img src="../assets/china/shanghai.jpg" alt="上海の常設店舗 #クリチ"></div>
+        <div class="body">
+          <span class="badge">SHANGHAI / 上海</span>
+          <h3>上海・常設キオスク店舗</h3>
+          <div class="loc">PERMANENT STORE</div>
+          <p class="desc">大型商業施設内に構えた常設店舗。木造の屋根とメニューPOPで世界観を再現し、現地のお客様に「日本ブランド」としての安心感と新鮮さを届けています。</p>
+        </div>
+      </article>
+
+      <article class="store-card">
+        <div class="ph"><img src="../assets/china/changsha.jpg" alt="長沙のPOPUP #クリチ"></div>
+        <div class="body">
+          <span class="badge">CHANGSHA / 長沙</span>
+          <h3>長沙・POPUPストア</h3>
+          <div class="loc">POPUP STORE</div>
+          <p class="desc">赤白ストライプテントとKURICHIキャラクターで彩られたPOPUP。「#酷莉琪 吃了吗？（クリチ食べた？）」の現地ローカライズ表現で、若年層を中心に強いSNS反応を獲得しています。</p>
+        </div>
+      </article>
+
+      <article class="store-card">
+        <div class="ph"><img src="../assets/china/changsha-aeon.jpg" alt="長沙イオンモールのGOT #KURICHI POPUP"></div>
+        <div class="body">
+          <span class="badge">CHANGSHA AEON / 長沙イオン</span>
+          <h3>長沙イオンモール内 POPUP</h3>
+          <div class="loc">SHOPPING MALL POPUP</div>
+          <p class="desc">日系大型ショッピングモール「イオン」の中央通路に出店。「GOT #KURICHI」の赤いPOPUPで、買い物客の動線上で確実に手に取られる場所での展開を実現しています。</p>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ===== WHY CHINA ===== -->
+<section class="cn-sec alt">
+  <div class="container">
+    <span class="sec-eyebrow">WHY CHINA</span>
+    <h2>なぜ、いま<em>中国市場</em>なのか。</h2>
+    <p class="lead">
+      中国の食市場は、若年層を中心に「見た目が華やかでSNSで共有したくなるスイーツ・パン」への関心が爆発的に高まっています。「#クリチ」はその波と高い親和性を持つブランドです。
+    </p>
+
+    <div class="why-grid">
+      <div class="why-card">
+        <div class="n">01</div>
+        <h4>SNS映えスイーツの需要急拡大</h4>
+        <p>小紅書・抖音を中心に、断面が美しい・色彩豊かなスイーツがバズの中心に。「#クリチ」の鮮やかな断面はそのままシェア素材として機能します。</p>
+      </div>
+      <div class="why-card">
+        <div class="n">02</div>
+        <h4>"日本ブランド" への信頼</h4>
+        <p>食品衛生・品質・パッケージング・世界観構築まで一貫した日本発ブランドへの信頼は依然として高く、中価格帯スイーツ市場で優位性があります。</p>
+      </div>
+      <div class="why-card">
+        <div class="n">03</div>
+        <h4>大型モール展開と相性が良い形態</h4>
+        <p>キオスク／POPUP／常設店舗いずれの形態でも展開可能な省スペース設計。商業施設側からの引き合いが続いている理由でもあります。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== STRENGTH ===== -->
+<section class="cn-sec">
+  <div class="container">
+    <span class="sec-eyebrow">OUR STRENGTH</span>
+    <h2>計画ではなく、<em>現地で動いている</em>体制。</h2>
+    <p class="lead">
+      私たちの中国事業の最大の強みは、<strong>すでに実店舗が稼働している</strong>こと、そして<strong>現地のビジネスパートナーが伴走している</strong>ことです。机上の構想ではなく、現地の生活者と接点を持ちながら育てています。
+    </p>
+
+    <div class="strength">
+      <div class="str-card">
+        <span class="tag">VSW INC.</span>
+        <h3>ブランド・商品・世界観を担う</h3>
+        <ul>
+          <li>商品開発・レシピ監修</li>
+          <li>ブランドガイドライン提供（色・タイポ・キャラクター）</li>
+          <li>現地ローカライズ表現の監修（"酷莉琪 吃了吗？" 等）</li>
+          <li>SNS／メディア露出の世界観統一</li>
+        </ul>
+      </div>
+      <div class="str-card">
+        <span class="tag">LOCAL PARTNER</span>
+        <h3>株式会社トーシン — 現地オペレーションの要</h3>
+        <ul>
+          <li>食品輸入・衛生・現地法規対応</li>
+          <li>商業施設・モール側との交渉・契約</li>
+          <li>現地スタッフ採用・店舗オペレーション</li>
+          <li>現地マーケティング・PR実行</li>
+        </ul>
+        <p style="margin-top:14px;font-size:13px;color:#5a4d45">
+          → <a href="../press/toshin-partnership.html" style="color:var(--tomato);text-decoration:underline">パートナーシップ締結のプレスリリースを読む</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== ROADMAP ===== -->
+<section class="cn-sec alt">
+  <div class="container">
+    <span class="sec-eyebrow">ROADMAP</span>
+    <h2>3フェーズで広げる、<em>中国での #クリチ。</em></h2>
+
+    <div class="roadmap">
+      <div class="rm-card now">
+        <div class="ph">PHASE 1 — NOW</div>
+        <h4>主要都市での認知形成</h4>
+        <p>上海・長沙の3拠点で店舗・POPUPを稼働中。SNS反応とリアル接点を蓄積し、ブランド体験の現地解像度を高めるフェーズ。</p>
+      </div>
+      <div class="rm-card">
+        <div class="ph">PHASE 2 — NEXT</div>
+        <h4>常設店舗・限定店舗の拡張</h4>
+        <p>主要モールでの常設ポップアップ／フラッグシップ的な限定店舗へ展開。ライセンス・コラボ商品の現地展開も視野に入れる。</p>
+      </div>
+      <div class="rm-card">
+        <div class="ph">PHASE 3 — FUTURE</div>
+        <h4>複数都市展開 ＋ EC本格稼働</h4>
+        <p>現地ライセンシーと連携した複数都市展開、抖音／天猫／京東などEC本格稼働。中国全土で「#クリチ」が選ばれる状態へ。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CTA ===== -->
+<section class="cn-cta">
+  <div class="container">
+    <h2>中国市場で、<em>#クリチ</em>と組みたい方へ。</h2>
+    <p>
+      商業施設出店・ライセンシング・コラボレーション・OEM／ODM・取材依頼など、
+      中国事業に関するお問い合わせはお気軽にご連絡ください。
+    </p>
+    <div class="btns">
+      <a href="../index.html#contact" class="btn-primary">お問い合わせ →</a>
+      <a href="../press/toshin-partnership.html" class="btn-ghost">パートナーシップを読む</a>
+      <a href="../press/index.html" class="btn-ghost">Press Release 一覧</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="foot-bottom" style="border:0;padding:30px 0">
+      <span>© 2026 Vsw Inc. / #KURICHI. All rights reserved.</span>
+      <span><a href="../index.html#top" style="color:var(--cheese)">← トップに戻る</a></span>
+    </div>
+  </div>
+</footer>
+
+<script src="../script.js"></script>
+</body>
+</html>
