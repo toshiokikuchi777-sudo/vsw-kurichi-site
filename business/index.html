@@ -21,6 +21,42 @@
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&family=Playfair+Display:ital,wght@0,700;1,700&family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../style.css">
 <link rel="stylesheet" href="business.css">
+<style>
+  /* Password gate for 価格・サポート / 運用シミュレーション */
+  .locked-content{display:none}
+  .locked-content.is-unlocked{display:revert}
+  .lock-gate{
+    max-width:560px;margin:24px auto 0;padding:28px 24px;border-radius:16px;
+    background:linear-gradient(180deg,#fffaf0 0%,#fff 100%);
+    border:1px solid rgba(26,22,19,.12);
+    box-shadow:0 20px 40px -28px rgba(26,22,19,.2);
+    text-align:center
+  }
+  .lock-gate .lock-ico{font-size:28px;display:block;margin-bottom:6px}
+  .lock-gate h3{margin:0 0 6px;font-size:17px;letter-spacing:.02em}
+  .lock-gate p{margin:0 0 16px;font-size:13.5px;color:#6b5e54;line-height:1.7}
+  .lock-gate form{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
+  .lock-gate input[type="password"]{
+    flex:1;min-width:200px;max-width:280px;
+    padding:12px 14px;border-radius:10px;
+    border:1px solid rgba(26,22,19,.18);
+    font-size:15px;background:#fff;
+    font-family:inherit;
+  }
+  .lock-gate input[type="password"]:focus{outline:2px solid var(--tomato);outline-offset:1px;border-color:transparent}
+  .lock-gate button{
+    padding:12px 22px;border:0;border-radius:10px;
+    background:var(--tomato);color:#fff;font-weight:700;font-size:14.5px;
+    cursor:pointer;letter-spacing:.04em;transition:transform .15s, opacity .15s
+  }
+  .lock-gate button:hover{transform:translateY(-1px);opacity:.92}
+  .lock-gate .lock-msg{margin-top:12px;font-size:13px;color:#c0392b;min-height:1em}
+  .lock-gate.is-hidden{display:none}
+  .lock-relock{
+    display:inline-block;margin-top:10px;font-size:12px;color:#6b5e54;
+    text-decoration:underline;cursor:pointer;background:none;border:0;padding:0;font-family:inherit
+  }
+</style>
 </head>
 <body>
 
@@ -333,26 +369,41 @@
     <div class="biz-head">
       <span class="biz-kicker">PRICING & SUPPORT</span>
       <h2>価格・サポート体制</h2>
+      <p class="biz-sub">具体的な納品価格・サポート内容は、パスワード入力後に表示されます。</p>
     </div>
 
-    <div class="price-grid">
-      <div class="price-card">
-        <h3>導入条件</h3>
-        <dl class="price-dl">
-          <dt>店頭販売価格</dt><dd>600〜700円（参考）</dd>
-          <dt>納品価格</dt><dd>店頭販売価格の<strong>約65%</strong></dd>
-          <dt>納品単位</dt><dd>50個（冷凍便）</dd>
-          <dt>保存期間</dt><dd>約3ヶ月（−18℃以下）</dd>
-          <dt>推奨冷凍庫</dt><dd>REMACOM製 80Lクラス</dd>
-        </dl>
-      </div>
-      <div class="price-card support">
-        <h3>充実のサポート</h3>
-        <ul class="support-list">
-          <li><strong>動画・POPサポート</strong><br>POP・メニューカード、ブランド紹介動画・食べ方動画など</li>
-          <li><strong>カスタム対応</strong><br>店舗専用POP、カスタム動画、限定フレーバー開発、イベント連動など、別途お見積りで対応可能</li>
-          <li><strong>送料無料</strong><br>100個以上のご発注で送料無料</li>
-        </ul>
+    <!-- Gate (unlocks both #pricing and #simulation) -->
+    <div class="lock-gate" id="biz-lock-gate" data-gate-for="biz-private">
+      <span class="lock-ico">🔒</span>
+      <h3>このコンテンツはパスワード保護されています</h3>
+      <p>「価格・サポート体制」および「運用シミュレーション」は<br>パートナー様・商談先様向けの情報です。<br>パスワードは担当者までお問い合わせください。</p>
+      <form id="biz-lock-form" autocomplete="off">
+        <input type="password" id="biz-lock-input" placeholder="パスワード" aria-label="パスワード" required>
+        <button type="submit">表示する</button>
+      </form>
+      <div class="lock-msg" id="biz-lock-msg" aria-live="polite"></div>
+    </div>
+
+    <div class="locked-content" data-gate="biz-private">
+      <div class="price-grid">
+        <div class="price-card">
+          <h3>導入条件</h3>
+          <dl class="price-dl">
+            <dt>店頭販売価格</dt><dd>600〜700円（参考）</dd>
+            <dt>納品価格</dt><dd>店頭販売価格の<strong>約65%</strong></dd>
+            <dt>納品単位</dt><dd>50個（冷凍便）</dd>
+            <dt>保存期間</dt><dd>約3ヶ月（−18℃以下）</dd>
+            <dt>推奨冷凍庫</dt><dd>REMACOM製 80Lクラス</dd>
+          </dl>
+        </div>
+        <div class="price-card support">
+          <h3>充実のサポート</h3>
+          <ul class="support-list">
+            <li><strong>動画・POPサポート</strong><br>POP・メニューカード、ブランド紹介動画・食べ方動画など</li>
+            <li><strong>カスタム対応</strong><br>店舗専用POP、カスタム動画、限定フレーバー開発、イベント連動など、別途お見積りで対応可能</li>
+            <li><strong>送料無料</strong><br>100個以上のご発注で送料無料</li>
+          </ul>
+        </div>
       </div>
     </div>
   </div>
@@ -365,8 +416,10 @@
       <span class="biz-kicker">REVENUE SIMULATION</span>
       <h2>📊 運用シミュレーション</h2>
       <p class="biz-sub">渋谷・原宿・代官山など、SNS映えを重視した立地での試算です。</p>
+      <p class="biz-sub" data-gate-locked-msg style="color:#c0392b;font-weight:700">🔒 この試算は「価格・サポート体制」と同じパスワードで表示されます。</p>
     </div>
 
+    <div class="locked-content" data-gate="biz-private">
     <h3 class="sim-subh">想定条件（前提）</h3>
     <div class="sim-cond">
       <div><span>販売価格</span><strong>¥600（税込）</strong></div>
@@ -441,6 +494,7 @@
       <p><strong>商品ロスゼロ・人件費負担軽・自動販促動画で安定収益。</strong><br>
       1日40個ペースで年 約250万円の利益が期待でき、カフェ・バー・クラブ併設店舗での導入価値が非常に高いモデルです。</p>
     </div>
+    </div><!-- /.locked-content -->
   </div>
 </section>
 
@@ -667,6 +721,69 @@ document.querySelector('.nav-toggle')?.addEventListener('click',function(){
   links.style.gap='14px';
   links.style.borderBottom='1px solid rgba(0,0,0,.08)';
 });
+
+// ===== Password gate for 価格・サポート & 運用シミュレーション =====
+// Password: vsw2026  (変更するには以下のハッシュ値を新しい値に差し替えてください)
+// ハッシュ生成: python3 -c "import hashlib; print(hashlib.sha256('新パスワード'.encode()).hexdigest())"
+(function(){
+  var GATE_ID='biz-private';
+  var HASH='4e023c09fc9e3c096f0d5a28671d62f8c803241e60902770da5910591a7b6c2d'; // sha256('vsw2026')
+  var STORE_KEY='vsw-biz-unlocked';
+
+  async function sha256(str){
+    var buf=new TextEncoder().encode(str);
+    var hashBuf=await crypto.subtle.digest('SHA-256',buf);
+    return Array.from(new Uint8Array(hashBuf)).map(b=>b.toString(16).padStart(2,'0')).join('');
+  }
+  function unlock(){
+    document.querySelectorAll('[data-gate="'+GATE_ID+'"]').forEach(function(el){el.classList.add('is-unlocked');});
+    var gate=document.getElementById('biz-lock-gate'); if(gate) gate.classList.add('is-hidden');
+    document.querySelectorAll('[data-gate-locked-msg]').forEach(function(el){el.style.display='none';});
+    // Add relock button after simulation section
+    if(!document.getElementById('biz-relock')){
+      var simSec=document.getElementById('simulation');
+      if(simSec){
+        var btn=document.createElement('button');
+        btn.id='biz-relock';btn.className='lock-relock';btn.type='button';
+        btn.textContent='🔒 再ロックする';
+        btn.addEventListener('click',function(){
+          sessionStorage.removeItem(STORE_KEY);
+          location.reload();
+        });
+        var wrap=document.createElement('div');
+        wrap.style.textAlign='center';wrap.style.padding='8px 0 24px';
+        wrap.appendChild(btn);
+        simSec.appendChild(wrap);
+      }
+    }
+  }
+  // Auto-unlock if previously authenticated in this session
+  if(sessionStorage.getItem(STORE_KEY)==='1'){ unlock(); }
+
+  var form=document.getElementById('biz-lock-form');
+  var input=document.getElementById('biz-lock-input');
+  var msg=document.getElementById('biz-lock-msg');
+  if(form && input){
+    form.addEventListener('submit',async function(e){
+      e.preventDefault();
+      var val=input.value.trim();
+      if(!val) return;
+      if(!window.crypto || !window.crypto.subtle){
+        if(msg) msg.textContent='お使いのブラウザはサポートされていません（HTTPS経由でアクセスしてください）';
+        return;
+      }
+      var h=await sha256(val);
+      if(h===HASH){
+        sessionStorage.setItem(STORE_KEY,'1');
+        if(msg){msg.style.color='#2e8b57';msg.textContent='✅ 認証されました';}
+        setTimeout(unlock,200);
+      }else{
+        if(msg){msg.style.color='#c0392b';msg.textContent='❌ パスワードが違います';}
+        input.value='';input.focus();
+      }
+    });
+  }
+})();
 </script>
 </body>
 </html>

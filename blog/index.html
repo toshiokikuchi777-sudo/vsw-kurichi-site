@@ -11,6 +11,18 @@
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&family=Playfair+Display:ital,wght@0,700;1,700&family=Montserrat:wght@400;600;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../style.css">
 <link rel="stylesheet" href="../press/press.css">
+<style>
+  /* Blog list thumbnails */
+  .press-list .press-entry{grid-template-columns:110px 110px 1fr auto;gap:22px}
+  .pe-thumb{width:110px;height:110px;border-radius:12px;overflow:hidden;background:#f3ead8;flex-shrink:0}
+  .pe-thumb img{width:100%;height:100%;object-fit:cover;display:block}
+  @media (max-width:768px){
+    .press-list .press-entry{grid-template-columns:84px 1fr;gap:14px;align-items:start}
+    .press-list .pe-thumb{width:84px;height:84px;grid-row:span 2;border-radius:10px}
+    .press-list .pe-date{grid-column:2}
+    .press-list .pe-arrow{display:none}
+  }
+</style>
 </head>
 <body>
 
@@ -46,6 +58,7 @@
     <div class="press-list-inner">
 
       <a href="panfes-2026-yokohama.html" class="press-entry">
+        <div class="pe-thumb"><img src="../assets/blog/panfes-2026-yokohama/img-01.png" alt="" loading="lazy"></div>
         <div class="pe-date">2026.03.06</div>
         <div>
           <span class="pe-cat">EVENT</span>
@@ -55,6 +68,7 @@
       </a>
 
       <a href="bronze-award-2025.html" class="press-entry">
+        <div class="pe-thumb"><img src="../assets/blog/bronze-award-2025/img-01.webp" alt="" loading="lazy"></div>
         <div class="pe-date">2025.03.10</div>
         <div>
           <span class="pe-cat">AWARD</span>
@@ -64,6 +78,7 @@
       </a>
 
       <a href="panfes-2025-yokohama.html" class="press-entry">
+        <div class="pe-thumb"><img src="../assets/blog/panfes-2025-yokohama/img-01.webp" alt="" loading="lazy"></div>
         <div class="pe-date">2025.02.21</div>
         <div>
           <span class="pe-cat">EVENT</span>
@@ -73,6 +88,7 @@
       </a>
 
       <a href="kurichi-land-project.html" class="press-entry">
+        <div class="pe-thumb"><img src="../assets/blog/kurichi-land-project/img-01.webp" alt="" loading="lazy"></div>
         <div class="pe-date">2025.01.23</div>
         <div>
           <span class="pe-cat">METAVERSE</span>
@@ -82,6 +98,7 @@
       </a>
 
       <a href="game-jam-meijijingu.html" class="press-entry">
+        <div class="pe-thumb"><img src="../assets/blog/game-jam-meijijingu/img-01.webp" alt="" loading="lazy"></div>
         <div class="pe-date">2025.01.23</div>
         <div>
           <span class="pe-cat">METAVERSE</span>
@@ -91,6 +108,7 @@
       </a>
 
       <a href="sandbox-possibilities.html" class="press-entry">
+        <div class="pe-thumb"><img src="../assets/blog/sandbox-possibilities/img-01.gif" alt="" loading="lazy"></div>
         <div class="pe-date">2025.01.15</div>
         <div>
           <span class="pe-cat">METAVERSE</span>
@@ -100,6 +118,7 @@
       </a>
 
       <a href="nyc-tshirt.html" class="press-entry">
+        <div class="pe-thumb"><img src="../assets/blog/nyc-tshirt/img-01.webp" alt="" loading="lazy"></div>
         <div class="pe-date">2024.12.04</div>
         <div>
           <span class="pe-cat">MERCH</span>
