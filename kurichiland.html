@@ -132,7 +132,29 @@
     font-size:clamp(28px,4vw,42px);margin:0 0 12px;line-height:1.2;letter-spacing:-.01em;
   }
   .kll-video h2 em{color:var(--cheese);font-style:italic}
-  .kll-video p{color:rgba(255,255,255,.75);font-size:14px;letter-spacing:.06em;margin:0 0 36px}
+  .kll-video p{color:rgba(255,255,255,.75);font-size:14px;letter-spacing:.06em;margin:0 0 36px;line-height:1.9}
+  .kll-creator{
+    display:inline-flex;align-items:center;gap:14px;
+    background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);
+    padding:10px 20px 10px 12px;border-radius:999px;margin-bottom:28px;
+    text-decoration:none;transition:background .25s ease,transform .25s ease;
+  }
+  .kll-creator:hover{background:rgba(255,255,255,.1);transform:translateY(-2px)}
+  .kll-creator-avatar{
+    width:40px;height:40px;border-radius:50%;
+    background:linear-gradient(135deg,#ff0000,#cc0000);
+    display:flex;align-items:center;justify-content:center;
+    font-size:18px;color:#fff;flex-shrink:0;
+    box-shadow:0 4px 12px rgba(255,0,0,.3);
+  }
+  .kll-creator-meta{text-align:left;line-height:1.35}
+  .kll-creator-label{
+    font-family:"Montserrat",sans-serif;font-size:10px;letter-spacing:.18em;
+    color:rgba(255,255,255,.55);font-weight:700;display:block;
+  }
+  .kll-creator-name{
+    font-weight:800;color:#fff;font-size:14px;letter-spacing:.02em;
+  }
   .kll-video-frame{
     position:relative;aspect-ratio:16/9;max-width:960px;margin:0 auto;
     border-radius:18px;overflow:hidden;
@@ -326,16 +348,27 @@
     </div>
   </section>
 
-  <!-- Video Showcase -->
+  <!-- Featured by YouTuber -->
   <section class="kll-video">
     <div class="kll-video-inner kll-reveal">
-      <span class="kll-video-tag">▶ WATCH THE WORLD</span>
-      <h2>動画で見る<em> KURICHI LAND</em></h2>
-      <p>ボクセルの街を駆けめぐる、小さな大冒険を先取り。</p>
+      <span class="kll-video-tag">★ AS FEATURED ON YOUTUBE</span>
+      <h2>YouTuber <em>「いまから！THE SANDBOX」</em>さんに<br>取り上げていただきました</h2>
+      <p>
+        The Sandbox専門YouTuber「いまから！THE SANDBOX」さんの動画で、<br>
+        KURICHI LAND をプレイ＆紹介していただきました。<br>
+        ボクセルの街を実際に歩き回る様子を、ぜひご覧ください。
+      </p>
+      <a href="https://www.youtube.com/watch?v=AONTEyQknnY" target="_blank" rel="noopener" class="kll-creator">
+        <span class="kll-creator-avatar">▶</span>
+        <span class="kll-creator-meta">
+          <span class="kll-creator-label">FEATURED BY</span>
+          <span class="kll-creator-name">いまから！THE SANDBOX</span>
+        </span>
+      </a>
       <div class="kll-video-frame">
         <iframe
           src="https://www.youtube.com/embed/AONTEyQknnY?rel=0&modestbranding=1"
-          title="KURICHI LAND - The Sandbox ワールド紹介"
+          title="いまから！THE SANDBOX - KURICHI LAND プレイ動画"
           loading="lazy"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
           allowfullscreen></iframe>
