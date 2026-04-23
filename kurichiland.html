@@ -24,6 +24,8 @@
 <link rel="icon" type="image/gif" href="assets/favicon.gif">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="dns-prefetch" href="https://www.youtube.com">
+<link rel="dns-prefetch" href="https://i.ytimg.com">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&family=Playfair+Display:ital,wght@0,700;1,700&family=Montserrat:wght@400;600;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 <style>
@@ -103,6 +105,42 @@
   .kll-section-dark .kll-title em{color:var(--cheese)}
   .kll-subtitle{color:#5a4d45;font-size:15px;line-height:1.9;max-width:640px;margin:0 auto}
   .kll-section-dark .kll-subtitle{color:rgba(255,255,255,.85)}
+
+  /* Video Showcase */
+  .kll-video{
+    position:relative;background:#0f0f1a;padding:80px 0;overflow:hidden;
+  }
+  .kll-video::before{
+    content:"";position:absolute;inset:0;
+    background:
+      radial-gradient(circle at 30% 40%,rgba(247,204,67,.1),transparent 50%),
+      radial-gradient(circle at 70% 60%,rgba(230,57,70,.12),transparent 50%);
+    pointer-events:none;
+  }
+  .kll-video-inner{
+    position:relative;z-index:2;max-width:1000px;margin:0 auto;padding:0 24px;text-align:center;
+  }
+  .kll-video-tag{
+    display:inline-block;padding:7px 18px;border-radius:999px;
+    background:rgba(230,57,70,.2);color:#ff6b7a;
+    border:1px solid rgba(230,57,70,.4);
+    font-family:"Montserrat",sans-serif;font-weight:800;font-size:12px;letter-spacing:.14em;
+    margin-bottom:18px;
+  }
+  .kll-video h2{
+    font-family:"Playfair Display","Noto Sans JP",serif;font-weight:900;color:#fff;
+    font-size:clamp(28px,4vw,42px);margin:0 0 12px;line-height:1.2;letter-spacing:-.01em;
+  }
+  .kll-video h2 em{color:var(--cheese);font-style:italic}
+  .kll-video p{color:rgba(255,255,255,.75);font-size:14px;letter-spacing:.06em;margin:0 0 36px}
+  .kll-video-frame{
+    position:relative;aspect-ratio:16/9;max-width:960px;margin:0 auto;
+    border-radius:18px;overflow:hidden;
+    box-shadow:0 40px 80px -20px rgba(0,0,0,.7),0 0 0 1px rgba(255,255,255,.08);
+  }
+  .kll-video-frame iframe{
+    position:absolute;inset:0;width:100%;height:100%;border:0;display:block;
+  }
 
   /* World Overview */
   .kll-world{
@@ -285,6 +323,23 @@
     <div class="kll-scroll">
       <span>SCROLL</span>
       <span>↓</span>
+    </div>
+  </section>
+
+  <!-- Video Showcase -->
+  <section class="kll-video">
+    <div class="kll-video-inner kll-reveal">
+      <span class="kll-video-tag">▶ WATCH THE WORLD</span>
+      <h2>動画で見る<em> KURICHI LAND</em></h2>
+      <p>ボクセルの街を駆けめぐる、小さな大冒険を先取り。</p>
+      <div class="kll-video-frame">
+        <iframe
+          src="https://www.youtube.com/embed/AONTEyQknnY?rel=0&modestbranding=1"
+          title="KURICHI LAND - The Sandbox ワールド紹介"
+          loading="lazy"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowfullscreen></iframe>
+      </div>
     </div>
   </section>
 
