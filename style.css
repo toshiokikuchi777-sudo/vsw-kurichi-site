@@ -109,13 +109,27 @@ h2.section-title em{
 }
 .brand{
   display:flex;align-items:center;gap:10px;font-weight:900;
-  font-family:"Montserrat",sans-serif;letter-spacing:.12em;
+  font-family:"Montserrat",sans-serif;letter-spacing:.08em;
 }
 .brand-mark{
   width:38px;height:38px;
   background:url("assets/logo-vsw.png") center/contain no-repeat;
 }
 .brand-mark.invert{filter:brightness(0) invert(1)}
+.brand-text{display:inline-flex;align-items:baseline;gap:8px;line-height:1}
+.brand-text .brand-hash{
+  font-style:normal;font-family:"Montserrat",sans-serif;font-weight:800;
+  font-size:.82em;letter-spacing:.06em;color:var(--tomato);
+  padding:3px 8px;border:1.5px solid var(--tomato);border-radius:999px;
+  background:rgba(230,57,70,.06);white-space:nowrap;
+}
+@media(max-width:640px){
+  .brand-text{gap:6px}
+  .brand-text .brand-hash{font-size:.72em;padding:2px 7px}
+}
+@media(max-width:420px){
+  .brand-text .brand-hash{display:none}
+}
 .nav-links{display:flex;gap:28px;font-size:14px;font-weight:500}
 .nav-links a{position:relative;padding:6px 2px}
 .nav-links a::after{
@@ -1174,3 +1188,87 @@ iframe{max-width:100%}
   .harichi-spot-body h3{font-size:22px}
   .harichi-spot-specs{grid-template-columns:repeat(2,1fr);gap:14px}
 }
+
+/* ========== MOBILE READABILITY PASS (2026.04.23) ========== */
+/* 全体的にスマホで "読みやすく" するための微調整 */
+@media (max-width:768px){
+  body{font-size:15px;line-height:1.85}
+  p{line-height:1.85}
+  .section-lead{font-size:15px;line-height:1.85}
+  .eyebrow{font-size:11px;letter-spacing:.2em}
+  h2.section-title{line-height:1.25}
+  h2.section-title em{display:inline-block}
+
+  /* Nav: brand + #KURICHI バッジのバランス */
+  .nav-inner{padding-left:16px;padding-right:16px;gap:8px}
+  .brand{font-size:15px;letter-spacing:.06em;gap:8px}
+
+  /* News grid: スマホで 1 行のタイトルがギュッと潰れないように */
+  .news-grid{gap:14px}
+  .news-item{padding:14px;gap:12px;border-radius:14px}
+  .news-thumb{width:76px;height:76px;flex-shrink:0}
+  .news-title{font-size:14px;line-height:1.6;font-weight:700}
+  .news-date{font-size:11px;letter-spacing:.08em}
+  .news-cat{font-size:10px;padding:2px 8px}
+  .news-arrow{display:none}
+
+  /* Press/Blog リストのタイトル可読性 */
+  .press-list .press-entry{padding:16px;gap:14px}
+  .pe-title{font-size:15px;line-height:1.65;font-weight:700}
+  .pe-cat{font-size:10px;padding:3px 9px;letter-spacing:.1em}
+  .pe-date{font-size:11px;letter-spacing:.08em}
+
+  /* Blog/Press 記事本文 */
+  .press-body-inner p{font-size:15px;line-height:1.95;color:#3a3330}
+  .press-body-inner li{font-size:15px;line-height:1.9}
+  .press-body-inner h2{font-size:22px;line-height:1.4;margin-top:2em}
+  .press-body-inner h3{font-size:17px;line-height:1.45}
+  .press-body-inner blockquote{font-size:14.5px;line-height:1.85;padding:12px 18px}
+  .press-article-header{padding:90px 0 24px}
+  .press-article-header h1{font-size:24px;line-height:1.5;letter-spacing:-.005em}
+  .press-meta-row{font-size:11px;gap:10px}
+  .press-article-hero{margin-top:18px}
+
+  /* Product cards のタイトルとタグ */
+  .pc-title{font-size:15px;line-height:1.45}
+  .pc-desc{font-size:13px;line-height:1.75}
+
+  /* Shop cards 文字大きめ */
+  .shop-card h3{font-size:17px;line-height:1.45}
+  .shop-card p{font-size:13.5px;line-height:1.8}
+
+  /* Hero section 密度調整 */
+  .hero-content{padding:72px 0 32px}
+
+  /* タップターゲット確保：リンクは最低 44px 相当 */
+  .nav-links a{padding:10px 4px}
+  .press-related-card{padding:18px}
+  .press-related-card .t{font-size:14.5px;line-height:1.65}
+
+  /* Footer 読みやすく */
+  footer{font-size:13px;line-height:1.8}
+  .foot-col h5{font-size:12px;letter-spacing:.15em}
+  .foot-col a{padding:3px 0;display:inline-block}
+}
+
+@media (max-width:480px){
+  body{font-size:14.5px}
+  .press-body-inner p,.press-body-inner li{font-size:14.5px;line-height:1.95}
+  .press-body-inner h2{font-size:20px}
+  .press-article-header h1{font-size:22px;line-height:1.5}
+  .news-item{padding:12px;gap:10px}
+  .news-thumb{width:68px;height:68px}
+  .news-title{font-size:13.5px}
+  .pe-title{font-size:14.5px}
+  .press-list .press-entry{padding:14px}
+
+  /* セクション間の呼吸 */
+  section{padding:56px 0}
+  .section-head{gap:10px}
+
+  /* ランクアップボックス スマホ調整 */
+  .rank-up-box{padding:18px 18px}
+  .rank-up-box p{font-size:14px}
+  .silver-hero-badge{font-size:11px;padding:6px 14px}
+}
+/* ========== /MOBILE READABILITY PASS ========== */
