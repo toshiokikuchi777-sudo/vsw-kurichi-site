@@ -87,6 +87,10 @@
 
   /* Parts + package gallery */
   .hari-gallery{display:grid;grid-template-columns:1.4fr 1fr;gap:24px;align-items:start}
+  .hari-parts-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  .hari-parts-grid img{width:100%;border-radius:14px;object-fit:cover;aspect-ratio:4/3;display:block}
+  .hari-parts-grid img:nth-child(4),.hari-parts-grid img:nth-child(5){grid-column:span 1}
+  @media(max-width:768px){.hari-parts-grid{grid-template-columns:1fr 1fr}}
   .hari-gallery img{width:100%;border-radius:18px;display:block;box-shadow:0 20px 50px -20px rgba(0,0,0,.2)}
   .hari-gallery-stack{display:grid;gap:24px}
 
@@ -383,12 +387,12 @@
         ハリチくんの本体（赤×白ストライプ）と、表情を変えられる顔パーツ4種。すべてが一枚の厚紙から切り出せるよう丁寧に設計されています。
       </p>
     </div>
-    <div class="hari-gallery">
-      <img src="assets/harichi/hero.webp" alt="ハリチくん 紙パーツシート（全52ピース）" loading="lazy">
-      <div class="hari-gallery-stack">
-        <img src="assets/harichi/portrait-1.webp" alt="ハリチくん パッケージ裏面 / 注意書き">
-        <img src="assets/harichi/wide-2.webp" alt="shi-gu-mi＋ 商品情報・注意書き">
-      </div>
+    <div class="hari-parts-grid">
+      <img src="assets/business/image-19-1.jpg" alt="ハリチくん 完成品" loading="lazy">
+      <img src="assets/business/image-19-2.jpg" alt="si-gu-mi パッケージ" loading="lazy">
+      <img src="assets/business/image-19-3.jpg" alt="si-gu-mi パーツシート" loading="lazy">
+      <img src="assets/business/image-19-4.jpg" alt="si-gu-mi 組み立て図" loading="lazy">
+      <img src="assets/business/image-19-5.jpg" alt="si-gu-mi パーツ詳細" loading="lazy">
     </div>
   </div>
 </section>
