@@ -108,14 +108,18 @@
   .proof-text{font-size:13px;line-height:1.8;color:var(--cb-mute);margin:0}
 
   /* グローバル */
-  .globe-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px}
-  .globe-card{background:linear-gradient(180deg,#1a1927 0%,#11101a 100%);border:1px solid var(--cb-line);border-radius:16px;overflow:hidden}
-  .globe-card .img{aspect-ratio:16/10;background:#222;overflow:hidden}
-  .globe-card .img img{width:100%;height:100%;object-fit:cover}
+  .globe-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+  .globe-card{background:linear-gradient(180deg,#1a1927 0%,#11101a 100%);border:1px solid var(--cb-line);border-radius:16px;overflow:hidden;transition:transform .3s ease,box-shadow .3s ease}
+  .globe-card:hover{transform:translateY(-6px);box-shadow:0 24px 48px -20px rgba(0,0,0,.5)}
+  .globe-card .img{aspect-ratio:4/3;background:#222;overflow:hidden}
+  .globe-card .img img{width:100%;height:100%;object-fit:cover;transition:transform .6s ease}
+  .globe-card:hover .img img{transform:scale(1.05)}
   .globe-card .txt{padding:22px 24px}
-  .globe-flag{font-family:"Montserrat",sans-serif;font-size:10px;letter-spacing:.18em;color:var(--cb-accent);text-transform:uppercase;margin-bottom:6px}
-  .globe-city{font-size:20px;font-weight:900;color:#fff;margin:0 0 6px}
+  .globe-flag{font-family:"Montserrat",sans-serif;font-size:10px;letter-spacing:.18em;color:var(--cb-accent);text-transform:uppercase;margin-bottom:6px;display:inline-block;background:rgba(255,59,83,.15);padding:4px 10px;border-radius:999px}
+  .globe-city{font-size:20px;font-weight:900;color:#fff;margin:6px 0 4px}
+  .globe-loc{font-family:"Montserrat",sans-serif;font-size:10px;letter-spacing:.16em;color:#a7a2b3;text-transform:uppercase;margin-bottom:10px}
   .globe-desc{font-size:13px;color:var(--cb-mute);line-height:1.7;margin:0}
+  @media(max-width:900px){.globe-grid{grid-template-columns:1fr!important}}
 
   /* メタバース */
   .mv-grid{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start}
@@ -372,23 +376,34 @@
 
     <div class="globe-grid">
       <div class="globe-card">
-        <div class="img"><img src="assets/hero-got-kurichi.jpg" alt="上海"></div>
+        <div class="img"><img src="assets/china/shanghai.jpg" alt="上海・常設キオスク店舗" loading="lazy"></div>
         <div class="txt">
-          <div class="globe-flag">🇨🇳 Shanghai 上海</div>
-          <div class="globe-city">金橋太茂商業広場</div>
-          <p class="globe-desc">中国本土における旗艦出店。SNSで話題化し、週末は長蛇の列。</p>
+          <div class="globe-flag">🇨🇳 SHANGHAI / 上海</div>
+          <div class="globe-city">上海・常設キオスク店舗</div>
+          <div class="globe-loc">PERMANENT STORE</div>
+          <p class="globe-desc">大型商業施設内に構えた常設店舗。木造の屋根とメニューPOPで世界観を再現し、現地のお客様に「日本ブランド」としての安心感と新鮮さを届けています。</p>
         </div>
       </div>
       <div class="globe-card">
-        <div class="img"><img src="assets/meta-meijijingu.jpg" alt="長沙"></div>
+        <div class="img"><img src="assets/china/changsha.jpg" alt="長沙・POPUPストア" loading="lazy"></div>
         <div class="txt">
-          <div class="globe-flag">🇨🇳 Changsha 長沙</div>
-          <div class="globe-city">イオンモール長沙 / 凯德壹中心</div>
-          <p class="globe-desc">中部中国の要衝都市で、現地パートナー「威风志作（WeiFeng ZhiZuo）」と連携。</p>
+          <div class="globe-flag">🇨🇳 CHANGSHA / 長沙</div>
+          <div class="globe-city">長沙・POPUPストア</div>
+          <div class="globe-loc">POPUP STORE</div>
+          <p class="globe-desc">赤白ストライプテントとKURICHIキャラクターで彩られたPOPUP。「#酷莉琪 吃了吗？」の現地ローカライズ表現で、若年層を中心に強いSNS反応を獲得しています。</p>
+        </div>
+      </div>
+      <div class="globe-card">
+        <div class="img"><img src="assets/china/changsha-aeon.jpg" alt="長沙イオンモール内POPUP" loading="lazy"></div>
+        <div class="txt">
+          <div class="globe-flag">🇨🇳 CHANGSHA AEON / 長沙イオン</div>
+          <div class="globe-city">長沙イオンモール内 POPUP</div>
+          <div class="globe-loc">SHOPPING MALL POPUP</div>
+          <p class="globe-desc">日系大型ショッピングモール「イオン」の中央通路に出店。「GOT #KURICHI」の赤いPOPUPで、買い物客の動線上で確実に手に取られる展開を実現しています。</p>
         </div>
       </div>
     </div>
-    <p style="margin-top:28px;color:var(--cb-mute);font-size:13px;line-height:1.8;max-width:860px">「威风志作（WeiFeng ZhiZuo）」との戦略的パートナーシップにより、日本のIP体験をそのまま現地へ輸出。国境や言語を問わず愛されるビジュアルと味が、海外市場での展開を後押ししています。</p>
+    <p style="margin-top:28px;color:var(--cb-mute);font-size:13px;line-height:1.8;max-width:860px">株式会社トーシンとの戦略的パートナーシップにより、日本のIP体験をそのまま現地へ輸出。国境や言語を問わず愛されるビジュアルと味が、海外市場での展開を後押ししています。<a href="business/china.html" style="color:var(--cb-accent);margin-left:10px">中国事業の詳細 →</a></p>
   </div>
 </section>
 
