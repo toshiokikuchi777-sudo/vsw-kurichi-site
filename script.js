@@ -95,22 +95,35 @@ if (toggle && links) {
   backdrop.addEventListener('click', closeMenu);
 }
 
-// ===== Newsletter form (stub) =====
-document.querySelectorAll('form.form-row').forEach(f => {
-  f.addEventListener('submit', ev => {
-    ev.preventDefault();
-    const btn = f.querySelector('button');
-    const input = f.querySelector('input');
-    const original = btn.innerText;
-    btn.innerText = 'Thanks! ✓';
-    btn.disabled = true;
-    if (input) input.value = '';
-    setTimeout(() => {
-      btn.innerText = original;
-      btn.disabled = false;
-    }, 3200);
-  });
-});
+// ===== Contact modal =====
+(() => {
+  const modal  = document.getElementById('contactModal');
+  const openBtn= document.getElementById('contactOpenBtn');
+  const closeBtn=document.getElementById('contactModalClose');
+  const bg     = document.getElementById('contactModalBg');
+  const form   = document.getElementById('contactForm');
+  if (!modal) return;
+
+  const open  = () => { modal.hidden = false; document.body.classList.add('modal-open'); };
+  const close = () => { modal.hidden = true;  document.body.classList.remove('modal-open'); };
+
+  if (openBtn)  openBtn.addEventListener('click', open);
+  if (closeBtn) closeBtn.addEventListener('click', close);
+  if (bg)       bg.addEventListener('click', close);
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') close(); });
+
+  if (form) {
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+      const name    = form.querySelector('#cf-name').value.trim();
+      const email   = form.querySelector('#cf-email').value.trim();
+      const subject = form.querySelector('#cf-subject').value.trim() || 'お問い合わせ';
+      const body    = form.querySelector('#cf-body').value.trim();
+      const mailto  = `mailto:info@vsw.co.jp?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(`お名前: ${name}\nメール: ${email}\n\n${body}`)}`;
+      window.location.href = mailto;
+    });
+  }
+})();
 
 // ===== Close mobile menu on nav link click =====
 // links は openMenu で body に移動されているので document.querySelectorAll で取得

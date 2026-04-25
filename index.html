@@ -703,13 +703,10 @@
 <!-- CONTACT / SOCIAL -->
 <section id="contact">
   <div class="container reveal">
-    <div class="eyebrow" style="color:#fff">GET #KURICHI</div>
-    <h2>Got <em>#KURICHI?</em></h2>
-    <p>新メニュー情報・催事出店・メタバースイベントを、いちばん早くお届け。<br>メールアドレスを登録して、クリチの次のひと口をお見逃しなく。</p>
-    <form class="form-row">
-      <input type="email" placeholder="your@email.com" required aria-label="email">
-      <button type="submit">Subscribe →</button>
-    </form>
+    <div class="eyebrow" style="color:#fff">CONTACT</div>
+    <h2>お問い合わせ</h2>
+    <p>出店・コラボ・取材・仕入れのご相談など、<br>お気軽にお問い合わせください。</p>
+    <button class="contact-open-btn" id="contactOpenBtn">お問い合わせはこちら →</button>
 
     <div class="social" aria-label="social links">
       <a href="https://www.tiktok.com/@kurichi.jp" target="_blank" rel="noopener" class="ico-tiktok">
@@ -914,6 +911,39 @@
   </div>
 </div>
 
-<script src="script.js?v=20260425"></script>
+<!-- Contact Modal -->
+<div class="c-modal" id="contactModal" hidden aria-modal="true" role="dialog" aria-label="お問い合わせ">
+  <div class="c-modal-bg" id="contactModalBg"></div>
+  <div class="c-modal-body">
+    <button class="c-modal-close" id="contactModalClose" aria-label="閉じる">×</button>
+    <div class="c-modal-head">
+      <div class="eyebrow" style="color:var(--tomato)">CONTACT</div>
+      <h3>お問い合わせ</h3>
+      <p class="c-modal-sub">出店・コラボ・取材・仕入れなど、下記フォームよりご連絡ください。</p>
+    </div>
+    <form class="c-form" id="contactForm">
+      <div class="c-field">
+        <label for="cf-name">お名前 <span>*</span></label>
+        <input type="text" id="cf-name" name="name" placeholder="山田 太郎" required>
+      </div>
+      <div class="c-field">
+        <label for="cf-email">メールアドレス <span>*</span></label>
+        <input type="email" id="cf-email" name="email" placeholder="your@email.com" required>
+      </div>
+      <div class="c-field">
+        <label for="cf-subject">件名</label>
+        <input type="text" id="cf-subject" name="subject" placeholder="出店のご相談">
+      </div>
+      <div class="c-field">
+        <label for="cf-body">お問い合わせ内容 <span>*</span></label>
+        <textarea id="cf-body" name="body" rows="5" placeholder="お気軽にご記入ください。" required></textarea>
+      </div>
+      <button type="submit" class="c-submit">送信する →</button>
+    </form>
+    <p class="c-modal-email">または直接メールで：<a href="mailto:info@vsw.co.jp">info@vsw.co.jp</a></p>
+  </div>
+</div>
+
+<script src="script.js?v=20260425b"></script>
 </body>
 </html>
