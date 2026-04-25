@@ -921,7 +921,12 @@
       <h3>お問い合わせ</h3>
       <p class="c-modal-sub">出店・コラボ・取材・仕入れなど、下記フォームよりご連絡ください。</p>
     </div>
-    <form class="c-form" id="contactForm">
+    <form class="c-form" id="contactForm" action="https://api.web3forms.com/submit" method="POST">
+      <input type="hidden" name="access_key" value="e0966916-21fc-4283-bafc-bb85c4255d8f">
+      <input type="hidden" name="subject" value="【VSWサイト】お問い合わせ">
+      <input type="hidden" name="from_name" value="VSW #クリチ サイト">
+      <!-- スパム対策ハニーポット -->
+      <input type="checkbox" name="botcheck" style="display:none">
       <div class="c-field">
         <label for="cf-name">お名前 <span>*</span></label>
         <input type="text" id="cf-name" name="name" placeholder="山田 太郎" required>
@@ -931,15 +936,18 @@
         <input type="email" id="cf-email" name="email" placeholder="your@email.com" required>
       </div>
       <div class="c-field">
-        <label for="cf-subject">件名</label>
-        <input type="text" id="cf-subject" name="subject" placeholder="出店のご相談">
+        <label for="cf-inquiry">お問い合わせ種別</label>
+        <input type="text" id="cf-inquiry" name="inquiry" placeholder="出店のご相談・コラボ・取材など">
       </div>
       <div class="c-field">
         <label for="cf-body">お問い合わせ内容 <span>*</span></label>
-        <textarea id="cf-body" name="body" rows="5" placeholder="お気軽にご記入ください。" required></textarea>
+        <textarea id="cf-body" name="message" rows="5" placeholder="お気軽にご記入ください。" required></textarea>
       </div>
-      <button type="submit" class="c-submit">送信する →</button>
+      <button type="submit" class="c-submit" id="contactSubmitBtn">送信する →</button>
     </form>
+    <div class="c-success" id="contactSuccess" hidden>
+      <p>✅ 送信しました！<br>2〜3営業日以内にご返信いたします。</p>
+    </div>
     <p class="c-modal-email">または直接メールで：<a href="mailto:info@vsw.co.jp">info@vsw.co.jp</a></p>
   </div>
 </div>

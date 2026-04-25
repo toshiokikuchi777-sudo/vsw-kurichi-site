@@ -95,13 +95,15 @@ if (toggle && links) {
   backdrop.addEventListener('click', closeMenu);
 }
 
-// ===== Contact modal =====
+// ===== Contact modal (Web3Forms) =====
 (() => {
-  const modal  = document.getElementById('contactModal');
-  const openBtn= document.getElementById('contactOpenBtn');
-  const closeBtn=document.getElementById('contactModalClose');
-  const bg     = document.getElementById('contactModalBg');
-  const form   = document.getElementById('contactForm');
+  const modal    = document.getElementById('contactModal');
+  const openBtn  = document.getElementById('contactOpenBtn');
+  const closeBtn = document.getElementById('contactModalClose');
+  const bg       = document.getElementById('contactModalBg');
+  const form     = document.getElementById('contactForm');
+  const submitBtn= document.getElementById('contactSubmitBtn');
+  const success  = document.getElementById('contactSuccess');
   if (!modal) return;
 
   const open  = () => { modal.hidden = false; document.body.classList.add('modal-open'); };
@@ -113,14 +115,28 @@ if (toggle && links) {
   document.addEventListener('keydown', e => { if (e.key === 'Escape') close(); });
 
   if (form) {
-    form.addEventListener('submit', e => {
+    form.addEventListener('submit', async e => {
       e.preventDefault();
-      const name    = form.querySelector('#cf-name').value.trim();
-      const email   = form.querySelector('#cf-email').value.trim();
-      const subject = form.querySelector('#cf-subject').value.trim() || 'お問い合わせ';
-      const body    = form.querySelector('#cf-body').value.trim();
-      const mailto  = `mailto:info@vsw.co.jp?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(`お名前: ${name}\nメール: ${email}\n\n${body}`)}`;
-      window.location.href = mailto;
+      submitBtn.textContent = '送信中…';
+      submitBtn.disabled = true;
+
+      const data = new FormData(form);
+      try {
+        const res  = await fetch('https://api.web3forms.com/submit', { method:'POST', body: data });
+        const json = await res.json();
+        if (json.success) {
+          form.hidden = true;
+          if (success) success.hidden = false;
+        } else {
+          alert('送信に失敗しました。直接 info@vsw.co.jp へご連絡ください。');
+          submitBtn.textContent = '送信する →';
+          submitBtn.disabled = false;
+        }
+      } catch {
+        alert('通信エラーが発生しました。直接 info@vsw.co.jp へご連絡ください。');
+        submitBtn.textContent = '送信する →';
+        submitBtn.disabled = false;
+      }
     });
   }
 })();

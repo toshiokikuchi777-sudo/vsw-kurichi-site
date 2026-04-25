@@ -560,6 +560,8 @@ body.modal-open{overflow:hidden}
 .c-modal-email{margin:18px 0 0;text-align:center;font-size:13px;color:#8a7a6e}
 .c-modal-email a{color:var(--tomato);font-weight:700;text-decoration:none}
 .c-modal-email a:hover{text-decoration:underline}
+.c-success{text-align:center;padding:32px 0;font-size:16px;line-height:1.8;color:var(--char)}
+.c-success[hidden]{display:none!important}
 
 @media(max-width:600px){
   .c-modal{padding:0;align-items:flex-end}
