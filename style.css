@@ -72,10 +72,16 @@ h2.section-title em{
   border-bottom:0;
 }
 .nav-inner{
-  backdrop-filter:saturate(140%) blur(14px);
-  -webkit-backdrop-filter:saturate(140%) blur(14px);
+  position:relative;
   background:rgba(255,247,230,.5);
   border-radius:0;
+}
+/* backdrop-filterを疑似要素に移してfixed子要素の座標ズレを防ぐ */
+.nav-inner::before{
+  content:'';
+  position:absolute;inset:0;z-index:-1;
+  backdrop-filter:saturate(140%) blur(14px);
+  -webkit-backdrop-filter:saturate(140%) blur(14px);
 }
 /* Nickname marquee under nav */
 .nav-marquee{
