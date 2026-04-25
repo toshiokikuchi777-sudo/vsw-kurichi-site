@@ -58,12 +58,20 @@ const links = document.querySelector('.nav-links');
 // 旧バージョンのインラインスタイルをリセット
 if (links) links.removeAttribute('style');
 if (toggle && links) {
+  // nav-links の元の位置を記憶（閉じる時に戻す）
+  const linksParent = links.parentElement;
+  const linksNext   = links.nextSibling;
+
   // バックドロップ生成
   const backdrop = document.createElement('div');
   backdrop.className = 'nav-backdrop';
   document.body.appendChild(backdrop);
 
   const openMenu = () => {
+    // backdrop-filter 親の影響を回避するため body 直下へ移動
+    if (links.parentElement !== document.body) {
+      document.body.appendChild(links);
+    }
     links.classList.add('is-open');
     backdrop.classList.add('is-open');
     document.body.style.overflow = 'hidden';
@@ -74,6 +82,11 @@ if (toggle && links) {
     backdrop.classList.remove('is-open');
     document.body.style.overflow = '';
     toggle.textContent = '☰';
+    // 元の位置へ戻す
+    if (links.parentElement === document.body) {
+      linksNext ? linksParent.insertBefore(links, linksNext)
+                : linksParent.appendChild(links);
+    }
   };
 
   toggle.addEventListener('click', () => {
@@ -100,16 +113,10 @@ document.querySelectorAll('form.form-row').forEach(f => {
 });
 
 // ===== Close mobile menu on nav link click =====
-document.querySelectorAll('.nav-links a').forEach(a => {
-  a.addEventListener('click', () => {
-    if (window.innerWidth <= 960) {
-      const links = document.querySelector('.nav-links');
-      const backdrop = document.querySelector('.nav-backdrop');
-      const toggle = document.querySelector('.nav-toggle');
-      if (links) links.classList.remove('is-open');
-      if (backdrop) backdrop.classList.remove('is-open');
-      if (toggle) toggle.textContent = '☰';
-      document.body.style.overflow = '';
-    }
-  });
+// links は openMenu で body に移動されているので document.querySelectorAll で取得
+document.addEventListener('click', (e) => {
+  const a = e.target.closest('.nav-links a');
+  if (!a || window.innerWidth > 960) return;
+  const toggle = document.querySelector('.nav-toggle');
+  if (toggle) toggle.click(); // closeMenu を呼ぶ
 });
