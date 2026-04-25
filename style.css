@@ -821,13 +821,17 @@ footer{background:var(--char);color:#c9bdb0;padding:70px 0 30px;font-size:13px}
   .kl-left h2{font-size:clamp(34px,9vw,44px)}
   .kl-ctas{flex-direction:column;align-items:stretch}
   .kl-play,.kl-reset{width:100%;justify-content:center;text-align:center}
-  .kl-right{aspect-ratio:4/3;max-width:420px;margin:0 auto}
+  .kl-right{aspect-ratio:unset;height:260px;max-width:100%;margin:0 auto}
+  .kl-right-card{border-radius:18px}
   .kl-award{position:static;transform:none;margin-top:16px;max-width:none;text-align:center}
-  .kl-character{width:44%;bottom:-16px;right:4%}
+  .kl-character{display:none}
   .bg-scatter{display:none}
 
-  /* Products phone */
-  .product-grid{grid-template-columns:1fr;gap:14px}
+  /* Products phone — 2 columns */
+  .product-grid{grid-template-columns:repeat(2,1fr);gap:10px}
+  .card-title{font-size:15px}
+  .card-desc{font-size:12px}
+  .card-body{padding:12px 12px 14px}
 
   /* Clips phone - 1 column */
   .clips-grid{grid-template-columns:1fr;gap:12px}
@@ -1156,14 +1160,21 @@ iframe{max-width:100%}
 
 @media (max-width:900px){
   .taste-hero{grid-template-columns:1fr;min-height:auto}
-  .taste-hero-copy{padding:50px 30px 30px;text-align:center}
-  .taste-hero-copy h2{font-size:42px}
-  .taste-hero-img{min-height:260px;aspect-ratio:16/9}
+  .taste-hero-copy{padding:40px 24px 28px;text-align:center;order:2}
+  .taste-hero-copy h2{font-size:38px;margin-bottom:14px}
+  .taste-hero-copy p{font-size:14px;line-height:1.9}
+  .taste-hero-img{min-height:280px;aspect-ratio:4/3;order:1}
   .taste-thaw{padding:50px 20px}
   .taste-thaw-title{font-size:18px;margin-bottom:26px}
   .taste-thaw-grid{grid-template-columns:1fr;gap:30px}
   .taste-thaw-label{font-size:17px;margin-bottom:12px}
   .taste-thaw-tag{width:60px;height:60px;font-size:9px}
+}
+@media (max-width:480px){
+  .taste-hero-copy{padding:28px 20px 24px}
+  .taste-hero-copy h2{font-size:32px;margin-bottom:10px}
+  .taste-hero-copy p{font-size:13.5px;line-height:1.85}
+  .taste-hero-img{min-height:240px;aspect-ratio:3/2}
 }
 
 /* ===== Harichi Spotlight ===== */
