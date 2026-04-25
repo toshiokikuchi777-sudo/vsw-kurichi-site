@@ -93,6 +93,31 @@ document.querySelectorAll('form.form-row').forEach(f => {
   });
 });
 
+// ===== Force metaverse video autoplay (mobile autoplay fallback) =====
+(() => {
+  const v = document.getElementById('metaverse-video');
+  if (!v) return;
+  v.muted = true;
+  v.setAttribute('muted', '');
+  v.setAttribute('playsinline', '');
+  const tryPlay = () => {
+    const p = v.play();
+    if (p && typeof p.catch === 'function') p.catch(() => {});
+  };
+  v.addEventListener('loadedmetadata', tryPlay);
+  v.addEventListener('canplay', tryPlay);
+  if (v.readyState >= 2) tryPlay();
+  if ('IntersectionObserver' in window) {
+    const vio = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) tryPlay(); });
+    }, { threshold: 0.1 });
+    vio.observe(v);
+  }
+  ['touchstart', 'click', 'scroll'].forEach(ev => {
+    document.addEventListener(ev, tryPlay, { once: true, passive: true });
+  });
+})();
+
 // ===== Close mobile menu on nav link click =====
 document.querySelectorAll('.nav-links a').forEach(a => {
   a.addEventListener('click', () => {
