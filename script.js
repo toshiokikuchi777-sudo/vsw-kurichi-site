@@ -52,28 +52,34 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
   });
 });
 
-// ===== Mobile menu toggle =====
+// ===== Mobile menu drawer =====
 const toggle = document.querySelector('.nav-toggle');
 const links = document.querySelector('.nav-links');
-if (toggle) {
+// 旧バージョンのインラインスタイルをリセット
+if (links) links.removeAttribute('style');
+if (toggle && links) {
+  // バックドロップ生成
+  const backdrop = document.createElement('div');
+  backdrop.className = 'nav-backdrop';
+  document.body.appendChild(backdrop);
+
+  const openMenu = () => {
+    links.classList.add('is-open');
+    backdrop.classList.add('is-open');
+    document.body.style.overflow = 'hidden';
+    toggle.textContent = '✕';
+  };
+  const closeMenu = () => {
+    links.classList.remove('is-open');
+    backdrop.classList.remove('is-open');
+    document.body.style.overflow = '';
+    toggle.textContent = '☰';
+  };
+
   toggle.addEventListener('click', () => {
-    const open = links.style.display === 'flex';
-    if (open) {
-      links.removeAttribute('style');
-    } else {
-      Object.assign(links.style, {
-        display: 'flex',
-        flexDirection: 'column',
-        position: 'absolute',
-        top: '68px',
-        left: '0',
-        right: '0',
-        background: 'rgba(255,247,230,.98)',
-        padding: '18px 24px',
-        borderBottom: '1px solid rgba(26,22,19,.12)'
-      });
-    }
+    links.classList.contains('is-open') ? closeMenu() : openMenu();
   });
+  backdrop.addEventListener('click', closeMenu);
 }
 
 // ===== Newsletter form (stub) =====
@@ -93,35 +99,17 @@ document.querySelectorAll('form.form-row').forEach(f => {
   });
 });
 
-// ===== Force metaverse video autoplay (mobile autoplay fallback) =====
-(() => {
-  const v = document.getElementById('metaverse-video');
-  if (!v) return;
-  v.muted = true;
-  v.setAttribute('muted', '');
-  v.setAttribute('playsinline', '');
-  const tryPlay = () => {
-    const p = v.play();
-    if (p && typeof p.catch === 'function') p.catch(() => {});
-  };
-  v.addEventListener('loadedmetadata', tryPlay);
-  v.addEventListener('canplay', tryPlay);
-  if (v.readyState >= 2) tryPlay();
-  if ('IntersectionObserver' in window) {
-    const vio = new IntersectionObserver((entries) => {
-      entries.forEach(e => { if (e.isIntersecting) tryPlay(); });
-    }, { threshold: 0.1 });
-    vio.observe(v);
-  }
-  ['touchstart', 'click', 'scroll'].forEach(ev => {
-    document.addEventListener(ev, tryPlay, { once: true, passive: true });
-  });
-})();
-
 // ===== Close mobile menu on nav link click =====
 document.querySelectorAll('.nav-links a').forEach(a => {
   a.addEventListener('click', () => {
-    const links = document.querySelector('.nav-links');
-    if (links && window.innerWidth <= 960) links.removeAttribute('style');
+    if (window.innerWidth <= 960) {
+      const links = document.querySelector('.nav-links');
+      const backdrop = document.querySelector('.nav-backdrop');
+      const toggle = document.querySelector('.nav-toggle');
+      if (links) links.classList.remove('is-open');
+      if (backdrop) backdrop.classList.remove('is-open');
+      if (toggle) toggle.textContent = '☰';
+      document.body.style.overflow = '';
+    }
   });
 });
