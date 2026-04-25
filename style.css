@@ -511,9 +511,9 @@ body.modal-open{overflow:hidden}
   .p-modal-header h3{font-size:22px;padding-right:40px}
   .p-modal-header .sub{font-size:14px}
   .p-modal-header .p-price{position:static;display:inline-block;margin-top:10px}
-  /* 画像を横長に小さく */
+  /* 画像エリア */
   .p-modal-grid{grid-template-columns:1fr;gap:14px}
-  .p-vis{aspect-ratio:16/9;max-height:190px;border-radius:12px}
+  .p-vis{aspect-ratio:4/3;max-height:260px;border-radius:12px}
   .p-detail h4{font-size:11px}
   .p-detail li{font-size:13px}
   .p-taste{padding:14px 16px}
