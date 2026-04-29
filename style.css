@@ -578,8 +578,8 @@ body.modal-open{overflow:hidden}
   /* ボトムシート型モーダル */
   .p-modal{padding:0;align-items:flex-end}
   .p-modal-body{
-    padding:20px 20px 40px;
-    max-height:88vh;
+    padding:24px 20px 40px;
+    max-height:90vh;
     border-radius:22px 22px 0 0;
     width:100%;max-width:100%;
     animation:modal-sheet-in .32s cubic-bezier(.32,1,.28,1);
@@ -589,21 +589,21 @@ body.modal-open{overflow:hidden}
   .p-modal-body::before{
     content:'';display:block;
     width:40px;height:4px;border-radius:2px;
-    background:#ddd;margin:0 auto 18px;
+    background:#ddd;margin:0 auto 20px;
   }
   .p-modal-close{top:18px;right:16px}
-  .p-modal-header h3{font-size:22px;padding-right:40px}
-  .p-modal-header .sub{font-size:14px}
+  .p-modal-header h3{font-size:24px;padding-right:40px}
+  .p-modal-header .sub{font-size:15px}
   .p-modal-header .p-price{position:static;display:inline-block;margin-top:10px}
   /* 画像エリア */
-  .p-modal-grid{grid-template-columns:1fr;gap:14px}
-  .p-vis{aspect-ratio:4/3;max-height:260px;border-radius:12px}
-  .p-detail h4{font-size:11px}
-  .p-detail li{font-size:13px}
-  .p-taste{padding:14px 16px}
-  .p-taste p{font-size:14px;line-height:1.7}
-  .p-allergy{font-size:11.5px;padding:12px 14px}
-  .p-note{font-size:11.5px}
+  .p-modal-grid{grid-template-columns:1fr;gap:20px}
+  .p-vis{aspect-ratio:1/1;max-height:320px;border-radius:14px}
+  .p-detail h4{font-size:12px}
+  .p-detail li{font-size:14px}
+  .p-taste{padding:16px 18px}
+  .p-taste p{font-size:15px;line-height:1.8}
+  .p-allergy{font-size:12px;padding:14px 16px}
+  .p-note{font-size:12px}
 }
 
 /* ---------- Story ---------- */
