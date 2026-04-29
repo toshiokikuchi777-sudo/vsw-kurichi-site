@@ -127,6 +127,30 @@
   .eat-mode h4{margin:0 0 6px;font-size:15px;color:var(--tomato);font-weight:800}
   .eat-mode p{font-size:13px;line-height:1.7;margin:0;color:var(--char)}
 
+  .product-showcase-grid{
+    display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:24px;
+  }
+  .product-showcase-item{
+    text-align:center;border-radius:16px;overflow:hidden;
+  }
+  .product-showcase-item img{
+    width:100%;aspect-ratio:1;object-fit:cover;display:block;border-radius:12px;margin-bottom:16px;
+  }
+  .product-showcase-item .label{
+    font-size:12px;font-weight:800;color:var(--tomato);letter-spacing:.08em;margin-bottom:8px;
+    font-family:"Montserrat","Noto Sans JP",sans-serif;
+  }
+  .product-showcase-item h4{
+    margin:0 0 8px;font-family:"Playfair Display","Noto Sans JP",serif;font-size:18px;font-weight:700;color:var(--char);
+  }
+  .product-showcase-item p{
+    font-size:13px;line-height:1.75;color:#5a4d45;margin:0;
+  }
+
+  @media (max-width:720px){
+    .product-showcase-grid{grid-template-columns:1fr;gap:16px}
+  }
+
   .summary-box{
     max-width:880px;margin:36px auto 0;
     background:linear-gradient(135deg,var(--cheese),var(--tomato));
@@ -283,6 +307,9 @@
           <p>トースターで温めると、外カリッ・中とろり。</p>
         </div>
       </div>
+      <div class="about-hero-img" style="margin:28px 0 0">
+        <img src="assets/kurichiphoto/thaw-hero.jpg" alt="thaw-hero">
+      </div>
     </section>
 
     <!-- FEATURES -->
@@ -301,6 +328,26 @@
       <p>
         さらに、<strong>米粉シフォン#クリチ</strong>のように、素材や形状を変えた派生商品にも展開できます。
       </p>
+      <div class="product-showcase-grid">
+        <div class="product-showcase-item">
+          <img src="assets/kurichiphoto/photo-1.jpg" alt="NY #KURICHI SIGNATURE">
+          <div class="label">SIGNATURE</div>
+          <h4>NY #KURICHI</h4>
+          <p>竹炭ストライプ<br>ブラリ絡むビターなレモン。特製クリームチーズにアーモンドとクルミの香はしいプラリネをサンド。</p>
+        </div>
+        <div class="product-showcase-item">
+          <img src="assets/kurichiphoto/photo-2.jpg" alt="赤レンガ #KURICHI LIMITED">
+          <div class="label">LIMITED</div>
+          <h4>赤レンガ #KURICHI</h4>
+          <p>ビーツストライプ<br>祝祭のオレンジプラリネ。鮮やかな赤系バンズと、柑橘の明るい酸味のコントラスト。</p>
+        </div>
+        <div class="product-showcase-item">
+          <img src="assets/kurichiphoto/photo-3.jpg" alt="米粉 #SOICHI HEALTHY">
+          <div class="label">HEALTHY</div>
+          <h4>米粉 #SOICHI</h4>
+          <p>紅茶香る米粉バンズ<br>豆乳ベースの軽やかなクリームチーズ「ソイチ」と大粒いちごを使用した次世代ヘルシースイーツ。</p>
+        </div>
+      </div>
     </section>
 
     <!-- BUSINESS -->
