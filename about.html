@@ -151,6 +151,16 @@
     .product-showcase-grid{grid-template-columns:1fr;gap:16px}
   }
 
+  .strengths-split{
+    display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:center;
+  }
+  .strengths-img{border-radius:16px;overflow:hidden;box-shadow:0 18px 40px -22px rgba(0,0,0,.25)}
+  .strengths-img img{width:100%;height:100%;aspect-ratio:4/5;object-fit:cover;display:block}
+  @media (max-width:720px){
+    .strengths-split{grid-template-columns:1fr;gap:18px}
+    .strengths-img img{aspect-ratio:4/3}
+  }
+
   .summary-box{
     max-width:880px;margin:36px auto 0;
     background:linear-gradient(135deg,var(--cheese),var(--tomato));
@@ -420,21 +430,25 @@
     <section class="about-section">
       <span class="sec-tag">OUR STRENGTHS</span>
       <h2>Vsw株式会社の<em>強み</em></h2>
-      <p>
-        Vsw株式会社の強みは、<strong>食品・企画・イベント・デザイン・デジタル</strong>を組み合わせて展開できる点です。
-      </p>
-      <p>
-        #クリチは、冷凍スイーツとしての商品力に加え、<strong>見た目のインパクト、SNSでの話題性、コラボのしやすさ、デジタル展開との相性</strong>を持っています。
-      </p>
-      <p>
-        そのため、Vsw株式会社は、
-      </p>
-      <p style="font-size:17px;font-weight:700;color:var(--tomato);text-align:center;padding:18px;background:var(--cream);border-radius:12px;margin-top:14px">
-        食をきっかけに人が集まり、話題が生まれ、<br>ブランド体験が広がる会社
-      </p>
-      <p style="text-align:center;margin-top:14px">として成長を目指しています。</p>
-      <div class="about-hero-img" style="margin:24px 0 0">
-        <img src="assets/story-kirara.jpg" alt="Vsw株式会社の強み">
+      <div class="strengths-split">
+        <div class="strengths-text">
+          <p>
+            Vsw株式会社の強みは、<strong>食品・企画・イベント・デザイン・デジタル</strong>を組み合わせて展開できる点です。
+          </p>
+          <p>
+            #クリチは、冷凍スイーツとしての商品力に加え、<strong>見た目のインパクト、SNSでの話題性、コラボのしやすさ、デジタル展開との相性</strong>を持っています。
+          </p>
+          <p>
+            そのため、Vsw株式会社は、
+          </p>
+          <p style="font-size:17px;font-weight:700;color:var(--tomato);text-align:center;padding:18px;background:var(--cream);border-radius:12px;margin-top:14px">
+            食をきっかけに人が集まり、話題が生まれ、<br>ブランド体験が広がる会社
+          </p>
+          <p style="text-align:center;margin-top:14px">として成長を目指しています。</p>
+        </div>
+        <div class="strengths-img">
+          <img src="assets/story-kirara.jpg" alt="Vsw株式会社の強み">
+        </div>
       </div>
     </section>
 
