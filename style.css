@@ -143,6 +143,14 @@ h2.section-title em{
   transform:scaleX(0);transform-origin:right;transition:transform .35s ease;
 }
 .nav-links a:hover::after{transform:scaleX(1);transform-origin:left}
+.nav-links .nav-link-branch{display:inline-flex;align-items:center;gap:6px;color:var(--tomato);font-weight:700}
+.nav-links .branch-tag{
+  font-style:normal;font-family:"Montserrat",sans-serif;font-weight:800;
+  font-size:9px;letter-spacing:.12em;
+  background:var(--tomato);color:#fff;
+  padding:2px 6px;border-radius:999px;
+  line-height:1.1;
+}
 .cta{
   display:inline-flex;align-items:center;gap:8px;
   padding:10px 18px;border-radius:999px;
