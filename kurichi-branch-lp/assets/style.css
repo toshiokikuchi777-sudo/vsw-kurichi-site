@@ -231,6 +231,24 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
   transform: scaleX(1);
   transform-origin: left;
 }
+.nav-links .nav-link-top {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--tomato);
+  font-weight: 700;
+  border: 1.5px solid var(--tomato);
+  border-radius: var(--radius-pill);
+  padding: 4px 12px;
+  background: rgba(230, 57, 70, 0.06);
+  transition: background .2s, color .2s, transform .2s;
+}
+.nav-links .nav-link-top::after { display: none; }
+.nav-links .nav-link-top:hover {
+  background: var(--tomato);
+  color: #fff;
+  transform: translateY(-1px);
+}
 .nav-cta {
   display: inline-flex;
   align-items: center;
