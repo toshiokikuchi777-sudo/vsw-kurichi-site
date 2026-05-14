@@ -172,6 +172,33 @@
   }
   .module-card p{font-size:13.5px;line-height:1.85;color:var(--char-soft);margin:0}
 
+  /* ===== DESIGN DNA ===== */
+  .dna-grid{
+    display:grid;grid-template-columns:repeat(2,1fr);gap:22px;
+  }
+  .dna-item{
+    background:#fff;border-radius:18px;padding:28px 30px;
+    border:1px solid var(--line);
+    box-shadow:0 14px 30px -22px rgba(0,0,0,.16);
+    display:grid;grid-template-columns:54px 1fr;gap:18px;align-items:start;
+  }
+  .dna-num{
+    width:46px;height:46px;background:var(--char);color:var(--cheese);
+    border-radius:50%;display:inline-flex;align-items:center;justify-content:center;
+    font-family:"Playfair Display",serif;font-size:22px;font-weight:700;
+  }
+  .dna-item h4{
+    font-family:"Playfair Display","Noto Sans JP",serif;
+    font-size:18px;color:var(--char);margin-bottom:8px;font-weight:700;
+  }
+  .dna-item p{font-size:13.5px;line-height:1.85;color:var(--char-soft);margin:0}
+  .dna-item strong{color:var(--tomato);font-weight:700}
+  .dna-item em{color:var(--cheese-deep);font-style:normal;font-weight:700}
+
+  @media (max-width:760px){
+    .dna-grid{grid-template-columns:1fr}
+  }
+
   /* ===== BENEFITS ===== */
   .benefits-grid{
     display:grid;grid-template-columns:repeat(3,1fr);gap:26px;
@@ -334,7 +361,7 @@
           2026年5月の上海パンフェス（上海环宇城MAX）出店をきっかけに、本格的に上海市場へ進出。観光地・ショッピングモール・百貨店・商業施設での<strong>路面型 / インモール型</strong>専門店として展開する。
         </p>
         <p>
-          特徴は、日本のクラフトマンシップを宿した <strong>"クルマの顔" を象った冷蔵ショーケース</strong> と、<strong>レトロ × ポップ</strong> な世界観。 写真を撮らずにいられない、<strong>"上海で唯一の体験型バーガー専門店"</strong>。
+          特徴は、<strong>クルマの顔を模した冷蔵ショーケース</strong> と、<strong>昭和喫茶 × アメリカンダイナー × 日本のキャラクター文化</strong> をミックスした世界観。中国本土の客にとっては "見たことのない日本のかわいい" として刺さり、SNS自走を前提に設計されている。
         </p>
         <p>
           上海から始まり、北京・成都・深圳・広州へ。<strong>中国全土へ展開可能</strong>な、新しい店舗フォーマット。
@@ -397,11 +424,95 @@
   </div>
 </section>
 
+<!-- ============ DESIGN DNA ============ -->
+<section>
+  <div class="container">
+    <div class="sec-head">
+      <div class="sec-eyebrow">DESIGN DNA / 03</div>
+      <h2>細部に宿る、<em>#クリチ</em> の世界観。</h2>
+      <p class="sec-sub">
+        建築・グラフィック・什器・キャラクター、<br>
+        すべてが「撮りたくなる」を前提に組み上げられている。
+      </p>
+    </div>
+
+    <div class="dna-grid">
+      <div class="dna-item">
+        <div class="dna-num">A</div>
+        <h4>クルマの顔の冷蔵ショーケース</h4>
+        <p>
+          昭和の軽自動車を思わせるフロントマスクをそのまま店舗の顔に。<strong>丸目ヘッドライト・グリル風スマイル・ナンバープレート "VSW"</strong> まで作り込まれ、店舗そのものが <em>キャラクター化</em> される。中国の若年層が「日本のレトロかわいい」を体験する象徴に。
+        </p>
+      </div>
+
+      <div class="dna-item">
+        <div class="dna-num">B</div>
+        <h4>2人のクリチガール</h4>
+        <p>
+          看板上に並ぶ <strong>ストロベリーヘアと、クリームヘアの2人</strong>。商品の世界観を擬人化したブランドキャラクター。"店員ではなく、住人"。中国市場での <em>キャラ展開・グッズ展開・コラボ拡張</em> の起点となる。
+        </p>
+      </div>
+
+      <div class="dna-item">
+        <div class="dna-num">C</div>
+        <h4>シグネチャーの赤×黄×クリーム</h4>
+        <p>
+          チーズ色 (cheese yellow) と トマト色 (tomato red)、ベースのクリーム色。VSWブランド3色をそのまま立体化。<strong>遠目でも一目で "#クリチ" だと認識できる</strong>カラーアイデンティティ。
+        </p>
+      </div>
+
+      <div class="dna-item">
+        <div class="dna-num">D</div>
+        <h4>赤白チェッカー</h4>
+        <p>
+          台座・床・腰板に貫通する <strong>赤白チェッカーパターン</strong>。<em>レーシング × ダイナー × バーガー</em> のDNAを示すサイン。一目で "アメリカ系食文化" だと伝わるが、日本のクラフトで仕上げる二重構造。
+        </p>
+      </div>
+
+      <div class="dna-item">
+        <div class="dna-num">E</div>
+        <h4>"Got KURICHI?" コピー</h4>
+        <p>
+          カウンター中央に大きく置かれる <strong>"Got KURICHI?"</strong>。<em>"Got Milk?"</em> へのオマージュ。"クリチ、食べた？" を中国の若者の口語に変換するキッカケ。SNS投稿の <strong>キャッチフレーズとして自走</strong>する設計。
+        </p>
+      </div>
+
+      <div class="dna-item">
+        <div class="dna-num">F</div>
+        <h4>JAPAN OSAKA → SHANGHAI</h4>
+        <p>
+          看板上に明示される <strong>"OSAKA JAPAN"</strong> の四角バッジと、中央サインの <strong>"JAPAN OSAKA → SHANGHAI / KURICHI SPECIALTY SHOP"</strong>。日本発であることを <em>看板で語る</em>。Made in Japan を信頼で買う中国市場での最強コピー。
+        </p>
+      </div>
+
+      <div class="dna-item">
+        <div class="dna-num">G</div>
+        <h4>ペンダントライト × ハイチェア × 観葉植物</h4>
+        <p>
+          黄色のペンダントライト、赤いハイチェア、棚に並ぶ観葉植物。<strong>"立ち寄って、座って、温まる"</strong> 滞在型動線。テイクアウトだけで終わらせず、<em>滞在時間と客単価</em>を両立させる設計。
+        </p>
+      </div>
+
+      <div class="dna-item">
+        <div class="dna-num">H</div>
+        <h4>KURICHI FACTORY バッジ</h4>
+        <p>
+          中央に配置される <strong>赤い丸い "KURICHI FACTORY"</strong> バッジ。<em>"単なる売店ではなく、商品が生まれる場所"</em> という物語装置。出来立てを買う体験を視覚化し、店舗を <strong>"ファクトリー" として象徴化</strong>。
+        </p>
+      </div>
+    </div>
+
+    <p style="text-align:center;margin-top:40px;font-size:14px;color:var(--char-soft);line-height:1.95">
+      上記すべてのデザイン要素は <strong>規格化されたモジュール内</strong>で表現されているため、<br>場所が変わっても、世界観が崩れない。
+    </p>
+  </div>
+</section>
+
 <!-- ============ BENEFITS ============ -->
 <section class="dark">
   <div class="container">
     <div class="sec-head">
-      <div class="sec-eyebrow">BENEFITS / 03</div>
+      <div class="sec-eyebrow">BENEFITS / 04</div>
       <h2>モジュールだから、できること。</h2>
       <p class="sec-sub">
         作りやすく、設置しやすく、移動しやすい。<br>
@@ -460,7 +571,7 @@
 <section>
   <div class="container">
     <div class="sec-head">
-      <div class="sec-eyebrow">MENU / 04</div>
+      <div class="sec-eyebrow">MENU / 05</div>
       <h2><em>6 Flavors</em> from Osaka</h2>
       <p class="sec-sub">
         上海店オープニングメニュー。<br>
@@ -509,7 +620,7 @@
 <section class="cream">
   <div class="container">
     <div class="sec-head">
-      <div class="sec-eyebrow">LOCATION / 05</div>
+      <div class="sec-eyebrow">LOCATION / 06</div>
       <h2>上海 1号店（予定）</h2>
     </div>
     <div class="location-card">
@@ -543,7 +654,7 @@
 <section class="dark">
   <div class="container">
     <div class="sec-head">
-      <div class="sec-eyebrow">FOR PARTNERS / 06</div>
+      <div class="sec-eyebrow">FOR PARTNERS / 07</div>
       <h2>場所を持っている方へ。</h2>
       <p class="sec-sub">
         ショッピングモール / 百貨店 / 駅ナカ / 観光地 / 商業施設、<br>
