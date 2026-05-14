@@ -59,8 +59,9 @@
   /* ===== HERO ===== */
   .hero{
     background:linear-gradient(135deg,var(--cream) 0%,var(--cream-2) 100%);
-    padding:80px 0 60px;text-align:center;position:relative;overflow:hidden;
+    padding:80px 0 80px;text-align:center;position:relative;overflow:hidden;
   }
+  .hero .container{max-width:1280px}
   .hero::before,.hero::after{
     content:"";position:absolute;width:280px;height:280px;border-radius:50%;
     background:radial-gradient(circle,rgba(230,57,70,.08),transparent 70%);
@@ -89,6 +90,12 @@
     margin:30px auto 0;max-width:920px;border-radius:24px;overflow:hidden;
     box-shadow:0 30px 80px -30px rgba(0,0,0,.3);position:relative;z-index:1;
   }
+  .hero-img-large{
+    max-width:1180px;
+    margin:40px auto 0;
+    box-shadow:0 40px 100px -30px rgba(230,57,70,.35), 0 30px 80px -30px rgba(0,0,0,.4);
+  }
+  .hero-img-large img{width:100%;height:auto;display:block}
 
   /* ===== STATUS PILL ===== */
   .status-pills{
@@ -331,16 +338,15 @@
     </div>
     <div class="eyebrow">KURICHI SHANGHAI SPECIALTY SHOP</div>
     <h1>
-      上海に、<em>#クリチ</em> 専門店。<br>
-      <span class="zh">上海 · 奶油芝士汉堡专门店</span>
+      上海に、<em>#クリチ</em> 専門店。
     </h1>
     <p class="lead">
       NY発・大阪生まれのクリームチーズバーガー <strong>#クリチ</strong> が、<br>
       上海に初の路面専門店としてオープン。<br>
       日本のクラフトと、上海のカルチャーが出会う場所。
     </p>
-    <div class="hero-img">
-      <img src="../assets/shanghai-shop/studio-render.png" alt="#クリチ 上海専門店 外観イメージ">
+    <div class="hero-img hero-img-large">
+      <img src="../assets/shanghai-shop/mall-install.png" alt="#クリチ 上海専門店 ショッピングモール内設置イメージ">
     </div>
   </div>
 </section>
@@ -368,7 +374,7 @@
         </p>
       </div>
       <div class="concept-img">
-        <img src="../assets/shanghai-shop/mall-install.png" alt="#クリチ 上海ショッピングモール内 設置イメージ">
+        <img src="../assets/shanghai-shop/studio-render.png" alt="#クリチ 上海専門店 デザインレンダリング">
       </div>
     </div>
   </div>
