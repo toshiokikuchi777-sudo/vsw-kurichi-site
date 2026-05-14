@@ -1,0 +1,573 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>#クリチ 上海専門店 | KURICHI Shanghai Specialty Shop | Vsw株式会社</title>
+<meta name="description" content="NY発・大阪生まれのクリームチーズバーガー #クリチ が上海に専門店オープン。モジュール設計で作りやすく、設置しやすく、移動しやすい新しい店舗フォーマット。" />
+<meta name="robots" content="index,follow">
+<link rel="canonical" href="https://vsw.co.jp/shanghai-shop/">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="VSW / #クリチ">
+<meta property="og:title" content="#クリチ 上海専門店 | KURICHI Shanghai Specialty Shop">
+<meta property="og:description" content="NY発・大阪生まれの#クリチ、上海上陸。モジュール式専門店フォーマット。">
+<meta property="og:url" content="https://vsw.co.jp/shanghai-shop/">
+<meta property="og:image" content="https://vsw.co.jp/assets/shanghai-shop/studio-render.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="#クリチ 上海専門店 | KURICHI Shanghai Specialty Shop">
+<meta name="twitter:description" content="NY発・大阪生まれの#クリチ、上海上陸。モジュール式専門店フォーマット。">
+<meta name="twitter:image" content="https://vsw.co.jp/assets/shanghai-shop/studio-render.png">
+
+<link rel="icon" type="image/gif" href="../assets/favicon.gif">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&family=Noto+Sans+SC:wght@400;500;700;900&family=Playfair+Display:ital,wght@0,700;1,700&family=Montserrat:wght@400;600;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#FAF4E6;
+    --cream-2:#F5EBD3;
+    --cheese:#F5C84B;
+    --cheese-deep:#D8A82E;
+    --tomato:#E63946;
+    --tomato-deep:#B22A35;
+    --char:#2A1A14;
+    --char-soft:#5A4D45;
+    --line:#E6D9C2;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:"Noto Sans JP","Noto Sans SC",sans-serif;
+    background:var(--cream);
+    color:var(--char);
+    line-height:1.8;
+    -webkit-font-smoothing:antialiased;
+  }
+  img{max-width:100%;display:block}
+  a{color:var(--tomato);text-decoration:none}
+
+  .container{max-width:1180px;margin:0 auto;padding:0 24px}
+
+  /* ===== NAV ===== */
+  .nav{position:sticky;top:0;background:rgba(250,244,230,.96);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);z-index:100}
+  .nav-inner{display:flex;align-items:center;justify-content:space-between;padding:14px 24px;max-width:1180px;margin:0 auto}
+  .brand{display:flex;align-items:center;gap:10px;font-family:"Playfair Display",serif;font-weight:700;font-size:18px;color:var(--char)}
+  .brand em{color:var(--tomato);font-style:italic;font-size:15px;margin-left:6px}
+  .nav-back{font-size:13px;color:var(--tomato);font-weight:700}
+
+  /* ===== HERO ===== */
+  .hero{
+    background:linear-gradient(135deg,var(--cream) 0%,var(--cream-2) 100%);
+    padding:80px 0 60px;text-align:center;position:relative;overflow:hidden;
+  }
+  .hero::before,.hero::after{
+    content:"";position:absolute;width:280px;height:280px;border-radius:50%;
+    background:radial-gradient(circle,rgba(230,57,70,.08),transparent 70%);
+  }
+  .hero::before{top:-100px;left:-80px}
+  .hero::after{bottom:-100px;right:-80px;background:radial-gradient(circle,rgba(245,200,75,.12),transparent 70%)}
+
+  .eyebrow{
+    display:inline-block;color:var(--tomato);
+    font-family:"Montserrat",sans-serif;
+    font-weight:800;letter-spacing:.3em;font-size:12px;
+    margin-bottom:16px;position:relative;z-index:1;
+  }
+  .hero h1{
+    font-family:"Playfair Display","Noto Sans JP",serif;
+    font-size:clamp(38px,5.5vw,68px);font-weight:700;line-height:1.15;
+    color:var(--char);margin-bottom:18px;position:relative;z-index:1;
+  }
+  .hero h1 em{color:var(--tomato);font-style:italic}
+  .hero h1 .zh{font-family:"Noto Sans SC",sans-serif;font-size:.7em;display:inline-block;margin-left:.3em;vertical-align:middle;color:var(--char)}
+  .hero .lead{
+    font-size:16px;line-height:2;color:var(--char-soft);
+    max-width:680px;margin:0 auto 36px;position:relative;z-index:1;
+  }
+  .hero-img{
+    margin:30px auto 0;max-width:920px;border-radius:24px;overflow:hidden;
+    box-shadow:0 30px 80px -30px rgba(0,0,0,.3);position:relative;z-index:1;
+  }
+
+  /* ===== STATUS PILL ===== */
+  .status-pills{
+    display:flex;justify-content:center;gap:10px;flex-wrap:wrap;
+    margin-bottom:24px;position:relative;z-index:1;
+  }
+  .pill{
+    display:inline-block;padding:6px 14px;border-radius:999px;
+    font-size:12px;font-weight:800;letter-spacing:.1em;
+    font-family:"Montserrat","Noto Sans JP",sans-serif;
+  }
+  .pill.red{background:var(--tomato);color:#fff}
+  .pill.cheese{background:var(--cheese);color:var(--char)}
+  .pill.ghost{background:transparent;color:var(--char);border:1.5px solid var(--char)}
+
+  /* ===== SECTION COMMON ===== */
+  section{padding:80px 0}
+  section.dark{background:var(--char);color:#fff}
+  section.dark h2{color:#fff}
+  section.dark .sec-eyebrow{color:var(--cheese)}
+  section.dark p{color:#e8ddc6}
+  section.cream{background:var(--cream-2)}
+
+  .sec-head{text-align:center;margin-bottom:50px}
+  .sec-eyebrow{
+    display:inline-block;color:var(--tomato);
+    font-family:"Montserrat",sans-serif;
+    font-weight:800;letter-spacing:.25em;font-size:12px;
+    margin-bottom:14px;
+  }
+  h2{
+    font-family:"Playfair Display","Noto Sans JP",serif;
+    font-size:clamp(28px,4vw,44px);font-weight:700;line-height:1.3;
+    color:var(--char);margin-bottom:14px;
+  }
+  h2 em{color:var(--tomato);font-style:italic}
+  .sec-sub{
+    font-size:15px;line-height:2;color:var(--char-soft);
+    max-width:680px;margin:0 auto;
+  }
+  section.dark .sec-sub{color:#cdb9aa}
+
+  /* ===== CONCEPT ===== */
+  .concept-grid{
+    display:grid;grid-template-columns:1fr 1fr;gap:50px;align-items:center;
+  }
+  .concept-img{border-radius:20px;overflow:hidden;box-shadow:0 25px 60px -25px rgba(0,0,0,.3)}
+  .concept-text p{font-size:15.5px;line-height:2;color:var(--char);margin-bottom:16px}
+  .concept-text strong{color:var(--tomato);font-weight:800}
+
+  /* ===== MODULE BREAKDOWN ===== */
+  .module-hero-img{
+    max-width:1080px;margin:0 auto 50px;border-radius:24px;overflow:hidden;
+    box-shadow:0 30px 80px -30px rgba(0,0,0,.4);
+    background:#fff;
+  }
+  .modules-grid{
+    display:grid;grid-template-columns:repeat(4,1fr);gap:22px;
+  }
+  .module-card{
+    background:#fff;border-radius:18px;padding:28px 22px;
+    border:1px solid var(--line);
+    box-shadow:0 18px 40px -22px rgba(0,0,0,.18);
+    text-align:center;transition:transform .3s ease;
+  }
+  .module-card:hover{transform:translateY(-4px)}
+  .module-num{
+    display:inline-flex;align-items:center;justify-content:center;
+    width:52px;height:52px;background:var(--tomato);color:#fff;
+    border-radius:50%;font-family:"Montserrat",sans-serif;
+    font-weight:900;font-size:22px;margin-bottom:16px;
+  }
+  .module-card h4{
+    font-family:"Playfair Display","Noto Sans JP",serif;
+    font-size:18px;color:var(--char);margin-bottom:8px;font-weight:700;
+  }
+  .module-card .en{
+    font-family:"Montserrat",sans-serif;
+    font-size:11px;letter-spacing:.12em;color:var(--char-soft);
+    font-weight:700;margin-bottom:12px;text-transform:uppercase;
+  }
+  .module-card p{font-size:13.5px;line-height:1.85;color:var(--char-soft);margin:0}
+
+  /* ===== BENEFITS ===== */
+  .benefits-grid{
+    display:grid;grid-template-columns:repeat(3,1fr);gap:26px;
+  }
+  .benefit{
+    background:rgba(255,255,255,.06);
+    border:1px solid rgba(255,255,255,.15);
+    border-radius:20px;padding:36px 30px;text-align:center;
+  }
+  .benefit-icon{font-size:48px;margin-bottom:16px;line-height:1}
+  .benefit h3{
+    font-family:"Playfair Display","Noto Sans JP",serif;
+    font-size:22px;color:var(--cheese);margin-bottom:10px;font-weight:700;
+  }
+  .benefit p{font-size:14px;line-height:1.95;color:#e8ddc6;margin:0}
+
+  /* ===== MENU ===== */
+  .menu-grid{
+    display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:30px;
+  }
+  .menu-item{
+    background:#fff;border-radius:18px;padding:24px;
+    border:1px solid var(--line);text-align:center;
+    box-shadow:0 14px 30px -22px rgba(0,0,0,.18);
+  }
+  .menu-item .name{
+    font-family:"Playfair Display",serif;font-size:24px;font-weight:700;
+    color:var(--char);margin-bottom:6px;
+  }
+  .menu-item .name em{color:var(--tomato);font-style:italic}
+  .menu-item .price{
+    font-family:"Montserrat",sans-serif;font-weight:800;
+    font-size:18px;color:var(--tomato);
+  }
+  .menu-item .sub{font-size:12px;color:var(--char-soft);margin-bottom:8px;letter-spacing:.05em}
+
+  /* ===== LOCATION CARD ===== */
+  .location-card{
+    background:#fff;border-radius:24px;
+    border:2px solid var(--char);overflow:hidden;
+    max-width:980px;margin:0 auto;
+  }
+  .location-card-header{
+    background:var(--char);color:#fff;padding:24px 32px;
+    display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;
+  }
+  .location-card-header h3{
+    font-family:"Playfair Display","Noto Sans JP",serif;
+    font-size:22px;font-weight:700;color:#fff;
+  }
+  .location-flag{
+    background:var(--tomato);color:#fff;padding:6px 14px;border-radius:999px;
+    font-size:12px;font-weight:800;letter-spacing:.12em;
+    font-family:"Montserrat",sans-serif;
+  }
+  .location-body{padding:32px;display:grid;grid-template-columns:160px 1fr;row-gap:14px;column-gap:24px}
+  .location-body dt{font-size:11px;font-weight:800;letter-spacing:.15em;color:var(--char-soft);font-family:"Montserrat",sans-serif}
+  .location-body dd{font-size:14.5px;color:var(--char);margin:0}
+  .location-body dd strong{color:var(--tomato);font-weight:700}
+
+  /* ===== CTA ===== */
+  .cta-wrap{text-align:center;margin-top:60px;display:flex;justify-content:center;gap:14px;flex-wrap:wrap}
+  .btn{
+    display:inline-flex;align-items:center;gap:8px;
+    padding:16px 36px;border-radius:999px;
+    font-family:"Montserrat","Noto Sans JP",sans-serif;
+    font-weight:700;font-size:14px;letter-spacing:.05em;
+    transition:transform .2s ease,box-shadow .2s ease;
+  }
+  .btn:hover{transform:translateY(-2px);box-shadow:0 14px 30px -10px rgba(0,0,0,.3)}
+  .btn.primary{background:var(--tomato);color:#fff}
+  .btn.cheese{background:var(--cheese);color:var(--char)}
+  .btn.ghost{background:transparent;color:var(--char);border:1.5px solid var(--char)}
+  section.dark .btn.ghost{color:#fff;border-color:#fff}
+
+  /* ===== STATS ===== */
+  .stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;margin-top:50px}
+  .stat{text-align:center}
+  .stat-num{
+    font-family:"Playfair Display",serif;font-weight:700;
+    font-size:clamp(40px,5vw,64px);color:var(--cheese);line-height:1;
+  }
+  .stat-label{
+    font-family:"Montserrat",sans-serif;
+    font-size:11px;font-weight:700;letter-spacing:.2em;
+    color:#cdb9aa;margin-top:10px;text-transform:uppercase;
+  }
+
+  /* ===== FOOTER ===== */
+  footer{background:var(--char);color:#e8ddc6;padding:40px 0;text-align:center}
+  footer a{color:var(--cheese)}
+  footer .foot-row{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px;font-size:13px}
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width:960px){
+    .concept-grid{grid-template-columns:1fr;gap:30px}
+    .modules-grid{grid-template-columns:repeat(2,1fr)}
+    .benefits-grid{grid-template-columns:1fr;gap:18px}
+    .menu-grid{grid-template-columns:repeat(2,1fr)}
+    .stats-grid{grid-template-columns:repeat(2,1fr);gap:30px}
+    .location-body{grid-template-columns:1fr;row-gap:8px}
+    .location-body dt{margin-top:14px}
+  }
+  @media (max-width:540px){
+    section{padding:60px 0}
+    .modules-grid{grid-template-columns:1fr}
+    .menu-grid{grid-template-columns:1fr}
+    .hero{padding:60px 0 40px}
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="../index.html" class="brand">
+      Vsw <em>#KURICHI</em>
+    </a>
+    <a href="../index.html" class="nav-back">← トップへ戻る</a>
+  </div>
+</nav>
+
+<!-- ============ HERO ============ -->
+<section class="hero">
+  <div class="container">
+    <div class="status-pills">
+      <span class="pill red">UPCOMING</span>
+      <span class="pill cheese">SHANGHAI 2026</span>
+      <span class="pill ghost">JAPAN OSAKA → SHANGHAI</span>
+    </div>
+    <div class="eyebrow">KURICHI SHANGHAI SPECIALTY SHOP</div>
+    <h1>
+      上海に、<em>#クリチ</em> 専門店。<br>
+      <span class="zh">上海 · 奶油芝士汉堡专门店</span>
+    </h1>
+    <p class="lead">
+      NY発・大阪生まれのクリームチーズバーガー <strong>#クリチ</strong> が、<br>
+      上海に初の路面専門店としてオープン。<br>
+      日本のクラフトと、上海のカルチャーが出会う場所。
+    </p>
+    <div class="hero-img">
+      <img src="../assets/shanghai-shop/studio-render.png" alt="#クリチ 上海専門店 外観イメージ">
+    </div>
+  </div>
+</section>
+
+<!-- ============ CONCEPT ============ -->
+<section>
+  <div class="container">
+    <div class="sec-head">
+      <div class="sec-eyebrow">CONCEPT / 01</div>
+      <h2>NY発・大阪生まれの <em>#クリチ</em>、<br>上海上陸。</h2>
+    </div>
+    <div class="concept-grid">
+      <div class="concept-text">
+        <p>
+          <strong>"パンでもアイスでもない"</strong> 新感覚スイーツバーガーとして、日本で話題になった <strong>#クリチ</strong>。
+        </p>
+        <p>
+          2026年5月の上海パンフェス（上海环宇城MAX）出店をきっかけに、本格的に上海市場へ進出。観光地・ショッピングモール・百貨店・商業施設での<strong>路面型 / インモール型</strong>専門店として展開する。
+        </p>
+        <p>
+          特徴は、日本のクラフトマンシップを宿した <strong>"クルマの顔" を象った冷蔵ショーケース</strong> と、<strong>レトロ × ポップ</strong> な世界観。 写真を撮らずにいられない、<strong>"上海で唯一の体験型バーガー専門店"</strong>。
+        </p>
+        <p>
+          上海から始まり、北京・成都・深圳・広州へ。<strong>中国全土へ展開可能</strong>な、新しい店舗フォーマット。
+        </p>
+      </div>
+      <div class="concept-img">
+        <img src="../assets/shanghai-shop/mall-install.png" alt="#クリチ 上海ショッピングモール内 設置イメージ">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ MODULES ============ -->
+<section class="cream">
+  <div class="container">
+    <div class="sec-head">
+      <div class="sec-eyebrow">MODULAR DESIGN / 02</div>
+      <h2><em>モジュール式</em> の専門店フォーマット</h2>
+      <p class="sec-sub">
+        全ての構成要素を独立したモジュールとして設計。<br>
+        必要な要素だけを組み合わせ、最短期間で店舗を立ち上げる。<br>
+        場所が変わっても、世界観はそのまま運べる。
+      </p>
+    </div>
+
+    <div class="module-hero-img">
+      <img src="../assets/shanghai-shop/modules-diagram.png" alt="#クリチ 上海専門店 モジュール構成図">
+    </div>
+
+    <div class="modules-grid">
+      <div class="module-card">
+        <div class="module-num">1</div>
+        <h4>看板キャノピー</h4>
+        <div class="en">Top Sign / Canopy</div>
+        <p>"KURICHI クリチ / Cream Cheese Burger / OSAKA JAPAN" のブランド看板。店舗全体の上に被さる象徴ユニット。</p>
+      </div>
+      <div class="module-card">
+        <div class="module-num">2</div>
+        <h4>冷蔵ショーケース<br>（カー・フェイス）</h4>
+        <div class="en">Refrigerated Showcase</div>
+        <p>クルマのフロントを模した冷蔵ショーケース。商品をディスプレイすると同時に、店舗の顔として記号化される。</p>
+      </div>
+      <div class="module-card">
+        <div class="module-num">3</div>
+        <h4>注文・サービスカウンター</h4>
+        <div class="en">Cashier / Counter</div>
+        <p>POS・決済端末・トレイ準備までを一体化したカウンター。電源1口で運用可能、簡易厨房と接続できる。</p>
+      </div>
+      <div class="module-card">
+        <div class="module-num">4</div>
+        <h4>イートインシート</h4>
+        <div class="en">Seating Module</div>
+        <p>ハイチェア＋カウンターのシートユニット。要否に応じて切り離し可能。テイクアウトのみ運用にも対応。</p>
+      </div>
+    </div>
+
+    <p style="text-align:center;margin-top:40px;font-size:14px;color:var(--char-soft);line-height:1.95">
+      ※ メニューボード / バックバー / サインボーディング / 飾り棚なども<br>同じ規格でモジュール化されているため、組み合わせ自在。
+    </p>
+  </div>
+</section>
+
+<!-- ============ BENEFITS ============ -->
+<section class="dark">
+  <div class="container">
+    <div class="sec-head">
+      <div class="sec-eyebrow">BENEFITS / 03</div>
+      <h2>モジュールだから、できること。</h2>
+      <p class="sec-sub">
+        作りやすく、設置しやすく、移動しやすい。<br>
+        これまでの "1店舗ずつスクラッチで作る" 店舗開発の常識を覆す。
+      </p>
+    </div>
+    <div class="benefits-grid">
+      <div class="benefit">
+        <div class="benefit-icon">🔨</div>
+        <h3>作りやすい</h3>
+        <p>
+          規格化された各モジュールを工場で先行製造。<br>
+          現地での組立工程を最小化し、<strong style="color:var(--cheese)">工期を従来の1/3〜1/2に短縮</strong>。
+        </p>
+      </div>
+      <div class="benefit">
+        <div class="benefit-icon">📐</div>
+        <h3>設置しやすい</h3>
+        <p>
+          1坪〜の小スペースでも成立。電源1口で稼働。<br>
+          路面 / モール / 百貨店 / イベント会場、<strong style="color:var(--cheese)">どんな場所にも合わせられる</strong>。
+        </p>
+      </div>
+      <div class="benefit">
+        <div class="benefit-icon">🚚</div>
+        <h3>移動しやすい</h3>
+        <p>
+          各モジュールを分解して輸送可能。<br>
+          催事・期間限定ポップアップ・他都市展開も<strong style="color:var(--cheese)">同じフォーマットで再現</strong>できる。
+        </p>
+      </div>
+    </div>
+
+    <div class="stats-grid">
+      <div class="stat">
+        <div class="stat-num">6</div>
+        <div class="stat-label">CORE MODULES</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">1坪〜</div>
+        <div class="stat-label">MINIMUM SPACE</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">1/2</div>
+        <div class="stat-label">CONSTRUCTION TIME</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">∞</div>
+        <div class="stat-label">EXPANSION POTENTIAL</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ MENU ============ -->
+<section>
+  <div class="container">
+    <div class="sec-head">
+      <div class="sec-eyebrow">MENU / 04</div>
+      <h2><em>6 Flavors</em> from Osaka</h2>
+      <p class="sec-sub">
+        上海店オープニングメニュー。<br>
+        日本の人気6フレーバーを、現地仕様で展開する。
+      </p>
+    </div>
+    <div class="menu-grid">
+      <div class="menu-item">
+        <div class="name">PLAIN</div>
+        <div class="sub">原味</div>
+        <div class="price">¥750</div>
+      </div>
+      <div class="menu-item">
+        <div class="name">STRAWBERRY</div>
+        <div class="sub">草莓</div>
+        <div class="price">¥750</div>
+      </div>
+      <div class="menu-item">
+        <div class="name">MATCHA</div>
+        <div class="sub">抹茶</div>
+        <div class="price">¥750</div>
+      </div>
+      <div class="menu-item">
+        <div class="name">CHOCOLATE</div>
+        <div class="sub">巧克力</div>
+        <div class="price">¥750</div>
+      </div>
+      <div class="menu-item">
+        <div class="name">LEMON</div>
+        <div class="sub">柠檬</div>
+        <div class="price">¥750</div>
+      </div>
+      <div class="menu-item">
+        <div class="name">ORANGE</div>
+        <div class="sub">橙子</div>
+        <div class="price">¥750</div>
+      </div>
+    </div>
+    <p style="text-align:center;margin-top:30px;font-size:13px;color:var(--char-soft)">
+      ※ 現地販売価格は人民元（¥ ⇄ ¥）で別途設定。季節限定・コラボフレーバーを随時追加予定。
+    </p>
+  </div>
+</section>
+
+<!-- ============ LOCATION ============ -->
+<section class="cream">
+  <div class="container">
+    <div class="sec-head">
+      <div class="sec-eyebrow">LOCATION / 05</div>
+      <h2>上海 1号店（予定）</h2>
+    </div>
+    <div class="location-card">
+      <div class="location-card-header">
+        <h3>KURICHI Shanghai #001</h3>
+        <span class="location-flag">UPCOMING / 2026</span>
+      </div>
+      <dl class="location-body">
+        <dt>ブランド</dt>
+        <dd><strong>#クリチ（KURICHI）</strong> Cream Cheese Burger</dd>
+        <dt>店舗形態</dt>
+        <dd>専門店（路面 / インモール どちらにも対応）</dd>
+        <dt>所在</dt>
+        <dd>上海市内 商業施設（候補地交渉中）</dd>
+        <dt>開店予定</dt>
+        <dd>2026年内</dd>
+        <dt>面積</dt>
+        <dd>1坪〜（モジュール組合せにより可変）</dd>
+        <dt>運営</dt>
+        <dd>Vsw 株式会社（日本本社） / 現地パートナー</dd>
+        <dt>関連実績</dt>
+        <dd>2026年5月 上海野雀真香面包节（上海环宇城MAX）出店</dd>
+        <dt>次の展開</dt>
+        <dd>北京 / 成都 / 深圳 / 広州 への横展開</dd>
+      </dl>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOR PARTNERS ============ -->
+<section class="dark">
+  <div class="container">
+    <div class="sec-head">
+      <div class="sec-eyebrow">FOR PARTNERS / 06</div>
+      <h2>場所を持っている方へ。</h2>
+      <p class="sec-sub">
+        ショッピングモール / 百貨店 / 駅ナカ / 観光地 / 商業施設、<br>
+        スペース提供パートナーを募集中。<br>
+        モジュール式なので、最短期間で店舗オープンが可能。
+      </p>
+    </div>
+    <div class="cta-wrap">
+      <a href="../index.html#contact" class="btn primary">📩 出店パートナーのお問い合わせ</a>
+      <a href="../index.html#contact" class="btn cheese">🤝 海外展開・FC相談</a>
+      <a href="../about.html" class="btn ghost">会社概要を見る</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer>
+  <div class="container">
+    <div class="foot-row">
+      <span>© 2026 Vsw Inc. / #KURICHI. All rights reserved.</span>
+      <span><a href="../index.html">← トップに戻る</a> / <a href="../about.html">About</a></span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
