@@ -97,6 +97,16 @@
   }
   .hero-img-large img{width:100%;height:auto;display:block}
 
+  /* full-bleed hero image (full viewport width) */
+  .hero-img-fullbleed{
+    width:100%;margin-top:50px;position:relative;z-index:1;
+    line-height:0;
+  }
+  .hero-img-fullbleed img{
+    width:100%;height:auto;display:block;
+    box-shadow:0 -10px 50px -10px rgba(0,0,0,.15);
+  }
+
   /* ===== STATUS PILL ===== */
   .status-pills{
     display:flex;justify-content:center;gap:10px;flex-wrap:wrap;
@@ -338,16 +348,16 @@
     </div>
     <div class="eyebrow">KURICHI SHANGHAI SPECIALTY SHOP</div>
     <h1>
-      上海に、<em>#クリチ</em> 専門店。
+      上海のモールに、<em>#クリチ</em> 専門店。
     </h1>
     <p class="lead">
       NY発・大阪生まれのクリームチーズバーガー <strong>#クリチ</strong> が、<br>
-      上海に初の路面専門店としてオープン。<br>
+      上海のショッピングモール内に、初の<strong>インモール型専門店</strong>としてオープン。<br>
       日本のクラフトと、上海のカルチャーが出会う場所。
     </p>
-    <div class="hero-img hero-img-large">
-      <img src="../assets/shanghai-shop/mall-install.png" alt="#クリチ 上海専門店 ショッピングモール内設置イメージ">
-    </div>
+  </div>
+  <div class="hero-img-fullbleed">
+    <img src="../assets/shanghai-shop/mall-install.png" alt="#クリチ 上海専門店 ショッピングモール内設置イメージ">
   </div>
 </section>
 
