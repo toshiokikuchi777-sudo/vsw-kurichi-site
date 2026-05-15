@@ -18,6 +18,34 @@
 </head>
 <body>
 
+<a href="../" class="back-to-top-fixed" aria-label="VSW トップページに戻る">
+  <span class="back-arrow">←</span>
+  <span class="back-label">TOP</span>
+</a>
+<style>
+  .back-to-top-fixed{
+    position:fixed;top:14px;left:14px;z-index:9999;
+    display:inline-flex;align-items:center;gap:6px;
+    padding:9px 16px 9px 12px;border-radius:999px;
+    background:#fff;color:#1a1613;
+    border:2px solid #1a1613;
+    font-family:"Montserrat","Noto Sans JP",sans-serif;
+    font-size:12px;font-weight:800;letter-spacing:.12em;
+    text-decoration:none;line-height:1;
+    box-shadow:0 10px 24px -10px rgba(0,0,0,.35);
+    transition:transform .2s ease, box-shadow .2s ease, background .2s ease;
+  }
+  .back-to-top-fixed:hover{
+    transform:translateY(-2px);
+    background:#1a1613;color:#fff;
+    box-shadow:0 14px 28px -10px rgba(0,0,0,.45);
+  }
+  .back-to-top-fixed .back-arrow{font-size:14px}
+  @media (max-width:640px){
+    .back-to-top-fixed{top:10px;left:10px;padding:8px 13px 8px 10px;font-size:11px}
+  }
+</style>
+
 <!-- =================== HEADER =================== -->
 <header class="site-header">
   <div class="nav-inner">
@@ -482,7 +510,7 @@
     <div class="foot-brand">
       <p class="foot-logo">KURICHI BRANCH</p>
       <p class="foot-sub">CULTURE VENDING BY #KURICHI</p>
-      <p class="foot-sub">A PROJECT OF VSW, INC. × MASTAR DESIGN</p>
+      <p class="foot-sub">A PROJECT OF VSW, INC.</p>
     </div>
     <div class="foot-meta">
       <p>EST. 2026 / OSAKA → STREET</p>
