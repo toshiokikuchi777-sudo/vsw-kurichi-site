@@ -1,0 +1,148 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 460 820" fill="none" aria-label="KURICHI BRANCH refrigerated vending kiosk">
+  <defs>
+    <linearGradient id="cabinet" x1="66" y1="42" x2="394" y2="780" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#fffdf6"/>
+      <stop offset="0.48" stop-color="#fff3dc"/>
+      <stop offset="1" stop-color="#e8d7bc"/>
+    </linearGradient>
+    <linearGradient id="sideShade" x1="348" y1="78" x2="420" y2="760" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#d8c2a2"/>
+      <stop offset="1" stop-color="#9d8062"/>
+    </linearGradient>
+    <linearGradient id="glass" x1="92" y1="160" x2="350" y2="538" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#f8fbff" stop-opacity="0.88"/>
+      <stop offset="0.44" stop-color="#dbefff" stop-opacity="0.56"/>
+      <stop offset="1" stop-color="#fff7e6" stop-opacity="0.78"/>
+    </linearGradient>
+    <linearGradient id="redPanel" x1="74" y1="88" x2="386" y2="138" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#f04a56"/>
+      <stop offset="1" stop-color="#c72f3c"/>
+    </linearGradient>
+    <linearGradient id="screenGrad" x1="294" y1="198" x2="376" y2="432" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#201916"/>
+      <stop offset="1" stop-color="#45352e"/>
+    </linearGradient>
+    <linearGradient id="metal" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset="0.5" stop-color="#d6d0c8"/>
+      <stop offset="1" stop-color="#8f857b"/>
+    </linearGradient>
+    <filter id="softShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="24" stdDeviation="18" flood-color="#1a1613" flood-opacity="0.28"/>
+    </filter>
+    <filter id="productShadow" x="-40%" y="-40%" width="180%" height="180%">
+      <feDropShadow dx="0" dy="10" stdDeviation="7" flood-color="#1a1613" flood-opacity="0.24"/>
+    </filter>
+    <clipPath id="displayClip">
+      <rect x="78" y="170" width="204" height="332" rx="14"/>
+    </clipPath>
+    <clipPath id="screenClip">
+      <rect x="298" y="198" width="76" height="214" rx="10"/>
+    </clipPath>
+  </defs>
+
+  <ellipse cx="230" cy="790" rx="166" ry="20" fill="#1a1613" opacity="0.22"/>
+
+  <g filter="url(#softShadow)">
+    <path d="M61 65 C61 45 77 30 97 30 H363 C383 30 399 45 399 65 V757 C399 774 386 788 369 788 H91 C74 788 61 774 61 757 V65Z" fill="url(#cabinet)" stroke="#201916" stroke-width="2"/>
+    <path d="M356 37 H363 C383 37 399 51 399 68 V754 C399 771 386 784 369 784 H350 C362 774 367 759 367 739 V79 C367 60 363 47 356 37Z" fill="url(#sideShade)" opacity="0.42"/>
+
+    <rect x="82" y="52" width="296" height="28" rx="14" fill="#201916"/>
+    <text x="104" y="70" font-family="'Montserrat', sans-serif" font-weight="800" font-size="10" fill="#fff7e6" letter-spacing="2.5">REFRIGERATED BRANCH KIOSK</text>
+
+    <rect x="76" y="91" width="308" height="58" rx="15" fill="url(#redPanel)" stroke="#201916" stroke-width="2"/>
+    <text x="230" y="124" text-anchor="middle" font-family="'Playfair Display', Georgia, serif" font-style="italic" font-weight="700" font-size="31" fill="#fff7e6" letter-spacing="1">KURICHI BRANCH</text>
+    <text x="230" y="141" text-anchor="middle" font-family="'Montserrat', sans-serif" font-weight="800" font-size="9.5" fill="#ffeccb" letter-spacing="4">#001 / HANEDA AIRPORT GARDEN</text>
+
+    <g transform="translate(333 104)">
+      <circle cx="38" cy="0" r="28" fill="#ffc23c" stroke="#201916" stroke-width="1.5"/>
+      <text x="38" y="-4" text-anchor="middle" font-family="'Playfair Display', Georgia, serif" font-style="italic" font-size="11" font-weight="700" fill="#201916">Got</text>
+      <text x="38" y="10" text-anchor="middle" font-family="'Montserrat', sans-serif" font-size="8.5" font-weight="900" fill="#e63946" letter-spacing="1">KURICHI?</text>
+    </g>
+
+    <rect x="76" y="164" width="212" height="346" rx="18" fill="#201916"/>
+    <rect x="84" y="172" width="196" height="330" rx="13" fill="url(#glass)"/>
+    <g clip-path="url(#displayClip)">
+      <rect x="78" y="170" width="204" height="332" fill="#fff9ed"/>
+      <g opacity="0.4" stroke="#d8c2a2" stroke-width="1">
+        <line x1="88" y1="236" x2="272" y2="236"/>
+        <line x1="88" y1="337" x2="272" y2="337"/>
+        <line x1="88" y1="438" x2="272" y2="438"/>
+      </g>
+
+      <g filter="url(#productShadow)">
+        <rect x="98" y="190" width="164" height="74" rx="10" fill="#f2f4f6" stroke="#d2d7dc"/>
+        <rect x="106" y="198" width="148" height="58" rx="8" fill="#fff"/>
+        <rect x="106" y="198" width="148" height="18" rx="8" fill="#e63946"/>
+        <text x="180" y="211" text-anchor="middle" font-family="'Montserrat', sans-serif" font-weight="900" font-size="7" fill="#fff7e6" letter-spacing="1.2">FROZEN PACK 01</text>
+        <image href="../img/product-ny-lemon.png" x="114" y="217" width="46" height="34" preserveAspectRatio="xMidYMid meet"/>
+        <text x="166" y="233" font-family="'Noto Sans JP', sans-serif" font-weight="900" font-size="11" fill="#201916">NY#クリチ</text>
+        <text x="166" y="248" font-family="'Noto Sans JP', sans-serif" font-weight="700" font-size="7.5" fill="#7a6c62">レモン＆プラリネ</text>
+      </g>
+
+      <g filter="url(#productShadow)">
+        <rect x="98" y="294" width="164" height="74" rx="10" fill="#f2f4f6" stroke="#d2d7dc"/>
+        <rect x="106" y="302" width="148" height="58" rx="8" fill="#fff"/>
+        <rect x="106" y="302" width="148" height="18" rx="8" fill="#e63946"/>
+        <text x="180" y="315" text-anchor="middle" font-family="'Montserrat', sans-serif" font-weight="900" font-size="7" fill="#fff7e6" letter-spacing="1.2">FROZEN PACK 02</text>
+        <image href="../img/product-akarenga-orange.png" x="114" y="321" width="46" height="34" preserveAspectRatio="xMidYMid meet"/>
+        <text x="166" y="337" font-family="'Noto Sans JP', sans-serif" font-weight="900" font-size="10.5" fill="#201916">赤レンガ#クリチ</text>
+        <text x="166" y="352" font-family="'Noto Sans JP', sans-serif" font-weight="700" font-size="7.5" fill="#7a6c62">オレンジ＆プラリネ</text>
+      </g>
+
+      <g filter="url(#productShadow)">
+        <rect x="98" y="398" width="164" height="74" rx="10" fill="#f2f4f6" stroke="#d2d7dc"/>
+        <rect x="106" y="406" width="148" height="58" rx="8" fill="#fff"/>
+        <rect x="106" y="406" width="148" height="18" rx="8" fill="#201916"/>
+        <text x="180" y="419" text-anchor="middle" font-family="'Montserrat', sans-serif" font-weight="900" font-size="7" fill="#fff7e6" letter-spacing="1.2">RICE FLOUR PACK 03</text>
+        <image href="../img/product-soichi-tea-berry.png" x="114" y="425" width="46" height="34" preserveAspectRatio="xMidYMid meet"/>
+        <text x="166" y="441" font-family="'Noto Sans JP', sans-serif" font-weight="900" font-size="11" fill="#201916">米粉#ソイチ</text>
+        <text x="166" y="456" font-family="'Noto Sans JP', sans-serif" font-weight="700" font-size="7.5" fill="#7a6c62">紅茶バンズ＆いちご</text>
+      </g>
+
+      <path d="M78 170 L282 170 L144 502 H78 V170Z" fill="#fff" opacity="0.28"/>
+      <path d="M230 170 L282 170 L282 502 H199 L230 170Z" fill="#fff" opacity="0.16"/>
+    </g>
+    <rect x="76" y="164" width="212" height="346" rx="18" stroke="#201916" stroke-width="2"/>
+
+    <rect x="294" y="184" width="86" height="242" rx="16" fill="#201916"/>
+    <rect x="298" y="198" width="76" height="214" rx="10" fill="url(#screenGrad)"/>
+    <g clip-path="url(#screenClip)">
+      <rect x="298" y="198" width="76" height="214" fill="#201916"/>
+      <rect x="308" y="218" width="56" height="50" rx="6" fill="#fff"/>
+      <rect x="308" y="218" width="56" height="14" rx="6" fill="#e63946"/>
+      <image href="../img/product-ny-lemon.png" x="313" y="234" width="46" height="28" preserveAspectRatio="xMidYMid meet" opacity="0.92"/>
+      <text x="336" y="315" text-anchor="middle" font-family="'Montserrat', sans-serif" font-weight="900" font-size="7" fill="#ffc23c" letter-spacing="1.6">NOW PLAYING</text>
+      <text x="336" y="335" text-anchor="middle" font-family="'Playfair Display', Georgia, serif" font-style="italic" font-weight="700" font-size="15" fill="#fff7e6">FROZEN PACK</text>
+      <text x="336" y="352" text-anchor="middle" font-family="'Noto Sans JP', sans-serif" font-weight="700" font-size="8" fill="#d5c5ae">羽田で買える</text>
+      <text x="336" y="365" text-anchor="middle" font-family="'Noto Sans JP', sans-serif" font-weight="700" font-size="8" fill="#d5c5ae">冷凍パック販売</text>
+      <path d="M312 384 H360" stroke="#e63946" stroke-width="2" stroke-linecap="round"/>
+      <circle cx="323" cy="384" r="3" fill="#e63946"/>
+    </g>
+    <text x="337" y="443" text-anchor="middle" font-family="'Montserrat', sans-serif" font-weight="900" font-size="8" fill="#7a6c62" letter-spacing="2.5">DIGITAL MENU</text>
+
+    <rect x="82" y="530" width="296" height="96" rx="16" fill="#fff" stroke="#201916" stroke-width="1.8"/>
+    <text x="103" y="556" font-family="'Montserrat', sans-serif" font-weight="900" font-size="9" fill="#e63946" letter-spacing="2.4">SELECT</text>
+    <g font-family="'Montserrat', sans-serif" font-weight="900" font-size="13" text-anchor="middle">
+      <rect x="102" y="570" width="54" height="36" rx="10" fill="#fff7e6" stroke="#201916" stroke-width="1.2"/>
+      <text x="129" y="593" fill="#201916">01</text>
+      <rect x="166" y="570" width="54" height="36" rx="10" fill="#fff7e6" stroke="#201916" stroke-width="1.2"/>
+      <text x="193" y="593" fill="#201916">02</text>
+      <rect x="230" y="570" width="54" height="36" rx="10" fill="#fff7e6" stroke="#201916" stroke-width="1.2"/>
+      <text x="257" y="593" fill="#201916">03</text>
+    </g>
+    <rect x="304" y="554" width="52" height="52" rx="12" fill="#201916"/>
+    <path d="M318 581 H342" stroke="#fff7e6" stroke-width="3" stroke-linecap="round"/>
+    <path d="M330 569 V593" stroke="#fff7e6" stroke-width="3" stroke-linecap="round"/>
+    <text x="330" y="620" text-anchor="middle" font-family="'Montserrat', sans-serif" font-weight="800" font-size="7" fill="#7a6c62" letter-spacing="1.8">CARD / QR</text>
+
+    <rect x="82" y="646" width="296" height="72" rx="16" fill="#201916"/>
+    <rect x="104" y="666" width="252" height="32" rx="9" fill="#fff7e6"/>
+    <path d="M118 682 H342" stroke="#d8c2a2" stroke-width="1" stroke-dasharray="5 6"/>
+    <text x="230" y="688" text-anchor="middle" font-family="'Montserrat', sans-serif" font-weight="900" font-size="10" fill="#201916" letter-spacing="2.4">PICK UP / FROZEN PACK</text>
+
+    <rect x="92" y="736" width="276" height="28" rx="14" fill="#201916"/>
+    <text x="112" y="755" font-family="'Montserrat', sans-serif" font-weight="900" font-size="9" fill="#fff7e6" letter-spacing="2.4">HANEDA AIRPORT GARDEN 2F</text>
+    <circle cx="350" cy="750" r="6" fill="#6ec4a7"/>
+  </g>
+</svg>
