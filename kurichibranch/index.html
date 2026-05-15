@@ -22,9 +22,14 @@
   <span class="back-arrow">←</span>
   <span class="back-label">TOP</span>
 </a>
+<a href="../news/" class="back-to-news-fixed" aria-label="NEWSに戻る">
+  <span class="back-label">NEWS</span>
+  <span class="back-arrow">→</span>
+</a>
 <style>
-  .back-to-top-fixed{
-    position:fixed;top:14px;left:14px;z-index:9999;
+  .back-to-top-fixed,
+  .back-to-news-fixed{
+    position:fixed;top:14px;z-index:9999;
     display:inline-flex;align-items:center;gap:6px;
     padding:9px 16px 9px 12px;border-radius:999px;
     background:#fff;color:#1a1613;
@@ -35,14 +40,22 @@
     box-shadow:0 10px 24px -10px rgba(0,0,0,.35);
     transition:transform .2s ease, box-shadow .2s ease, background .2s ease;
   }
-  .back-to-top-fixed:hover{
+  .back-to-top-fixed{left:14px}
+  .back-to-news-fixed{right:14px;padding:9px 12px 9px 16px}
+  .back-to-top-fixed:hover,
+  .back-to-news-fixed:hover{
     transform:translateY(-2px);
     background:#1a1613;color:#fff;
     box-shadow:0 14px 28px -10px rgba(0,0,0,.45);
   }
-  .back-to-top-fixed .back-arrow{font-size:14px}
+  .back-to-top-fixed .back-arrow,
+  .back-to-news-fixed .back-arrow{font-size:14px}
   @media (max-width:640px){
-    .back-to-top-fixed{top:10px;left:10px;padding:8px 13px 8px 10px;font-size:11px}
+    .back-to-top-fixed{left:10px}
+    .back-to-news-fixed{right:10px}
+    .back-to-top-fixed,
+    .back-to-news-fixed{top:10px;padding:8px 13px 8px 10px;font-size:11px}
+    .back-to-news-fixed{padding:8px 10px 8px 13px}
   }
 </style>
 
