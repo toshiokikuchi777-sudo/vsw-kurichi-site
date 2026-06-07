@@ -101,6 +101,9 @@
     background:var(--cheese);color:var(--char);font-weight:800;font-size:15px;
     letter-spacing:.04em;transition:transform .2s ease,background .2s ease}
   .fk-cta-btn:hover{transform:translateY(-3px);background:#fff}
+  .fk-cta-btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+  .fk-cta-btn--ghost{background:transparent;color:#fff;border:1.5px solid rgba(255,255,255,.55)}
+  .fk-cta-btn--ghost:hover{background:#fff;color:var(--char);border-color:#fff}
   .fk-cta-note{max-width:560px;margin:28px auto 0;color:rgba(255,255,255,.6);
     font-size:12px;line-height:1.9}
 
@@ -228,7 +231,10 @@
   <section class="fk-cta">
     <div class="container">
       <h2>3つのごほうび、その手に。</h2>
-      <a href="https://vswferdinand.base.shop/" target="_blank" rel="noopener" class="fk-cta-btn">Online Shop で見る →</a>
+      <div class="fk-cta-btns">
+        <a href="https://vswferdinand.base.shop/" target="_blank" rel="noopener" class="fk-cta-btn">Online Shop で見る →</a>
+        <a href="../assets/blog/fuwamochi-kurichi/fuwamochi-kurichi-catalog.pdf" download class="fk-cta-btn fk-cta-btn--ghost">📄 商品カタログ（PDF・8ページ）をダウンロード</a>
+      </div>
       <p class="fk-cta-note">※販売フレーバー・販売形態・在庫状況は店舗により異なります。最新の取り扱い状況は、各店舗・オンラインショップにてご確認ください。</p>
     </div>
   </section>
