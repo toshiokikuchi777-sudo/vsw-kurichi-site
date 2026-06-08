@@ -89,9 +89,19 @@
     font-size:clamp(26px,4vw,42px);line-height:1.4;margin:0 0 24px;color:var(--char)}
   .fk-exp-p{max-width:560px;margin:0 auto;color:#5a4d45;
     font-size:clamp(14px,1.8vw,17px);line-height:2.1}
-  .fk-exp-tag{margin:40px auto 0;max-width:680px;font-family:"Noto Sans JP",sans-serif;
+  .fk-exp-tag{margin:44px auto 0;max-width:680px;font-family:"Noto Sans JP",sans-serif;
     font-weight:700;font-size:clamp(17px,2.6vw,24px);line-height:1.85;
     color:var(--cheese-deep);letter-spacing:.03em}
+  /* 食べ頃バッジ */
+  .fk-exp-badge{display:inline-flex;align-items:center;gap:12px;margin:6px auto 0;
+    padding:16px 40px;border-radius:999px;background:var(--tomato);color:#fff;
+    font-family:"Noto Sans JP",sans-serif;font-weight:900;
+    font-size:clamp(20px,3.2vw,30px);letter-spacing:.06em;
+    box-shadow:0 20px 38px -14px rgba(230,57,70,.55)}
+  .fk-exp-badge .snow{font-size:.92em;line-height:1}
+  .fk-exp-note{max-width:560px;margin:24px auto 0;color:#5a4d45;font-weight:500;
+    font-size:clamp(13.5px,1.8vw,16px);line-height:2.05}
+  .fk-exp-note b{color:var(--tomato);font-weight:800}
 
   /* CTA */
   .fk-cta{padding:88px 20px;text-align:center;background:var(--char)}
@@ -116,6 +126,8 @@
     .fk-flavor{padding:64px 0}
     .fk-flavor-imgs{grid-template-columns:1fr;gap:18px;max-width:420px;padding:0 18px}
     .fk-keycopy{margin-top:36px}
+    .fk-exp{padding:72px 18px}
+    .fk-exp-badge{padding:13px 26px;gap:9px}
   }
 </style>
 </head>
@@ -149,7 +161,7 @@
   <!-- HERO -->
   <header class="fk-hero">
     <div class="fk-hero-img">
-      <img src="../assets/blog/fuwamochi-kurichi/hero.png" alt="ふわもち#クリチ いちご・ブルーベリー・抹茶あんこ 3種の新感覚スイーツ">
+      <img src="../assets/blog/fuwamochi-kurichi/hero.jpg" alt="ふわもち#クリチ いちご・ブルーベリー・抹茶あんこ 3種の新感覚スイーツ">
     </div>
     <div class="fk-hero-cap">
       <a href="../news/index.html" class="press-back">← News 一覧へ</a>
@@ -212,19 +224,21 @@
         <h2 class="fk-flavor-name">抹茶あんこ</h2>
         <p class="fk-flavor-catch">和のやさしさ、ふわもち新食感。</p>
       </div>
-      <p class="fk-flavor-copy">ふわもち食感の白バンズで、なめらかなクリームチーズのコクを閉じ込めた抹茶クリチdiscに、甘さ控えめで軽やかな口どけのホイップ。中心でほどけるあんこが全体をつなぎ、抹茶の香り、やさしい甘み、奥行きのある食感を重ねました。</p>
+      <p class="fk-flavor-copy">ふわもち食感の白バンズで、なめらかなクリームチーズのコクを閉じ込めた抹茶クリチdiscに、甘さ控えめで軽やかな口どけのホイップ。やさしいあんこと、とろりとほどける黒蜜が全体をつなぎ、抹茶のほろ苦い香り、やさしい甘み、奥行きのある食感を重ねました。</p>
       <div class="fk-flavor-imgs">
         <figure><img src="../assets/blog/fuwamochi-kurichi/matcha.jpg" alt="ふわもち#クリチ 抹茶あんこ メインビジュアル" loading="lazy"></figure>
-        <figure><img src="../assets/blog/fuwamochi-kurichi/matcha-cross.jpg" alt="ふわもち#クリチ 抹茶あんこ 断面と構成（ふわもち生地・あんこ・ホイップ・抹茶クリームチーズ）" loading="lazy"></figure>
+        <figure><img src="../assets/blog/fuwamochi-kurichi/matcha-cross.jpg" alt="ふわもち#クリチ 抹茶あんこ 断面と構成（ふわもち生地・あんこ・ホイップ・抹茶クリームチーズ・黒蜜）" loading="lazy"></figure>
       </div>
     </div>
   </section>
 
   <!-- EXPERIENCE -->
   <section class="fk-exp">
-    <h2 class="fk-exp-h">時間と温度が、完成させる。</h2>
-    <p class="fk-exp-p">テイクアウトして、お家に着くころ。<br>持ち帰る時間でゆっくりとほどけ、ひんやり・ふわり・もちりが、ちょうど食べ頃に整います。</p>
-    <p class="fk-exp-tag">お家に着くころ、ちょうど食べ頃。<br>時間と温度が完成させる、新感覚・新食感 #クリチ。</p>
+    <h2 class="fk-exp-h">いちばんおいしいのは、<br>冷やして、とけてから。</h2>
+    <p class="fk-exp-p">買ってすぐより、ちょっと待つのがおすすめ。<br>冷蔵庫でゆっくり冷やすほどクリームチーズとホイップがほどけ、<br>ふわり・もちりの口どけが、いちばん引き立ちます。</p>
+    <div class="fk-exp-badge"><span class="snow">❄</span>冷蔵2日間が、食べ頃。</div>
+    <p class="fk-exp-note">目安は<b>冷蔵で2日間</b>。とけて馴染んだころが、ふわもち#クリチのいちばんのおいしさです。<br>キンと冷やして、とろける口どけをお楽しみください。</p>
+    <p class="fk-exp-tag">時間と温度が完成させる、<br>新感覚・新食感 #クリチ。</p>
   </section>
 
   <!-- CTA -->
