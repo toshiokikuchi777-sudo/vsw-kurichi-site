@@ -63,13 +63,23 @@
     <div style="font-size:12px;opacity:.75">2階建て＋屋上を組み立てています…</div>
   </div>
 
-<script type="importmap">
-{ "imports": { "three": "./lib/three.module.js", "three/addons/": "./lib/jsm/" } }
+<script>
+(function(){
+  function fail(msg){
+    var l=document.getElementById('loader'); if(!l) return;
+    l.innerHTML='<div style="text-align:center;padding:26px;max-width:340px;color:#241f1a"><div style="font-size:22px;font-weight:900">3Dを表示できませんでした</div><div style="font-size:13px;margin-top:12px;line-height:1.75;opacity:.85">'+(msg||'お使いの環境が対応していない可能性があります。')+'<br><br>Safari / Chrome の最新版で開いてください。LINE・微信などのアプリ内ブラウザの場合は、メニューから「ブラウザで開く」をお試しください。</div></div>';
+    l.classList.remove('hide');
+  }
+  window.__kurichiFail=fail;
+  window.addEventListener('error',function(e){ if(!window.__KURICHI_READY) fail(e.message); });
+  setTimeout(function(){ if(!window.__KURICHI_READY) fail('この環境では 3D（WebGL／JavaScript モジュール）が動作しないようです。'); },7000);
+})();
 </script>
 
 <script type="module">
-import * as THREE from 'three';
-import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import * as THREE from './lib/three.module.js';
+import { OrbitControls } from './lib/jsm/controls/OrbitControls.js';
+try {
 
 const COL = {
   red:0xE3261D, redD:0xb81d13, yellow:0xFFC20E, cream:0xFFF3D6, white:0xffffff,
@@ -285,7 +295,7 @@ document.querySelectorAll('#views button[data-view]').forEach(b=>b.addEventListe
 document.getElementById('fsbtn').addEventListener('click',()=>{ if(!document.fullscreenElement) document.documentElement.requestFullscreen?.(); else document.exitFullscreen?.(); });
 addEventListener('resize',()=>{ camera.aspect=innerWidth/innerHeight; camera.updateProjectionMatrix(); renderer.setSize(innerWidth,innerHeight); });
 
-const clock=new THREE.Clock(); const up=new THREE.Vector3(0,1,0);
+const clock=new THREE.Clock(); const up=new THREE.Vector3(0,1,0); let loaderShown=true;
 function animate(){
   requestAnimationFrame(animate);
   const dt=Math.min(clock.getDelta(),0.05);
@@ -300,10 +310,11 @@ function animate(){
   camera.position.y=Math.max(1.2,camera.position.y);
   if(fly){ camera.position.lerp(fly.pos,0.05); controls.target.lerp(fly.tgt,0.05); if(camera.position.distanceTo(fly.pos)<0.4) fly=null; }
   controls.update(); renderer.render(scene,camera);
+  if(loaderShown){ loaderShown=false; const l=document.getElementById('loader'); if(l){ l.classList.add('hide'); setTimeout(()=>l.remove(),700); } }
 }
-animate();
-setTimeout(()=>{ const l=document.getElementById('loader'); l.classList.add('hide'); setTimeout(()=>l.remove(),700); },500);
 window.__KURICHI_READY=true;
+animate();
+} catch(err){ if(window.__kurichiFail) window.__kurichiFail(err && err.message); throw err; }
 </script>
 </body>
 </html>
