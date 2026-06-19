@@ -1,0 +1,372 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>KURICHI LAND ｜ 石家庄 Neverland 旗艦構想 - VSW</title>
+<meta name="description" content="日本発のクリームチーズデザートブランド #クリチ が、中国・石家庄『Neverland 滹沱河集』の中心につくる、食べられるキャラクターデザートパーク「KURICHI LAND」。構想・空間・3D体験。" />
+<!-- 非公開ページ：サイトのナビからはリンクしない／検索にも載せない -->
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#e1281c">
+
+<!-- OGP（URLを直接共有したとき用） -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="KURICHI LAND ｜ 石家庄 Neverland 旗艦構想">
+<meta property="og:description" content="食べる・撮る・遊ぶ・集める。食べられるキャラクターデザートパーク KURICHI LAND の構想と3D体験。">
+<meta property="og:image" content="assets/kurichiland-china/booth-front.png">
+
+<script>document.documentElement.classList.add('js');</script>
+<link rel="icon" type="image/gif" href="assets/favicon.gif">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&family=Playfair+Display:ital,wght@0,700;1,700&family=Montserrat:wght@400;600;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+  /* ===== KURICHI LAND × 石家庄 Neverland page (kl2-) ===== */
+  :root{ --kl-red:#e1281c; --kl-red-d:#b81d13; --kl-yellow:#ffc20e; --kl-cream:#fff3d6; --kl-ink:#241f1a; }
+  .kl2{ background:var(--kl-cream); overflow-x:hidden; color:var(--kl-ink); }
+  .kl2 .wrap{ width:min(1140px,92vw); margin-inline:auto; }
+  .kl2 section{ padding:84px 0; }
+  .kl2 .eyebrow{ display:inline-block; font:800 12px/1 Montserrat,sans-serif; letter-spacing:.22em; text-transform:uppercase;
+                 color:var(--kl-red); background:#fff; border:2px solid var(--kl-red); padding:8px 14px; border-radius:999px; margin-bottom:18px; }
+  .kl2 h2{ font:900 clamp(26px,4.4vw,44px)/1.12 "Noto Sans JP",sans-serif; margin:0 0 14px; letter-spacing:.01em; }
+  .kl2 h2 .y{ color:var(--kl-red); }
+  .kl2 .lead{ font-size:clamp(15px,1.7vw,18px); line-height:1.95; color:#4a423b; max-width:760px; }
+
+  /* hero */
+  .kl2-hero{ position:relative; background:var(--kl-red); color:#fff; padding:128px 0 70px;
+    background-image:repeating-linear-gradient(135deg, rgba(255,255,255,.05) 0 22px, transparent 22px 44px); }
+  .kl2-hero .grid{ display:grid; grid-template-columns:1.05fr .95fr; gap:48px; align-items:center; }
+  .kl2-badge{ display:inline-flex; gap:8px; align-items:center; background:var(--kl-yellow); color:var(--kl-ink);
+    font:900 13px/1 Montserrat,sans-serif; letter-spacing:.12em; padding:9px 16px; border-radius:999px; margin-bottom:22px; }
+  .kl2-hero h1{ font:900 clamp(40px,7vw,84px)/.98 Montserrat,sans-serif; letter-spacing:-.01em; margin:0 0 6px; }
+  .kl2-hero h1 .jp{ display:block; font:900 clamp(20px,3vw,30px)/1.2 "Noto Sans JP",sans-serif; color:var(--kl-yellow); margin-top:8px; }
+  .kl2-hero .cn{ font-size:clamp(15px,1.9vw,19px); opacity:.95; margin:14px 0 6px; font-weight:500; }
+  .kl2-hero .place{ font-size:13px; letter-spacing:.06em; opacity:.85; margin-bottom:26px; }
+  .kl2-hero p.desc{ font-size:15.5px; line-height:1.9; opacity:.96; max-width:520px; }
+  .kl2-cta-row{ display:flex; gap:12px; flex-wrap:wrap; margin-top:30px; }
+  .kl2-btn{ display:inline-flex; align-items:center; gap:8px; font:800 15px/1 "Noto Sans JP",sans-serif; padding:15px 24px; border-radius:999px; text-decoration:none; transition:transform .15s, box-shadow .15s; }
+  .kl2-btn.primary{ background:var(--kl-yellow); color:var(--kl-ink); box-shadow:0 12px 30px -10px rgba(0,0,0,.5); }
+  .kl2-btn.ghost{ background:rgba(255,255,255,.12); color:#fff; border:2px solid rgba(255,255,255,.6); }
+  .kl2-btn:hover{ transform:translateY(-3px); }
+  .kl2-hero-img{ border-radius:24px; overflow:hidden; box-shadow:0 40px 70px -24px rgba(0,0,0,.55); border:5px solid #fff; transform:rotate(-1.2deg); }
+  .kl2-hero-img img{ display:block; width:100%; height:100%; object-fit:cover; }
+
+  /* stats */
+  .kl2-stats{ background:var(--kl-ink); color:#fff; padding:0; }
+  .kl2-stats .row{ display:grid; grid-template-columns:repeat(4,1fr); }
+  .kl2-stats .cell{ padding:30px 18px; text-align:center; border-right:1px solid rgba(255,255,255,.12); }
+  .kl2-stats .cell:last-child{ border-right:none; }
+  .kl2-stats .n{ font:900 clamp(26px,4vw,40px)/1 Montserrat,sans-serif; color:var(--kl-yellow); }
+  .kl2-stats .l{ font-size:12.5px; letter-spacing:.05em; opacity:.85; margin-top:8px; }
+
+  /* pillars */
+  .kl2-pillars{ display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-top:42px; }
+  .kl2-card{ background:#fff; border:2px solid var(--kl-ink); border-radius:20px; padding:26px 22px; box-shadow:6px 6px 0 var(--kl-ink); }
+  .kl2-card .ico{ font-size:30px; }
+  .kl2-card h3{ font:800 19px/1.3 "Noto Sans JP",sans-serif; margin:12px 0 6px; }
+  .kl2-card p{ font-size:13.5px; line-height:1.8; color:#5a514a; margin:0; }
+
+  /* place */
+  .kl2-place{ background:#fff; }
+  .kl2-place .two{ display:grid; grid-template-columns:1fr 1fr; gap:44px; align-items:center; }
+  .kl2-tags{ display:flex; flex-wrap:wrap; gap:8px; margin-top:18px; }
+  .kl2-tags span{ font-size:12.5px; font-weight:700; background:var(--kl-cream); border:1.5px solid var(--kl-yellow); color:#7a5a12; padding:7px 13px; border-radius:999px; }
+  .kl2-place-img{ border-radius:20px; overflow:hidden; box-shadow:var(--shadow); }
+  .kl2-place-img img{ width:100%; display:block; }
+
+  /* experience / webgl */
+  .kl2-exp{ background:linear-gradient(180deg,#241f1a, #2e2722); color:#fff; }
+  .kl2-exp .head{ text-align:center; margin-bottom:34px; }
+  .kl2-exp h2{ color:#fff; }
+  .kl2-frame{ position:relative; width:100%; aspect-ratio:16/9; border-radius:20px; overflow:hidden; border:4px solid var(--kl-yellow); box-shadow:0 30px 60px -20px rgba(0,0,0,.7); background:#bfe3f2; }
+  .kl2-frame iframe{ position:absolute; inset:0; width:100%; height:100%; border:0; }
+  .kl2-exp .note{ text-align:center; margin-top:18px; font-size:13px; opacity:.8; }
+  .kl2-exp .note a{ color:var(--kl-yellow); font-weight:700; }
+
+  /* layout 200+450 */
+  .kl2-zones{ display:grid; grid-template-columns:1fr 1fr; gap:22px; margin-top:42px; }
+  .kl2-zone{ border-radius:22px; padding:32px 28px; }
+  .kl2-zone.fac{ background:var(--kl-yellow); color:var(--kl-ink); border:3px solid var(--kl-red); }
+  .kl2-zone.gar{ background:#eaf1dc; color:#243018; border:3px solid #6da544; }
+  .kl2-zone .ztag{ font:900 13px/1 Montserrat,sans-serif; letter-spacing:.1em; }
+  .kl2-zone h3{ font:900 24px/1.2 Montserrat,sans-serif; margin:6px 0 4px; }
+  .kl2-zone .sub{ font-size:13px; font-weight:700; opacity:.8; margin-bottom:16px; }
+  .kl2-zone ul{ margin:0; padding:0; list-style:none; }
+  .kl2-zone li{ padding:9px 0 9px 26px; position:relative; font-size:14.5px; line-height:1.5; border-top:1px dashed rgba(0,0,0,.15); }
+  .kl2-zone li:first-child{ border-top:none; }
+  .kl2-zone li::before{ content:"●"; position:absolute; left:0; top:9px; font-size:11px; }
+  .kl2-zone.fac li::before{ color:var(--kl-red); }
+  .kl2-zone.gar li::before{ color:#4e8a2e; }
+
+  /* gallery */
+  .kl2-gal{ display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin-top:38px; }
+  .kl2-gal figure{ margin:0; border-radius:18px; overflow:hidden; background:#fff; border:2px solid var(--kl-ink); box-shadow:5px 5px 0 var(--kl-ink); }
+  .kl2-gal img{ width:100%; display:block; aspect-ratio:4/3; object-fit:cover; }
+  .kl2-gal figcaption{ font-size:12.5px; font-weight:700; padding:10px 12px; }
+
+  /* closing */
+  .kl2-close{ background:var(--kl-red); color:#fff; text-align:center;
+    background-image:repeating-linear-gradient(135deg, rgba(255,255,255,.05) 0 22px, transparent 22px 44px); }
+  .kl2-close h2{ color:#fff; }
+  .kl2-close .big{ font:900 clamp(26px,4.6vw,46px)/1.2 "Noto Sans JP",sans-serif; }
+  .kl2-close .big em{ color:var(--kl-yellow); font-style:normal; }
+  .kl2-close p{ opacity:.95; margin:16px auto 28px; max-width:620px; line-height:1.9; }
+
+  /* reveal（プログレッシブ：JS無し/未発火でも必ず見える） */
+  .kl2-reveal{ transition:opacity .7s ease, transform .7s ease; }
+  html.js .kl2-reveal{ opacity:0; transform:translateY(26px); }
+  html.js .kl2-reveal.in{ opacity:1; transform:none; }
+  @media (prefers-reduced-motion:reduce){ html.js .kl2-reveal{ opacity:1; transform:none; } }
+
+  @media (max-width:860px){
+    .kl2-hero .grid{ grid-template-columns:1fr; }
+    .kl2-hero-img{ order:-1; transform:none; }
+    .kl2-stats .row{ grid-template-columns:repeat(2,1fr); }
+    .kl2-stats .cell:nth-child(2){ border-right:none; }
+    .kl2-pillars{ grid-template-columns:1fr 1fr; }
+    .kl2-place .two{ grid-template-columns:1fr; }
+    .kl2-zones{ grid-template-columns:1fr; }
+    .kl2-gal{ grid-template-columns:1fr; }
+  }
+  @media (max-width:520px){ .kl2-pillars{ grid-template-columns:1fr; } }
+</style>
+</head>
+<body>
+
+<!-- アイコンスプライト（フッター用） -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-tiktok" viewBox="0 0 24 24"><path fill="currentColor" d="M19.3 6.3c-1.4-.9-2.3-2.5-2.4-4.3h-3.1v13.5c0 1.6-1.3 2.9-2.9 2.9s-2.9-1.3-2.9-2.9 1.3-2.9 2.9-2.9c.3 0 .6 0 .8.1V9.5c-.3 0-.6-.1-.8-.1-3.3 0-6 2.7-6 6s2.7 6 6 6 6-2.7 6-6V9.2c1.3.9 2.8 1.4 4.5 1.4V7.5c-.7 0-1.4-.2-2.1-.6z"/></symbol>
+  <symbol id="i-instagram" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" d="M4 8a4 4 0 0 1 4-4h8a4 4 0 0 1 4 4v8a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4Z"/><circle cx="12" cy="12" r="3.8" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="17.3" cy="6.7" r="1" fill="currentColor"/></symbol>
+  <symbol id="i-youtube" viewBox="0 0 24 24"><path fill="currentColor" d="M21.6 7.2c-.2-.9-.9-1.6-1.8-1.8C18.2 5 12 5 12 5s-6.2 0-7.8.4c-.9.2-1.6.9-1.8 1.8C2 8.8 2 12 2 12s0 3.2.4 4.8c.2.9.9 1.6 1.8 1.8C5.8 19 12 19 12 19s6.2 0 7.8-.4c.9-.2 1.6-.9 1.8-1.8.4-1.6.4-4.8.4-4.8s0-3.2-.4-4.8ZM10 15V9l5.2 3L10 15Z"/></symbol>
+  <symbol id="i-sandbox" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2 2 7v10l10 5 10-5V7L12 2Zm0 2.3 7.6 3.8L12 11.9 4.4 8.1 12 4.3Zm-8 5.5 7 3.5v7l-7-3.5v-7Zm9 10.5v-7l7-3.5v7l-7 3.5Z"/></symbol>
+</svg>
+
+<!-- 共通ナビ（このページは非公開だが、ナビからサイトへは戻れる） -->
+<nav class="nav">
+  <div class="container nav-inner">
+    <a href="index.html#top" class="brand">
+      <span class="brand-mark" style="background-image:url('assets/3d/vsw-logo-animated.gif')"></span>
+      <span class="brand-text">Vsw <em class="brand-hash">#KURICHI</em></span>
+    </a>
+    <div class="nav-links">
+      <a href="index.html#products">Products</a>
+      <a href="index.html#story">Story</a>
+      <a href="kurichiland.html">3D World</a>
+      <a href="harichi.html">Harichi</a>
+      <a href="news/index.html">News</a>
+      <a href="business/index.html">Business</a>
+      <a href="business/china.html">China</a>
+      <a href="collaboration.html">Partnership</a>
+      <a href="index.html#shop">Shop</a>
+      <a href="about.html">Company</a>
+    </div>
+    <a href="https://vswferdinand.base.shop/" target="_blank" rel="noopener" class="cta">Online Shop →</a>
+    <button class="nav-toggle" aria-label="menu">☰</button>
+  </div>
+</nav>
+
+<main class="kl2">
+
+  <!-- HERO -->
+  <section class="kl2-hero">
+    <div class="wrap grid">
+      <div>
+        <span class="kl2-badge">🧀 FLAGSHIP CONCEPT · CHINA</span>
+        <h1>KURICHI LAND<span class="jp">クリチランド</span></h1>
+        <p class="cn">来自日本的奶酪甜品IP乐园 ／ 日本发・奶酪甜品・沉浸式IP空间</p>
+        <p class="place">中国 河北省 石家庄市・滹沱河 艺术生态岛 ｜ Neverland 滹沱河集</p>
+        <p class="desc">日本発のクリームチーズデザートブランド「#クリチ」が、石家庄の文旅施設「Neverland」の中心に出店する、<b>食べる・撮る・遊ぶ・集める</b>を一体化した「食べられるキャラクターデザートパーク」。</p>
+        <div class="kl2-cta-row">
+          <a class="kl2-btn primary" href="#experience">🎮 3D空間を体験する</a>
+          <a class="kl2-btn ghost" href="#concept">構想を見る ↓</a>
+        </div>
+      </div>
+      <div class="kl2-hero-img">
+        <img src="assets/kurichiland-china/booth-front.png" alt="KURICHI LAND ブースデザイン（レトロポップ・赤×黄）">
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <section class="kl2-stats">
+    <div class="wrap"><div class="row">
+      <div class="cell"><div class="n">650㎡</div><div class="l">島の中心・旗艦区画</div></div>
+      <div class="cell"><div class="n">200㎡</div><div class="l">KURICHI FACTORY（屋内）</div></div>
+      <div class="cell"><div class="n">450㎡</div><div class="l">KURICHI GARDEN（屋外）</div></div>
+      <div class="cell"><div class="n">主理人</div><div class="l">島の看板テナント</div></div>
+    </div></div>
+  </section>
+
+  <!-- CONCEPT -->
+  <section id="concept">
+    <div class="wrap">
+      <span class="eyebrow kl2-reveal">Concept</span>
+      <h2 class="kl2-reveal">単なるバーガー店ではなく、<span class="y">食べられるIP空間</span>。</h2>
+      <p class="lead kl2-reveal">クリチランドは、商品・キャラクター・世界観を一つの場所に結晶させた体験施設。来場者は「食べて終わり」ではなく、撮って・遊んで・集めて・また来たくなる。レトロポップな赤と黄色の世界が、島の中心で人を呼びます。</p>
+      <div class="kl2-pillars">
+        <div class="kl2-card kl2-reveal"><div class="ico">🍔</div><h3>食べる</h3><p>クリームチーズデザート、限定フレーバー、出来たての一口。</p></div>
+        <div class="kl2-card kl2-reveal"><div class="ico">📸</div><h3>撮る</h3><p>車顔ショーケース、大型ロゴ、Got KURICHI? の打卡（チェックイン）スポット。</p></div>
+        <div class="kl2-card kl2-reveal"><div class="ico">🎡</div><h3>遊ぶ</h3><p>KURICHI FACTORY の制作演出、ガーデンのイベント・キャラ体験。</p></div>
+        <div class="kl2-card kl2-reveal"><div class="ico">🧸</div><h3>集める</h3><p>Tシャツ・キーホルダー・フィギュア・限定グッズ。持ち帰れる世界観。</p></div>
+        <div class="kl2-card kl2-reveal"><div class="ico">🛍</div><h3>買う</h3><p>物販＋EC連動。「島の味」を家でも、リピートにつなげる。</p></div>
+        <div class="kl2-card kl2-reveal"><div class="ico">👋</div><h3>キャラと出会う</h3><p>クリチ系キャラ／ボクセル立像。会いに来る理由をつくる。</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PLACE -->
+  <section class="kl2-place">
+    <div class="wrap two">
+      <div class="kl2-reveal">
+        <span class="eyebrow">The Place</span>
+        <h2>石家庄 <span class="y">Neverland</span> の<br>中心に立つ。</h2>
+        <p class="lead">滹沱河の中洲に生まれる文化観光の島「滹沱河 艺术生态岛 / Neverland 滹沱河集」。生態・アート・自然と共生する独棟商業クラスターの中心区画に、クリチランドが旗艦テナント（主理人）として出店します。島の生態トーンに調和させながら、クリチの赤・黄で必ず立ち寄りたくなる"主役の風景"をつくります。</p>
+        <div class="kl2-tags">
+          <span>生態 × アート</span><span>独棟商業クラスター</span><span>島の中心区画</span><span>看板テナント（主理人）</span><span>北京から高速鉄道で約1時間</span>
+        </div>
+      </div>
+      <div class="kl2-place-img kl2-reveal">
+        <img src="assets/kurichiland-china/booth-mall.png" alt="KURICHI LAND 出店イメージ">
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE (WebGL) -->
+  <section id="experience" class="kl2-exp">
+    <div class="wrap">
+      <div class="head kl2-reveal">
+        <span class="eyebrow">3D Experience</span>
+        <h2>歩いて体験する、<span style="color:var(--kl-yellow)">クリチランド</span>。</h2>
+        <p class="lead" style="color:#e9e2da;margin-inline:auto;text-align:center">ブラウザの中を歩き回れる3D空間。FACTORY（屋内）からGARDEN（屋外）まで、配置と世界観をそのまま体験できます。</p>
+      </div>
+      <div class="kl2-frame kl2-reveal">
+        <iframe src="kurichiland-experience/index.html" title="KURICHI LAND 3D体験空間" loading="lazy" allowfullscreen></iframe>
+      </div>
+      <p class="note">操作：ドラッグ＝見回す／ホイール＝ズーム／<b>W A S D</b>＝移動 ・ 下部ボタンで主要スポットへ　—
+        <a href="kurichiland-experience/index.html" target="_blank" rel="noopener">別タブで全画面表示 ↗</a></p>
+    </div>
+  </section>
+
+  <!-- LAYOUT 650㎡ -->
+  <section>
+    <div class="wrap">
+      <span class="eyebrow kl2-reveal">650㎡ Layout</span>
+      <h2 class="kl2-reveal">屋内は濃いIP空間、<span class="y">屋外は自然と調和</span>。</h2>
+      <p class="lead kl2-reveal">建物200㎡（KURICHI FACTORY）に世界観を凝縮し、テラス450㎡（KURICHI GARDEN）でNeverlandの自然へ広げる。屋内の赤黄ポップと、屋外の木・緑が、ひとつの旗艦体験になります。</p>
+      <div class="kl2-zones">
+        <div class="kl2-zone fac kl2-reveal">
+          <div class="ztag">INDOOR · 200㎡</div>
+          <h3>KURICHI FACTORY</h3>
+          <div class="sub">屋内＝濃いIP空間</div>
+          <ul>
+            <li>メインカウンター＋大型キャノピー看板（Got KURICHI?）</li>
+            <li>車顔ショーケース（入口の顔・最初に撮りたくなる場所）</li>
+            <li>KURICHI FACTORY（ガラス越しの制作演出）</li>
+            <li>グッズ売場（T/キャップ/キーホルダー/フィギュア）</li>
+            <li>キャラクター展示（ボクセル立像・撮影ポイント）</li>
+          </ul>
+        </div>
+        <div class="kl2-zone gar kl2-reveal">
+          <div class="ztag">OUTDOOR · 450㎡</div>
+          <h3>KURICHI GARDEN</h3>
+          <div class="sub">屋外＝自然と調和</div>
+          <ul>
+            <li>テラス席（丸テーブル／赤チェア／ロゴ入りパラソル）</li>
+            <li>ガーデン動線（石畳の小道・植栽・花壇）</li>
+            <li>フォトスポット（大型ロゴ／キャラオブジェ）</li>
+            <li>イベントスペース（季節メニュー・キャラ体験）</li>
+            <li>Neverlandの生態トーンに馴染む自然素材</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GALLERY -->
+  <section class="kl2-place">
+    <div class="wrap">
+      <span class="eyebrow kl2-reveal">Design Language</span>
+      <h2 class="kl2-reveal">レトロポップな、<span class="y">クリチの世界</span>。</h2>
+      <div class="kl2-gal">
+        <figure class="kl2-reveal"><img src="assets/kurichiland-china/booth-front.png" alt="ブース正面"><figcaption>車顔ショーケース＋カウンター＋キャノピー看板</figcaption></figure>
+        <figure class="kl2-reveal"><img src="assets/kurichiland-china/booth-mall.png" alt="出店イメージ"><figcaption>赤白チェック・黄色面材・グロッシー什器</figcaption></figure>
+        <figure class="kl2-reveal"><img src="assets/kurichiland-china/booth-modules.png" alt="モジュール構成"><figcaption>什器モジュール構成（拡張・転用可能）</figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- CLOSING -->
+  <section class="kl2-close">
+    <div class="wrap">
+      <span class="eyebrow" style="background:var(--kl-yellow);border-color:var(--kl-yellow);color:var(--kl-ink)">KURICHI LAND</span>
+      <div class="big">この島の主役を、<em>クリチ</em>で。</div>
+      <p>石家庄 Neverland の中心で、「食べる・撮る・遊ぶ・集める」を一体化する、<br>日本発のレトロポップなキャラクターデザートパーク。</p>
+      <a class="kl2-btn primary" href="#experience">🎮 もう一度、3Dで体験する</a>
+    </div>
+  </section>
+
+</main>
+
+<!-- 共通フッター -->
+<footer>
+  <div class="container">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <div class="brand" style="color:#fff">
+          <span class="brand-mark"></span>
+          <span>VSW / #クリチ</span>
+        </div>
+        <p>ひと口で、世界が色づく。<br>Vsw株式会社 - 大阪府池田市（本社） / 横浜（事務所のみ・販売なし）<br>NY発・大阪生まれのクリームチーズバーガー</p>
+        <div class="foot-social">
+          <a href="https://www.tiktok.com/@kurichi.jp" target="_blank" rel="noopener" aria-label="TikTok kurichi.jp"><svg><use href="#i-tiktok"/></svg></a>
+          <a href="https://www.instagram.com/kurichi.jp" target="_blank" rel="noopener" aria-label="Instagram kurichi.jp"><svg><use href="#i-instagram"/></svg></a>
+          <a href="https://www.youtube.com/@vswcreamcheese" target="_blank" rel="noopener" aria-label="YouTube"><svg><use href="#i-youtube"/></svg></a>
+          <a href="https://vswferdinand.base.shop/" target="_blank" rel="noopener" aria-label="Online Shop"><svg><use href="#i-sandbox"/></svg></a>
+        </div>
+      </div>
+      <div>
+        <h4>EXPLORE</h4>
+        <a href="index.html#products">Products</a>
+        <a href="how-to-eat.html">美味しい食べ方</a>
+        <a href="index.html#story">Story</a>
+        <a href="kurichiland.html">3D World</a>
+        <a href="about.html">会社概要</a>
+      </div>
+      <div>
+        <h4>KURICHI LAND</h4>
+        <a href="#concept">Concept</a>
+        <a href="#experience">3D Experience</a>
+        <a href="#">650㎡ Layout</a>
+        <a href="kurichiland-experience/index.html" target="_blank" rel="noopener">空間を全画面で</a>
+      </div>
+      <div>
+        <h4>CONTACT</h4>
+        <a href="https://vswferdinand.base.shop/" target="_blank" rel="noopener">Online Shop</a>
+        <a href="collaboration.html">Partnership</a>
+        <a href="about.html">会社概要</a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 Vsw Inc. / #KURICHI. All rights reserved.</span>
+      <span>非公開プレビューページ</span>
+    </div>
+  </div>
+</footer>
+
+<script src="script.js?v=20260427" defer></script>
+<script>
+  // セクションのフェードイン（失敗時フェイルセーフ付き）
+  (function(){
+    const reveal = el => el.classList.add('in');
+    const els = document.querySelectorAll('.kl2-reveal');
+    if('IntersectionObserver' in window){
+      const io = new IntersectionObserver((es)=>{ es.forEach(e=>{ if(e.isIntersecting){ reveal(e.target); io.unobserve(e.target);} }); }, {threshold:.12, rootMargin:'0px 0px -8% 0px'});
+      els.forEach(el=>io.observe(el));
+    } else { els.forEach(reveal); }
+    // 何らかの理由で発火しなくても確実に表示
+    setTimeout(()=>els.forEach(reveal), 2500);
+  })();
+</script>
+</body>
+</html>
