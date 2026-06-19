@@ -96,8 +96,12 @@
   .kl2-zone li{ padding:9px 0 9px 26px; position:relative; font-size:14.5px; line-height:1.5; border-top:1px dashed rgba(0,0,0,.15); }
   .kl2-zone li:first-child{ border-top:none; }
   .kl2-zone li::before{ content:"●"; position:absolute; left:0; top:9px; font-size:11px; }
+  .kl2-zone.diner{ background:#fff0bf; color:#5a4612; border:3px solid #d9b53c; }
+  .kl2-zone.sky{ background:#e8f4f1; color:#1f3a37; border:3px solid #2f8f87; }
   .kl2-zone.fac li::before{ color:var(--kl-red); }
   .kl2-zone.gar li::before{ color:#4e8a2e; }
+  .kl2-zone.diner li::before{ color:#d49a00; }
+  .kl2-zone.sky li::before{ color:#2f8f87; }
 
   /* gallery */
   .kl2-gal{ display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin-top:38px; }
@@ -192,8 +196,8 @@
   <section class="kl2-stats">
     <div class="wrap"><div class="row">
       <div class="cell"><div class="n">650㎡</div><div class="l">島の中心・旗艦区画</div></div>
-      <div class="cell"><div class="n">200㎡</div><div class="l">KURICHI FACTORY（屋内）</div></div>
-      <div class="cell"><div class="n">450㎡</div><div class="l">KURICHI GARDEN（屋外）</div></div>
+      <div class="cell"><div class="n">2F＋屋上</div><div class="l">建物構成（footprint 約200㎡）</div></div>
+      <div class="cell"><div class="n">450㎡</div><div class="l">テラス GARDEN（屋外）</div></div>
       <div class="cell"><div class="n">主理人</div><div class="l">島の看板テナント</div></div>
     </div></div>
   </section>
@@ -238,7 +242,7 @@
       <div class="head kl2-reveal">
         <span class="eyebrow">3D Experience</span>
         <h2>歩いて体験する、<span style="color:var(--kl-yellow)">クリチランド</span>。</h2>
-        <p class="lead" style="color:#e9e2da;margin-inline:auto;text-align:center">ブラウザの中を歩き回れる3D空間。FACTORY（屋内）からGARDEN（屋外）まで、配置と世界観をそのまま体験できます。</p>
+        <p class="lead" style="color:#e9e2da;margin-inline:auto;text-align:center">ブラウザの中を歩き回れる3D空間。1F FACTORY → 2F DINER → 屋上 SKY、そしてテラス GARDEN まで、2階建て＋屋上の配置と世界観をそのまま体験できます。</p>
       </div>
       <div class="kl2-frame kl2-reveal">
         <iframe src="kurichiland-experience/index.html" title="KURICHI LAND 3D体験空間" loading="lazy" allowfullscreen></iframe>
@@ -251,32 +255,51 @@
   <!-- LAYOUT 650㎡ -->
   <section>
     <div class="wrap">
-      <span class="eyebrow kl2-reveal">650㎡ Layout</span>
-      <h2 class="kl2-reveal">屋内は濃いIP空間、<span class="y">屋外は自然と調和</span>。</h2>
-      <p class="lead kl2-reveal">建物200㎡（KURICHI FACTORY）に世界観を凝縮し、テラス450㎡（KURICHI GARDEN）でNeverlandの自然へ広げる。屋内の赤黄ポップと、屋外の木・緑が、ひとつの旗艦体験になります。</p>
+      <span class="eyebrow kl2-reveal">Layout · 2F＋屋上</span>
+      <h2 class="kl2-reveal">登るほど、<span class="y">物語が変わる</span>建物。</h2>
+      <p class="lead kl2-reveal">建物は<b>2階建て＋屋上</b>。1階＝作る現場が見えるFACTORY、2階＝石家庄の冬を支える通年ダイナー＆キャラ・ミュージアム、屋上＝中洲と川を見下ろす絶景デッキ。外殻は木・緑・クリームでNeverlandに溶け込み、中に入ると赤黄が炸裂します。<span style="opacity:.7">（footprint 約200㎡を前提に延床 約360–400㎡）</span></p>
       <div class="kl2-zones">
         <div class="kl2-zone fac kl2-reveal">
-          <div class="ztag">INDOOR · 200㎡</div>
+          <div class="ztag">1F · FACTORY</div>
           <h3>KURICHI FACTORY</h3>
-          <div class="sub">屋内＝濃いIP空間</div>
+          <div class="sub">作る現場＝アトラクション（水・火・冷凍を集約）</div>
           <ul>
-            <li>メインカウンター＋大型キャノピー看板（Got KURICHI?）</li>
-            <li>車顔ショーケース（入口の顔・最初に撮りたくなる場所）</li>
-            <li>KURICHI FACTORY（ガラス越しの制作演出）</li>
-            <li>グッズ売場（T/キャップ/キーホルダー/フィギュア）</li>
-            <li>キャラクター展示（ボクセル立像・撮影ポイント）</li>
+            <li>車顔ショーケース（入口の顔・最初の一枚）</li>
+            <li>ガラス越しの仕上げ＝KURICHI FACTORY演出</li>
+            <li>メインカウンター＋Got KURICHI? 看板</li>
+            <li>厨房・冷凍ストック（冷凍ロジで重厨房なし）</li>
+          </ul>
+        </div>
+        <div class="kl2-zone diner kl2-reveal">
+          <div class="ztag">2F · DINER & MUSEUM</div>
+          <h3>KURICHI DINER</h3>
+          <div class="sub">冬を支える通年の屋内主力</div>
+          <ul>
+            <li>川ビューの屋内ダイナー席（約60席）</li>
+            <li>キャラクター・ミュージアム（ボクセル立像）</li>
+            <li>グッズショップ（滞在＝物販に直結）</li>
+            <li>イベント／ワークショップ（親子対応）</li>
+          </ul>
+        </div>
+        <div class="kl2-zone sky kl2-reveal">
+          <div class="ztag">屋上 · SKY</div>
+          <h3>KURICHI SKY</h3>
+          <div class="sub">島で一番撮られる、川ビューの特等席</div>
+          <ul>
+            <li>滹沱河と中洲を見下ろすフォトデッキ</li>
+            <li>夜は発光するシンボルサイン＝島の目印</li>
+            <li>夏夜のテラス席（夕〜夜が主役）</li>
           </ul>
         </div>
         <div class="kl2-zone gar kl2-reveal">
-          <div class="ztag">OUTDOOR · 450㎡</div>
+          <div class="ztag">テラス · GARDEN 450㎡</div>
           <h3>KURICHI GARDEN</h3>
-          <div class="sub">屋外＝自然と調和</div>
+          <div class="sub">屋外＝自然と調和する回遊</div>
           <ul>
-            <li>テラス席（丸テーブル／赤チェア／ロゴ入りパラソル）</li>
-            <li>ガーデン動線（石畳の小道・植栽・花壇）</li>
-            <li>フォトスポット（大型ロゴ／キャラオブジェ）</li>
-            <li>イベントスペース（季節メニュー・キャラ体験）</li>
-            <li>Neverlandの生態トーンに馴染む自然素材</li>
+            <li>テラス席（赤チェア／ロゴ入りパラソル）</li>
+            <li>ガーデン動線（石畳・植栽・花壇）</li>
+            <li>フォトスポット＋グリーティング広場</li>
+            <li>イベント／マルシェ（季節主役）</li>
           </ul>
         </div>
       </div>
