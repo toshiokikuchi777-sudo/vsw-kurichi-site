@@ -77,6 +77,7 @@
   .dl-card:hover{transform:translateY(-4px);box-shadow:0 22px 44px -24px rgba(0,0,0,.35);border-color:rgba(230,57,70,.3)}
   .dl-thumb{position:relative;display:block;aspect-ratio:4/3;background:#f4ece0 center/cover no-repeat;overflow:hidden}
   .dl-thumb img{width:100%;height:100%;object-fit:cover;display:block}
+  .dl-thumb img.contain{object-fit:contain;padding:20px;background:#fff7e6}
   .dl-thumb .badge{position:absolute;top:8px;left:8px;background:rgba(26,22,19,.82);color:#fff;font-family:"Montserrat";font-weight:800;font-size:10px;letter-spacing:.06em;padding:3px 8px;border-radius:6px}
   .dl-thumb .play{position:absolute;inset:0;margin:auto;width:50px;height:50px;background:rgba(255,255,255,.92);border-radius:50%;display:grid;place-items:center;font-size:18px;color:var(--tomato);box-shadow:0 6px 18px -6px rgba(0,0,0,.5)}
   .dl-card-body{padding:13px 14px 15px;display:flex;flex-direction:column;gap:9px;flex:1}
@@ -133,7 +134,7 @@
     <div class="dl-hero">
       <div class="eyebrow">FOR RETAIL PARTNERS</div>
       <h1 class="dl-title">販売店向け <em>ダウンロードセンター</em></h1>
-      <p class="dl-sub">#クリチ 取扱店さま用 ─ 店頭POP・商品写真・SNS動画・資料を無料でご利用いただけます</p>
+      <p class="dl-sub">#クリチ 取扱店さま用 ─ 店頭POP・商品写真・ロゴ・SNS動画・資料を無料でご利用いただけます</p>
     </div>
 
     <div class="dl-guide">
@@ -291,6 +292,24 @@ const CATS = [
       ]},
     ]
   },
+  {
+    id:"brand", icon:"🎨", title:"ロゴ・ブランド素材",
+    desc:"VSWロゴ・横断幕デザイン・商品イメージ写真。店頭装飾やオリジナル販促物の制作にご利用ください。",
+    sections:[
+      { head:"ロゴ（SVG・拡大しても劣化なし）", items:[
+        { t:"VSW ロゴマーク", thumbFull:"KURICHI_POP/Vsw.svg", contain:true, kind:"logo", type:"SVG", size:"8KB",
+          file:"KURICHI_POP/Vsw.svg", dl:"VSW_logo_mark.svg" },
+        { t:"VSW ロゴ（縦型）", thumbFull:"KURICHI_POP/logo.svg", contain:true, kind:"logo", type:"SVG", size:"4KB",
+          file:"KURICHI_POP/logo.svg", dl:"VSW_logo.svg" },
+      ]},
+      { head:"横断幕・写真", items:[
+        { t:"横断幕デザイン 1800×600（Illustrator）", thumb:"extra-oudanmaku.jpg", kind:"ai", type:"AI", size:"4.7MB",
+          file:"KURICHI_POP/oudanmaku_1800_600_hukuro_4cm_yoko.ai", dl:"クリチ_横断幕_1800x600_yoko.ai" },
+        { t:"商品イメージ写真", thumb:"extra-hte-hero.jpg", kind:"image", type:"JPG", size:"320KB",
+          file:"KURICHI_POP/hte-hero.jpg", dl:"クリチ_商品イメージ.jpg" },
+      ]},
+    ]
+  },
 ];
 
 /* ===== レンダリング ===== */
@@ -307,9 +326,13 @@ function card(it){
   const badge = `<span class="badge">${it.type}</span>`;
   const play = isVideo ? '<span class="play">▶</span>' : "";
   const waitTag = (isVideo && !ready) ? '<span class="wait-tag">準備中</span>' : "";
-  const thumbStyle = it.thumb ? "" : ' style="display:grid;place-items:center;font-size:42px"';
-  const inner = it.thumb
-    ? `${badge}<img src="${TH}/${it.thumb}" alt="${it.t}" loading="lazy">${play}${waitTag}`
+  const thumbSrc = it.thumbFull ? enc(it.thumbFull) : (it.thumb ? TH+"/"+it.thumb : null);
+  const imgClass = it.contain ? ' class="contain"' : '';
+  const thumbStyle = thumbSrc
+    ? (it.contain ? ' style="background:#fff7e6"' : "")
+    : ' style="display:grid;place-items:center;font-size:42px"';
+  const inner = thumbSrc
+    ? `${badge}<img src="${thumbSrc}"${imgClass} alt="${it.t}" loading="lazy">${play}${waitTag}`
     : `${badge}${kindIcon[it.kind]||"📄"}`;
   const media = (ready && href)
     ? `<a class="dl-thumb" href="${href}" target="_blank" rel="noopener" title="${isVideo?'動画を開く':'プレビューを開く'}"${thumbStyle}>${inner}</a>`

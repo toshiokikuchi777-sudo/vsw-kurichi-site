@@ -53,5 +53,10 @@ vid "$B/ふわもち.MP4"  vid-fuwa.jpg
 C="$POP/KURICHI_movie"
 for n in 1 2 3 4 5 7 8 9; do vid "$C/instagram${n}.MP4" "vid-ig${n}.jpg"; done
 
+### ロゴ・ブランド素材 (KURICHI_POP 直下) ###
+img "$POP/hte-hero.jpg"                              extra-hte-hero.jpg
+pdf "$POP/oudanmaku_1800_600_hukuro_4cm_yoko.ai"     extra-oudanmaku.jpg
+# ロゴSVG(Vsw.svg / logo.svg)はサムネ不要（ページで直接表示）
+
 echo "---- done ----"
 ls "$OUT" | wc -l
