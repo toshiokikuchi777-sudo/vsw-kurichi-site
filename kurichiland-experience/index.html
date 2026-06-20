@@ -55,6 +55,7 @@
     <button data-view="diner">🍰 2F DINER</button>
     <button data-view="sky">🌆 屋上 SKY</button>
     <button data-view="garden">🌿 GARDEN</button>
+    <button id="dnbtn" class="ghost">🌙 夜にする</button>
     <button id="fsbtn" class="ghost">⛶ 全画面</button>
   </div>
   <div id="loader">
@@ -112,8 +113,8 @@ controls.target.set(-4, 5, -7);
 controls.maxPolarAngle = Math.PI * 0.497;
 controls.minDistance = 2; controls.maxDistance = 130;
 
-scene.add(new THREE.HemisphereLight(0xffffff, 0x88a868, 0.85));
-scene.add(new THREE.AmbientLight(0xffffff, 0.22));
+const hemi=new THREE.HemisphereLight(0xffffff, 0x88a868, 0.85); scene.add(hemi);
+const amb=new THREE.AmbientLight(0xffffff, 0.22); scene.add(amb);
 const sun = new THREE.DirectionalLight(0xfff3df, 1.55);
 sun.position.set(38, 60, 30); sun.castShadow = true;
 sun.shadow.mapSize.set(2048, 2048);
@@ -138,6 +139,13 @@ function makeLabel(text,sub,col){
   const tex=canvasTex((x,w,h)=>{ x.clearRect(0,0,w,h); x.fillStyle='rgba(36,31,26,.86)'; rr(x,18,18,w-36,h-36,56); x.fill(); x.strokeStyle=col||'#FFC20E'; x.lineWidth=9; rr(x,18,18,w-36,h-36,56); x.stroke(); x.textAlign='center';x.textBaseline='middle'; x.fillStyle='#fff';x.font='bold 92px "Hiragino Sans",sans-serif';x.fillText(text,w/2,h/2-24); x.fillStyle=col||'#FFC20E';x.font='bold 54px "Hiragino Sans",sans-serif';x.fillText(sub,w/2,h/2+60); },1024,300);
   const s=new THREE.Sprite(new THREE.SpriteMaterial({map:tex,transparent:true,depthTest:true})); s.scale.set(6.2,1.82,1); return s;
 }
+
+// ---- day/night + animation registries ----
+const emissives=[], bulbs=[], steam=[], nightLights=[];
+function reg(m,day,night){ if(m.material){ m.material.emissiveIntensity=day; } emissives.push({m,day,night}); return m; }
+const tmesh=(w,h,d,t,o={})=>{ const m=new THREE.Mesh(new THREE.BoxGeometry(w,h,d), new THREE.MeshStandardMaterial({map:t,roughness:o.rough??0.8,metalness:o.metal??0})); m.castShadow=true; m.receiveShadow=true; return m; };
+const stripeTex=canvasTex((x,w,h)=>{const n=10,sw=w/n;for(let i=0;i<n;i++){x.fillStyle=(i%2)?'#E3261D':'#fff6ec';x.fillRect(i*sw,0,sw,h);}},512,128);
+const checkerTex=canvasTex((x,w,h)=>{const n=16,sw=w/n,sh=h/2;for(let i=0;i<n;i++)for(let j=0;j<2;j++){x.fillStyle=((i+j)%2)?'#E3261D':'#fff';x.fillRect(i*sw,j*sh,sw,sh);}},512,64);
 
 // ---- water + island ----
 const water=new THREE.Mesh(new THREE.CircleGeometry(330,72), new THREE.MeshStandardMaterial({color:COL.water,roughness:0.25,metalness:0.15}));
@@ -165,14 +173,29 @@ add(BLD, box(14,F1,T,COL.red), 0,F1/2,-HZ);                  // back wall
 add(BLD, box(T,F1,14,COL.red), -HX,F1/2,0);                  // left
 add(BLD, box(T,F1,14,COL.red), HX,F1/2,0);                   // right
 add(BLD, box(14.1,0.6,T+0.04,COL.yellow), 0,F1-0.6,-HZ);     // band
+// glossy checker wainscot (base band, sides+back)
+add(BLD, tmesh(14.06,0.9,0.06,checkerTex,{rough:0.3,metal:0.1}), 0,0.5,-HZ-0.03);
+add(BLD, tmesh(0.06,0.9,14.06,checkerTex,{rough:0.3,metal:0.1}), -HX-0.03,0.5,0);
+add(BLD, tmesh(0.06,0.9,14.06,checkerTex,{rough:0.3,metal:0.1}), HX+0.03,0.5,0);
+// wood batten screen on left wall (Neverland harmony)
+for(let i=0;i<12;i++) add(BLD, box(0.1,F1-0.6,0.1,COL.wood,{rough:0.9}), -HX-0.1,(F1-0.6)/2+0.3,-6+i*1.05);
+// window boxes w/ flowers under 2F (added later with 2F)
 // 1F storefront (front +z)
 add(BLD, box(0.6,F1,0.6,COL.yellow), -HX+0.3,F1/2,HZ);
 add(BLD, box(0.6,F1,0.6,COL.yellow), HX-0.3,F1/2,HZ);
 add(BLD, box(14,0.8,0.5,COL.red), 0,F1-0.4,HZ);              // header beam
-add(BLD, box(12.6,3.2,0.12,COL.glass,{transparent:true,opacity:0.28,metal:0.1,rough:0.05}), 0,1.9,HZ);
+add(BLD, box(12.6,3.2,0.10,COL.glass,{transparent:true,opacity:0.24,metal:0.1,rough:0.05}), 0,1.9,HZ);
+// vertical mullions + sill rail
+for(let i=-2;i<=2;i++) add(BLD, box(0.1,3.2,0.16,COL.cream), i*2.5,1.9,HZ+0.03);
+add(BLD, box(12.6,0.12,0.16,COL.cream), 0,2.7,HZ+0.03);
+add(BLD, box(12.6,0.12,0.16,COL.cream), 0,0.45,HZ+0.03);
+// pendant lights inside (warm glow at night)
+for(let i=-1;i<=1;i++){ add(BLD, cyl(0.02,0.02,0.5,COL.ink,6), i*3,F1-0.55,HZ-1.3); const bb=sph(0.16,0xfff1c0,{emissive:0xFFC23C,ei:0.25}); add(BLD,bb,i*3,F1-0.92,HZ-1.3); reg(bb,0.25,1.7); }
+// striped awning over storefront (slanted) + valance
+(function(){ const a=tmesh(13.4,0.1,1.9,stripeTex,{rough:0.85}); a.rotation.x=-0.34; a.position.set(0,F1+0.02,HZ+1.05); BLD.add(a);
+  const v=tmesh(13.4,0.5,0.06,stripeTex); v.position.set(0,F1-0.42,HZ+1.95); BLD.add(v); })();
 // checker fascia
-const checker=canvasTex((x,w,h)=>{const n=16,sw=w/n,sh=h/2;for(let i=0;i<n;i++)for(let j=0;j<2;j++){x.fillStyle=((i+j)%2)?'#E3261D':'#fff';x.fillRect(i*sw,j*sh,sw,sh);}},512,64);
-add(BLD, new THREE.Mesh(new THREE.BoxGeometry(14.2,0.5,0.16), new THREE.MeshStandardMaterial({map:checker})), 0,F1-0.95,HZ+0.16);
+add(BLD, tmesh(14.2,0.5,0.16,checkerTex), 0,F1-0.95,HZ+0.18);
 // --- 2F floor slab (overhang ledge) ---
 add(BLD, box(14.8,0.4,14.8,COL.red), 0,F1+0.0,0);
 // --- 1F interior ---
@@ -193,6 +216,22 @@ for(let r=0;r<3;r++)for(let c=0;c<5;c++) add(BLD, box(0.5,0.5,0.45,[COL.red,COL.
 // big marquee on 1F/2F band front
 add(BLD, signPlane(11,2.9, canvasTex((x,w,h)=>{x.fillStyle='#E3261D';rr(x,12,12,w-24,h-24,40);x.fill();x.strokeStyle='#FFC20E';x.lineWidth=14;rr(x,12,12,w-24,h-24,40);x.stroke();x.textAlign='center';x.textBaseline='middle';x.fillStyle='#fff';x.font='900 150px Arial';x.fillText('KURICHI LAND',w/2,h/2-20);x.fillStyle='#FFC20E';x.font='bold 66px "Hiragino Sans",sans-serif';x.fillText('クリチランド',w/2,h/2+90);},1280,360)), 0,F1+1.0,HZ+0.3);
 
+// --- entrance portal arch + marquee bulbs (front-left) ---
+(function(){ const p=new THREE.Group(); const fw=4.4, fh=3.4;
+  add(p, box(0.32,fh,0.32,COL.yellow), -fw/2,fh/2,0);
+  add(p, box(0.32,fh,0.32,COL.yellow), fw/2,fh/2,0);
+  const arch=new THREE.Mesh(new THREE.TorusGeometry(fw/2,0.16,10,28,Math.PI), mat(COL.yellow)); arch.position.set(0,fh,0); arch.castShadow=true; p.add(arch);
+  const pts=[];
+  for(let t=0;t<=12;t++){ const a=Math.PI*(t/12); pts.push([Math.cos(a)*fw/2, fh+Math.sin(a)*fw/2]); }
+  for(let i=1;i<=6;i++){ pts.push([-fw/2, i/6*fh]); pts.push([fw/2, i/6*fh]); }
+  pts.forEach(q=>{ const b=sph(0.1,0xfff4c0,{emissive:0xFFC20E,ei:0.25}); b.castShadow=false; add(p,b,q[0],q[1],0.22); bulbs.push(b); });
+  add(p, box(2.0,0.5,0.06, panelTex('OPEN','#fff','#E3261D')), 0,fh-0.55,0.12);
+  p.position.set(-3.2,0.1,HZ+0.7); BLD.add(p);
+})();
+// neon frame around the big marquee
+(function(){ const fy=F1+1.0, fz=HZ+0.34, w=11.2, h=3.1, t=0.12, mk=()=>mat(0xFFC20E,{emissive:0xFFC20E,ei:0.3});
+  [[0,h/2,w,t],[0,-h/2,w,t],[-w/2,0,t,h],[w/2,0,t,h]].forEach(s=>{ const m=new THREE.Mesh(new THREE.BoxGeometry(s[2],s[3],0.08),mk()); add(BLD,m,s[0],fy+s[1],fz); reg(m,0.3,1.9); });
+})();
 // --- 2F (DINER) ---
 const y2=lvl2+F2/2+0.2;
 add(BLD, box(14,F2,T,COL.red), 0,y2,-HZ);                    // back
@@ -202,6 +241,9 @@ add(BLD, box(T,F2,14,COL.red), HX,y2,0);                     // right
 add(BLD, box(12.4,2.8,0.12,COL.glass,{transparent:true,opacity:0.3,rough:0.05}), 0,y2,HZ);
 add(BLD, box(0.12,2.8,12.4,COL.glass,{transparent:true,opacity:0.3,rough:0.05}), HX,y2,0);
 add(BLD, box(14.1,0.5,T+0.06,COL.yellow), 0,lvl2+F2-0.3+0.2,-HZ);  // 2F band
+// 2F front mullions + window boxes with flowers
+for(let i=-2;i<=2;i++) add(BLD, box(0.1,2.8,0.16,COL.cream), i*2.5,y2,HZ+0.03);
+for(let i=-1;i<=1;i++){ const wb=new THREE.Group(); add(wb,box(3.6,0.4,0.5,COL.darkwood),0,0,0); add(wb,box(3.4,0.18,0.42,COL.green),0,0.16,0.02); for(let k=0;k<6;k++) add(wb,sph(0.12,k%2?COL.red:COL.yellow),-1.35+k*0.54,0.3,0.06); wb.position.set(i*4.2, lvl2+0.7, HZ+0.4); BLD.add(wb); }
 add(BLD, box(6,0.8,0.08,panelTex('KURICHI DINER','#fff','#E3261D')), 0,lvl2+F2-0.5,HZ+0.12); // 2F sign
 // 2F floor + a few dining tables (visible through glass)
 add(BLD, box(13.4,0.12,13.4,0xf3e3c2), 0,lvl2+0.26,0);
@@ -215,7 +257,7 @@ add(BLD, box(14.8,0.4,14.8,COL.wood), 0,roofY+0.2,0);
 const rfy=roofY+0.4;
 add(BLD, box(13.6,0.12,13.6,COL.deck), 0,rfy+0.06,0);        // deck
 // parapet railing
-const rail=(w,d,x,z)=>add(BLD, box(w,1.0,d,COL.cream,{opacity:0.96}), x,rfy+0.5,z);
+const rail=(w,d,x,z)=>{ add(BLD, box(w,0.85,d,COL.glass,{transparent:true,opacity:0.18,rough:0.05}), x,rfy+0.5,z); add(BLD, box(w<1?0.12:w,0.1,d<1?0.12:d,COL.red), x,rfy+0.95,z); };
 rail(14,0.25,0,HZ-0.1); rail(14,0.25,0,-HZ+0.1); rail(0.25,14,HX-0.1,0); rail(0.25,14,-HX+0.1,0);
 // stair penthouse
 add(BLD, box(3,2.6,3,COL.red), 4.8,rfy+1.3,-4.8);
@@ -234,7 +276,27 @@ add(BLD, box(1.2,3.6,1.2,COL.redD), -3,rfy+1.8,2.0);
 const beacon=signPlane(3.6,2.0, canvasTex((x,w,h)=>{x.fillStyle='#E3261D';rr(x,8,8,w-16,h-16,30);x.fill();x.fillStyle='#FFC20E';x.font='900 92px Arial';x.textAlign='center';x.textBaseline='middle';x.fillText('KURICHI',w/2,h/2-30);x.fillStyle='#fff';x.font='900 92px Arial';x.fillText('LAND',w/2,h/2+55);},512,300));
 add(BLD, beacon, -3,rfy+4.4,2.0);
 // glow billboard behind beacon (emissive)
-add(BLD, box(3.4,1.9,0.05,COL.yellow,{emissive:0xFFB000,ei:0.5}), -3,rfy+4.4,1.95);
+const bGlow=box(3.4,1.9,0.05,COL.yellow,{emissive:0xFFB000,ei:0.4}); add(BLD,bGlow,-3,rfy+4.4,1.95); reg(bGlow,0.4,2.2);
+
+// chimney with cream-swirl cap + steam (left-back of roof)
+(function(){ const cx=-4.6, cz=-4.6, cb=rfy+0.1;
+  add(BLD, cyl(0.5,0.6,2.0,COL.cream,16), cx,cb+1.0,cz);
+  add(BLD, tmesh(1.3,0.35,1.3,checkerTex), cx,cb+2.0,cz);
+  for(let i=0;i<5;i++) add(BLD, cyl(0.48-i*0.08,0.52-i*0.08,0.22,COL.cream,14), cx,cb+2.35+i*0.2,cz);
+  add(BLD, cone(0.16,0.45,COL.cream,12), cx,cb+3.5,cz);
+  for(let i=0;i<4;i++){ const pf=sph(0.32+i*0.05,0xffffff,{transparent:true,opacity:0.7,rough:1}); pf.castShadow=false; add(BLD,pf,cx+(i%2?0.22:-0.22),cb+3.9+i*0.55,cz); steam.push({m:pf,base:cb+3.9+i*0.55,ph:i*1.4}); }
+})();
+// pergola + string lights over rooftop seating
+(function(){ const py=rfy+2.5;
+  [-5,3].forEach(x=>{ add(BLD, box(0.18,2.4,0.18,COL.wood), x,rfy+1.3,0.0); add(BLD, box(0.18,2.4,0.18,COL.wood), x,rfy+1.3,3.2); });
+  add(BLD, box(8.4,0.16,0.16,COL.wood), -1,py,0.0); add(BLD, box(8.4,0.16,0.16,COL.wood), -1,py,3.2);
+  for(let i=0;i<6;i++) add(BLD, box(0.14,0.14,3.5,COL.wood), -4.6+i*1.4,py,1.6);
+  for(let i=0;i<9;i++){ const b=sph(0.09,0xfff0b0,{emissive:0xFFD050,ei:0.25}); b.castShadow=false; add(BLD,b,-4.4+i*1.05,py-0.28,1.6); bulbs.push(b); }
+})();
+// cream-swirl photo sculpture (rooftop)
+(function(){ const sx=2.6, sz=-2.2, sb=rfy+0.1; add(BLD,cyl(0.6,0.7,0.5,COL.choco,16),sx,sb+0.25,sz);
+  for(let i=0;i<6;i++) add(BLD,cyl(0.55-i*0.08,0.6-i*0.08,0.26,COL.cream,14),sx,sb+0.62+i*0.24,sz);
+  add(BLD,cone(0.16,0.5,COL.cream,12),sx,sb+2.25,sz); add(BLD,sph(0.15,COL.red),sx,sb+2.5,sz); })();
 
 BLD.position.set(-4,0,-7);
 scene.add(BLD);
@@ -295,6 +357,20 @@ document.querySelectorAll('#views button[data-view]').forEach(b=>b.addEventListe
 document.getElementById('fsbtn').addEventListener('click',()=>{ if(!document.fullscreenElement) document.documentElement.requestFullscreen?.(); else document.exitFullscreen?.(); });
 addEventListener('resize',()=>{ camera.aspect=innerWidth/innerHeight; camera.updateProjectionMatrix(); renderer.setSize(innerWidth,innerHeight); });
 
+// ---- day / night ----
+const skyDay=new THREE.Color(COL.sky), skyNight=new THREE.Color(0x141d33);
+let night=false;
+const np1=new THREE.PointLight(0xffd9a0,0,32); np1.position.set(-11,7,4); scene.add(np1); nightLights.push(np1);
+const np2=new THREE.PointLight(0xfff0c0,0,28); np2.position.set(-7,13,-3); scene.add(np2); nightLights.push(np2);
+function setNight(on){ night=on;
+  scene.background.copy(on?skyNight:skyDay); scene.fog.color.copy(on?skyNight:skyDay);
+  sun.intensity=on?0.32:1.55; hemi.intensity=on?0.45:0.85; amb.intensity=on?0.55:0.22; renderer.toneMappingExposure=on?1.18:1.05;
+  emissives.forEach(e=>{ if(e.m.material) e.m.material.emissiveIntensity=on?e.night:e.day; });
+  nightLights.forEach(l=>l.intensity=on?1.1:0);
+  const b=document.getElementById('dnbtn'); if(b) b.textContent=on?'☀ 昼にする':'🌙 夜にする';
+}
+document.getElementById('dnbtn').addEventListener('click',()=>setNight(!night));
+
 const clock=new THREE.Clock(); const up=new THREE.Vector3(0,1,0); let loaderShown=true;
 function animate(){
   requestAnimationFrame(animate);
@@ -309,6 +385,10 @@ function animate(){
   if(mv.lengthSq()>0){ mv.normalize().multiplyScalar(sp); camera.position.add(mv); controls.target.add(mv); fly=null; }
   camera.position.y=Math.max(1.2,camera.position.y);
   if(fly){ camera.position.lerp(fly.pos,0.05); controls.target.lerp(fly.tgt,0.05); if(camera.position.distanceTo(fly.pos)<0.4) fly=null; }
+  // animated details
+  const tt=clock.elapsedTime;
+  for(let i=0;i<bulbs.length;i++){ const on=(Math.floor(tt*4)+i)%3===0; if(bulbs[i].material) bulbs[i].material.emissiveIntensity = night ? (on?2.0:0.5) : (on?0.45:0.16); }
+  for(const s of steam){ const p=((tt*0.45+s.ph)%1); s.m.position.y=s.base+p*2.4; s.m.scale.setScalar(0.6+p*1.5); if(s.m.material) s.m.material.opacity=(night?0.55:0.72)*(1-p); }
   controls.update(); renderer.render(scene,camera);
   if(loaderShown){ loaderShown=false; const l=document.getElementById('loader'); if(l){ l.classList.add('hide'); setTimeout(()=>l.remove(),700); } }
 }
