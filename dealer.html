@@ -48,6 +48,15 @@
   .dl-copybox p{margin:0;font-size:14px;line-height:1.9;color:var(--char)}
   .dl-copybox p strong{background:#ffe4a8;padding:1px 6px;border-radius:4px;font-weight:800}
 
+  /* ブログ記事リンク */
+  .dl-blog{display:flex;align-items:center;gap:14px;margin:0 0 22px;padding:16px 20px;border-radius:14px;background:linear-gradient(135deg,#fff,#fff7e6);border:1.5px solid var(--cheese);text-decoration:none;transition:.2s;box-shadow:0 14px 30px -26px rgba(0,0,0,.3)}
+  .dl-blog:hover{transform:translateY(-2px);border-color:var(--tomato);box-shadow:0 18px 36px -22px rgba(0,0,0,.35)}
+  .dl-blog-ico{font-size:26px;line-height:1;flex-shrink:0}
+  .dl-blog-txt{display:flex;flex-direction:column;gap:2px;flex:1;min-width:0}
+  .dl-blog-txt b{font-size:14.5px;color:var(--char);line-height:1.4}
+  .dl-blog-txt small{font-size:12px;color:#8a7a6e;line-height:1.5}
+  .dl-blog-arr{font-size:20px;color:var(--tomato);font-weight:800;flex-shrink:0}
+
   .dl-sub-head{font-size:14px;font-weight:800;color:var(--char);letter-spacing:.04em;margin:30px 0 14px;display:flex;align-items:center;gap:8px}
   .dl-sub-head::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--tomato);display:inline-block}
 
@@ -217,7 +226,7 @@ const CATS = [
           dl:"クリチ_商品写真"+(n-8)+(n===17?".jpg":".jpg")
         }))
       ]},
-      { head:"パンのフェス2026", items:[
+      { head:"パンのフェス2026", blogLink:{url:"blog/panfes-2026-yokohama.html", label:"パンのフェス2026｜横浜赤レンガ 出店記事", sub:"出店告知のブログ記事を読む（店頭・SNS告知の参考に）"}, items:[
         { t:"ストーリー告知（パンフェス）", thumb:"story-panfes.jpg", kind:"image", type:"JPG", size:"568KB",
           file:POP+"/パンのフェス2026/story-panfes.jpg", dl:"クリチ_ストーリー_パンフェス.jpg" },
         { t:"ストーリー告知（少女）", thumb:"story-shojo.jpg", kind:"image", type:"JPG", size:"508KB",
@@ -230,6 +239,7 @@ const CATS = [
   {
     id:"fuwamochi", icon:"🍓", title:"ふわもち#クリチ 販促キット",
     desc:"ふわもち食感の白バンズ新シリーズ（いちご／抹茶あんこ／ブルーベリー）。POP・ビジュアル・動画・資料・商品コピー。",
+    blogLink:{url:"blog/fuwamochi-kurichi.html", label:"ふわもち#クリチ 紹介ブログ記事", sub:"3フレーバーの世界観・商品ストーリーを記事で詳しく"},
     copybox:{
       head:"店頭・SNS用 キーコピー（そのままご利用OK）",
       html:'<strong>ひんやり、ふわり、もちり、口の中でほどける。</strong>　<strong>お家に着くころ、ちょうど食べ頃。</strong><br>時間と温度が完成させる、新感覚・新食感 #クリチ。'
@@ -327,17 +337,24 @@ function render(){
   }).join("");
   document.getElementById("chips").innerHTML = chips;
 
+  const blogBanner = b => `<a class="dl-blog" href="${b.url}">
+        <span class="dl-blog-ico">📖</span>
+        <span class="dl-blog-txt"><b>${b.label}</b><small>${b.sub||'ブログ記事で詳しく見る'}</small></span>
+        <span class="dl-blog-arr">→</span>
+      </a>`;
   const html = CATS.map(c=>{
     const total = c.sections.reduce((s,sec)=>s+sec.items.length,0);
     const cb = c.copybox ? `<div class="dl-copybox"><h3>✦ ${c.copybox.head}</h3><p>${c.copybox.html}</p></div>` : "";
+    const catBlog = c.blogLink ? blogBanner(c.blogLink) : "";
     const secs = c.sections.map(sec=>
       `<div class="dl-sub-head">${sec.head}</div>
+       ${sec.blogLink ? blogBanner(sec.blogLink) : ""}
        <div class="dl-grid">${sec.items.map(card).join("")}</div>`
     ).join("");
     return `<section class="dl-cat" id="${c.id}">
       <div class="dl-cat-head"><span class="ico">${c.icon}</span><h2>${c.title}</h2><span class="cnt">全 ${total} 点</span></div>
       <p class="dl-cat-desc">${c.desc}</p>
-      ${cb}${secs}
+      ${cb}${catBlog}${secs}
     </section>`;
   }).join("");
   document.getElementById("catalog").innerHTML = html;
