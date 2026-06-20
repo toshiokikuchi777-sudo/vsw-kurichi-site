@@ -68,8 +68,15 @@
   .dl-blog-txt small{font-size:12px;color:#8a7a6e;line-height:1.5}
   .dl-blog-arr{font-size:20px;color:var(--tomato);font-weight:800;flex-shrink:0}
 
-  .dl-sub-head{font-size:14px;font-weight:800;color:var(--char);letter-spacing:.04em;margin:30px 0 14px;display:flex;align-items:center;gap:8px}
+  .dl-sub-head{font-size:14px;font-weight:800;color:var(--char);letter-spacing:.04em;margin:30px 0 14px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
   .dl-sub-head::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--tomato);display:inline-block}
+  .dl-bulk{margin-left:auto;display:inline-flex;align-items:center;gap:7px;background:var(--char);color:var(--cheese);border:0;padding:8px 15px;border-radius:999px;font-family:inherit;font-weight:800;font-size:12px;letter-spacing:.02em;cursor:pointer;transition:.15s;white-space:nowrap}
+  .dl-bulk span{font-weight:600;font-size:10.5px;color:#e9d9b0}
+  .dl-bulk:hover{background:#000;transform:translateY(-1px)}
+  .dl-bulk:disabled{cursor:default;opacity:.9;transform:none}
+  .dl-bulk.busy{background:#8a7a6e;color:#fff}
+  .dl-bulk.busy span{display:none}
+  .dl-bulk-note{font-size:11px;color:#9a8c80;margin:10px 2px 0;line-height:1.6}
 
   /* カードグリッド */
   .dl-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:18px}
@@ -143,6 +150,7 @@
       <ul>
         <li>各カードの「<strong>ダウンロード</strong>」ボタンから個別に保存できます。サムネイル画像をタップ／クリックすると、原寸プレビューが開きます。</li>
         <li>📱 <strong>スマホで写真アプリに保存</strong>：画像カードの「写真に保存」をタップ → 開いた画像を<strong>長押し</strong>して「&ldquo;写真&rdquo;に保存」を選んでください。</li>
+        <li>📦 <strong>まとめてダウンロード</strong>：各グループ見出しの「まとめてDL」ボタンで、そのグループの画像・資料を<strong>ZIPで一括保存</strong>できます（動画はDriveの個別リンクから）。</li>
         <li>用途は <strong>店頭販促・SNS投稿・取扱告知</strong> など #クリチ の販売促進目的に限ります。商品名・ロゴの改変、他社商品との誤認を招く使用はご遠慮ください。</li>
         <li>無断での二次配布・再販・第三者提供は不可です。ご不明点は担当窓口までご連絡ください。</li>
         <li>動画素材は外部ストレージ（Google Drive）に保管しています。各動画の「ダウンロード」から保存できます（最大 約75MB・通信環境の良い場所を推奨）。</li>
@@ -373,6 +381,52 @@ function card(it){
   </div>`;
 }
 
+/* ===== 一括ダウンロード（ブラウザ内ZIP / JSZip 遅延ロード） ===== */
+const BULK = [];
+function sizeToMB(s){
+  const m=/([\d.]+)\s*(KB|MB|GB)/i.exec(s||"");
+  if(!m) return 0;
+  const v=parseFloat(m[1]), u=m[2].toUpperCase();
+  return u==="KB"?v/1024 : u==="GB"?v*1024 : v;
+}
+function fmtMB(mb){ if(mb<1) return "1MB未満"; return mb>=1024 ? (mb/1024).toFixed(1)+"GB" : Math.round(mb)+"MB"; }
+let _jszip;
+function loadJSZip(){
+  if(window.JSZip) return Promise.resolve(window.JSZip);
+  if(!_jszip) _jszip=new Promise((res,rej)=>{
+    const s=document.createElement("script");
+    s.src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js";
+    s.onload=()=>res(window.JSZip); s.onerror=()=>rej(new Error("jszip load failed"));
+    document.head.appendChild(s);
+  });
+  return _jszip;
+}
+async function bulkDownload(btn, files, zipName){
+  const orig=btn.innerHTML;
+  btn.disabled=true; btn.classList.add("busy");
+  try{
+    const JSZip=await loadJSZip();
+    const zip=new JSZip();
+    for(let i=0;i<files.length;i++){
+      btn.textContent=`作成中… ${i}/${files.length}`;
+      const r=await fetch(files[i].url);
+      if(!r.ok) throw new Error("fetch failed "+files[i].url);
+      zip.file(files[i].name, await r.blob());
+    }
+    btn.textContent="ZIP圧縮中…";
+    const blob=await zip.generateAsync({type:"blob"});
+    const a=document.createElement("a");
+    a.href=URL.createObjectURL(blob); a.download=zipName;
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(()=>URL.revokeObjectURL(a.href),5000);
+    btn.innerHTML="✓ 完了";
+    setTimeout(()=>{btn.innerHTML=orig;btn.disabled=false;btn.classList.remove("busy");},2500);
+  }catch(e){
+    btn.innerHTML="⚠ 失敗：個別DLをご利用ください";
+    setTimeout(()=>{btn.innerHTML=orig;btn.disabled=false;btn.classList.remove("busy");},4500);
+  }
+}
+
 function render(){
   const chips = CATS.map(c=>{
     const n = c.sections.reduce((s,sec)=>s+sec.items.length,0);
@@ -385,15 +439,28 @@ function render(){
         <span class="dl-blog-txt"><b>${b.label}</b><small>${b.sub||'ブログ記事で詳しく見る'}</small></span>
         <span class="dl-blog-arr">→</span>
       </a>`;
+  const enc = s => s.split("/").map(encodeURIComponent).join("/");
   const html = CATS.map(c=>{
     const total = c.sections.reduce((s,sec)=>s+sec.items.length,0);
     const cb = c.copybox ? `<div class="dl-copybox"><h3>✦ ${c.copybox.head}</h3><p>${c.copybox.html}</p></div>` : "";
     const catBlog = c.blogLink ? blogBanner(c.blogLink) : "";
-    const secs = c.sections.map(sec=>
-      `<div class="dl-sub-head">${sec.head}</div>
+    const secs = c.sections.map(sec=>{
+      // ZIP対象＝同一オリジンの主素材（動画＝Drive外部 は除外）
+      const zippable = sec.items.filter(it => it.kind!=="video" && it.file);
+      let bulkBtn = "";
+      if (zippable.length >= 2){
+        const files = zippable.map(it => ({url: enc(it.file), name: it.dl || it.file.split("/").pop()}));
+        const mb = zippable.reduce((a,it)=>a+sizeToMB(it.size),0);
+        const zipName = `VSW_${c.id}_${sec.head}.zip`.replace(/[\\/:*?"<>|]+/g,"_");
+        const idx = BULK.push({files, zipName}) - 1;
+        bulkBtn = `<button class="dl-bulk" data-bulk="${idx}">📦 まとめてDL <span>${zippable.length}点・約${fmtMB(mb)}</span></button>`;
+      }
+      const hasVideo = sec.items.some(it=>it.kind==="video");
+      const vnote = (hasVideo && zippable.length>=2) ? `<div class="dl-bulk-note">※ 動画はZIPに含まれません。各カードのDriveリンクから個別に保存してください。</div>` : "";
+      return `<div class="dl-sub-head">${sec.head}${bulkBtn}</div>
        ${sec.blogLink ? blogBanner(sec.blogLink) : ""}
-       <div class="dl-grid">${sec.items.map(card).join("")}</div>`
-    ).join("");
+       <div class="dl-grid">${sec.items.map(card).join("")}</div>${vnote}`;
+    }).join("");
     return `<section class="dl-cat" id="${c.id}">
       <div class="dl-cat-head"><span class="ico">${c.icon}</span><h2>${c.title}</h2><span class="cnt">全 ${total} 点</span></div>
       <p class="dl-cat-desc">${c.desc}</p>
@@ -401,6 +468,12 @@ function render(){
     </section>`;
   }).join("");
   document.getElementById("catalog").innerHTML = html;
+
+  // 一括DLボタンのバインド
+  document.querySelectorAll("[data-bulk]").forEach(btn=>{
+    const b = BULK[+btn.dataset.bulk];
+    btn.addEventListener("click", ()=>bulkDownload(btn, b.files, b.zipName));
+  });
 }
 render();
 </script>
