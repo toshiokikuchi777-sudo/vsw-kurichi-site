@@ -3,3 +3,8 @@
 node_modules/
 .env
 .claude/
+
+# 販売店向けダウンロード：動画はDropboxで配信するためリポジトリに含めない
+KURICHI_POP/**/*.MP4
+KURICHI_POP/**/*.mp4
+KURICHI_POP/KURICHI_movie/
