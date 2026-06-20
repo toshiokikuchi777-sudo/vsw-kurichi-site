@@ -75,9 +75,9 @@
   .dl-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:18px}
   .dl-card{background:#fff;border:1px solid rgba(26,22,19,.1);border-radius:16px;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 14px 34px -26px rgba(0,0,0,.3);transition:.2s}
   .dl-card:hover{transform:translateY(-4px);box-shadow:0 22px 44px -24px rgba(0,0,0,.35);border-color:rgba(230,57,70,.3)}
-  .dl-thumb{position:relative;display:block;aspect-ratio:4/3;background:#f4ece0 center/cover no-repeat;overflow:hidden}
-  .dl-thumb img{width:100%;height:100%;object-fit:cover;display:block}
-  .dl-thumb img.contain{object-fit:contain;padding:20px;background:#fff7e6}
+  .dl-thumb{position:relative;display:block;aspect-ratio:1/1;background:#faf4ea;overflow:hidden}
+  .dl-thumb img{width:100%;height:100%;object-fit:contain;display:block}
+  .dl-thumb img.contain{padding:20px;background:#fff7e6}
   .dl-thumb .badge{position:absolute;top:8px;left:8px;background:rgba(26,22,19,.82);color:#fff;font-family:"Montserrat";font-weight:800;font-size:10px;letter-spacing:.06em;padding:3px 8px;border-radius:6px}
   .dl-thumb .play{position:absolute;inset:0;margin:auto;width:50px;height:50px;background:rgba(255,255,255,.92);border-radius:50%;display:grid;place-items:center;font-size:18px;color:var(--tomato);box-shadow:0 6px 18px -6px rgba(0,0,0,.5)}
   .dl-card-body{padding:13px 14px 15px;display:flex;flex-direction:column;gap:9px;flex:1}
@@ -88,6 +88,7 @@
   .dl-btn:hover{background:#c92c39}
   .dl-btn svg{width:14px;height:14px}
   .dl-btn--wait{background:#e7ded3;color:#9a8c80;cursor:default;pointer-events:none}
+  .dl-savehint{display:block;text-align:center;font-size:10.5px;color:#9a8c80;line-height:1.4;margin-top:1px}
   .dl-thumb .wait-tag{position:absolute;bottom:8px;right:8px;background:rgba(26,22,19,.78);color:#ffd9a0;font-family:"Montserrat";font-weight:800;font-size:10px;letter-spacing:.06em;padding:3px 8px;border-radius:6px}
   .dl-alt{display:flex;flex-wrap:wrap;gap:6px}
   .dl-alt a{flex:1;text-align:center;border:1.4px solid rgba(26,22,19,.18);color:#5a4d45;padding:6px 8px;border-radius:8px;font-size:11.5px;font-weight:700;text-decoration:none;transition:.15s}
@@ -140,7 +141,8 @@
     <div class="dl-guide">
       <h2>📋 ご利用ガイド</h2>
       <ul>
-        <li>各カードの「<strong>ダウンロード</strong>」ボタンから個別に保存できます。サムネイル画像をクリックすると、原寸プレビューが新しいタブで開きます。</li>
+        <li>各カードの「<strong>ダウンロード</strong>」ボタンから個別に保存できます。サムネイル画像をタップ／クリックすると、原寸プレビューが開きます。</li>
+        <li>📱 <strong>スマホで写真アプリに保存</strong>：画像カードの「写真に保存」をタップ → 開いた画像を<strong>長押し</strong>して「&ldquo;写真&rdquo;に保存」を選んでください。</li>
         <li>用途は <strong>店頭販促・SNS投稿・取扱告知</strong> など #クリチ の販売促進目的に限ります。商品名・ロゴの改変、他社商品との誤認を招く使用はご遠慮ください。</li>
         <li>無断での二次配布・再販・第三者提供は不可です。ご不明点は担当窓口までご連絡ください。</li>
         <li>動画素材は外部ストレージ（Google Drive）に保管しています。各動画の「ダウンロード」から保存できます（最大 約75MB・通信環境の良い場所を推奨）。</li>
@@ -314,7 +316,10 @@ const CATS = [
 
 /* ===== レンダリング ===== */
 const dlIcon = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m0 0 4-4m-4 4-4-4M5 21h14"/></svg>';
+const camIcon = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6.5" width="18" height="13" rx="2.5"/><circle cx="12" cy="13" r="3.3"/><path d="M8.5 6.5l1.2-2h4.6l1.2 2"/></svg>';
 const kindIcon = {pdf:"📄",text:"📝"};
+// タッチ端末（スマホ/タブレット）判定：画像は「写真」アプリに保存しやすい導線へ切替
+const IS_MOBILE = window.matchMedia('(pointer: coarse)').matches || /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
 function card(it){
   const enc = s => s.split("/").map(encodeURIComponent).join("/");
@@ -347,6 +352,10 @@ function card(it){
     btn = `<span class="dl-btn dl-btn--wait">リンク準備中</span>`;
   } else if (isVideo){
     btn = `<a class="dl-btn" href="${href}" target="_blank" rel="noopener">${dlIcon}ダウンロード</a>`;
+  } else if (it.kind==="image" && IS_MOBILE){
+    // スマホは画像を開いて長押し→「写真に保存」できるようにする
+    btn = `<a class="dl-btn" href="${href}" target="_blank" rel="noopener">${camIcon}写真に保存</a>
+        <small class="dl-savehint">画像を長押し →「写真に保存」</small>`;
   } else {
     btn = `<a class="dl-btn" href="${href}" download="${it.dl||''}">${dlIcon}ダウンロード</a>`;
   }
