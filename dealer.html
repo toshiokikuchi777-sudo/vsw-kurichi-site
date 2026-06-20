@@ -248,7 +248,7 @@ const CATS = [
           dl:"クリチ_商品写真"+(n-8)+(n===17?".jpg":".jpg")
         }))
       ]},
-      { head:"パンのフェス2026", blogLink:{url:"blog/panfes-2026-yokohama.html", label:"パンのフェス2026｜横浜赤レンガ 出店記事", sub:"出店告知のブログ記事を読む（店頭・SNS告知の参考に）"}, items:[
+      { head:"パンのフェス2026", blogLink:{url:"blog/silver-award-2026.html", label:"横浜パンのフェス2026｜シルバー賞受賞🥈", sub:"受賞のブログ記事を読む（店頭・SNS告知の参考に）"}, items:[
         { t:"ストーリー告知（パンフェス）", thumb:"story-panfes.jpg", kind:"image", type:"JPG", size:"568KB",
           file:POP+"/パンのフェス2026/story-panfes.jpg", dl:"クリチ_ストーリー_パンフェス.jpg" },
         { t:"ストーリー告知（少女）", thumb:"story-shojo.jpg", kind:"image", type:"JPG", size:"508KB",
@@ -293,7 +293,7 @@ const CATS = [
     id:"sns", icon:"🎬", title:"SNS動画素材",
     desc:"Instagram / TikTok などへの投稿・リポストにご利用いただける縦型動画素材。",
     sections:[
-      { head:"動画（縦型）", items:[
+      { head:"動画（縦型）", extBulk:{url:"https://drive.google.com/drive/folders/147Iche3gQRa-7a8Yc806Yx3yTq5n903j", label:"動画をまとめてDL"}, items:[
         ...[1,2,3,4,5,7,8,9].map(n=>({
           t:"SNS動画 "+n, thumb:"vid-ig"+n+".jpg", kind:"video", type:"MP4",
           size:({1:"9.9MB",2:"8.7MB",3:"17MB",4:"75MB",5:"14MB",7:"13MB",8:"22MB",9:"14MB"})[n],
@@ -454,12 +454,15 @@ function render(){
         const zipName = `VSW_${c.id}_${sec.head}.zip`.replace(/[\\/:*?"<>|]+/g,"_");
         const idx = BULK.push({files, zipName}) - 1;
         bulkBtn = `<button class="dl-bulk" data-bulk="${idx}">📦 まとめてDL <span>${zippable.length}点・約${fmtMB(mb)}</span></button>`;
+      } else if (sec.extBulk){
+        bulkBtn = `<a class="dl-bulk" href="${sec.extBulk.url}" target="_blank" rel="noopener">📦 ${sec.extBulk.label} <span>Google Drive</span></a>`;
       }
       const hasVideo = sec.items.some(it=>it.kind==="video");
       const vnote = (hasVideo && zippable.length>=2) ? `<div class="dl-bulk-note">※ 動画はZIPに含まれません。各カードのDriveリンクから個別に保存してください。</div>` : "";
+      const extNote = sec.extBulk ? `<div class="dl-bulk-note">※ Googleドライブのフォルダが開きます。Driveの「すべてダウンロード」で全動画をまとめて保存できます。</div>` : "";
       return `<div class="dl-sub-head">${sec.head}${bulkBtn}</div>
        ${sec.blogLink ? blogBanner(sec.blogLink) : ""}
-       <div class="dl-grid">${sec.items.map(card).join("")}</div>${vnote}`;
+       <div class="dl-grid">${sec.items.map(card).join("")}</div>${vnote}${extNote}`;
     }).join("");
     return `<section class="dl-cat" id="${c.id}">
       <div class="dl-cat-head"><span class="ico">${c.icon}</span><h2>${c.title}</h2><span class="cnt">全 ${total} 点</span></div>
