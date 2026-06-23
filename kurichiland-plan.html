@@ -1,0 +1,291 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>KURICHI LAND ｜ 設計・レベルデザイン（プロジェクト計画）- VSW</title>
+<meta name="description" content="日本発のクリームチーズデザートIP「#クリチ」を、中国・石家庄の文旅施設「Neverland」の中心に旗艦出店する『KURICHI LAND』。目的・計画・フロア別平面図・人間工学レベルデザイン(3D)を、はじめての方にも分かるようにまとめたページ。" />
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#e1281c">
+<meta property="og:title" content="KURICHI LAND ｜ 設計・レベルデザイン（プロジェクト計画）">
+<meta property="og:description" content="何を目的に、どんな計画か。平面図と人間工学3Dで、はじめての方にも分かるプロジェクト解説。">
+<meta property="og:image" content="assets/kurichiland-china/booth-front.png">
+
+<link rel="icon" type="image/gif" href="assets/favicon.gif">
+<script>document.documentElement.classList.add('js');</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&family=Montserrat:wght@600;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+  :root{ --kl-red:#e1281c; --kl-yellow:#ffc20e; --kl-cream:#fff3d6; --kl-ink:#241f1a; --kl-teal:#2f8f87; --kl-green:#4e8a2e; }
+  .klp{ background:var(--kl-cream); color:var(--kl-ink); overflow-x:hidden; }
+  .klp .wrap{ width:min(1140px,92vw); margin-inline:auto; }
+  .klp section{ padding:72px 0; }
+  .klp .ey{ display:inline-block; font:800 12px/1 Montserrat,sans-serif; letter-spacing:.2em; text-transform:uppercase; color:var(--kl-red); background:#fff; border:2px solid var(--kl-red); padding:7px 13px; border-radius:999px; margin-bottom:16px; }
+  .klp h2{ font:900 clamp(24px,4vw,40px)/1.15 "Noto Sans JP",sans-serif; margin:0 0 14px; }
+  .klp h2 .y{ color:var(--kl-red); }
+  .klp p.lead{ font-size:clamp(15px,1.7vw,18px); line-height:2; color:#4a423b; max-width:780px; }
+
+  /* hero */
+  .klp-hero{ background:var(--kl-red); color:#fff; padding:122px 0 64px; background-image:repeating-linear-gradient(135deg,rgba(255,255,255,.05) 0 22px,transparent 22px 44px); }
+  .klp-badge{ display:inline-flex;gap:8px;align-items:center;background:var(--kl-yellow);color:var(--kl-ink);font:900 12.5px/1 Montserrat,sans-serif;letter-spacing:.1em;padding:8px 15px;border-radius:999px;margin-bottom:20px; }
+  .klp-hero h1{ font:900 clamp(32px,6vw,68px)/1.0 Montserrat,sans-serif; margin:0 0 6px; }
+  .klp-hero h1 .jp{ display:block; font:900 clamp(18px,2.6vw,26px)/1.2 "Noto Sans JP",sans-serif; color:var(--kl-yellow); margin-top:8px; }
+  .klp-hero p{ font-size:16px; line-height:1.95; opacity:.97; max-width:680px; margin:14px 0 0; }
+  .klp-cta{ display:flex;gap:11px;flex-wrap:wrap;margin-top:28px; }
+  .klp-btn{ display:inline-flex;align-items:center;gap:7px;font:800 15px/1 "Noto Sans JP",sans-serif;padding:14px 22px;border-radius:999px;text-decoration:none;transition:transform .15s; }
+  .klp-btn.p{ background:var(--kl-yellow); color:var(--kl-ink); box-shadow:0 12px 28px -10px rgba(0,0,0,.5); }
+  .klp-btn.g{ background:rgba(255,255,255,.12); color:#fff; border:2px solid rgba(255,255,255,.6); }
+  .klp-btn:hover{ transform:translateY(-3px); }
+
+  /* what-is steps */
+  .klp-3{ display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-top:36px; }
+  .klp-card{ background:#fff; border:2px solid var(--kl-ink); border-radius:18px; padding:24px 20px; box-shadow:6px 6px 0 var(--kl-ink); }
+  .klp-card .k{ font:900 12px/1 Montserrat,sans-serif; letter-spacing:.12em; color:var(--kl-red); }
+  .klp-card h3{ font:800 19px/1.35 "Noto Sans JP",sans-serif; margin:8px 0 6px; }
+  .klp-card p{ font-size:13.5px; line-height:1.8; color:#5a514a; margin:0; }
+
+  /* purpose list */
+  .klp-goals{ display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top:30px; }
+  .klp-goal{ background:#fff; border-left:6px solid var(--kl-yellow); border-radius:12px; padding:18px 20px; box-shadow:var(--shadow); }
+  .klp-goal b{ display:block; font-size:16px; margin-bottom:4px; }
+  .klp-goal span{ font-size:13.5px; color:#5a514a; line-height:1.8; }
+
+  /* plan stats */
+  .klp-stats{ background:var(--kl-ink); color:#fff; }
+  .klp-stats .row{ display:grid; grid-template-columns:repeat(4,1fr); }
+  .klp-stats .c{ padding:28px 16px; text-align:center; border-right:1px solid rgba(255,255,255,.12); }
+  .klp-stats .c:last-child{ border-right:none; }
+  .klp-stats .n{ font:900 clamp(22px,3.4vw,34px)/1 Montserrat,sans-serif; color:var(--kl-yellow); }
+  .klp-stats .l{ font-size:12px; opacity:.85; margin-top:7px; }
+
+  /* floors */
+  .klp-floors{ display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-top:30px; }
+  .klp-fl{ border-radius:16px; padding:20px 16px; color:#fff; }
+  .klp-fl .t{ font:900 13px/1 Montserrat,sans-serif; opacity:.9; }
+  .klp-fl h4{ font:900 18px/1.2 "Noto Sans JP",sans-serif; margin:5px 0 6px; }
+  .klp-fl p{ font-size:12.5px; line-height:1.7; margin:0; opacity:.95; }
+
+  /* embeds */
+  .klp-embed{ background:#fff; }
+  .klp-frame{ position:relative; width:100%; border-radius:18px; overflow:hidden; border:3px solid var(--kl-ink); box-shadow:8px 8px 0 rgba(36,31,26,.12); background:#dfe7ee; margin-top:8px; }
+  .klp-frame.r3d{ aspect-ratio:16/10; }
+  .klp-frame.r3d iframe{ position:absolute; inset:0; width:100%; height:100%; border:0; }
+  .klp-frame.plans{ height:78vh; min-height:560px; }
+  .klp-frame.plans iframe{ width:100%; height:100%; border:0; display:block; }
+  .klp-note{ font-size:13px; color:#6a6056; margin-top:12px; line-height:1.8; }
+  .klp-note a{ color:var(--kl-red); font-weight:700; }
+  .klp-keys{ display:flex; flex-wrap:wrap; gap:8px; margin-top:14px; }
+  .klp-keys span{ font-size:12px; font-weight:700; background:var(--kl-cream); border:1.5px solid var(--kl-yellow); color:#7a5a12; padding:6px 12px; border-radius:999px; }
+
+  /* related */
+  .klp-rel{ display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top:30px; }
+  .klp-rel a{ display:block; text-decoration:none; color:var(--kl-ink); background:#fff; border:2px solid var(--kl-ink); border-radius:16px; padding:22px; box-shadow:5px 5px 0 var(--kl-ink); transition:transform .15s; }
+  .klp-rel a:hover{ transform:translateY(-3px); }
+  .klp-rel .k{ font:900 12px/1 Montserrat,sans-serif; color:var(--kl-red); letter-spacing:.1em; }
+  .klp-rel h4{ font-size:18px; margin:8px 0 4px; }
+  .klp-rel p{ font-size:13px; color:#5a514a; margin:0; }
+
+  .klp-reveal{ transition:opacity .7s, transform .7s; }
+  html.js .klp-reveal{ opacity:0; transform:translateY(24px); }
+  html.js .klp-reveal.in{ opacity:1; transform:none; }
+  @media (prefers-reduced-motion:reduce){ html.js .klp-reveal{ opacity:1; transform:none; } }
+
+  @media (max-width:860px){
+    .klp-3{ grid-template-columns:1fr; } .klp-goals{ grid-template-columns:1fr; }
+    .klp-stats .row{ grid-template-columns:repeat(2,1fr); } .klp-stats .c:nth-child(2){ border-right:none; }
+    .klp-floors{ grid-template-columns:1fr 1fr; } .klp-rel{ grid-template-columns:1fr; }
+  }
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-tiktok" viewBox="0 0 24 24"><path fill="currentColor" d="M19.3 6.3c-1.4-.9-2.3-2.5-2.4-4.3h-3.1v13.5c0 1.6-1.3 2.9-2.9 2.9s-2.9-1.3-2.9-2.9 1.3-2.9 2.9-2.9c.3 0 .6 0 .8.1V9.5c-.3 0-.6-.1-.8-.1-3.3 0-6 2.7-6 6s2.7 6 6 6 6-2.7 6-6V9.2c1.3.9 2.8 1.4 4.5 1.4V7.5c-.7 0-1.4-.2-2.1-.6z"/></symbol>
+  <symbol id="i-instagram" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" d="M4 8a4 4 0 0 1 4-4h8a4 4 0 0 1 4 4v8a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4Z"/><circle cx="12" cy="12" r="3.8" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="17.3" cy="6.7" r="1" fill="currentColor"/></symbol>
+  <symbol id="i-youtube" viewBox="0 0 24 24"><path fill="currentColor" d="M21.6 7.2c-.2-.9-.9-1.6-1.8-1.8C18.2 5 12 5 12 5s-6.2 0-7.8.4c-.9.2-1.6.9-1.8 1.8C2 8.8 2 12 2 12s0 3.2.4 4.8c.2.9.9 1.6 1.8 1.8C5.8 19 12 19 12 19s6.2 0 7.8-.4c.9-.2 1.6-.9 1.8-1.8.4-1.6.4-4.8.4-4.8s0-3.2-.4-4.8ZM10 15V9l5.2 3L10 15Z"/></symbol>
+  <symbol id="i-sandbox" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2 2 7v10l10 5 10-5V7L12 2Zm0 2.3 7.6 3.8L12 11.9 4.4 8.1 12 4.3Zm-8 5.5 7 3.5v7l-7-3.5v-7Zm9 10.5v-7l7-3.5v7l-7 3.5Z"/></symbol>
+</svg>
+
+<nav class="nav">
+  <div class="container nav-inner">
+    <a href="index.html#top" class="brand">
+      <span class="brand-mark" style="background-image:url('assets/3d/vsw-logo-animated.gif')"></span>
+      <span class="brand-text">Vsw <em class="brand-hash">#KURICHI</em></span>
+    </a>
+    <div class="nav-links">
+      <a href="index.html#products">Products</a>
+      <a href="kurichiland.html">3D World</a>
+      <a href="harichi.html">Harichi</a>
+      <a href="business/index.html">Business</a>
+      <a href="business/china.html">China</a>
+      <a href="collaboration.html">Partnership</a>
+      <a href="about.html">Company</a>
+    </div>
+    <a href="https://vswferdinand.base.shop/" target="_blank" rel="noopener" class="cta">Online Shop →</a>
+    <button class="nav-toggle" aria-label="menu">☰</button>
+  </div>
+</nav>
+
+<main class="klp">
+
+  <!-- HERO -->
+  <section class="klp-hero">
+    <div class="wrap">
+      <span class="klp-badge">🧀 PROJECT PLAN ・ 設計</span>
+      <h1>KURICHI LAND<span class="jp">設計・レベルデザイン</span></h1>
+      <p>日本発のクリームチーズデザートブランド「#クリチ」を、中国・石家庄の文化観光施設「Neverland」の中心に、<b>旗艦店として出店する計画</b>です。このページでは「何を目的に、どんな計画なのか」を、はじめての方にも分かるように、図面と3Dでご紹介します。</p>
+      <div class="klp-cta">
+        <a class="klp-btn p" href="#level3d">🧱 3Dで間取りを操作する</a>
+        <a class="klp-btn g" href="#plans">📐 平面図を見る</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHAT IS THIS -->
+  <section>
+    <div class="wrap">
+      <span class="ey klp-reveal">はじめての方へ</span>
+      <h2 class="klp-reveal">これは、<span class="y">何のプロジェクト？</span></h2>
+      <p class="lead klp-reveal">中国・石家庄市の川の中洲（島）に、地元の文化観光会社が「Neverland」という、自然・アート・食が集まる新しい商業の島をつくっています。その<b>島の中心の区画（約650㎡）に、クリチが"食べられるキャラクターのデザートパーク"として出店</b>します。建物を建てて運営するのは先方、私たち（VSW/#クリチ）は<b>世界観・商品・デザインを提供</b>する役割です。</p>
+      <div class="klp-3">
+        <div class="klp-card klp-reveal"><div class="k">WHAT ／ 何を</div><h3>食べられるIP空間</h3><p>食べる・撮る・遊ぶ・集める・キャラに会う。クリチの赤×黄のレトロポップな世界を、丸ごと体験できる旗艦店。</p></div>
+        <div class="klp-card klp-reveal"><div class="k">WHERE ／ どこに・誰と</div><h3>石家庄 Neverland</h3><p>石家庄文化旅游投资集団が開発する「滹沱河 艺术生态岛」。クリチは島の中心の"看板テナント（主理人）"。</p></div>
+        <div class="klp-card klp-reveal"><div class="k">HOW ／ どんな形で</div><h3>約650㎡の旗艦</h3><p>建物200㎡＋テラス450㎡。2階建て＋屋上で、1F工場・2F食事・屋上の川ビューを楽しめる構成。</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PURPOSE -->
+  <section style="background:#fff">
+    <div class="wrap">
+      <span class="ey klp-reveal">目的</span>
+      <h2 class="klp-reveal">なぜ、<span class="y">この島につくるのか。</span></h2>
+      <div class="klp-goals">
+        <div class="klp-goal klp-reveal"><b>① ブランドの"聖地"をつくる</b><span>商品・キャラ・メタバースに続く、リアルで世界観に没入できる場所。「行く価値のあるブランド」へ格上げする。</span></div>
+        <div class="klp-goal klp-reveal"><b>② 島全体の"集客の核"になる</b><span>一番撮りたい・行きたい場所として、来場者を島全体に呼び込む装置に。先方（文旅）の成功にも直結する。</span></div>
+        <div class="klp-goal klp-reveal"><b>③ 中国市場での主導権</b><span>"出店させてもらう"側から、自前の旗艦体験を持つ側へ。出店交渉・ライセンスでの立場が変わる。</span></div>
+        <div class="klp-goal klp-reveal"><b>④ 売上・ECへの還流</b><span>来場→SNS拡散→EC購入→再来の循環。施設＝最大の広告媒体・体験メディアとして本体に還元する。</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PLAN STATS -->
+  <section class="klp-stats">
+    <div class="wrap"><div class="row">
+      <div class="c"><div class="n">650㎡</div><div class="l">島の中心・旗艦区画</div></div>
+      <div class="c"><div class="n">2F＋屋上</div><div class="l">階構成（工場/食事/絶景）</div></div>
+      <div class="c"><div class="n">200/450㎡</div><div class="l">建物 ／ テラス</div></div>
+      <div class="c"><div class="n">主理人</div><div class="l">島の看板テナント</div></div>
+    </div></div>
+  </section>
+
+  <!-- FLOORS -->
+  <section>
+    <div class="wrap">
+      <span class="ey klp-reveal">計画の全体像</span>
+      <h2 class="klp-reveal">フロアごとの<span class="y">役割。</span></h2>
+      <p class="lead klp-reveal">建物は「下＝作る・買う」「上＝食べる・くつろぐ」「屋上＝撮る・絶景」と、登るほど体験が変わる構成です。寒い冬は屋内（2F）が、暑い夏は屋外（テラス・屋上）が主役になります。</p>
+      <div class="klp-floors">
+        <div class="klp-fl klp-reveal" style="background:#e1281c"><div class="t">1F</div><h4>KURICHI FACTORY</h4><p>仕上げが見える工場・カウンター・車顔ショーケース・物販・キャラ展示。</p></div>
+        <div class="klp-fl klp-reveal" style="background:#d49a00"><div class="t">2F</div><h4>DINER & MUSEUM</h4><p>川ビューの食事席・キャラ展示・グッズ。冬を支える通年の主力。</p></div>
+        <div class="klp-fl klp-reveal" style="background:#2f8f87"><div class="t">屋上</div><h4>KURICHI SKY</h4><p>川を見下ろす絶景フォトデッキ・夏夜のテラス・島の目印サイン。</p></div>
+        <div class="klp-fl klp-reveal" style="background:#4e8a2e"><div class="t">屋外</div><h4>KURICHI GARDEN</h4><p>テラス450㎡。自然に囲まれた飲食・フォト・イベントの回遊空間。</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LEVEL 3D -->
+  <section id="level3d" class="klp-embed">
+    <div class="wrap">
+      <span class="ey klp-reveal">レベルデザイン（3D）</span>
+      <h2 class="klp-reveal">間取りを、<span class="y">3Dで歩いて確かめる。</span></h2>
+      <p class="lead klp-reveal">各フロアを「人間工学スケール」（椅子0.45m・テーブル0.74m・主通路1.5mなど、人が快適に過ごせる実寸）で配置したブロックアウトです。<b>方位（東西南北）と窓の向き</b>、<b>人の動き（導線）</b>まで設計しています。下のボタンでフロアを切り替え、「真上(平面)」で間取りを俯瞰できます。</p>
+      <div class="klp-keys klp-reveal">
+        <span>🧭 方位：北(青)/東(緑)/南(赤・川)/西(黄)</span><span>🪑 椅子0.45・卓0.74・通路1.5m</span><span>☀ 南＝川向き大開口＋夏日射制御</span><span>🚶 導線（クリーン/ダーティ分離）</span>
+      </div>
+      <div class="klp-frame r3d klp-reveal">
+        <iframe src="kurichiland-level/" title="KURICHI LAND レベルデザイン 3D" loading="lazy" allowfullscreen></iframe>
+      </div>
+      <p class="klp-note">操作：ドラッグ＝見回す／ホイール＝ズーム／下のボタンでフロア切替・真上ビュー — <a href="kurichiland-level/" target="_blank" rel="noopener">別タブで全画面 ↗</a></p>
+    </div>
+  </section>
+
+  <!-- FLOOR PLANS -->
+  <section id="plans">
+    <div class="wrap">
+      <span class="ey klp-reveal">フロア別 平面図</span>
+      <h2 class="klp-reveal">寸法で見る、<span class="y">実寸の間取り。</span></h2>
+      <p class="lead klp-reveal">配置図（敷地650㎡）と各フロアの平面図です。各室の面積・寸法・方位・導線を、メートル定義から作図しています（概算・検討用）。</p>
+      <div class="klp-frame plans klp-reveal">
+        <iframe src="kurichiland-floorplans.html" title="KURICHI LAND フロア別 実寸平面図" loading="lazy"></iframe>
+      </div>
+      <p class="klp-note"><a href="kurichiland-floorplans.html" target="_blank" rel="noopener">平面図を別タブで開く ↗</a></p>
+    </div>
+  </section>
+
+  <!-- RELATED -->
+  <section style="background:#fff">
+    <div class="wrap">
+      <span class="ey klp-reveal">関連ページ</span>
+      <h2 class="klp-reveal">もっと見る</h2>
+      <div class="klp-rel">
+        <a href="kurichiland-building/" target="_blank" rel="noopener" class="klp-reveal"><div class="k">3D ・ 建築</div><h4>建物を3Dで体験（昼/夜）🌙</h4><p>作り込んだ外観を歩いて体験。夜はネオン・電飾が灯る昼/夜モード付き。</p></a>
+        <a href="kurichiland-china.html" target="_blank" rel="noopener" class="klp-reveal"><div class="k">概要 ・ コンセプト</div><h4>プロジェクト概要LP</h4><p>世界観・コンセプト・ギャラリーをまとめた概要ページ。</p></a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="container">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <div class="brand" style="color:#fff"><span class="brand-mark"></span><span>VSW / #クリチ</span></div>
+        <p>ひと口で、世界が色づく。<br>Vsw株式会社 - 大阪府池田市（本社） / 横浜（事務所のみ・販売なし）<br>NY発・大阪生まれのクリームチーズバーガー</p>
+        <div class="foot-social">
+          <a href="https://www.tiktok.com/@kurichi.jp" target="_blank" rel="noopener" aria-label="TikTok"><svg><use href="#i-tiktok"/></svg></a>
+          <a href="https://www.instagram.com/kurichi.jp" target="_blank" rel="noopener" aria-label="Instagram"><svg><use href="#i-instagram"/></svg></a>
+          <a href="https://www.youtube.com/@vswcreamcheese" target="_blank" rel="noopener" aria-label="YouTube"><svg><use href="#i-youtube"/></svg></a>
+          <a href="https://vswferdinand.base.shop/" target="_blank" rel="noopener" aria-label="Shop"><svg><use href="#i-sandbox"/></svg></a>
+        </div>
+      </div>
+      <div>
+        <h4>KURICHI LAND</h4>
+        <a href="kurichiland-plan.html">設計・レベルデザイン</a>
+        <a href="kurichiland-level/" target="_blank" rel="noopener">3D 間取り</a>
+        <a href="kurichiland-floorplans.html" target="_blank" rel="noopener">平面図</a>
+        <a href="kurichiland-building/" target="_blank" rel="noopener">建築3D（昼/夜）</a>
+      </div>
+      <div>
+        <h4>PROJECT</h4>
+        <a href="kurichiland-china.html">概要LP</a>
+        <a href="kurichiland-china.html#concept">コンセプト</a>
+        <a href="business/china.html">China事業</a>
+      </div>
+      <div>
+        <h4>CONTACT</h4>
+        <a href="https://vswferdinand.base.shop/" target="_blank" rel="noopener">Online Shop</a>
+        <a href="collaboration.html">Partnership</a>
+        <a href="about.html">会社概要</a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 Vsw Inc. / #KURICHI. All rights reserved.</span>
+      <span>非公開プレビューページ</span>
+    </div>
+  </div>
+</footer>
+
+<script src="script.js?v=20260427" defer></script>
+<script>
+  (function(){ var els=document.querySelectorAll('.klp-reveal');
+    if('IntersectionObserver' in window){ var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:.12,rootMargin:'0px 0px -8% 0px'}); els.forEach(function(el){io.observe(el);}); }
+    else { els.forEach(function(el){el.classList.add('in');}); }
+    setTimeout(function(){els.forEach(function(el){el.classList.add('in');});},2500);
+  })();
+</script>
+</body>
+</html>
