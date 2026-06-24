@@ -58,7 +58,7 @@
     <span class="desktop-only"><kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> / 矢印キーで歩く<br>
     画面を<b>ドラッグ</b>で視点回転・<b>ホイール</b>でズーム<br></span>
     <span class="touch-only" style="display:none">左の<b>スティック</b>で歩く・<b>右側ドラッグ</b>で視点</span>
-    緑の芝生のクリチランドを、アバターで歩けます。<b>建物の中にも入れます</b>（前進＝入口へ）。
+    緑の芝生に立つ<b>約4m</b>のハリチくんの、まわりをぐるっと歩いて見上げられます。
   </div>
 </div>
 
@@ -146,9 +146,9 @@ const sun = new THREE.DirectionalLight(0xfff3df, 1.7);
 sun.position.set(28, 42, 18);
 sun.castShadow = true;
 sun.shadow.mapSize.set(2048, 2048);
-sun.shadow.camera.near = 1; sun.shadow.camera.far = 130;
-sun.shadow.camera.left=-30; sun.shadow.camera.right=30;
-sun.shadow.camera.top=30; sun.shadow.camera.bottom=-30;
+sun.shadow.camera.near = 1; sun.shadow.camera.far = 90;
+sun.shadow.camera.left=-16; sun.shadow.camera.right=16;
+sun.shadow.camera.top=16; sun.shadow.camera.bottom=-16;
 sun.shadow.bias = -0.0004;
 scene.add(sun);
 scene.add(sun.target);
@@ -168,27 +168,25 @@ scene.add(sun.target);
   }
   ctx.globalAlpha=1;
   const tex=new THREE.CanvasTexture(c);
-  tex.wrapS=tex.wrapT=THREE.RepeatWrapping; tex.repeat.set(60,60);
+  tex.wrapS=tex.wrapT=THREE.RepeatWrapping; tex.repeat.set(12,12);
   tex.colorSpace=THREE.SRGBColorSpace; tex.anisotropy=4;
+  const LAWN_R=11;
   const ground=new THREE.Mesh(
-    new THREE.CircleGeometry(160,64),
+    new THREE.CircleGeometry(LAWN_R,64),
     new THREE.MeshStandardMaterial({map:tex, roughness:1, metalness:0, color:0xcfe6bf}));
   ground.rotation.x=-Math.PI/2; ground.receiveShadow=true; scene.add(ground);
 })();
 
-// a few simple bushes for depth / sense of scale & motion
+// 低い生垣で囲った“狭い庭”にする（外周がやわらかい壁）
 (function(){
   const mat=new THREE.MeshStandardMaterial({color:0x3f7d2e, roughness:1});
-  const spots=[[24,-10],[-22,14],[34,26],[-30,-24],[12,34],[-38,4],[40,-30],[6,-40],[-14,40]];
-  for(const [x,z] of spots){
-    const b=new THREE.Group();
-    for(let k=0;k<3;k++){
-      const r=1.1+((x*7+z*13+k*5)%5)/5*1.1;
-      const m=new THREE.Mesh(new THREE.IcosahedronGeometry(r,1), mat);
-      m.position.set((k-1)*r*0.8, r*0.7, ((k*x)%3-1)*r*0.5);
-      m.castShadow=true; m.receiveShadow=true; b.add(m);
-    }
-    b.position.set(x,0,z); scene.add(b);
+  const R=11, N=46;
+  for(let i=0;i<N;i++){
+    const a=i/N*Math.PI*2;
+    const r=1.0+((i*37)%5)/5*0.7;
+    const m=new THREE.Mesh(new THREE.IcosahedronGeometry(r,1), mat);
+    m.position.set(Math.cos(a)*R, r*0.6, Math.sin(a)*R);
+    m.castShadow=true; m.receiveShadow=true; scene.add(m);
   }
 })();
 
@@ -226,8 +224,7 @@ const pHarichi = new Promise((resolve,reject)=>{
   gltfLoader.load('assets/harichi/3d/shigumiharichi.glb',
     (g)=>{
       const m=g.scene;
-      fitHeight(m, HARICHI_H, true, true);       // 高さ4mに正規化＋XZ中心を原点へ
-      m.position.x += 5; m.position.z += 12;      // 建物の入口前の広場へ（館内を空ける）
+      fitHeight(m, HARICHI_H, true, true);       // 高さ4mに正規化＋XZ中心を原点へ（庭の中央）
       m.traverse(o=>{ if(o.isMesh){ o.castShadow=true; o.receiveShadow=true;
         if(o.material){ o.material.side=THREE.FrontSide; } } });
       scene.add(m);
@@ -260,27 +257,19 @@ const pAvatar = new Promise((resolve,reject)=>{
     (err)=>reject(new Error('FBX(アバター)読込エラー')));
 });
 
-/* ---------- 建物（クリチランド）：アバターで中に入れる（当たり判定なし） ---------- */
-const pBuilding = new Promise((resolve)=>{
-  gltfLoader.load('kurichiland-level/all.glb',
-    (g)=>{ const b=g.scene; b.traverse(o=>{ if(o.isMesh){ o.castShadow=true; o.receiveShadow=true; } }); scene.add(b); resolve(b); },
-    undefined,
-    ()=>resolve(null));   // 建物が読めなくても歩行は継続
-});
-
 /* ---------- third-person walk controller ---------- */
 const player = {
-  pos: new THREE.Vector3(0,0,12),    // 入口前の広場に出現（前進で館内へ）
-  heading: Math.PI,                  // 建物（-Z）の方を向く
+  pos: new THREE.Vector3(0,0,6),     // ハリチくんの正面に出現
+  heading: Math.PI,                  // 像（原点）の方を向く
   speed: 0,
 };
 let camYaw = Math.PI;     // カメラ方位（プレイヤー背後）
 let camPitch = 0.28;      // 見下ろし角
 let camDist = 6.2;        // 距離
 let curTS = 0;            // アニメ速度の平滑化用
-const CAM_MIN=2.6, CAM_MAX=16;
-const WALK_SPEED = 2.6;   // m/s
-const BOUND = 120;        // 行動可能半径
+const CAM_MIN=2.4, CAM_MAX=9;
+const WALK_SPEED = 2.4;   // m/s
+const BOUND = 9.6;        // 行動可能半径（狭い庭・生垣の内側で止まる）
 
 // input
 const keys=Object.create(null);
@@ -402,7 +391,7 @@ function tick(dt){
   renderer.render(scene,camera);
 }
 
-Promise.all([pHarichi, pAvatar, pBuilding]).then(([statue,av])=>{
+Promise.all([pHarichi, pAvatar]).then(([statue,av])=>{
   window.__READY=true;
   // debug introspection (used for automated verification; harmless in production)
   window.__dbg=()=>{
