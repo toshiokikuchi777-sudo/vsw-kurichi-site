@@ -34,7 +34,7 @@
 <div id="app"></div>
 <div id="hud">
   <h1>KURICHI <b>LAND</b> ｜ レベルデザイン</h1>
-  <div class="sub">人間工学スケールのブロックアウト（GLB）。<br>方位：上(青)=北／右(緑)=東／下(赤)=南(正面・川)／左(黄)=西<br>椅子0.45・卓0.74・カウンター1.0・主通路1.5m</div>
+  <div class="sub">人間工学スケールのブロックアウト（GLB）。<br>方位：上(青)=北／右(緑)=東／下(赤)=南(正面・川)／左(黄)=西<br>椅子0.45・卓0.74・カウンター1.0・主通路1.5m／階高1F4.5・2F4.2m<br>🚶 <b>W A S D=移動／Q E=上下／ドラッグ=見回す</b>（中に入れます）</div>
   <div class="legend">
     <i style="background:#E3261D"></i>椅子/カウンター &nbsp; <i style="background:#FFF3D6;border:1px solid #ccc"></i>卓上 &nbsp; <i style="background:#FFC20E"></i>棚/展示<br>
     <i style="background:#BFE3EA"></i>窓(開口) &nbsp; <i style="background:#CFE0EC"></i>冷凍 &nbsp; <i style="background:#C9CCD0"></i>厨房 &nbsp; <i style="background:#66B6D9"></i>導線
@@ -45,6 +45,7 @@
   <button data-f="1F" class="on">1F FACTORY</button>
   <button data-f="2F">2F DINER</button>
   <button data-f="all">全体</button>
+  <button id="inbtn" class="ghost">🚶 中へ入る</button>
   <button id="topbtn" class="ghost">真上(平面)</button>
   <button id="fsbtn" class="ghost">⛶ 全画面</button>
 </div>
@@ -68,8 +69,8 @@ const controls=new OrbitControls(camera,renderer.domElement); controls.enableDam
 scene.add(new THREE.HemisphereLight(0xffffff,0x8a9aa8,0.9)); scene.add(new THREE.AmbientLight(0xffffff,0.35));
 const sun=new THREE.DirectionalLight(0xfff4e2,1.4); sun.position.set(16,26,10); sun.castShadow=true; sun.shadow.mapSize.set(2048,2048);
 sun.shadow.camera.near=1; sun.shadow.camera.far=90; sun.shadow.camera.left=-20; sun.shadow.camera.right=20; sun.shadow.camera.top=20; sun.shadow.camera.bottom=-20; sun.shadow.bias=-0.0005; scene.add(sun);
-const grid=new THREE.GridHelper(40,40,0xb9c4cf,0xcdd6de); grid.position.y=-0.02; scene.add(grid);
-const ground=new THREE.Mesh(new THREE.CircleGeometry(40,48),new THREE.MeshStandardMaterial({color:0xe8eef2,roughness:1})); ground.rotation.x=-Math.PI/2; ground.position.y=-0.06; ground.receiveShadow=true; scene.add(ground);
+const grid=new THREE.GridHelper(60,60,0xb9c4cf,0xcdd6de); grid.position.y=-0.55; scene.add(grid);
+const ground=new THREE.Mesh(new THREE.CircleGeometry(60,48),new THREE.MeshStandardMaterial({color:0xe8eef2,roughness:1})); ground.rotation.x=-Math.PI/2; ground.position.y=-0.6; ground.receiveShadow=true; scene.add(ground);
 
 const loader=new GLTFLoader();
 let current=null;
@@ -90,11 +91,28 @@ function load(name){
 document.querySelectorAll('#views button[data-f]').forEach(b=>b.addEventListener('click',()=>load(b.dataset.f)));
 document.getElementById('topbtn').addEventListener('click',()=>{ if(!current)return; const box=new THREE.Box3().setFromObject(current); const c=box.getCenter(new THREE.Vector3()); const s=box.getSize(new THREE.Vector3()); controls.target.copy(c); camera.position.set(c.x+0.01,c.y+Math.max(s.x,s.z)*1.4,c.z); });
 document.getElementById('fsbtn').addEventListener('click',()=>{ if(!document.fullscreenElement)document.documentElement.requestFullscreen?.(); else document.exitFullscreen?.(); });
+document.getElementById('inbtn').addEventListener('click',()=>{ camera.position.set(0,1.7,12); controls.target.set(0,1.7,-2); });  // 入口アプローチ→WASDで中へ
 addEventListener('resize',()=>{ camera.aspect=innerWidth/innerHeight; camera.updateProjectionMatrix(); renderer.setSize(innerWidth,innerHeight); });
+
+// ---- 歩行（中に入れる） ----
+const keys={};
+addEventListener('keydown',e=>{ keys[e.code]=true; if(['Space','ArrowUp','ArrowDown','ArrowLeft','ArrowRight'].includes(e.code))e.preventDefault(); });
+addEventListener('keyup',e=>{ keys[e.code]=false; });
+const upv=new THREE.Vector3(0,1,0); const clock=new THREE.Clock();
 
 const dial=document.getElementById('dial');
 function animate(){ requestAnimationFrame(animate);
-  // compass: rotate so world North(-Z) maps correctly relative to view azimuth
+  const dt=Math.min(clock.getDelta(),0.05);
+  const sp=(keys['ShiftLeft']||keys['ShiftRight']?16:7)*dt;
+  const fwd=new THREE.Vector3(); camera.getWorldDirection(fwd); fwd.y=0; fwd.normalize();
+  const right=new THREE.Vector3().crossVectors(fwd,upv).normalize();
+  const mv=new THREE.Vector3();
+  if(keys['KeyW']||keys['ArrowUp'])mv.add(fwd); if(keys['KeyS']||keys['ArrowDown'])mv.sub(fwd);
+  if(keys['KeyD']||keys['ArrowRight'])mv.add(right); if(keys['KeyA']||keys['ArrowLeft'])mv.sub(right);
+  if(keys['KeyE'])mv.y+=1; if(keys['KeyQ'])mv.y-=1;
+  if(mv.lengthSq()>0){ mv.normalize().multiplyScalar(sp); camera.position.add(mv); controls.target.add(mv); }
+  camera.position.y=Math.max(0.3,camera.position.y);
+  // compass: 北(-Z)が方位通りに見えるよう回転
   const dir=new THREE.Vector3(); camera.getWorldDirection(dir); const az=Math.atan2(dir.x,dir.z);
   dial.style.transform='rotate('+(az)+'rad)';
   controls.update(); renderer.render(scene,camera);
