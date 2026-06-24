@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-<title>KURICHI LAND ｜ 体験できるWebGL空間（2階建て＋屋上／石家庄 Neverland）</title>
+<title>KURICHI LAND ｜ 体験できるWebGL空間（2階建て／石家庄 Neverland）</title>
 <style>
   :root{ --red:#E3261D; --yellow:#FFC20E; --cream:#FFF3D6; --ink:#241f1a; }
   *{ box-sizing:border-box; }
@@ -39,8 +39,8 @@
 <body>
   <div id="app"></div>
   <div id="hud">
-    <h1>KURICHI <b>LAND</b> <span style="font-size:12px;opacity:.8">体験デモ・2F＋屋上</span></h1>
-    <div class="sub">石家庄 Neverland ／ 1F FACTORY ・ 2F DINER ・ 屋上 SKY ＋ GARDEN 450㎡</div>
+    <h1>KURICHI <b>LAND</b> <span style="font-size:12px;opacity:.8">体験デモ・2階建て</span></h1>
+    <div class="sub">石家庄 Neverland ／ 1F FACTORY ・ 2F DINER ＋ GARDEN 450㎡</div>
     <div class="keys">
       <span class="desktoponly">🖱 ドラッグ＝見回す ／ ホイール＝ズーム<br>
       <kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> 移動 ／ <kbd>Q</kbd><kbd>E</kbd> 上下 ／ <kbd>Shift</kbd> 加速<br></span>
@@ -53,7 +53,6 @@
     <button data-view="entrance">🚪 入口</button>
     <button data-view="factory">🏭 1F FACTORY</button>
     <button data-view="diner">🍰 2F DINER</button>
-    <button data-view="sky">🌆 屋上 SKY</button>
     <button data-view="garden">🌿 GARDEN</button>
     <button id="dnbtn" class="ghost">🌙 夜にする</button>
     <button id="fsbtn" class="ghost">⛶ 全画面</button>
@@ -61,7 +60,7 @@
   <div id="loader">
     <div class="logo">KURICHI <b>LAND</b></div>
     <div class="bar"><i></i></div>
-    <div style="font-size:12px;opacity:.75">2階建て＋屋上を組み立てています…</div>
+    <div style="font-size:12px;opacity:.75">2階建てを組み立てています…</div>
   </div>
 
 <script>
@@ -213,6 +212,10 @@ for(let r=0;r<3;r++)for(let c=0;c<5;c++) add(BLD, box(0.5,0.5,0.45,[COL.red,COL.
   add(g,box(1.4,1.1,1.1,COL.cream),0,2.1,0); add(g,box(0.2,0.24,0.06,COL.ink),-0.3,2.2,0.58); add(g,box(0.2,0.24,0.06,COL.ink),0.3,2.2,0.58);
   add(g,box(0.5,0.12,0.06,COL.red),0,1.85,0.58); add(g,box(1.5,0.3,1.2,COL.red),0,2.75,0);
   g.position.set(5.0,0,3.4); g.rotation.y=-0.5; BLD.add(g);})();
+// 1F 展示：エントランスの大ぬいぐるみ＆マスコット
+add(BLD, box(1.3,2.0,1.3,COL.cream), -2.2,1.0,5.4);                       // 大きなクリチのぬいぐるみ
+add(BLD, box(0.6,0.9,0.6,COL.cream), -3.6,0.45,5.6); add(BLD, box(0.28,0.45,0.12,COL.red), -3.6,1.1,5.85); // ハリチくん
+add(BLD, box(0.6,0.8,0.6,COL.cream), 1.2,0.4,5.8);                        // クリチちゃん
 // big marquee on 1F/2F band front
 add(BLD, signPlane(11,2.9, canvasTex((x,w,h)=>{x.fillStyle='#E3261D';rr(x,12,12,w-24,h-24,40);x.fill();x.strokeStyle='#FFC20E';x.lineWidth=14;rr(x,12,12,w-24,h-24,40);x.stroke();x.textAlign='center';x.textBaseline='middle';x.fillStyle='#fff';x.font='900 150px Arial';x.fillText('KURICHI LAND',w/2,h/2-20);x.fillStyle='#FFC20E';x.font='bold 66px "Hiragino Sans",sans-serif';x.fillText('クリチランド',w/2,h/2+90);},1280,360)), 0,F1+1.0,HZ+0.3);
 
@@ -249,54 +252,35 @@ add(BLD, box(6,0.8,0.08,panelTex('KURICHI DINER','#fff','#E3261D')), 0,lvl2+F2-0
 add(BLD, box(13.4,0.12,13.4,0xf3e3c2), 0,lvl2+0.26,0);
 function miniTable(x,z){ add(BLD, cyl(0.5,0.5,0.08,COL.white,16), x,lvl2+0.85,z); add(BLD,cyl(0.1,0.12,0.6,COL.cream,10),x,lvl2+0.5,z);
   [[0.8,0],[-0.8,0],[0,0.8],[0,-0.8]].forEach(s=>add(BLD,box(0.34,0.5,0.34,COL.red),x+s[0],lvl2+0.55,z+s[1])); }
-miniTable(-3.5,3.5); miniTable(0,3.5); miniTable(3.5,3.5); miniTable(-3.5,-1); miniTable(0,-1); miniTable(3.5,-1);
+miniTable(-3.5,3.5); miniTable(0,3.5); miniTable(3.5,3.5); miniTable(0,-1); miniTable(3.5,-1);
+// 2F 展示：マスコット・模型・販売ぬいぐるみ(大中小)（NW・ガラス越しに見える）
+(function(){ const fy=lvl2+0.32;
+  add(BLD, box(1.4,2.2,1.4,COL.cream), -5.0,fy+1.1,-4.5);                 // 大きなクリチのぬいぐるみ
+  add(BLD, box(0.5,0.2,0.5,COL.red), -5.0,fy+0.0,-4.5);                   // 台座
+  add(BLD, box(0.7,1.0,0.7,COL.cream), -3.2,fy+0.5,-5.2); add(BLD, box(0.3,0.5,0.12,COL.red), -3.2,fy+1.25,-4.9); // ハリチくん
+  add(BLD, box(0.7,0.9,0.7,COL.cream), -2.0,fy+0.45,-5.2);               // クリチちゃん
+  add(BLD, box(1.1,0.8,1.1,COL.wood), -5.0,fy+0.4,-2.4); add(BLD, box(0.9,0.4,0.9,0xcfd3d6,{metal:0.4,rough:0.4}), -5.0,fy+1.0,-2.4); // クリチの模型＋台
+  add(BLD, box(1.9,1.0,0.5,COL.yellow), -2.6,fy+0.5,-2.6);               // 販売棚
+  add(BLD, box(0.5,0.6,0.5,COL.cream), -3.3,fy+1.3,-2.6); add(BLD, box(0.36,0.42,0.36,COL.cream), -2.6,fy+1.2,-2.6); add(BLD, box(0.24,0.28,0.24,COL.cream), -2.1,fy+1.15,-2.6); // 大中小
+})();
 // --- roof slab over 2F ---
 add(BLD, box(14.8,0.4,14.8,COL.wood), 0,roofY+0.2,0);
 
-// --- ROOFTOP (SKY) ---
-const rfy=roofY+0.4;
-add(BLD, box(13.6,0.12,13.6,COL.deck), 0,rfy+0.06,0);        // deck
-// parapet railing
-const rail=(w,d,x,z)=>{ add(BLD, box(w,0.85,d,COL.glass,{transparent:true,opacity:0.18,rough:0.05}), x,rfy+0.5,z); add(BLD, box(w<1?0.12:w,0.1,d<1?0.12:d,COL.red), x,rfy+0.95,z); };
-rail(14,0.25,0,HZ-0.1); rail(14,0.25,0,-HZ+0.1); rail(0.25,14,HX-0.1,0); rail(0.25,14,-HX+0.1,0);
-// stair penthouse
-add(BLD, box(3,2.6,3,COL.red), 4.8,rfy+1.3,-4.8);
-add(BLD, box(3.05,0.4,3.05,COL.yellow), 4.8,rfy+2.6,-4.8);
-// rooftop parasol seats
-function parasol(x,z){ add(BLD,cyl(0.07,0.07,2.6,COL.darkwood,8),x,rfy+1.3,z); add(BLD,cone(1.7,0.8,COL.red,12),x,rfy+2.8,z);
-  add(BLD,cyl(0.45,0.45,0.1,COL.white,16),x,rfy+0.45,z); [[0.8,0],[-0.8,0]].forEach(s=>add(BLD,box(0.32,0.45,0.32,COL.red),x+s[0],rfy+0.3,z+s[1])); }
-parasol(-3.5,3.2); parasol(0.5,3.2);
-// river-view photo frame (faces back/water, -z)
-(function(){const g=new THREE.Group();
-  add(g,cyl(0.18,0.18,3.2,COL.yellow,12),-2.6,1.6,0); add(g,cyl(0.18,0.18,3.2,COL.yellow,12),2.6,1.6,0);
-  add(g,box(6,0.5,0.2,panelTex('KURICHI LAND','#E3261D','#FFC20E')),0,3.3,0);
-  g.position.set(-3,rfy+0.0,-5.6); g.rotation.y=Math.PI; BLD.add(g);})();
-// beacon sign (tall, glowing)
-add(BLD, box(1.2,3.6,1.2,COL.redD), -3,rfy+1.8,2.0);
-const beacon=signPlane(3.6,2.0, canvasTex((x,w,h)=>{x.fillStyle='#E3261D';rr(x,8,8,w-16,h-16,30);x.fill();x.fillStyle='#FFC20E';x.font='900 92px Arial';x.textAlign='center';x.textBaseline='middle';x.fillText('KURICHI',w/2,h/2-30);x.fillStyle='#fff';x.font='900 92px Arial';x.fillText('LAND',w/2,h/2+55);},512,300));
-add(BLD, beacon, -3,rfy+4.4,2.0);
-// glow billboard behind beacon (emissive)
-const bGlow=box(3.4,1.9,0.05,COL.yellow,{emissive:0xFFB000,ei:0.4}); add(BLD,bGlow,-3,rfy+4.4,1.95); reg(bGlow,0.4,2.2);
-
-// chimney with cream-swirl cap + steam (left-back of roof)
-(function(){ const cx=-4.6, cz=-4.6, cb=rfy+0.1;
-  add(BLD, cyl(0.5,0.6,2.0,COL.cream,16), cx,cb+1.0,cz);
-  add(BLD, tmesh(1.3,0.35,1.3,checkerTex), cx,cb+2.0,cz);
-  for(let i=0;i<5;i++) add(BLD, cyl(0.48-i*0.08,0.52-i*0.08,0.22,COL.cream,14), cx,cb+2.35+i*0.2,cz);
-  add(BLD, cone(0.16,0.45,COL.cream,12), cx,cb+3.5,cz);
-  for(let i=0;i<4;i++){ const pf=sph(0.32+i*0.05,0xffffff,{transparent:true,opacity:0.7,rough:1}); pf.castShadow=false; add(BLD,pf,cx+(i%2?0.22:-0.22),cb+3.9+i*0.55,cz); steam.push({m:pf,base:cb+3.9+i*0.55,ph:i*1.4}); }
+// --- 屋根のクラウン（屋上利用なし＝フラット屋根。煙突＋看板のみ） ---
+// chimney with cream-swirl cap + steam（"工場"の象徴・占有屋上ではない）
+(function(){ const cx=-4.6, cz=-4.6, cb=roofY+0.4;
+  add(BLD, cyl(0.5,0.6,1.8,COL.cream,16), cx,cb+0.9,cz);
+  add(BLD, tmesh(1.3,0.35,1.3,checkerTex), cx,cb+1.85,cz);
+  for(let i=0;i<5;i++) add(BLD, cyl(0.48-i*0.08,0.52-i*0.08,0.22,COL.cream,14), cx,cb+2.2+i*0.2,cz);
+  add(BLD, cone(0.16,0.45,COL.cream,12), cx,cb+3.35,cz);
+  for(let i=0;i<4;i++){ const pf=sph(0.32+i*0.05,0xffffff,{transparent:true,opacity:0.7,rough:1}); pf.castShadow=false; add(BLD,pf,cx+(i%2?0.22:-0.22),cb+3.7+i*0.55,cz); steam.push({m:pf,base:cb+3.7+i*0.55,ph:i*1.4}); }
 })();
-// pergola + string lights over rooftop seating
-(function(){ const py=rfy+2.5;
-  [-5,3].forEach(x=>{ add(BLD, box(0.18,2.4,0.18,COL.wood), x,rfy+1.3,0.0); add(BLD, box(0.18,2.4,0.18,COL.wood), x,rfy+1.3,3.2); });
-  add(BLD, box(8.4,0.16,0.16,COL.wood), -1,py,0.0); add(BLD, box(8.4,0.16,0.16,COL.wood), -1,py,3.2);
-  for(let i=0;i<6;i++) add(BLD, box(0.14,0.14,3.5,COL.wood), -4.6+i*1.4,py,1.6);
-  for(let i=0;i<9;i++){ const b=sph(0.09,0xfff0b0,{emissive:0xFFD050,ei:0.25}); b.castShadow=false; add(BLD,b,-4.4+i*1.05,py-0.28,1.6); bulbs.push(b); }
-})();
-// cream-swirl photo sculpture (rooftop)
-(function(){ const sx=2.6, sz=-2.2, sb=rfy+0.1; add(BLD,cyl(0.6,0.7,0.5,COL.choco,16),sx,sb+0.25,sz);
-  for(let i=0;i<6;i++) add(BLD,cyl(0.55-i*0.08,0.6-i*0.08,0.26,COL.cream,14),sx,sb+0.62+i*0.24,sz);
-  add(BLD,cone(0.16,0.5,COL.cream,12),sx,sb+2.25,sz); add(BLD,sph(0.15,COL.red),sx,sb+2.5,sz); })();
+// roof crown sign（前面・建物の目印。占有屋上なし）
+add(BLD, box(0.4,1.7,0.4,COL.redD), -5.2,roofY+1.25,HZ-0.7);
+add(BLD, box(0.4,1.7,0.4,COL.redD),  5.2,roofY+1.25,HZ-0.7);
+const crown=signPlane(8.4,1.8, canvasTex((x,w,h)=>{x.fillStyle='#E3261D';rr(x,8,8,w-16,h-16,28);x.fill();x.strokeStyle='#FFC20E';x.lineWidth=12;rr(x,8,8,w-16,h-16,28);x.stroke();x.fillStyle='#fff';x.font='900 118px Arial';x.textAlign='center';x.textBaseline='middle';x.fillText('KURICHI LAND',w/2,h/2);},960,220));
+add(BLD, crown, 0,roofY+1.6,HZ-0.66);
+const crownGlow=box(8.0,1.5,0.05,COL.yellow,{emissive:0xFFB000,ei:0.35}); add(BLD,crownGlow,0,roofY+1.6,HZ-0.73); reg(crownGlow,0.35,2.0);
 
 BLD.position.set(-4,0,-7);
 scene.add(BLD);
@@ -336,7 +320,6 @@ const pyl=new THREE.Group(); add(pyl,box(1.4,6,1.4,COL.red),0,3,0); add(pyl,box(
 // zone labels
 const L1=makeLabel('KURICHI FACTORY','1F','#E3261D'); L1.position.set(5.5,3.0,-2); scene.add(L1);
 const L2=makeLabel('KURICHI DINER','2F','#FFC20E'); L2.position.set(6.0,7.2,-2); scene.add(L2);
-const L3=makeLabel('KURICHI SKY','屋上','#2f8f87'); L3.position.set(-4,12.6,0); scene.add(L3);
 const L4=makeLabel('KURICHI GARDEN','450㎡','#6DA544'); L4.position.set(11,2.6,11); scene.add(L4);
 
 // ---- navigation ----
@@ -348,7 +331,6 @@ const VIEWS={
   entrance:{pos:[0,4,18],tgt:[-4,3,-3]},
   factory: {pos:[-4,3,6],tgt:[-4,2.4,-7]},
   diner:   {pos:[-2,8,13],tgt:[-4,6.5,-7]},
-  sky:     {pos:[10,16,8],tgt:[-5,9.5,-12]},
   garden:  {pos:[13,6,17],tgt:[0,1,7]}
 };
 let fly=null;

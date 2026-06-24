@@ -30,7 +30,7 @@
 <header>
   <h1>クリチランド ｜ フロア別 実寸平面図 <b>（schematic）</b></h1>
   <p>石家庄 Neverland 滹沱河集 ／ 建物 footprint 約14.0m × 14.4m ≒ 200㎡ ＋ テラス 450㎡（敷地 約26m × 25m ＝ 650㎡）</p>
-  <p>2階建て＋屋上。各室は実寸ベースの概念配置（construction前の検討用）。寸法はメートル定義から自動作図。</p>
+  <p>2階建て（屋上利用なし／エレベーターなし）。各室は実寸ベースの概念配置（construction前の検討用）。寸法はメートル定義から自動作図。</p>
   <span class="note">⚠️「建物200㎡＝建築面積(footprint)」前提。先方確認後に実寸確定。</span>
 </header>
 
@@ -61,7 +61,7 @@ const LEGEND = [
   ['factory','見せる仕上げ/FACTORY'],['counter','カウンター/サービス'],['diner','飲食席'],
   ['star','象徴/フォト/エントランス'],['retail','物販・展示'],['cold','冷凍・冷蔵'],
   ['boh','BOH（厨房・事務・設備）'],['core','垂直動線'],['wc','トイレ'],
-  ['garden','植栽・回遊'],['plaza','広場/イベント'],['deck','屋上デッキ'],
+  ['garden','植栽・回遊'],['plaza','広場/イベント'],
 ];
 
 // ---- floors (meters) ----
@@ -71,7 +71,7 @@ const FLOORS = [
       {x:0, y:0, w:6, h:25, label:'ガーデン・フォト回遊路（植栽帯）', t:'garden'},
       {x:20,y:0, w:6, h:25, label:'イベント／マルシェ広場', t:'plaza'},
       {x:6, y:0, w:14,h:2,  label:'搬入ヤード（冷凍トラック）', t:'boh'},
-      {x:6, y:2, w:14,h:14.4,label:'建物（1F〜屋上）', t:'building'},
+      {x:6, y:2, w:14,h:14.4,label:'建物（1F〜2F）', t:'building'},
       {x:6, y:16.4,w:14,h:2.6,label:'グリーティング広場', t:'star'},
       {x:6, y:19,w:14,h:6,  label:'テラス飲食ゾーン', t:'diner'},
     ]},
@@ -81,7 +81,7 @@ const FLOORS = [
       {x:3.0,y:0, w:2.5, h:4.5, label:'冷凍ストック／冷蔵', t:'cold'},
       {x:5.5,y:0, w:5.0, h:4.5, label:'厨房（解凍・仕上げ・洗浄）', t:'boh'},
       {x:10.5,y:0,w:1.5, h:4.5, label:'WC', t:'wc'},
-      {x:12.0,y:0,w:2.0, h:4.5, label:'階段・EV・昇降機', t:'core'},
+      {x:12.0,y:0,w:2.0, h:4.5, label:'階段（EVなし）', t:'core'},
       {x:5.5,y:4.5,w:5.0,h:4.0, label:'KURICHI FACTORY（見せる仕上げ）', t:'factory'},
       {x:0, y:4.5,w:5.5, h:5.5, label:'屋内スタンディング／少数席', t:'seat'},
       {x:10.5,y:4.5,w:3.5,h:9.9,label:'物販＋キャラ展示', t:'retail'},
@@ -94,19 +94,12 @@ const FLOORS = [
       {x:0, y:0, w:5.5, h:3.0, label:'事務・更衣・休憩・在庫', t:'boh'},
       {x:5.5,y:0, w:5.0, h:3.0, label:'軽ドリンク（無火）', t:'counter'},
       {x:10.5,y:0,w:1.5, h:4.5, label:'WC', t:'wc'},
-      {x:12.0,y:0,w:2.0, h:4.5, label:'階段・EV・昇降機', t:'core'},
-      {x:0, y:3.0,w:6.0, h:6.0, label:'キャラクター・ミュージアム', t:'star'},
+      {x:12.0,y:0,w:2.0, h:4.5, label:'階段（EVなし）', t:'core'},
+      {x:0, y:3.0,w:6.0, h:6.0, label:'キャラ展示・模型・販売ぬいぐるみ(大中小)', t:'star'},
       {x:0, y:9.0,w:6.0, h:5.4, label:'グッズショップ', t:'retail'},
       {x:6.0,y:3.0,w:4.5, h:1.5, label:'回廊', t:'hall'},
       {x:6.0,y:4.5,w:8.0, h:9.9, label:'屋内ダイナー席（川ビュー・約60席）', t:'diner'},
       {x:8.0,y:4.7,w:5.8, h:3.3, label:'イベント／WS（可動）', t:'diner', dashed:true},
-    ]},
-  { title:'屋上 ｜ KURICHI SKY', sub:'約130㎡・開放デッキ（夏夜とフォトの主役）', W:14, H:14.4, S:26, base:'deck',
-    rooms:[
-      {x:12.0,y:0,w:2.0, h:4.5, label:'階段ペントハウス／EV', t:'core'},
-      {x:0, y:0, w:4.0, h:3.0, label:'設備（室外機）', t:'boh'},
-      {x:4.0,y:3.0,w:8.0, h:6.0, label:'夏夜テラス席', t:'diner'},
-      {x:0, y:9.0,w:14.0,h:5.4, label:'川ビュー・フォトデッキ＋シンボルサイン', t:'star'},
     ]},
 ];
 
