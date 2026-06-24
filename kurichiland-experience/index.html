@@ -212,10 +212,9 @@ for(let r=0;r<3;r++)for(let c=0;c<5;c++) add(BLD, box(0.5,0.5,0.45,[COL.red,COL.
   add(g,box(1.4,1.1,1.1,COL.cream),0,2.1,0); add(g,box(0.2,0.24,0.06,COL.ink),-0.3,2.2,0.58); add(g,box(0.2,0.24,0.06,COL.ink),0.3,2.2,0.58);
   add(g,box(0.5,0.12,0.06,COL.red),0,1.85,0.58); add(g,box(1.5,0.3,1.2,COL.red),0,2.75,0);
   g.position.set(5.0,0,3.4); g.rotation.y=-0.5; BLD.add(g);})();
-// 1F 展示：エントランスの大ぬいぐるみ＆マスコット
-add(BLD, box(1.3,2.0,1.3,COL.cream), -2.2,1.0,5.4);                       // 大きなクリチのぬいぐるみ
-add(BLD, box(0.6,0.9,0.6,COL.cream), -3.6,0.45,5.6); add(BLD, box(0.28,0.45,0.12,COL.red), -3.6,1.1,5.85); // ハリチくん
-add(BLD, box(0.6,0.8,0.6,COL.cream), 1.2,0.4,5.8);                        // クリチちゃん
+// 1F 展示：エントランスのキャラ像（大ぬいぐるみは中央吹き抜けへ）
+add(BLD, box(0.6,0.9,0.6,COL.cream), -3.6,0.45,5.6); add(BLD, box(0.28,0.45,0.12,COL.red), -3.6,1.1,5.85); // ハリチくん像
+add(BLD, box(0.6,0.8,0.6,COL.cream), 2.6,0.4,5.8);                        // クリチちゃん像
 // big marquee on 1F/2F band front
 add(BLD, signPlane(11,2.9, canvasTex((x,w,h)=>{x.fillStyle='#E3261D';rr(x,12,12,w-24,h-24,40);x.fill();x.strokeStyle='#FFC20E';x.lineWidth=14;rr(x,12,12,w-24,h-24,40);x.stroke();x.textAlign='center';x.textBaseline='middle';x.fillStyle='#fff';x.font='900 150px Arial';x.fillText('KURICHI LAND',w/2,h/2-20);x.fillStyle='#FFC20E';x.font='bold 66px "Hiragino Sans",sans-serif';x.fillText('クリチランド',w/2,h/2+90);},1280,360)), 0,F1+1.0,HZ+0.3);
 
@@ -248,23 +247,43 @@ add(BLD, box(14.1,0.5,T+0.06,COL.yellow), 0,lvl2+F2-0.3+0.2,-HZ);  // 2F band
 for(let i=-2;i<=2;i++) add(BLD, box(0.1,2.8,0.16,COL.cream), i*2.5,y2,HZ+0.03);
 for(let i=-1;i<=1;i++){ const wb=new THREE.Group(); add(wb,box(3.6,0.4,0.5,COL.darkwood),0,0,0); add(wb,box(3.4,0.18,0.42,COL.green),0,0.16,0.02); for(let k=0;k<6;k++) add(wb,sph(0.12,k%2?COL.red:COL.yellow),-1.35+k*0.54,0.3,0.06); wb.position.set(i*4.2, lvl2+0.7, HZ+0.4); BLD.add(wb); }
 add(BLD, box(6,0.8,0.08,panelTex('KURICHI DINER','#fff','#E3261D')), 0,lvl2+F2-0.5,HZ+0.12); // 2F sign
-// 2F floor + a few dining tables (visible through glass)
-add(BLD, box(13.4,0.12,13.4,0xf3e3c2), 0,lvl2+0.26,0);
+// 2F floor = 回廊リング（中央に吹き抜け 6.6×6.6m）
+add(BLD, box(13.6,0.12,3.5,0xf3e3c2), 0,lvl2+0.26,5.05);    // 前リング
+add(BLD, box(13.6,0.12,3.5,0xf3e3c2), 0,lvl2+0.26,-5.05);   // 後リング
+add(BLD, box(3.5,0.12,6.6,0xf3e3c2), -5.05,lvl2+0.26,0);    // 左リング
+add(BLD, box(3.5,0.12,6.6,0xf3e3c2), 5.05,lvl2+0.26,0);     // 右リング
+// 吹き抜けのガラス手すり（2階から1階を見下ろす）
+[[0,3.3,6.8,0.1],[0,-3.3,6.8,0.1],[-3.3,0,0.1,6.8],[3.3,0,0.1,6.8]].forEach(s=>{ add(BLD, box(s[2],0.95,s[3],COL.glass,{transparent:true,opacity:0.18,rough:0.05}), s[0],lvl2+0.78,s[1]); add(BLD, box(s[2]<1?0.1:s[2],0.1,s[3]<1?0.1:s[3],COL.red), s[0],lvl2+1.22,s[1]); });
+// ★中央吹き抜けの主役：大きなクリチのぬいぐるみ（1F中央→2階から見下ろせる）
+(function(){ const cx=0, cz=0;
+  add(BLD, cyl(1.5,1.7,0.4,COL.red), cx,0.2,cz);             // 台座
+  add(BLD, sph(1.5,COL.cream), cx,2.0,cz);                   // 胴
+  add(BLD, sph(1.2,COL.cream), cx,4.0,cz);                   // 頭（吹き抜けに突き出る）
+  add(BLD, box(0.5,0.95,0.22,COL.cream), cx-0.55,4.95,cz); add(BLD, box(0.5,0.95,0.22,COL.cream), cx+0.55,4.95,cz); // 耳
+  add(BLD, box(0.3,0.34,0.1,COL.ink), cx-0.42,4.2,cz+1.12); add(BLD, box(0.3,0.34,0.1,COL.ink), cx+0.42,4.2,cz+1.12); // 目
+  add(BLD, box(0.7,0.18,0.1,COL.red), cx,3.8,cz+1.18);       // 口
+  add(BLD, box(0.5,0.5,0.1,0xF4A6B8), cx-0.82,3.95,cz+1.0); add(BLD, box(0.5,0.5,0.1,0xF4A6B8), cx+0.82,3.95,cz+1.0); // ほお
+})();
+// 2F dining tables（リング上・吹き抜けを囲む）
 function miniTable(x,z){ add(BLD, cyl(0.5,0.5,0.08,COL.white,16), x,lvl2+0.85,z); add(BLD,cyl(0.1,0.12,0.6,COL.cream,10),x,lvl2+0.5,z);
   [[0.8,0],[-0.8,0],[0,0.8],[0,-0.8]].forEach(s=>add(BLD,box(0.34,0.5,0.34,COL.red),x+s[0],lvl2+0.55,z+s[1])); }
-miniTable(-3.5,3.5); miniTable(0,3.5); miniTable(3.5,3.5); miniTable(0,-1); miniTable(3.5,-1);
-// 2F 展示：マスコット・模型・販売ぬいぐるみ(大中小)（NW・ガラス越しに見える）
+miniTable(-4.5,4.5); miniTable(0,4.5); miniTable(4.5,4.5); miniTable(4.5,1.5); miniTable(4.5,-1.5); miniTable(4.5,-4.5);
+// 2F 展示（museum：左・後リング上＝吹き抜けを避けて配置）
 (function(){ const fy=lvl2+0.32;
-  add(BLD, box(1.4,2.2,1.4,COL.cream), -5.0,fy+1.1,-4.5);                 // 大きなクリチのぬいぐるみ
-  add(BLD, box(0.5,0.2,0.5,COL.red), -5.0,fy+0.0,-4.5);                   // 台座
-  add(BLD, box(0.7,1.0,0.7,COL.cream), -3.2,fy+0.5,-5.2); add(BLD, box(0.3,0.5,0.12,COL.red), -3.2,fy+1.25,-4.9); // ハリチくん
-  add(BLD, box(0.7,0.9,0.7,COL.cream), -2.0,fy+0.45,-5.2);               // クリチちゃん
-  add(BLD, box(1.1,0.8,1.1,COL.wood), -5.0,fy+0.4,-2.4); add(BLD, box(0.9,0.4,0.9,0xcfd3d6,{metal:0.4,rough:0.4}), -5.0,fy+1.0,-2.4); // クリチの模型＋台
-  add(BLD, box(1.9,1.0,0.5,COL.yellow), -2.6,fy+0.5,-2.6);               // 販売棚
-  add(BLD, box(0.5,0.6,0.5,COL.cream), -3.3,fy+1.3,-2.6); add(BLD, box(0.36,0.42,0.36,COL.cream), -2.6,fy+1.2,-2.6); add(BLD, box(0.24,0.28,0.24,COL.cream), -2.1,fy+1.15,-2.6); // 大中小
+  add(BLD, box(0.7,1.0,0.7,COL.cream), -3.8,fy+0.5,-5.4); add(BLD, box(0.3,0.5,0.12,COL.red), -3.8,fy+1.25,-5.1); // ハリチくん像
+  add(BLD, box(0.7,0.9,0.7,COL.cream), -2.0,fy+0.45,-5.4);               // クリチちゃん像
+  add(BLD, box(1.1,0.8,1.1,COL.wood), -5.4,fy+0.4,-1.5); add(BLD, box(0.9,0.4,0.9,0xcfd3d6,{metal:0.4,rough:0.4}), -5.4,fy+1.0,-1.5); // クリチの模型＋台
+  add(BLD, box(0.5,1.0,1.9,COL.yellow), -5.7,fy+0.5,1.6);               // 販売棚（左壁沿い）
+  add(BLD, box(0.5,0.6,0.5,COL.cream), -5.6,fy+1.3,0.9); add(BLD, box(0.36,0.42,0.36,COL.cream), -5.6,fy+1.2,1.6); add(BLD, box(0.24,0.28,0.24,COL.cream), -5.6,fy+1.15,2.2); // 販売ぬいぐるみ 大中小
 })();
-// --- roof slab over 2F ---
-add(BLD, box(14.8,0.4,14.8,COL.wood), 0,roofY+0.2,0);
+// --- roof（中央に天窓＝吹き抜けへ採光。屋根はリング＋ガラス天窓） ---
+add(BLD, box(14.8,0.4,4.1,COL.wood), 0,roofY+0.2,5.35);   // 前
+add(BLD, box(14.8,0.4,4.1,COL.wood), 0,roofY+0.2,-5.35);  // 後
+add(BLD, box(4.1,0.4,6.6,COL.wood), -5.35,roofY+0.2,0);   // 左
+add(BLD, box(4.1,0.4,6.6,COL.wood), 5.35,roofY+0.2,0);    // 右
+add(BLD, box(6.8,0.08,6.8,COL.glass,{transparent:true,opacity:0.22,rough:0.05}), 0,roofY+0.25,0); // 天窓
+add(BLD, box(7.0,0.18,0.18,COL.red), 0,roofY+0.4,3.4); add(BLD, box(7.0,0.18,0.18,COL.red), 0,roofY+0.4,-3.4); // 天窓枠
+add(BLD, box(0.18,0.18,7.0,COL.red), 3.4,roofY+0.4,0); add(BLD, box(0.18,0.18,7.0,COL.red), -3.4,roofY+0.4,0);
 
 // --- 屋根のクラウン（屋上利用なし＝フラット屋根。煙突＋看板のみ） ---
 // chimney with cream-swirl cap + steam（"工場"の象徴・占有屋上ではない）
@@ -330,7 +349,7 @@ const VIEWS={
   overview:{pos:[32,26,36],tgt:[-4,6,-6]},
   entrance:{pos:[0,4,18],tgt:[-4,3,-3]},
   factory: {pos:[-4,3,6],tgt:[-4,2.4,-7]},
-  diner:   {pos:[-2,8,13],tgt:[-4,6.5,-7]},
+  diner:   {pos:[-4,9.5,9],tgt:[-4,3.2,-7]},
   garden:  {pos:[13,6,17],tgt:[0,1,7]}
 };
 let fly=null;
