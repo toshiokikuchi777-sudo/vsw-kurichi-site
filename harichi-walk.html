@@ -58,7 +58,7 @@
     <span class="desktop-only"><kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> / 矢印キーで歩く<br>
     画面を<b>ドラッグ</b>で視点回転・<b>ホイール</b>でズーム<br></span>
     <span class="touch-only" style="display:none">左の<b>スティック</b>で歩く・<b>右側ドラッグ</b>で視点</span>
-    緑の芝生に立つ<b>約4m</b>のハリチくんの周りを歩けます。
+    緑の芝生のクリチランドを、アバターで歩けます。<b>建物の中にも入れます</b>（前進＝入口へ）。
   </div>
 </div>
 
@@ -227,6 +227,7 @@ const pHarichi = new Promise((resolve,reject)=>{
     (g)=>{
       const m=g.scene;
       fitHeight(m, HARICHI_H, true, true);       // 高さ4mに正規化＋XZ中心を原点へ
+      m.position.x += 5; m.position.z += 12;      // 建物の入口前の広場へ（館内を空ける）
       m.traverse(o=>{ if(o.isMesh){ o.castShadow=true; o.receiveShadow=true;
         if(o.material){ o.material.side=THREE.FrontSide; } } });
       scene.add(m);
@@ -259,10 +260,18 @@ const pAvatar = new Promise((resolve,reject)=>{
     (err)=>reject(new Error('FBX(アバター)読込エラー')));
 });
 
+/* ---------- 建物（クリチランド）：アバターで中に入れる（当たり判定なし） ---------- */
+const pBuilding = new Promise((resolve)=>{
+  gltfLoader.load('kurichiland-level/all.glb',
+    (g)=>{ const b=g.scene; b.traverse(o=>{ if(o.isMesh){ o.castShadow=true; o.receiveShadow=true; } }); scene.add(b); resolve(b); },
+    undefined,
+    ()=>resolve(null));   // 建物が読めなくても歩行は継続
+});
+
 /* ---------- third-person walk controller ---------- */
 const player = {
-  pos: new THREE.Vector3(0,0,6.5),   // ハリチくんの正面に出現
-  heading: Math.PI,                  // 像(原点)の方を向く
+  pos: new THREE.Vector3(0,0,12),    // 入口前の広場に出現（前進で館内へ）
+  heading: Math.PI,                  // 建物（-Z）の方を向く
   speed: 0,
 };
 let camYaw = Math.PI;     // カメラ方位（プレイヤー背後）
@@ -393,7 +402,7 @@ function tick(dt){
   renderer.render(scene,camera);
 }
 
-Promise.all([pHarichi, pAvatar]).then(([statue,av])=>{
+Promise.all([pHarichi, pAvatar, pBuilding]).then(([statue,av])=>{
   window.__READY=true;
   // debug introspection (used for automated verification; harmless in production)
   window.__dbg=()=>{
