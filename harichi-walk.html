@@ -1,0 +1,421 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="robots" content="noindex,nofollow">
+<meta property="og:title" content="ハリチくん 3Dウォーク ｜ 芝生に立つ4mのハリチくんの周りを歩く">
+<meta property="og:description" content="アバターになって、緑の芝生に立つ約4mのハリチくんの周りを自由に歩き回れます。">
+<title>ハリチくん 3Dウォーク ｜ アバターで歩く</title>
+<style>
+  :root{ --red:#E3261D; --yellow:#FFC20E; --ink:#241f1a; }
+  *{box-sizing:border-box}
+  html,body{margin:0;height:100%;overflow:hidden;background:#bfe3ff;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Hiragino Sans",sans-serif;
+    -webkit-user-select:none;user-select:none;-webkit-tap-highlight-color:transparent}
+  #app{position:fixed;inset:0;touch-action:none}
+  canvas{display:block}
+
+  /* HUD */
+  #hud{position:fixed;left:12px;top:12px;z-index:10;max-width:min(90vw,360px);
+    background:rgba(36,31,26,.78);color:#fff;padding:12px 14px;border-radius:14px;
+    border:2px solid var(--yellow);backdrop-filter:blur(4px)}
+  #hud h1{margin:0 0 3px;font-size:15px;letter-spacing:.02em} #hud h1 b{color:var(--yellow)}
+  #hud .sub{font-size:11px;opacity:.9;line-height:1.7}
+  #hud kbd{display:inline-block;min-width:16px;text-align:center;background:#fff;color:var(--ink);
+    border-radius:5px;padding:1px 5px;font-size:10.5px;font-weight:800;margin:0 1px}
+
+  #back{position:fixed;right:12px;top:12px;z-index:11;cursor:pointer;border:none;
+    border-radius:999px;padding:9px 15px;font-weight:800;font-size:12.5px;
+    background:var(--red);color:#fff;box-shadow:0 3px 12px rgba(0,0,0,.25);text-decoration:none}
+  #fsbtn{position:fixed;right:12px;top:54px;z-index:11;cursor:pointer;border:none;
+    border-radius:999px;padding:8px 14px;font-weight:800;font-size:12px;
+    background:rgba(255,255,255,.92);color:var(--ink);box-shadow:0 3px 12px rgba(0,0,0,.2)}
+
+  /* mobile joystick */
+  #stick{position:fixed;left:24px;bottom:28px;z-index:12;width:128px;height:128px;border-radius:50%;
+    background:rgba(255,255,255,.18);border:2px solid rgba(255,255,255,.55);display:none;touch-action:none}
+  #stick .nub{position:absolute;left:50%;top:50%;width:54px;height:54px;margin:-27px 0 0 -27px;border-radius:50%;
+    background:rgba(255,255,255,.9);box-shadow:0 2px 10px rgba(0,0,0,.3)}
+  .touch #stick{display:block}
+  .touch #hud .desktop-only{display:none}
+
+  #loader{position:fixed;inset:0;z-index:50;display:flex;align-items:center;justify-content:center;
+    flex-direction:column;gap:14px;background:var(--yellow);color:var(--ink);transition:opacity .6s}
+  #loader .big{font-size:26px;font-weight:900} #loader .big b{color:var(--red)}
+  #loader .pct{font-size:13px;opacity:.85;font-weight:700}
+  #loader .bar{width:200px;height:8px;border-radius:999px;background:rgba(0,0,0,.12);overflow:hidden}
+  #loader .bar i{display:block;height:100%;width:0;background:var(--red);transition:width .25s}
+  .hide{opacity:0;pointer-events:none}
+</style>
+</head>
+<body>
+<div id="app"></div>
+
+<div id="hud">
+  <h1>ハリチくん <b>3D WALK</b></h1>
+  <div class="sub">
+    <span class="desktop-only"><kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> / 矢印キーで歩く<br>
+    画面を<b>ドラッグ</b>で視点回転・<b>ホイール</b>でズーム<br></span>
+    <span class="touch-only" style="display:none">左の<b>スティック</b>で歩く・<b>右側ドラッグ</b>で視点</span>
+    緑の芝生に立つ<b>約4m</b>のハリチくんの周りを歩けます。
+  </div>
+</div>
+
+<a id="back" href="harichi.html">← 戻る</a>
+<button id="fsbtn">⛶ 全画面</button>
+
+<div id="stick"><div class="nub" id="nub"></div></div>
+
+<div id="loader">
+  <div class="big">ハリチくん <b>WALK</b></div>
+  <div class="bar"><i id="barfill"></i></div>
+  <div class="pct" id="pct">3D空間を読み込み中… 0%</div>
+</div>
+
+<script>
+(function(){
+  // touch detection
+  if (matchMedia('(hover: none) and (pointer: coarse)').matches || 'ontouchstart' in window){
+    document.documentElement.classList.add('touch');
+    document.body.classList.add('touch');
+    var to=document.querySelector('.touch-only'); if(to) to.style.display='inline';
+  }
+  function fail(m){var l=document.getElementById('loader');if(!l)return;
+    l.innerHTML='<div style="text-align:center;padding:24px;max-width:340px">'+
+      '<b style="font-size:20px;color:#241f1a">表示できませんでした</b>'+
+      '<div style="font-size:12px;margin-top:8px;color:#241f1a;line-height:1.7">'+(m||'')+
+      '<br>通信環境のよい場所で、Chrome / Safari の最新版でお試しください。</div></div>';
+    l.classList.remove('hide');}
+  window.__fail=fail;
+  window.addEventListener('error',function(e){ if(!window.__READY) fail(e.message); });
+  setTimeout(function(){ if(!window.__READY) fail('読み込みに時間がかかっています。'); }, 25000);
+})();
+</script>
+
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+  }
+}
+</script>
+
+<script type="module">
+import * as THREE from 'three';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { FBXLoader }  from 'three/addons/loaders/FBXLoader.js';
+
+try{
+const app = document.getElementById('app');
+
+/* ---------- renderer ---------- */
+const renderer = new THREE.WebGLRenderer({ antialias:true });
+renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+renderer.setSize(innerWidth, innerHeight);
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+renderer.outputColorSpace = THREE.SRGBColorSpace;
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure = 1.05;
+app.appendChild(renderer.domElement);
+
+/* ---------- scene / sky / fog ---------- */
+const scene = new THREE.Scene();
+scene.fog = new THREE.Fog(0xcfe8ff, 70, 150);
+
+// gradient sky dome
+(function(){
+  const c = document.createElement('canvas'); c.width=2; c.height=256;
+  const g = c.getContext('2d').createLinearGradient(0,0,0,256);
+  g.addColorStop(0.0,'#3a8fe6'); g.addColorStop(0.45,'#86c4f5'); g.addColorStop(1.0,'#dff1ff');
+  const ctx=c.getContext('2d'); ctx.fillStyle=g; ctx.fillRect(0,0,2,256);
+  const tex=new THREE.CanvasTexture(c); tex.colorSpace=THREE.SRGBColorSpace;
+  const sky=new THREE.Mesh(new THREE.SphereGeometry(220,32,16),
+    new THREE.MeshBasicMaterial({map:tex, side:THREE.BackSide, fog:false}));
+  scene.add(sky);
+})();
+
+const camera = new THREE.PerspectiveCamera(55, innerWidth/innerHeight, 0.05, 600);
+
+/* ---------- lights ---------- */
+scene.add(new THREE.HemisphereLight(0xffffff, 0x7da06a, 0.95));
+scene.add(new THREE.AmbientLight(0xffffff, 0.25));
+const sun = new THREE.DirectionalLight(0xfff3df, 1.7);
+sun.position.set(28, 42, 18);
+sun.castShadow = true;
+sun.shadow.mapSize.set(2048, 2048);
+sun.shadow.camera.near = 1; sun.shadow.camera.far = 130;
+sun.shadow.camera.left=-30; sun.shadow.camera.right=30;
+sun.shadow.camera.top=30; sun.shadow.camera.bottom=-30;
+sun.shadow.bias = -0.0004;
+scene.add(sun);
+scene.add(sun.target);
+
+/* ---------- grass ground ---------- */
+(function(){
+  const c = document.createElement('canvas'); c.width=c.height=512;
+  const ctx = c.getContext('2d');
+  ctx.fillStyle = '#5aa23a'; ctx.fillRect(0,0,512,512);
+  for(let i=0;i<14000;i++){
+    const x=(i*97.13)%512, y=(i*53.71)%512;          // deterministic scatter
+    const t=(i*0.6180339887)%1;
+    const greens=['#4f9633','#67ad44','#3f8a2c','#74b84e','#56a03b'];
+    ctx.strokeStyle=greens[i%greens.length];
+    ctx.globalAlpha=0.5+0.5*t;
+    ctx.beginPath(); ctx.moveTo(x,y); ctx.lineTo(x+(t-0.5)*3, y-2-t*4); ctx.lineWidth=1; ctx.stroke();
+  }
+  ctx.globalAlpha=1;
+  const tex=new THREE.CanvasTexture(c);
+  tex.wrapS=tex.wrapT=THREE.RepeatWrapping; tex.repeat.set(60,60);
+  tex.colorSpace=THREE.SRGBColorSpace; tex.anisotropy=4;
+  const ground=new THREE.Mesh(
+    new THREE.CircleGeometry(160,64),
+    new THREE.MeshStandardMaterial({map:tex, roughness:1, metalness:0, color:0xcfe6bf}));
+  ground.rotation.x=-Math.PI/2; ground.receiveShadow=true; scene.add(ground);
+})();
+
+// a few simple bushes for depth / sense of scale & motion
+(function(){
+  const mat=new THREE.MeshStandardMaterial({color:0x3f7d2e, roughness:1});
+  const spots=[[24,-10],[-22,14],[34,26],[-30,-24],[12,34],[-38,4],[40,-30],[6,-40],[-14,40]];
+  for(const [x,z] of spots){
+    const b=new THREE.Group();
+    for(let k=0;k<3;k++){
+      const r=1.1+((x*7+z*13+k*5)%5)/5*1.1;
+      const m=new THREE.Mesh(new THREE.IcosahedronGeometry(r,1), mat);
+      m.position.set((k-1)*r*0.8, r*0.7, ((k*x)%3-1)*r*0.5);
+      m.castShadow=true; m.receiveShadow=true; b.add(m);
+    }
+    b.position.set(x,0,z); scene.add(b);
+  }
+})();
+
+/* ============================================================
+   LOADING : harichi GLB (4m statue) + Walking.fbx (avatar)
+   ============================================================ */
+const loaderUI = document.getElementById('loader');
+const barfill  = document.getElementById('barfill');
+const pctEl    = document.getElementById('pct');
+let pGlb=0, pFbx=0;
+function prog(){ const p=Math.round((pGlb*0.5+pFbx*0.5)*100);
+  barfill.style.width=p+'%'; pctEl.textContent='3D空間を読み込み中… '+p+'%'; }
+
+const manager = new THREE.LoadingManager();
+const gltfLoader = new GLTFLoader(manager);
+const fbxLoader  = new FBXLoader(manager);
+
+function fitHeight(obj, targetH, dropToFloor=true, centerXZ=true){
+  const box=new THREE.Box3().setFromObject(obj);
+  const size=box.getSize(new THREE.Vector3());
+  const s = targetH / (size.y || 1);
+  obj.scale.setScalar(s);
+  const box2=new THREE.Box3().setFromObject(obj);
+  const c=box2.getCenter(new THREE.Vector3());
+  if(centerXZ){ obj.position.x -= c.x; obj.position.z -= c.z; }
+  if(dropToFloor){ obj.position.y -= box2.min.y; }
+  return s;
+}
+
+let mixer=null, walkAction=null, avatar=null, obstacle=null;
+const HARICHI_H = 4.0;   // 約4メートル
+const AVATAR_H  = 1.7;   // 人間スケール
+
+const pHarichi = new Promise((resolve,reject)=>{
+  gltfLoader.load('assets/harichi/3d/shigumiharichi.glb',
+    (g)=>{
+      const m=g.scene;
+      fitHeight(m, HARICHI_H, true, true);       // 高さ4mに正規化＋XZ中心を原点へ
+      m.traverse(o=>{ if(o.isMesh){ o.castShadow=true; o.receiveShadow=true;
+        if(o.material){ o.material.side=THREE.FrontSide; } } });
+      scene.add(m);
+      // 足元のフットプリント（XZ）を当たり判定に使う＝中に入れず「周りを歩く」
+      const fb=new THREE.Box3().setFromObject(m);
+      obstacle={ minX:fb.min.x, maxX:fb.max.x, minZ:fb.min.z, maxZ:fb.max.z };
+      resolve(m);
+    },
+    (e)=>{ if(e.lengthComputable){ pGlb=e.loaded/e.total; prog(); } },
+    (err)=>reject(new Error('GLB読込エラー')));
+});
+
+const pAvatar = new Promise((resolve,reject)=>{
+  fbxLoader.load('assets/harichi/3d/Walking.fbx',
+    (fbx)=>{
+      fitHeight(fbx, AVATAR_H, true, true);
+      fbx.traverse(o=>{ if(o.isMesh){ o.castShadow=true; o.receiveShadow=true; o.frustumCulled=false; } });
+      // 歩行アニメーション
+      if(fbx.animations && fbx.animations.length){
+        mixer=new THREE.AnimationMixer(fbx);
+        walkAction=mixer.clipAction(fbx.animations[0]);
+        walkAction.play();            // 常に再生（timeScaleで速度制御＝静止時はTポーズにならない）
+        mixer.timeScale=0; mixer.update(0);   // バインド(Tポーズ)ではなく歩行クリップの姿勢を即適用
+      }
+      avatar=fbx;
+      scene.add(fbx);
+      resolve(fbx);
+    },
+    (e)=>{ if(e.lengthComputable){ pFbx=e.loaded/e.total; prog(); } },
+    (err)=>reject(new Error('FBX(アバター)読込エラー')));
+});
+
+/* ---------- third-person walk controller ---------- */
+const player = {
+  pos: new THREE.Vector3(0,0,6.5),   // ハリチくんの正面に出現
+  heading: Math.PI,                  // 像(原点)の方を向く
+  speed: 0,
+};
+let camYaw = Math.PI;     // カメラ方位（プレイヤー背後）
+let camPitch = 0.28;      // 見下ろし角
+let camDist = 6.2;        // 距離
+let curTS = 0;            // アニメ速度の平滑化用
+const CAM_MIN=2.6, CAM_MAX=16;
+const WALK_SPEED = 2.6;   // m/s
+const BOUND = 120;        // 行動可能半径
+
+// input
+const keys=Object.create(null);
+addEventListener('keydown',e=>{ keys[e.code]=true;
+  if(['ArrowUp','ArrowDown','ArrowLeft','ArrowRight','Space'].includes(e.code)) e.preventDefault(); });
+addEventListener('keyup',  e=>{ keys[e.code]=false; });
+
+// pointer-drag to orbit camera (desktop + touch fallback)
+let dragging=false, lastX=0, lastY=0, dragPointer=-1;
+const stickEl=document.getElementById('stick');
+function onDown(x,y,id){ dragging=true; lastX=x; lastY=y; dragPointer=id; }
+function onMove(x,y){ if(!dragging) return;
+  camYaw   -= (x-lastX)*0.005;
+  camPitch  = Math.max(-0.15, Math.min(1.15, camPitch + (y-lastY)*0.004));
+  lastX=x; lastY=y; }
+function onUp(){ dragging=false; dragPointer=-1; }
+
+renderer.domElement.addEventListener('pointerdown',e=>{ onDown(e.clientX,e.clientY,e.pointerId); });
+addEventListener('pointermove',e=>{ if(e.pointerId===dragPointer) onMove(e.clientX,e.clientY); });
+addEventListener('pointerup',  e=>{ if(e.pointerId===dragPointer) onUp(); });
+addEventListener('wheel',e=>{ camDist=Math.max(CAM_MIN,Math.min(CAM_MAX, camDist + e.deltaY*0.01)); },{passive:true});
+
+// virtual joystick (touch)
+let joyX=0, joyY=0, joyActive=false, joyId=-1;
+const nub=document.getElementById('nub');
+function joyStart(e){ const t=e.changedTouches?e.changedTouches[0]:e; joyActive=true; joyId=t.identifier??-2;
+  joyMove(e); e.preventDefault(); }
+function joyMove(e){ if(!joyActive) return;
+  let t=e; if(e.changedTouches){ for(const tt of e.changedTouches){ if((tt.identifier??-2)===joyId){t=tt;break;} } }
+  const r=stickEl.getBoundingClientRect(); const cx=r.left+r.width/2, cy=r.top+r.height/2;
+  let dx=(t.clientX-cx), dy=(t.clientY-cy); const max=r.width/2;
+  const len=Math.hypot(dx,dy)||1; if(len>max){ dx=dx/len*max; dy=dy/len*max; }
+  nub.style.transform='translate('+dx+'px,'+dy+'px)';
+  joyX=dx/max; joyY=dy/max; e.preventDefault(); }
+function joyEnd(e){ joyActive=false; joyId=-1; joyX=joyY=0; nub.style.transform='translate(0,0)'; }
+stickEl.addEventListener('touchstart',joyStart,{passive:false});
+stickEl.addEventListener('touchmove', joyMove ,{passive:false});
+stickEl.addEventListener('touchend',  joyEnd );
+stickEl.addEventListener('touchcancel',joyEnd );
+
+document.getElementById('fsbtn').addEventListener('click',()=>{
+  if(!document.fullscreenElement) document.documentElement.requestFullscreen?.();
+  else document.exitFullscreen?.(); });
+
+addEventListener('resize',()=>{ camera.aspect=innerWidth/innerHeight; camera.updateProjectionMatrix();
+  renderer.setSize(innerWidth,innerHeight); });
+
+/* ---------- main loop ---------- */
+const clock=new THREE.Clock();
+function animate(){
+  requestAnimationFrame(animate);
+  tick(Math.min(clock.getDelta(),0.05));
+}
+function tick(dt){
+  // movement input (camera-relative)
+  let ix=0, iz=0;
+  if(keys['KeyW']||keys['ArrowUp'])    iz-=1;
+  if(keys['KeyS']||keys['ArrowDown'])  iz+=1;
+  if(keys['KeyA']||keys['ArrowLeft'])  ix-=1;
+  if(keys['KeyD']||keys['ArrowRight']) ix+=1;
+  if(joyActive){ ix+=joyX; iz+=joyY; }
+  const inLen=Math.hypot(ix,iz);
+  let moving=inLen>0.12;
+
+  if(moving){
+    if(inLen>1){ ix/=inLen; iz/=inLen; }
+    // camera-forward basis on ground plane
+    const fwdX=Math.sin(camYaw),  fwdZ=Math.cos(camYaw);
+    const rgtX=Math.cos(camYaw),  rgtZ=-Math.sin(camYaw);
+    // iz<0 = away from camera = forward
+    const mvX = rgtX*ix - fwdX*iz;
+    const mvZ = rgtZ*ix - fwdZ*iz;
+    const mlen=Math.hypot(mvX,mvZ)||1;
+    const nx=mvX/mlen, nz=mvZ/mlen;
+    const step=WALK_SPEED*Math.min(inLen,1)*dt;
+    player.pos.x+=nx*step; player.pos.z+=nz*step;
+    // clamp to field
+    const rad=Math.hypot(player.pos.x,player.pos.z);
+    if(rad>BOUND){ player.pos.x*=BOUND/rad; player.pos.z*=BOUND/rad; }
+    // ハリチくんのフットプリントには入れない（外周を歩く）
+    if(obstacle){
+      const mg=0.45, x1=obstacle.minX-mg, x2=obstacle.maxX+mg, z1=obstacle.minZ-mg, z2=obstacle.maxZ+mg;
+      if(player.pos.x>x1 && player.pos.x<x2 && player.pos.z>z1 && player.pos.z<z2){
+        const dL=player.pos.x-x1, dR=x2-player.pos.x, dD=player.pos.z-z1, dU=z2-player.pos.z;
+        const mn=Math.min(dL,dR,dD,dU);
+        if(mn===dL) player.pos.x=x1; else if(mn===dR) player.pos.x=x2;
+        else if(mn===dD) player.pos.z=z1; else player.pos.z=z2;
+      }
+    }
+    player.heading=Math.atan2(nx,nz);
+  }
+
+  // avatar transform + animation
+  if(avatar){
+    avatar.position.copy(player.pos);
+    // smooth turn
+    let d=player.heading-avatar.rotation.y;
+    while(d>Math.PI)d-=2*Math.PI; while(d<-Math.PI)d+=2*Math.PI;
+    avatar.rotation.y+=d*Math.min(1,dt*12);
+  }
+  if(mixer){
+    const targetTS = moving ? Math.min(inLen,1)*1.2 : 0;   // 静止=0で姿勢を保持（Tポーズにはならない）
+    curTS += (targetTS-curTS)*Math.min(1,dt*10);
+    mixer.timeScale = curTS;
+    mixer.update(dt);
+  }
+
+  // third-person camera follow
+  const targetX=player.pos.x - Math.sin(camYaw)*Math.cos(camPitch)*camDist;
+  const targetZ=player.pos.z - Math.cos(camYaw)*Math.cos(camPitch)*camDist;
+  const targetY=player.pos.y + 1.5 + Math.sin(camPitch)*camDist;
+  camera.position.lerp(new THREE.Vector3(targetX,Math.max(0.4,targetY),targetZ), Math.min(1,dt*8));
+  camera.lookAt(player.pos.x, player.pos.y+1.15, player.pos.z);
+
+  // keep sun shadow centered on player
+  sun.position.set(player.pos.x+28, 42, player.pos.z+18);
+  sun.target.position.copy(player.pos);
+
+  renderer.render(scene,camera);
+}
+
+Promise.all([pHarichi, pAvatar]).then(([statue,av])=>{
+  window.__READY=true;
+  // debug introspection (used for automated verification; harmless in production)
+  window.__dbg=()=>{
+    const hb=new THREE.Box3().setFromObject(statue).getSize(new THREE.Vector3());
+    const ab=new THREE.Box3().setFromObject(av).getSize(new THREE.Vector3());
+    return { statueH:+hb.y.toFixed(2), statueW:+hb.x.toFixed(2),
+             avatarH:+ab.y.toFixed(2),
+             clip: (av.animations&&av.animations[0]&&av.animations[0].name)||null,
+             clipDur: av.animations&&av.animations[0]? +av.animations[0].duration.toFixed(2):null,
+             avatarPos: player.pos.toArray().map(n=>+n.toFixed(2)),
+             avatarRotY: +av.rotation.y.toFixed(2),
+             animTimeScale: mixer? +mixer.timeScale.toFixed(2) : null,
+             obstacle: obstacle? {minX:+obstacle.minX.toFixed(2),maxX:+obstacle.maxX.toFixed(2),minZ:+obstacle.minZ.toFixed(2),maxZ:+obstacle.maxZ.toFixed(2)} : null,
+             camPos: camera.position.toArray().map(n=>+n.toFixed(1)) };
+  };
+  window.__setMove=(on)=>{ keys['KeyW']=on; };
+  window.__tick=(n,dt)=>{ for(let i=0;i<(n||1);i++) tick(dt||0.05); };   // 検証用: rAFが止まる環境で手動ステップ
+  loaderUI.classList.add('hide'); setTimeout(()=>loaderUI.remove(),700);
+  clock.getDelta(); animate();
+}).catch(err=>{ window.__fail(err&&err.message); });
+
+}catch(err){ if(window.__fail) window.__fail(err&&err.message); throw err; }
+</script>
+</body>
+</html>
