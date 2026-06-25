@@ -132,6 +132,11 @@
   .wh-fcard .wh-ph{background:#fff}
   .wh-fcard .wh-ph img{width:100%;height:auto;min-height:0;object-fit:contain;display:block}
 
+  /* 横長フライヤー/写真を切らずに全体表示（画像を上、テキストを下） */
+  .wh-wide{grid-template-columns:1fr}
+  .wh-wide .wh-ph{background:#fff}
+  .wh-wide .wh-ph img{width:100%;height:auto;min-height:0;max-height:none;object-fit:contain;display:block}
+
   @media(max-width:680px){
     .wh-card{grid-template-columns:1fr}
     .wh-ph img{min-height:200px;max-height:280px}
@@ -289,7 +294,7 @@
           <div class="wh-sec-head"><span class="num">03</span><h2>スタンダード＆ヘルシー <em>LINEUP</em></h2></div>
           <div class="wh-band">スタンダード＆ヘルシー：日常に寄り添う<b>リピート需要の開拓</b></div>
 
-          <div class="wh-card">
+          <div class="wh-card wh-wide">
             <div class="wh-ph"><img src="img/poster.jpg" alt="ノーマル#クリチ KURICHI ひんやり濃厚 クリームチーズデザートバーガー"></div>
             <div class="wh-body">
               <p class="wh-pname">ノーマル#クリチ（The Standard）</p>
@@ -307,7 +312,7 @@
             </div>
           </div>
 
-          <div class="wh-card">
+          <div class="wh-card wh-wide">
             <div class="wh-ph"><img src="img/soichi.jpg" alt="米粉#ソイチ 紅茶いちご"></div>
             <div class="wh-body">
               <p class="wh-pname">米粉#ソイチ（Health &amp; Gluten-Free）</p>
