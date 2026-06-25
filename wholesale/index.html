@@ -127,9 +127,15 @@
   .wh-cta-tel{margin-top:16px;font-size:13px;opacity:.8}
   .wh-cta-tel b{color:var(--cheese);font-family:"Montserrat",sans-serif;font-size:16px;letter-spacing:.5px}
 
+  /* Flyer card（縦型フライヤーを切らずに全体表示） */
+  .wh-fcard{grid-template-columns:minmax(0,300px) 1fr}
+  .wh-fcard .wh-ph{background:#fff}
+  .wh-fcard .wh-ph img{width:100%;height:auto;min-height:0;object-fit:contain;display:block}
+
   @media(max-width:680px){
     .wh-card{grid-template-columns:1fr}
     .wh-ph img{min-height:200px;max-height:280px}
+    .wh-fcard .wh-ph img{max-height:none;max-width:380px;margin:0 auto}
     .wh-gift{grid-template-columns:1fr}
     .wh-price .p{flex:1;min-width:0}
   }
@@ -251,8 +257,8 @@
           <div class="wh-band">ふわもち：テイクアウトと食べ歩きの<b>新定番</b></div>
           <p class="wh-intro">人気の味をアップデート。ふわもち食感の白バンズに、なめらかなクリームチーズのコクを閉じ込めた「クリチdisc」と軽やかなホイップを重ねました。中心からとろけるソースが全体をつなぎます。ひんやり、ふわり、もちり。</p>
 
-          <div class="wh-card">
-            <div class="wh-ph"><img src="img/ichigo.jpg" alt="ふわもち#クリチ いちご"></div>
+          <div class="wh-card wh-fcard">
+            <div class="wh-ph"><img src="img/ichigo.jpg" alt="ふわもち#クリチ（いちご）商品フライヤー"></div>
             <div class="wh-body">
               <p class="wh-pname">ふわもち#クリチ（いちご）</p>
               <span class="wh-jan">JAN <b>4595775904500</b></span>
@@ -264,8 +270,8 @@
             </div>
           </div>
 
-          <div class="wh-card">
-            <div class="wh-ph"><img src="img/matcha.jpg" alt="ふわもち#クリチ 抹茶あんこ"></div>
+          <div class="wh-card wh-fcard">
+            <div class="wh-ph"><img src="img/matcha.jpg" alt="ふわもち#クリチ（抹茶あんこ）商品フライヤー"></div>
             <div class="wh-body">
               <p class="wh-pname">ふわもち#クリチ（抹茶あんこ）</p>
               <span class="wh-jan">JAN <b>4595775904524</b></span>
