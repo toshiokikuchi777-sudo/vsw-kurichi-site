@@ -137,9 +137,9 @@
   .wh-wide .wh-ph{background:#fff}
   .wh-wide .wh-ph img:not(.award){width:100%;height:auto;min-height:0;max-height:none;object-fit:contain;display:block}
 
-  /* 横並びのまま切らずにコンパクト表示（左カラム内に縦横比保持で収める） */
-  .wh-contain .wh-ph{background:#fff;display:flex;align-items:center;justify-content:center;padding:14px}
-  .wh-contain .wh-ph img{width:100%;height:auto;min-height:0;max-height:300px;object-fit:contain;display:block}
+  /* 横並びのまま切らずにコンパクト表示（左カラム幅に縦横比保持で収める） */
+  .wh-contain .wh-ph{background:#fff}
+  .wh-contain .wh-ph img:not(.award){width:100%;height:auto;min-height:0;max-height:none;object-fit:contain;display:block}
 
   @media(max-width:680px){
     .wh-card{grid-template-columns:1fr}
@@ -233,7 +233,7 @@
           <div class="wh-sec-head"><span class="num">01</span><h2>プレミアム#クリチ <em>LINEUP</em></h2></div>
           <div class="wh-band">Premium Series: モード系バンズと<b>『静かな衝撃』</b></div>
 
-          <div class="wh-card wh-wide">
+          <div class="wh-card wh-contain">
             <div class="wh-ph"><img src="img/lemon.jpg" alt="NY#クリチ レモンプラリネ"><img class="award" src="img/badge.png" alt="パンのフェス2025 AWARD シルバー"></div>
             <div class="wh-body">
               <p class="wh-pname"><span class="ny">NY</span>#クリチ（レモンプラリネ）</p>
@@ -246,7 +246,7 @@
             </div>
           </div>
 
-          <div class="wh-card wh-wide">
+          <div class="wh-card wh-contain">
             <div class="wh-ph"><img src="img/orange.jpg" alt="NY#クリチ オレンジプラリネ"></div>
             <div class="wh-body">
               <p class="wh-pname"><span class="ny">NY</span>#クリチ（オレンジプラリネ）</p>
