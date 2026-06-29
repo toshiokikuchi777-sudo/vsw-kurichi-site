@@ -152,6 +152,7 @@ h2.section-title em{
   transition:transform .25s ease,box-shadow .25s ease,filter .25s ease;
 }
 .nav-ai::after{display:none!important}
+.nav-ai-top{display:none}
 .nav-ai:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(214,69,46,.45);filter:brightness(1.05)}
 .cta{
   display:inline-flex;align-items:center;gap:8px;
@@ -937,8 +938,16 @@ footer{background:var(--char);color:#c9bdb0;padding:70px 0 30px;font-size:13px}
   .foot-bottom{flex-direction:column;gap:10px;text-align:center}
 
   /* Nav mobile menu adjustments */
-  .nav-inner{height:60px}
+  .nav-inner{height:60px;gap:8px}
   .nav .cta{padding:8px 14px;font-size:11px}
+  .nav-ai-top{
+    display:inline-flex;align-items:center;gap:5px;white-space:nowrap;
+    padding:8px 14px;border-radius:999px;
+    background:linear-gradient(120deg,var(--tomato),var(--cheese));
+    color:#fff!important;font-weight:800;font-size:11px;letter-spacing:.03em;
+    box-shadow:0 3px 12px rgba(214,69,46,.4);
+  }
+  .nav-ai-top:active{transform:scale(.96)}
   .brand-mark{width:32px;height:32px}
 
   /* Floating spline widget */
