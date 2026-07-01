@@ -2,38 +2,67 @@
 <html lang="ja">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
 <meta name="robots" content="noindex,nofollow">
-<title>ForgeCAD ギャラリー ｜ クリチランド（確認用）</title>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>ForgeCAD ギャラリー ｜ クリチランド</title>
 <style>
-  :root{ --red:#E3261D; --yellow:#FFC20E; --ink:#241f1a; }
-  *{box-sizing:border-box} html,body{margin:0;height:100%;overflow:hidden;background:#e7edf2;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Hiragino Sans",sans-serif}
-  #app{position:fixed;inset:0}
-  #hud{position:fixed;left:14px;top:14px;z-index:10;max-width:min(90vw,360px);background:rgba(36,31,26,.8);color:#fff;padding:12px 14px;border-radius:14px;border:2px solid var(--yellow)}
-  #hud h1{margin:0 0 3px;font-size:15px} #hud h1 b{color:var(--yellow)}
-  #hud .sub{font-size:11px;opacity:.85;line-height:1.6}
-  #hud #meta{font-size:11px;opacity:.9;margin-top:6px}
-  #models{position:fixed;left:50%;bottom:14px;transform:translateX(-50%);z-index:10;display:flex;gap:7px;flex-wrap:wrap;justify-content:center;padding:0 8px}
-  #models button{cursor:pointer;border:none;border-radius:999px;padding:9px 15px;font-weight:800;font-size:12.5px;background:var(--red);color:#fff;box-shadow:0 3px 12px rgba(0,0,0,.22)}
-  #models button.on{background:var(--yellow);color:var(--ink)}
-  #models button.ghost{background:rgba(255,255,255,.92);color:var(--ink)}
-  #loader{position:fixed;inset:0;z-index:50;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:10px;background:var(--yellow);color:var(--ink);transition:opacity .4s}
+  :root{ --red:#E3261D; --yellow:#FFC20E; --ink:#241f1a; --side:236px; }
+  *{box-sizing:border-box} html,body{margin:0;height:100%;overflow:hidden;background:#e7edf2;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Hiragino Sans",sans-serif;color:var(--ink)}
+  #app{position:fixed;inset:0 0 0 var(--side)}
+  /* ---- サイドバー（サムネイル一覧） ---- */
+  #side{position:fixed;left:0;top:0;bottom:0;width:var(--side);z-index:8;background:rgba(247,249,251,.94);border-right:1px solid #d5dde4;display:flex;flex-direction:column}
+  #side header{padding:12px 12px 8px;border-bottom:1px solid #e2e8ee}
+  #side header h1{margin:0;font-size:15px;font-weight:900} #side header h1 b{color:var(--red)}
+  #side header .s{font-size:10.5px;opacity:.7;line-height:1.5;margin-top:3px}
+  #cards{flex:1;overflow:auto;-webkit-overflow-scrolling:touch;padding:10px;display:grid;grid-template-columns:1fr 1fr;gap:9px;align-content:start}
+  .card{cursor:pointer;border:2px solid transparent;border-radius:12px;background:#fff;box-shadow:0 1px 4px rgba(30,40,60,.10);padding:6px;text-align:left;overflow:hidden;transition:border-color .15s,transform .1s}
+  .card:active{transform:scale(.97)}
+  .card.on{border-color:var(--red)}
+  .card .thumb{display:block;width:100%;aspect-ratio:1/1;border-radius:8px;background:linear-gradient(135deg,#eef2f6,#dbe3ea);overflow:hidden;position:relative}
+  .card .thumb img{width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .35s}
+  .card.ready .thumb img{opacity:1}
+  .card .thumb .spin{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:16px;color:#9fb0bf}
+  .card.ready .thumb .spin{display:none}
+  .card .nm{display:block;font-size:11.5px;font-weight:800;margin:5px 2px 0;line-height:1.25}
+  .card .dm{display:block;font-size:9.5px;opacity:.6;margin:1px 2px 2px}
+  /* ---- 上部の操作ヒント ---- */
+  #hint{position:fixed;left:calc(var(--side) + 12px);top:12px;z-index:10;background:rgba(36,31,26,.72);color:#fff;font-size:11px;padding:7px 11px;border-radius:10px;border:1px solid rgba(255,194,14,.6)}
+  #tools{position:fixed;right:12px;top:12px;z-index:10;display:flex;gap:6px}
+  #tools button{cursor:pointer;border:none;border-radius:999px;width:36px;height:36px;font-size:13px;font-weight:800;background:#fff;color:var(--ink);box-shadow:0 2px 8px rgba(0,0,0,.16)}
+  #meta{position:fixed;right:12px;bottom:12px;z-index:10;background:rgba(36,31,26,.72);color:#fff;font-size:11px;padding:6px 10px;border-radius:9px}
+  #loader{position:fixed;inset:0 0 0 var(--side);z-index:50;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px;background:var(--yellow);color:var(--ink);transition:opacity .4s}
   #loader b{color:var(--red)} .hide{opacity:0;pointer-events:none}
+  /* ---- 狭い画面：サイドバーを下部の横スクロール帯に ---- */
+  @media (max-width:720px){
+    :root{ --side:0px; }
+    #app{inset:0 0 128px 0}
+    #side{left:0;right:0;top:auto;bottom:0;width:auto;height:128px;flex-direction:column;border-right:none;border-top:1px solid #d5dde4}
+    #side header{display:none}
+    #cards{grid-template-columns:none;grid-auto-flow:column;grid-auto-columns:96px;overflow-x:auto;overflow-y:hidden;padding:8px}
+    .card .nm{font-size:10px} .card .dm{display:none}
+    #hint{left:10px;top:10px} #loader{inset:0 0 128px 0}
+  }
 </style>
 </head>
 <body>
 <div id="app"></div>
-<div id="hud">
-  <h1>ForgeCAD <b>ギャラリー</b></h1>
-  <div class="sub">ドラッグ＝回転／ホイール＝ズーム／右ドラッグ＝移動<br>下のボタンでモデル切替。GLBは <code>forgecad export glb</code> 出力。</div>
-  <div id="meta"></div>
-</div>
-<div id="models"></div>
-<div id="loader"><div style="font-size:20px;font-weight:900">ForgeCAD <b>Gallery</b></div><div style="font-size:12px;opacity:.8">読み込み中…</div></div>
+
+<aside id="side">
+  <header>
+    <h1>ForgeCAD <b>ギャラリー</b></h1>
+    <div class="s">クリチランドの什器・建物。カードで選択→ドラッグ回転／ホイールズーム。</div>
+  </header>
+  <div id="cards"></div>
+</aside>
+
+<div id="hint">ドラッグ＝回転 ／ ホイール＝ズーム ／ 右ドラッグ＝移動</div>
+<div id="tools"><button id="btnTop" title="真上から">▲</button><button id="btnFs" title="全画面">⛶</button></div>
+<div id="meta"></div>
+<div id="loader"><div style="font-size:19px;font-weight:900">ForgeCAD <b>Gallery</b></div><div style="font-size:12px;opacity:.8">読み込み中…</div></div>
 
 <script>
-(function(){ function fail(m){var l=document.getElementById('loader');if(!l)return;l.innerHTML='<div style="text-align:center;padding:22px;max-width:320px"><b style="font-size:18px;color:#241f1a">表示できませんでした</b><div style="font-size:12px;margin-top:8px;color:#241f1a">'+(m||'')+'<br>ローカルサーバで開いてください（file://不可）。</div></div>';l.classList.remove('hide');}
-  window.__fail=fail; window.addEventListener('error',e=>{if(!window.__READY)fail(e.message)}); setTimeout(()=>{if(!window.__READY)fail('読み込みに失敗しました。')},8000);})();
+(function(){ function fail(m){var l=document.getElementById('loader');if(!l)return;l.innerHTML='<div style="text-align:center;padding:22px;max-width:320px"><b style="font-size:18px">表示できませんでした</b><div style="font-size:12px;margin-top:8px">'+(m||'')+'<br>ローカルサーバで開いてください（file://不可）。</div></div>';l.classList.remove('hide');}
+  window.__fail=fail; window.addEventListener('error',e=>{if(!window.__READY)fail(e.message)}); setTimeout(()=>{if(!window.__READY)fail('読み込みに失敗しました。')},12000);})();
 </script>
 <script type="module">
 import * as THREE from './lib/three.module.js';
@@ -41,56 +70,105 @@ import { OrbitControls } from './lib/jsm/controls/OrbitControls.js';
 import { GLTFLoader } from './lib/jsm/loaders/GLTFLoader.js';
 try{
 
-/* ==== ここにモデルを追加していくだけ ==== */
+/* ===== モデルはここに増やすだけ ===== */
 const MODELS = [
-  { name:"ダイナーチェア",   file:"chair.glb" },
-  { name:"ラウンジチェア",   file:"lounge.glb" },
-  { name:"建物 白模型",      file:"building.glb" },
+  { name:"ダイナーチェア", file:"chair.glb" },
+  { name:"ラウンジチェア", file:"lounge.glb" },
+  { name:"建物 白模型",    file:"building.glb" },
+  { name:"建物 柱だけ",    file:"frame.glb" },
 ];
+const VER = "?v=6";   // GLB更新時にここを上げるとキャッシュを破棄
 
+/* ===== メインビューア ===== */
 const app=document.getElementById('app');
-const renderer=new THREE.WebGLRenderer({antialias:true}); renderer.setPixelRatio(Math.min(devicePixelRatio,2)); renderer.setSize(innerWidth,innerHeight);
+const renderer=new THREE.WebGLRenderer({antialias:true}); renderer.setPixelRatio(Math.min(devicePixelRatio,2));
 renderer.shadowMap.enabled=true; renderer.shadowMap.type=THREE.PCFSoftShadowMap; renderer.outputColorSpace=THREE.SRGBColorSpace; renderer.toneMapping=THREE.ACESFilmicToneMapping; renderer.toneMappingExposure=1.05; app.appendChild(renderer.domElement);
 const scene=new THREE.Scene(); scene.background=new THREE.Color(0xe7edf2);
-const camera=new THREE.PerspectiveCamera(50,innerWidth/innerHeight,0.01,100000);
+const camera=new THREE.PerspectiveCamera(50,1,0.01,1000000);
 const controls=new OrbitControls(camera,renderer.domElement); controls.enableDamping=true; controls.dampingFactor=0.08;
-scene.add(new THREE.HemisphereLight(0xffffff,0x9aa7b0,1.0)); scene.add(new THREE.AmbientLight(0xffffff,0.35));
-const sun=new THREE.DirectionalLight(0xfff4e2,1.5); sun.position.set(1,2,1.4); sun.castShadow=true; sun.shadow.mapSize.set(2048,2048); sun.shadow.bias=-0.0004; scene.add(sun);
+scene.add(new THREE.HemisphereLight(0xffffff,0x9aa7b0,1.0)); scene.add(new THREE.AmbientLight(0xffffff,0.32));
+const sun=new THREE.DirectionalLight(0xfff4e2,1.5); sun.position.set(1,2,1.4); sun.castShadow=true; sun.shadow.mapSize.set(2048,2048); sun.shadow.bias=-0.0004; scene.add(sun); scene.add(sun.target);
 const grid=new THREE.GridHelper(4000,40,0xb9c4cf,0xcfd8e0); scene.add(grid);
 const ground=new THREE.Mesh(new THREE.CircleGeometry(4000,48),new THREE.MeshStandardMaterial({color:0xeef2f5,roughness:1})); ground.rotation.x=-Math.PI/2; ground.position.y=-0.5; ground.receiveShadow=true; scene.add(ground);
+function fitRenderer(){ const w=app.clientWidth,h=app.clientHeight; renderer.setSize(w,h); camera.aspect=w/h; camera.updateProjectionMatrix(); }
+fitRenderer();
 
-const loader=new GLTFLoader(); let current=null;
+/* ===== GLBキャッシュ＆ローダ ===== */
+const loader=new GLTFLoader(); const glbCache=new Map();
+function loadGLB(file){ if(glbCache.has(file)) return Promise.resolve(glbCache.get(file));
+  return new Promise((res,rej)=>loader.load(file+VER, g=>{glbCache.set(file,g);res(g);}, undefined, e=>rej(e))); }
+
+let current=null;
 function frame(obj){
   const box=new THREE.Box3().setFromObject(obj); const c=box.getCenter(new THREE.Vector3()); const s=box.getSize(new THREE.Vector3());
-  // drop model onto grid (y=0)
   obj.position.y -= box.min.y; box.setFromObject(obj); box.getCenter(c);
-  const r=Math.max(s.x,s.y,s.z);
-  grid.scale.setScalar(Math.max(1, r/2000)); ground.scale.setScalar(Math.max(1, r/3500));
-  sun.shadow.camera.left=-r; sun.shadow.camera.right=r; sun.shadow.camera.top=r; sun.shadow.camera.bottom=-r; sun.shadow.camera.far=r*6; sun.shadow.camera.updateProjectionMatrix();
-  sun.position.set(c.x+r, c.y+r*1.6, c.z+r*0.9); sun.target.position.copy(c); scene.add(sun.target);
+  const r=Math.max(s.x,s.y,s.z)||1;
+  grid.scale.setScalar(Math.max(1,r/2000)); ground.scale.setScalar(Math.max(1,r/3500));
+  sun.shadow.camera.left=-r;sun.shadow.camera.right=r;sun.shadow.camera.top=r;sun.shadow.camera.bottom=-r;sun.shadow.camera.far=r*6;sun.shadow.camera.updateProjectionMatrix();
+  sun.position.set(c.x+r,c.y+r*1.6,c.z+r*0.9); sun.target.position.copy(c);
   controls.target.copy(c); camera.near=r/500; camera.far=r*50; camera.updateProjectionMatrix();
-  camera.position.set(c.x+r*1.1, c.y+r*0.85, c.z+r*1.4);
+  camera.position.set(c.x+r*1.1,c.y+r*0.85,c.z+r*1.4);
   document.getElementById('meta').textContent='寸法(mm): '+[s.x,s.y,s.z].map(n=>Math.round(n)).join(' × ');
 }
-function load(i){
-  document.querySelectorAll('#models button[data-i]').forEach(b=>b.classList.toggle('on',+b.dataset.i===i));
-  loader.load(MODELS[i].file+'?v=2',(g)=>{
+async function load(i){
+  document.querySelectorAll('.card').forEach(el=>el.classList.toggle('on',+el.dataset.i===i));
+  try{
+    const g=await loadGLB(MODELS[i].file);
     if(current) scene.remove(current);
-    current=g.scene;
-    if(MODELS[i].yUp!==true) current.rotation.x=-Math.PI/2;   // ForgeCADはZ-up→ビューアはY-up。立てる。
+    current=g.scene.clone(true);
+    if(MODELS[i].yUp!==true) current.rotation.x=-Math.PI/2;   // ForgeCADはZ-up→ビューアはY-up
     current.traverse(o=>{ if(o.isMesh){ o.castShadow=true; o.receiveShadow=true; } });
     scene.add(current); frame(current); window.__model=current; window.__READY=true;
     const l=document.getElementById('loader'); if(l){ l.classList.add('hide'); setTimeout(()=>l.remove(),500); }
-  }, undefined, ()=>window.__fail('GLB読込エラー: '+MODELS[i].file));
+  }catch(e){ window.__fail('GLB読込エラー: '+MODELS[i].file); }
 }
-const bar=document.getElementById('models');
-MODELS.forEach((m,i)=>{ const b=document.createElement('button'); b.dataset.i=i; b.textContent=m.name; b.onclick=()=>load(i); bar.appendChild(b); });
-const top=document.createElement('button'); top.className='ghost'; top.textContent='真上'; top.onclick=()=>{ if(!current)return; const box=new THREE.Box3().setFromObject(current); const c=box.getCenter(new THREE.Vector3()); const s=box.getSize(new THREE.Vector3()); controls.target.copy(c); camera.position.set(c.x+0.001,c.y+Math.max(s.x,s.z)*1.6,c.z); }; bar.appendChild(top);
-const fs=document.createElement('button'); fs.className='ghost'; fs.textContent='⛶'; fs.onclick=()=>{ if(!document.fullscreenElement)document.documentElement.requestFullscreen?.(); else document.exitFullscreen?.(); }; bar.appendChild(fs);
 
-addEventListener('resize',()=>{ camera.aspect=innerWidth/innerHeight; camera.updateProjectionMatrix(); renderer.setSize(innerWidth,innerHeight); });
+/* ===== サムネイル生成（オフスクリーン・GLBから自動） ===== */
+const tR=new THREE.WebGLRenderer({antialias:true,alpha:true,preserveDrawingBuffer:true}); tR.setPixelRatio(1); tR.setSize(300,300);
+tR.outputColorSpace=THREE.SRGBColorSpace; tR.toneMapping=THREE.ACESFilmicToneMapping; tR.toneMappingExposure=1.05;
+const tS=new THREE.Scene(); tS.add(new THREE.HemisphereLight(0xffffff,0x9aa7b0,1.1)); tS.add(new THREE.AmbientLight(0xffffff,0.3));
+const tSun=new THREE.DirectionalLight(0xfff4e2,1.5); tSun.position.set(1.2,2,1.3); tS.add(tSun);
+const tCam=new THREE.PerspectiveCamera(42,1,0.01,1000000); let tModel=null;
+async function makeThumb(file){
+  const g=await loadGLB(file);
+  if(tModel) tS.remove(tModel);
+  tModel=g.scene.clone(true); tModel.rotation.x=-Math.PI/2; tS.add(tModel);
+  const box=new THREE.Box3().setFromObject(tModel); const c=box.getCenter(new THREE.Vector3()); const s=box.getSize(new THREE.Vector3());
+  const r=Math.max(s.x,s.y,s.z)||1;
+  tCam.position.set(c.x+r*1.05,c.y+r*0.78,c.z+r*1.35); tCam.near=r/500; tCam.far=r*50; tCam.updateProjectionMatrix(); tCam.lookAt(c);
+  tR.render(tS,tCam);
+  return { url:tR.domElement.toDataURL('image/png'), size:s };
+}
+async function buildThumbs(){
+  for(let i=0;i<MODELS.length;i++){
+    try{
+      const {url,size}=await makeThumb(MODELS[i].file);
+      const card=document.getElementById('card'+i); if(!card)continue;
+      card.querySelector('img').src=url; card.classList.add('ready');
+      card.querySelector('.dm').textContent=[size.x,size.y,size.z].map(n=>Math.round(n)).join('×')+'mm';
+      await new Promise(r=>setTimeout(r,10));
+    }catch(e){}
+  }
+}
+
+/* ===== カードUI構築 ===== */
+const cards=document.getElementById('cards');
+MODELS.forEach((m,i)=>{
+  const b=document.createElement('button'); b.className='card'; b.id='card'+i; b.dataset.i=i;
+  b.innerHTML='<span class="thumb"><span class="spin">◍</span><img alt=""></span><span class="nm">'+m.name+'</span><span class="dm"></span>';
+  b.onclick=()=>load(i); cards.appendChild(b);
+});
+
+/* ===== ツール＆リサイズ ===== */
+document.getElementById('btnTop').onclick=()=>{ if(!current)return; const box=new THREE.Box3().setFromObject(current); const c=box.getCenter(new THREE.Vector3()); const s=box.getSize(new THREE.Vector3()); controls.target.copy(c); camera.position.set(c.x+0.001,c.y+Math.max(s.x,s.z)*1.7,c.z); };
+document.getElementById('btnFs').onclick=()=>{ if(!document.fullscreenElement)document.documentElement.requestFullscreen?.(); else document.exitFullscreen?.(); };
+addEventListener('resize',fitRenderer);
 function anim(){ requestAnimationFrame(anim); controls.update(); renderer.render(scene,camera); }
-load(0); anim();
+anim();
+
+/* ===== 起動：まず1台目→サムネ生成 ===== */
+load(0).then(buildThumbs);
+
 }catch(err){ if(window.__fail)window.__fail(err&&err.message); throw err; }
 </script>
 </body>
