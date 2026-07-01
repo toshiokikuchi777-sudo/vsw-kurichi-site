@@ -75,7 +75,9 @@ function load(i){
   document.querySelectorAll('#models button[data-i]').forEach(b=>b.classList.toggle('on',+b.dataset.i===i));
   loader.load(MODELS[i].file+'?v=2',(g)=>{
     if(current) scene.remove(current);
-    current=g.scene; current.traverse(o=>{ if(o.isMesh){ o.castShadow=true; o.receiveShadow=true; } });
+    current=g.scene;
+    if(MODELS[i].yUp!==true) current.rotation.x=-Math.PI/2;   // ForgeCADはZ-up→ビューアはY-up。立てる。
+    current.traverse(o=>{ if(o.isMesh){ o.castShadow=true; o.receiveShadow=true; } });
     scene.add(current); frame(current); window.__READY=true;
     const l=document.getElementById('loader'); if(l){ l.classList.add('hide'); setTimeout(()=>l.remove(),500); }
   }, undefined, ()=>window.__fail('GLB読込エラー: '+MODELS[i].file));
