@@ -32,6 +32,13 @@
   #meta{position:fixed;right:12px;bottom:12px;z-index:10;background:rgba(36,31,26,.72);color:#fff;font-size:11px;padding:6px 10px;border-radius:9px}
   #loader{position:fixed;inset:0 0 0 var(--side);z-index:50;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px;background:var(--yellow);color:var(--ink);transition:opacity .4s}
   #loader b{color:var(--red)} .hide{opacity:0;pointer-events:none}
+  /* ---- 平面図オーバーレイ ---- */
+  .card.plan-card{background:var(--yellow)}
+  .card.plan-card .thumb{background:#fff;display:flex;align-items:center;justify-content:center;font-size:34px}
+  #planOv{position:fixed;inset:0;z-index:70;background:rgba(36,31,26,.55);display:none}
+  #planOv.show{display:block}
+  #planOv iframe{position:absolute;inset:44px 12px 12px;width:calc(100% - 24px);height:calc(100% - 56px);border:none;border-radius:14px;background:#fbf7ee}
+  #planOv button{position:absolute;top:6px;right:12px;z-index:71;cursor:pointer;border:none;border-radius:999px;padding:8px 16px;font-weight:900;font-size:13px;background:var(--red);color:#fff}
   /* ---- 狭い画面：サイドバーを下部の横スクロール帯に ---- */
   @media (max-width:720px){
     :root{ --side:0px; }
@@ -59,6 +66,7 @@
 <div id="tools"><button id="btnTop" title="真上から">▲</button><button id="btnFs" title="全画面">⛶</button></div>
 <div id="meta"></div>
 <div id="loader"><div style="font-size:19px;font-weight:900">ForgeCAD <b>Gallery</b></div><div style="font-size:12px;opacity:.8">読み込み中…</div></div>
+<div id="planOv"><button id="planClose">✕ 閉じる</button><iframe id="planFrame" loading="lazy"></iframe></div>
 
 <script>
 (function(){ function fail(m){var l=document.getElementById('loader');if(!l)return;l.innerHTML='<div style="text-align:center;padding:22px;max-width:320px"><b style="font-size:18px">表示できませんでした</b><div style="font-size:12px;margin-top:8px">'+(m||'')+'<br>ローカルサーバで開いてください（file://不可）。</div></div>';l.classList.remove('hide');}
@@ -84,7 +92,7 @@ const MODELS = [
   { name:"建物 白模型",        file:"building.glb" },
   { name:"建物 柱だけ",        file:"frame.glb" },
 ];
-const VER = "?v=10";   // GLB更新時にここを上げるとキャッシュを破棄
+const VER = "?v=11";   // GLB更新時にここを上げるとキャッシュを破棄
 
 /* ===== メインビューア ===== */
 const app=document.getElementById('app');
@@ -160,6 +168,13 @@ async function buildThumbs(){
 
 /* ===== カードUI構築 ===== */
 const cards=document.getElementById('cards');
+/* 平面図カード（最上段・クリックでオーバーレイ表示） */
+const planBtn=document.createElement('button'); planBtn.className='card plan-card';
+planBtn.innerHTML='<span class="thumb">📐</span><span class="nm">平面図（1F/2F・買い物動線）</span><span class="dm">どういう施設か一目で分かる</span>';
+planBtn.onclick=()=>{ const ov=document.getElementById('planOv'); const fr=document.getElementById('planFrame');
+  if(!fr.src) fr.src='/kurichiland-floorplans.html'; ov.classList.add('show'); };
+cards.appendChild(planBtn);
+document.getElementById('planClose').onclick=()=>document.getElementById('planOv').classList.remove('show');
 MODELS.forEach((m,i)=>{
   const b=document.createElement('button'); b.className='card'; b.id='card'+i; b.dataset.i=i;
   b.innerHTML='<span class="thumb"><span class="spin">◍</span><img alt=""></span><span class="nm">'+m.name+'</span><span class="dm"></span>';

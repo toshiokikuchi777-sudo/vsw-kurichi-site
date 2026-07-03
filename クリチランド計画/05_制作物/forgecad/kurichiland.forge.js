@@ -66,7 +66,7 @@ const bigPlush = box(2400, 2400, 4000).translate(0, voidCy, 0).color(C.plush);  
 const STAIR_N = 14, rise = F1 / STAIR_N, tread = 380, stX = VW/2 - 900;
 let stair = null;
 for (let i = 0; i < STAIR_N; i++) {
-  const step = box(1400, tread, rise).translate(stX, (D/2 - VD + 1400) + i * tread, i * rise);
+  const step = box(1400, tread, rise).translate(stX, (D/2 - VD + tread/2) + (STAIR_N - 1 - i) * tread, i * rise);
   stair = stair ? stair.union(step) : step;
 }
 stair = stair.color(C.stair);

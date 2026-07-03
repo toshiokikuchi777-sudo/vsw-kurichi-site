@@ -59,12 +59,12 @@ const z1 = {
   "1F_厨房":       c1(5.5, 0,   5.0, 4.5, ZC.boh),
   "1F_WC":        c1(10.5,0,   1.5, 4.5, ZC.wc),
   "1F_階段室":     c1(12.0,0,   2.0, 4.5, ZC.core),
-  "1F_西_待合席":   c1(0,   4.5, 5.5, 2.9, ZC.seat),
-  "1F_FACTORY":   c1(5.5, 4.5, 5.0, 2.9, ZC.factory),
-  "1F_東_物販導入": c1(10.5,4.5, 3.5, 2.9, ZC.retail),
-  "1F_西ウイング_席": c1(0,  7.4, 4.0, 7.0, ZC.seat),   // west wing
-  "1F_東ウイング_物販": c1(10.0,7.4, 4.0, 7.0, ZC.retail), // east wing
-  "1F_ホール(吹抜)": c1(4.0, 7.4, 6.0, 7.0, ZC.hall),   // 吹き抜け土間（1Fは床あり）
+  "1F_ドリンク準備_レジバック": c1(0, 4.5, 4.0, 2.9, ZC.counter),
+  "1F_クリチ工房(見せる製造)": c1(4.0, 4.5, 6.5, 2.9, ZC.factory),
+  "1F_補充バックヤード": c1(10.5, 4.5, 3.5, 2.9, ZC.boh),
+  "1F_西ウイング_カフェ席": c1(0,  7.4, 4.0, 7.0, ZC.seat),   // west wing
+  "1F_東ウイング_陳列グッズ": c1(10.0,7.4, 4.0, 7.0, ZC.retail), // east wing
+  "1F_吹抜ホール": c1(4.0, 7.4, 6.0, 7.0, ZC.star),   // 吹き抜け土間（1Fは床あり）
 };
 
 // 市松床（テクスチャ）：エントランス（前面中央）
@@ -84,37 +84,43 @@ const z2 = {
   "2F_東ウイング_ダイナー": c2(10.0,7.4, 4.0, 7.0, ZC.diner), // east wing（東窓・川ビュー）
 };
 
-// ---------- 1F 什器（すべて1F床上・吹き抜け直下＝二層吹抜ホールでOK） ----------
-// メインカウンター・受渡し（ホール中央・客側=+Y）
-const ctrY = PY(9.6);
-const counterBody = box(5000, 700, 850).translate(0, ctrY, 230).color(RED);
-const counterTop  = box(5200, 1000, 60).translate(0, ctrY + 60, 1080).color(WHITE);
-const stools = {};
-[-1800, -600, 600, 1800].forEach((dx, i) => {
-  stools["スツール_"+(i+1)+"_柱"] = cylinder(600, 45, 45).translate(dx, ctrY + 950, 230).color(CHROME).material(chrome);
-  stools["スツール_"+(i+1)+"_座"] = cylinder(85, 175, 185).translate(dx, ctrY + 950, 830).color(RED);
-});
-// FACTORY（見せる仕上げ・ガラス箱）
-const factory = box(4700, 2500, 2600).translate(0, PY(5.95), 230).color(GLASS).material(glassM);
+// ---------- 1F 什器（買い物の流れ：①入口→②陳列→③レジ(ドリンク)→④席／⑤階段） ----------
+// ③ レジ＋ドリンクカウンター（ホール西側・東向き）
+const regX = PX(4.8), regY = PY(10.1);
+const regBody = box(1100, 3500, 850).translate(regX, regY, 230).color(RED);
+const regTop  = box(1300, 3700, 60).translate(regX, regY, 1080).color(WHITE);
+const drinkSt = box(500, 1500, 1300).translate(PX(3.55), regY, 230).color("#2a2e35"); // ドリンクステーション
+// ② 陳列アイランド（クリチを取る・入口正面）
+const islBase = box(1700, 1000, 900).translate(0, PY(8.925), 230).color(RED);
+const islCase = box(1700, 1000, 500).translate(0, PY(8.925), 1130).color(GLASS).material(glassM);
+// クリチ工房（ガラス張り・見せる製造）＝お客さんから中が見える
+const glassSee = { roughness: 0.08, metalness: 0.05, opacity: 0.3 };
+const factory = box(6300, 2700, 2600).translate(PX(7.25), PY(5.95), 230).color(GLASS).material(glassSee);
+const workTbl = box(5200, 900, 900).translate(PX(7.25), PY(5.95), 230).color(CHROME).material(chrome);
+// 工房の職人（見えるのが楽しい）
+const maker = (mx) => cylinder(1300, 230, 180).translate(mx, PY(6.4), 230).color(WHITE);
+const makerHead = (mx) => cylinder(320, 160, 160).translate(mx, PY(6.4), 1530).color(PINK);
 // 車顔ショーケース（エントランス前面）
 const showcase = box(3000, 1500, 1800).translate(0, PY(13.4), 230).color(RED);
 const showWin  = box(3060, 900, 700).translate(0, PY(13.4), 1130).color("#2a2e35");
-// 東ウイング 物販棚×3（東窓沿い）
+// ② 東ウイング 陳列棚×3（クリチ・グッズ／東窓沿い）
 const shelvesE = {};
 [8.6, 10.9, 13.2].forEach((py, i) => {
-  shelvesE["物販棚_"+(i+1)] = box(500, 1900, 1800).translate(PX(12.6), PY(py), 230).color(RED);
+  shelvesE["陳列棚_"+(i+1)] = box(500, 1900, 1800).translate(PX(12.6), PY(py), 230).color(RED);
 });
-// 西ウイング 待合ベンチ×2
+// ④ 西ウイング カフェベンチ×2
 const benchW = {};
 [9.0, 12.0].forEach((py, i) => {
-  benchW["待合ベンチ_"+(i+1)] = box(2600, 500, 430).translate(PX(2.0), PY(py), 230).color(RED);
+  benchW["カフェベンチ_"+(i+1)] = box(2600, 500, 430).translate(PX(2.0), PY(py), 230).color(RED);
 });
-// 吹き抜け中央：大ぬいぐるみ＋オープン階段
-const bigPlush = box(2400, 2400, 4000).translate(0, voidCy, 200).color(PINK);
+// 吹き抜け中央：大ぬいぐるみ（お出迎えの主役）＋⑤オープン階段（北向きに上がる）
+const bigPlush = box(2400, 2400, 4000).translate(0, 4000, 200).color(PINK);
 const STAIR_N = 14, rise = F1 / STAIR_N, tread = 380, stX = VW/2 - 900;
 let stair = null;
 for (let i = 0; i < STAIR_N; i++) {
-  const step = box(1300, tread, rise).translate(stX, (D/2 - VD + 1300) + i * tread, i * rise + 200);
+  // i=0が最下段（南・入口側）→ 上るほど北へ。最上段は2F床(コの字の奥辺 y=200)に着地
+  const step = box(1300, tread, rise)
+    .translate(stX, (D/2 - VD + tread/2) + (STAIR_N - 1 - i) * tread, i * rise + 200);
   stair = stair ? stair.union(step) : step;
 }
 stair = stair.color(stairC);
@@ -144,7 +150,9 @@ T.forEach((p, i) => {
 });
 // 吹き抜けのギャラリー手すり（北・東・西の縁）
 const rails = {
-  "手すり_北": box(VW + 200, 90, 1000).translate(0, PY(7.4), Z2F).color(RAIL).material(chrome),
+  // 北手すりは階段の着地口（x 1450..2750）を開ける
+  "手すり_北西": box(4450, 90, 1000).translate(-875, PY(7.4), Z2F).color(RAIL).material(chrome),
+  "手すり_北東": box(250, 90, 1000).translate(2975, PY(7.4), Z2F).color(RAIL).material(chrome),
   "手すり_西": box(90, VD, 1000).translate(PX(4.0), voidCy, Z2F).color(RAIL).material(chrome),
   "手すり_東": box(90, VD, 1000).translate(PX(10.0), voidCy, Z2F).color(RAIL).material(chrome),
 };
@@ -155,9 +163,12 @@ return Object.assign({
 }, columns, z1, {
   "1F_市松_エントランス": entFloor,
 }, z2, {
-  "カウンター本体": counterBody, "カウンター天板": counterTop,
-}, stools, {
-  "FACTORYガラス": factory, "車顔ショーケース": showcase, "ショーケース窓": showWin,
+  "レジ本体": regBody, "レジ天板": regTop, "ドリンクステーション": drinkSt,
+  "陳列アイランド_台": islBase, "陳列アイランド_ケース": islCase,
+  "工房ガラス": factory, "工房_作業台": workTbl,
+  "職人_1": maker(-800), "職人_1_頭": makerHead(-800),
+  "職人_2": maker(1300), "職人_2_頭": makerHead(1300),
+  "車顔ショーケース": showcase, "ショーケース窓": showWin,
 }, shelvesE, benchW, {
   "大ぬいぐるみ": bigPlush, "階段": stair, "2F_ドリンクバー": drinkBar,
 }, peds, goodsW, tables, rails);

@@ -30,8 +30,9 @@
 <header>
   <h1>クリチランド ｜ フロア別 実寸平面図 <b>（schematic）</b></h1>
   <p>石家庄 Neverland 滹沱河集 ／ 建物 footprint 約14.0m × 14.4m ≒ 200㎡ ＋ テラス 450㎡（敷地 約26m × 25m ＝ 650㎡）</p>
-  <p>2階建て（屋上利用なし／エレベーターなし）。各室は実寸ベースの概念配置（construction前の検討用）。寸法はメートル定義から自動作図。</p>
-  <span class="note">⚠️「建物200㎡＝建築面積(footprint)」前提。先方確認後に実寸確定。</span>
+  <p>2階建て（屋上利用なし／エレベーターなし）。前面に吹き抜け（6.0×7.0m）＝大きなクリチのぬいぐるみがお出迎え。</p>
+  <p><b style="color:#E3261D">たのしい施設です：</b>セルフで選んで、ガラス張りの工房で「作っているところ」を眺めて、レジでドリンクも一緒に。クリチのテーマパーク型ショップ。</p>
+  <span class="note">🛒 買い物の流れ：<b>① 入口</b> → <b>② 陳列からクリチを取る</b> → <b>③ レジで会計（ドリンクもここ）</b> → <b>④ 席・テラスへ</b> ／ <b>⑤ 階段で2Fミュージアム＆ダイナーへ</b></span>
 </header>
 
 <div class="grid" id="grid"></div>
@@ -75,21 +76,32 @@ const FLOORS = [
       {x:6, y:16.4,w:14,h:2.6,label:'グリーティング広場', t:'star'},
       {x:6, y:19,w:14,h:6,  label:'テラス飲食ゾーン', t:'diner'},
     ]},
-  { title:'1F ｜ KURICHI FACTORY', sub:'約200㎡・水/火/冷凍を集約（オペの心臓）／前面に吹き抜けホール', W:14, H:14.4, S:26, entryX:7,
+  { title:'1F ｜ KURICHI SHOP & 工房', sub:'約200㎡。工房はガラス張り＝「クリチを作っているところ」がお客さんからいつでも見える。買い物は①→⑤の流れ。', W:14, H:14.4, S:26, entryX:7,
     rooms:[
       {x:0, y:0, w:3.0, h:4.5, label:'搬入・ゴミ・通用口', t:'boh'},
       {x:3.0,y:0, w:2.5, h:4.5, label:'冷凍ストック／冷蔵', t:'cold'},
-      {x:5.5,y:0, w:5.0, h:4.5, label:'厨房（解凍・仕上げ・洗浄）', t:'boh'},
+      {x:5.5,y:0, w:5.0, h:4.5, label:'仕込み厨房（洗浄・下処理）', t:'boh'},
       {x:10.5,y:0,w:1.5, h:4.5, label:'WC', t:'wc'},
       {x:12.0,y:0,w:2.0, h:4.5, label:'階段（EVなし）', t:'core'},
-      {x:0, y:4.5,w:5.5, h:2.9, label:'屋内スタンディング／少数席', t:'seat'},
-      {x:5.5,y:4.5,w:5.0,h:2.9, label:'KURICHI FACTORY（見せる仕上げ）', t:'factory'},
-      {x:10.5,y:4.5,w:3.5,h:2.9, label:'物販導入', t:'retail'},
-      {x:0, y:7.4,w:4.0, h:7.0, label:'西ウイング／待合席（テラス側）', t:'seat'},
-      {x:10.0,y:7.4,w:4.0,h:7.0, label:'東ウイング／物販＋キャラ展示', t:'retail'},
-      {x:4.0,y:7.4,w:6.0, h:7.0, label:'吹き抜けホール（エントランス／メインカウンター／大ぬいぐるみ／オープン階段）', t:'star'},
+      {x:0, y:4.5,w:4.0, h:2.9, label:'ドリンク準備／レジバック', t:'counter'},
+      {x:4.0,y:4.5,w:6.5,h:2.9, label:'クリチ工房（ガラス張り・見せる製造）', t:'factory'},
+      {x:10.5,y:4.5,w:3.5,h:2.9, label:'補充バックヤード', t:'boh'},
+      {x:0, y:7.4,w:4.0, h:7.0, label:'西ウイング／カフェ席', t:'seat'},
+      {x:10.0,y:7.4,w:4.0,h:7.0, label:'東ウイング／陳列＋キャラグッズ', t:'retail'},
+      {x:4.0,y:7.4,w:6.0, h:7.0, label:'吹き抜けホール', t:'star'},
+      {x:4.2,y:8.3,w:1.2,h:3.6, label:'レジ＋ドリンク', t:'counter'},
+      {x:6.1,y:8.35,w:1.8,h:1.15,label:'陳列（クリチ）', t:'retail'},
+      {x:5.9,y:10.2,w:2.3,h:2.3, label:'大ぬいぐるみ', t:'star', dashed:true},
+      {x:8.45,y:7.4,w:1.3,h:5.3, label:'オープン階段↑', t:'core'},
+    ],
+    flows:[
+      {pts:[[7.0,13.8],[7.0,9.9],[5.85,10.1],[2.6,10.9]], c:'#E3261D'},
+      {pts:[[7.6,12.9],[9.1,12.4],[9.1,8.4]], c:'#2f8f87'},
+    ],
+    marks:[
+      {x:7.55,y:13.55,n:'①'},{x:7.0,y:8.85,n:'②'},{x:4.8,y:10.15,n:'③'},{x:2.0,y:11.3,n:'④'},{x:9.1,y:7.9,n:'⑤'},
     ]},
-  { title:'2F ｜ KURICHI DINER & MUSEUM', sub:'約158㎡・通年/冬の主力（火・水なし）／前面コの字の吹き抜け', W:14, H:14.4, S:26, upX:7,
+  { title:'2F ｜ KURICHI DINER & MUSEUM', sub:'約158㎡・通年/冬の主力（火・水なし）。⑤オープン階段で上がると、吹き抜け越しに大ぬいぐるみを見下ろせる。', W:14, H:14.4, S:26, upX:7,
     rooms:[
       {x:0, y:0, w:5.5, h:4.5, label:'事務・更衣・休憩・在庫', t:'boh'},
       {x:5.5,y:0, w:5.0, h:4.5, label:'軽ドリンクバー（無火）', t:'counter'},
@@ -99,8 +111,13 @@ const FLOORS = [
       {x:7.0,y:4.5,w:7.0, h:2.9, label:'屋内ダイナー席（奥）', t:'diner'},
       {x:0, y:7.4,w:4.0, h:7.0, label:'グッズショップ', t:'retail'},
       {x:10.0,y:7.4,w:4.0,h:7.0, label:'屋内ダイナー席（東窓・川ビュー）', t:'diner'},
-      {x:4.0,y:7.4,w:6.0, h:7.0, label:'吹き抜け（下階まで／大ぬいぐるみ）', t:'hall', dashed:true},
-    ]},
+      {x:4.0,y:7.4,w:6.0, h:7.0, label:'吹き抜け（下階まで／大ぬいぐるみを見下ろす）', t:'hall', dashed:true},
+    ],
+    flows:[
+      {pts:[[9.1,7.2],[9.1,5.9],[4.5,5.9]], c:'#2f8f87'},
+      {pts:[[9.6,7.0],[12.0,8.2],[12.0,11.5]], c:'#2f8f87'},
+    ],
+    marks:[ {x:9.1,y:7.1,n:'⑤'} ]},
 ];
 
 const NS='http://www.w3.org/2000/svg';
@@ -160,6 +177,29 @@ function drawFloor(f){
   svg.appendChild(el('rect',{x:sx,y:sy,width:sb,height:6,fill:'#241f1a'}));
   svg.appendChild(el('rect',{x:sx,y:sy,width:sb/5,height:6,fill:'#fff',stroke:'#241f1a','stroke-width':1}));
   const sl=el('text',{x:sx+sb+8,y:sy+6,'font-size':10.5,fill:'#5a5048'}); sl.textContent='5 m'; svg.appendChild(sl);
+
+  // flows（動線矢印）
+  if(f.flows){
+    f.flows.forEach((fl,fi)=>{
+      const mid='arw'+f.title.length+'_'+fi;
+      const defs=el('defs',{});
+      const mk=el('marker',{id:mid,viewBox:'0 0 10 10',refX:8,refY:5,markerWidth:7,markerHeight:7,orient:'auto-start-reverse'});
+      mk.appendChild(el('path',{d:'M0 0 L10 5 L0 10 z',fill:fl.c||'#E3261D'}));
+      defs.appendChild(mk); svg.appendChild(defs);
+      const pts=fl.pts.map(p=>`${ox+p[0]*S},${oy+p[1]*S}`).join(' ');
+      svg.appendChild(el('polyline',{points:pts,fill:'none',stroke:fl.c||'#E3261D','stroke-width':3,
+        'stroke-linecap':'round','stroke-linejoin':'round',opacity:.85,'marker-end':`url(#${mid})`}));
+    });
+  }
+  // marks（①②…の番号）
+  if(f.marks){
+    f.marks.forEach(mk=>{
+      const cx=ox+mk.x*S, cy=oy+mk.y*S;
+      svg.appendChild(el('circle',{cx:cx,cy:cy,r:9.5,fill:'#E3261D',stroke:'#fff','stroke-width':2}));
+      const t=el('text',{x:cx,y:cy+3.6,'text-anchor':'middle','font-size':10.5,'font-weight':900,fill:'#fff'});
+      t.textContent=mk.n; svg.appendChild(t);
+    });
+  }
 
   // north arrow
   const nx=ox+w-14, ny=oy+h+12;
