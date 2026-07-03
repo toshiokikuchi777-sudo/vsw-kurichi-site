@@ -29,6 +29,7 @@ const C = {
   car:"#E3261D", carWin:"#2a2e35", wheel:"#333333", glass:"#bcd6e2",
 };
 const chrome = { roughness: 0.22, metalness: 0.85 };
+const glassWall = { roughness: 0.1, metalness: 0.0, opacity: 0.20 };   // ★透明な壁（中を見せる）
 
 // ---------- 敷地・基礎・デッキ（白模型v2と同じ土台） ----------
 const site   = box(TW + 4000, D + TD + 4000, 300).translate(0, TD/2, -300).color(C.lawn);
@@ -41,11 +42,11 @@ const voidCut = box(VW, VD, F2 + SLAB + 800).translate(0, voidCy, F1);
 const doorCut = box(DOORW, 3000, DOORH).translate(0, D/2, 0);
 
 // ---------- 本体（クリーム壁） ----------
-const f1   = box(W, D, F1).translate(0, 0, 0).color(C.cream).subtract(doorCut);
+const f1   = box(W, D, F1).translate(0, 0, 0).color(C.cream).material(glassWall).subtract(doorCut);
 const band = box(W + 320, D + 320, 420).translate(0, 0, F1 - 210).color(C.band).subtract(voidCut); // ★赤帯（ダイナーのライン）
 const bandChrome = box(W + 380, D + 380, 70).translate(0, 0, F1 + 215).color(C.chrome).material(chrome)
   .subtract(voidCut);                                                    // 赤帯上のクロームトリム
-const f2   = box(W, D, F2).translate(0, 0, F1).color(C.cream2).subtract(voidCut);
+const f2   = box(W, D, F2).translate(0, 0, F1).color(C.cream2).material(glassWall).subtract(voidCut);
 const roof = box(W + 300, D + 300, SLAB).translate(0, 0, F1 + F2).color(C.roof).subtract(voidCut);
 // 屋根の赤コーピング（縁どり）
 const coping = box(W + 460, D + 460, 140).translate(0, 0, F1 + F2 + SLAB)

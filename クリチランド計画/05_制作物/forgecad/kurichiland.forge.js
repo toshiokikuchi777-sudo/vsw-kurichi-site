@@ -28,6 +28,7 @@ const C = {
   lawn:"#b9d3a2", deck:"#d8c197", plush:"#f0b0a8", stair:"#c9b48f",
   car:"#E3261D", carWin:"#2a2e35", wheel:"#333333",
 };
+const glassWall = { roughness: 0.1, metalness: 0.0, opacity: 0.20 };   // ★透明な壁（中を見せる）
 
 // ---------- 敷地・地面（緑の芝生：一番下に敷いて浮きを防ぐ） ----------
 const siteCy = (TD) / 2;                       // 前庭ぶん前方に寄せた中心
@@ -44,13 +45,13 @@ const voidCut = box(VW, VD, F2 + SLAB + 800).translate(0, voidCy, F1);
 const doorCut = box(DOORW, 3000, DOORH).translate(0, D/2, 0);
 
 // ---------- 1F（フルフロア − 入口） ----------
-const f1 = box(W, D, F1).translate(0, 0, 0).color(C.mass).subtract(doorCut);               // 0..F1
+const f1 = box(W, D, F1).translate(0, 0, 0).color(C.mass).material(glassWall).subtract(doorCut);   // 0..F1（透明壁）
 
 // ---------- 階間スラブ帯（2階建てに見せる水平ライン・少し庇状に出す） ----------
 const band = box(W + 260, D + 260, 160).translate(0, 0, F1 - 80).color(C.band).subtract(voidCut);
 
 // ---------- 2F（フル − 吹き抜け ＝ コの字） ----------
-const f2 = box(W, D, F2).translate(0, 0, F1).color(C.mass2).subtract(voidCut);             // F1..F1+F2
+const f2 = box(W, D, F2).translate(0, 0, F1).color(C.mass2).material(glassWall).subtract(voidCut);  // F1..F1+F2（透明壁）
 
 // ---------- 屋根（吹き抜け上は開放） ----------
 const roof = box(W + 300, D + 300, SLAB).translate(0, 0, F1 + F2).color(C.roof).subtract(voidCut);
