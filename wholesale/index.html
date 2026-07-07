@@ -57,7 +57,7 @@
 
   /* Quick table */
   .wh-tbl-wrap{overflow-x:auto;border-radius:14px;box-shadow:0 10px 36px rgba(43,38,34,.12);border:1px solid rgba(43,38,34,.10)}
-  table.wh-list{width:100%;border-collapse:collapse;background:#fff;font-size:14px;min-width:560px}
+  table.wh-list{width:100%;border-collapse:collapse;background:#fff;font-size:14px;min-width:620px}
   table.wh-list th,table.wh-list td{padding:12px 14px;text-align:left;border-bottom:1px solid rgba(43,38,34,.10)}
   table.wh-list thead th{background:var(--char);color:var(--cream);font-size:12.5px;letter-spacing:.5px;font-weight:700}
   table.wh-list tbody tr:nth-child(even){background:#fcf9f2}
@@ -65,6 +65,8 @@
   table.wh-list .retail{color:#9a918a;font-family:"Montserrat",sans-serif}
   table.wh-list .whole{font-family:"Montserrat",sans-serif;font-weight:800;color:var(--tomato);font-size:15px}
   table.wh-list .grp td{background:var(--cheese);color:var(--char);font-weight:800;font-size:12.5px;letter-spacing:.5px}
+  table.wh-list .thumbcell{width:60px;padding:6px 6px 6px 12px}
+  table.wh-list .thumbcell img{width:46px;height:46px;object-fit:contain;background:var(--cream);border-radius:8px;display:block}
 
   /* Product card */
   .wh-card{background:#fff;border:1px solid rgba(43,38,34,.10);border-radius:16px;box-shadow:0 10px 36px rgba(43,38,34,.12);overflow:hidden;display:grid;grid-template-columns:minmax(0,38%) minmax(0,62%);margin-bottom:20px}
@@ -213,25 +215,25 @@
           <div class="wh-band">価格はすべて<b>税抜</b>表記。「通常卸値」が卸価格です。</div>
           <div class="wh-tbl-wrap">
             <table class="wh-list">
-              <thead><tr><th>商品名</th><th>JANコード</th><th>一般販売価格</th><th>通常卸値</th></tr></thead>
+              <thead><tr><th></th><th>商品名</th><th>JANコード</th><th>一般販売価格</th><th>通常卸値</th></tr></thead>
               <tbody>
-                <tr class="grp"><td colspan="4">プレミアム#クリチ</td></tr>
-                <tr><td>NY#クリチ（レモンプラリネ）</td><td class="jancell">4595775904203</td><td class="retail">¥600</td><td class="whole">¥390</td></tr>
-                <tr><td>NY#クリチ（オレンジプラリネ）</td><td class="jancell">4595775904210</td><td class="retail">¥600</td><td class="whole">¥390</td></tr>
-                <tr class="grp"><td colspan="4">ふわもち#クリチ</td></tr>
-                <tr><td>ふわもち#クリチ（いちご）</td><td class="jancell">4595775904500</td><td class="retail">¥600</td><td class="whole">¥390</td></tr>
-                <tr><td>ふわもち#クリチ（抹茶あんこ）</td><td class="jancell">4595775904524</td><td class="retail">¥600</td><td class="whole">¥390</td></tr>
-                <tr class="grp"><td colspan="4">ノーマル#クリチ（The Standard）</td></tr>
-                <tr><td>#クリチ（マロン）</td><td class="jancell">4595775904067</td><td class="retail">¥500</td><td class="whole">¥320</td></tr>
-                <tr><td>#クリチ（抹茶あんこ）</td><td class="jancell">4595775904081</td><td class="retail">¥500</td><td class="whole">¥320</td></tr>
-                <tr><td>#クリチ（クランベリーナッツ）</td><td class="jancell">4595775904050</td><td class="retail">¥500</td><td class="whole">¥320</td></tr>
-                <tr><td>#クリチ（いちじくナッツ）</td><td class="jancell">4595775904074</td><td class="retail">¥500</td><td class="whole">¥320</td></tr>
-                <tr class="grp"><td colspan="4">米粉#ソイチ（Health &amp; Gluten-Free）</td></tr>
-                <tr><td>米粉#ソイチ（紅茶いちご）</td><td class="jancell">4595775904807</td><td class="retail">¥550</td><td class="whole">¥350</td></tr>
-                <tr class="grp"><td colspan="4">#クリチdisc（OEM・御社のパンにサンド）</td></tr>
-                <tr><td>#クリチdisc</td><td class="jancell">—</td><td class="retail">—</td><td class="whole">¥220</td></tr>
-                <tr class="grp"><td colspan="4">GIFTセット</td></tr>
-                <tr><td>おすすめ6個セット（箱込・送料別）</td><td class="jancell">—</td><td class="retail">¥3,700</td><td class="whole">¥2,500</td></tr>
+                <tr class="grp"><td colspan="5">プレミアム#クリチ</td></tr>
+                <tr><td class="thumbcell"><img src="../assets/products/ny-lemon.png" alt="NY#クリチ（レモンプラリネ）"></td><td>NY#クリチ（レモンプラリネ）</td><td class="jancell">4595775904203</td><td class="retail">¥600</td><td class="whole">¥390</td></tr>
+                <tr><td class="thumbcell"><img src="../assets/products/ny-orange.png" alt="NY#クリチ（オレンジプラリネ）"></td><td>NY#クリチ（オレンジプラリネ）</td><td class="jancell">4595775904210</td><td class="retail">¥600</td><td class="whole">¥390</td></tr>
+                <tr class="grp"><td colspan="5">ふわもち#クリチ</td></tr>
+                <tr><td class="thumbcell"><img src="../assets/products/fuwamochi-strawberry.png" alt="ふわもち#クリチ（いちご）"></td><td>ふわもち#クリチ（いちご）</td><td class="jancell">4595775904500</td><td class="retail">¥600</td><td class="whole">¥390</td></tr>
+                <tr><td class="thumbcell"><img src="../assets/products/fuwamochi-matcha.png" alt="ふわもち#クリチ（抹茶あんこ）"></td><td>ふわもち#クリチ（抹茶あんこ）</td><td class="jancell">4595775904524</td><td class="retail">¥600</td><td class="whole">¥390</td></tr>
+                <tr class="grp"><td colspan="5">ノーマル#クリチ（The Standard）</td></tr>
+                <tr><td class="thumbcell"><img src="../assets/products/teiban-marron.png" alt="#クリチ（マロン）"></td><td>#クリチ（マロン）</td><td class="jancell">4595775904067</td><td class="retail">¥500</td><td class="whole">¥320</td></tr>
+                <tr><td class="thumbcell"><img src="../assets/products/teiban-matcha.png" alt="#クリチ（抹茶あんこ）"></td><td>#クリチ（抹茶あんこ）</td><td class="jancell">4595775904081</td><td class="retail">¥500</td><td class="whole">¥320</td></tr>
+                <tr><td class="thumbcell"><img src="../assets/products/teiban-cranberry.png" alt="#クリチ（クランベリーナッツ）"></td><td>#クリチ（クランベリーナッツ）</td><td class="jancell">4595775904050</td><td class="retail">¥500</td><td class="whole">¥320</td></tr>
+                <tr><td class="thumbcell"><img src="../assets/products/teiban-fig.png" alt="#クリチ（いちじくナッツ）"></td><td>#クリチ（いちじくナッツ）</td><td class="jancell">4595775904074</td><td class="retail">¥500</td><td class="whole">¥320</td></tr>
+                <tr class="grp"><td colspan="5">米粉#ソイチ（Health &amp; Gluten-Free）</td></tr>
+                <tr><td class="thumbcell"><img src="../assets/products/soichi-tea.png" alt="米粉#ソイチ（紅茶いちご）"></td><td>米粉#ソイチ（紅茶いちご）</td><td class="jancell">4595775904807</td><td class="retail">¥550</td><td class="whole">¥350</td></tr>
+                <tr class="grp"><td colspan="5">#クリチdisc（OEM・御社のパンにサンド）</td></tr>
+                <tr><td class="thumbcell"></td><td>#クリチdisc</td><td class="jancell">—</td><td class="retail">—</td><td class="whole">¥220</td></tr>
+                <tr class="grp"><td colspan="5">GIFTセット</td></tr>
+                <tr><td class="thumbcell"></td><td>おすすめ6個セット（箱込・送料別）</td><td class="jancell">—</td><td class="retail">¥3,700</td><td class="whole">¥2,500</td></tr>
               </tbody>
             </table>
           </div>
