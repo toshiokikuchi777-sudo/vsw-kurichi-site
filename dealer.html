@@ -237,8 +237,10 @@ const CATS = [
           file:POP+"/pop/pannofes.jpg", dl:"クリチ_パンフェス告知.jpg" },
       ]},
       { head:"商品資料", items:[
-        { t:"#クリチ 商品説明資料", thumb:"doc-setsumei.jpg", kind:"pdf", type:"PDF", size:"23MB",
-          file:POP+"/KURICHI_説明.pdf", dl:"クリチ_商品説明資料.pdf" },
+        ...[1,2,3,4,5,6,7,8].map(n=>({
+          t:"#クリチ 商品説明資料 "+n, thumb:"doc-setsumei"+n+".jpg", kind:"pdf", type:"PDF",
+          size:({1:"21MB",2:"20MB",3:"19MB",4:"19MB",5:"20MB",6:"19MB",7:"19MB",8:"23MB"})[n],
+          file:POP+"/商品説明"+n+".pdf", dl:"クリチ_商品説明資料"+n+".pdf" })),
         { t:"#クリチ COMIC ①", thumb:"doc-comic1.jpg", kind:"pdf", type:"PDF", size:"2.8MB",
           file:POP+"/comic.pdf", dl:"クリチ_COMIC1.pdf" },
         { t:"#クリチ COMIC ②", thumb:"doc-comic2.jpg", kind:"pdf", type:"PDF", size:"2.9MB",
