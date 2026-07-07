@@ -50,6 +50,17 @@
   .feat h3{font-size:15.5px;font-weight:800;margin-bottom:6px;}
   .feat p{font-size:13px;line-height:1.85;color:#5a5248;}
 
+  /* perspective gallery */
+  .pers-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:26px;}
+  .pers-grid a{display:block;}
+  .pers-grid img{width:100%;height:100%;object-fit:cover;aspect-ratio:4/3;border-radius:12px;border:4px solid var(--white);box-shadow:0 10px 26px rgba(28,26,23,.14);transition:transform .25s;}
+  .pers-grid img:hover{transform:scale(1.02);}
+
+  /* viewer switch */
+  .viewer-switch{display:flex;gap:10px;margin-top:22px;}
+  .vbtn{border:2px solid var(--red);background:var(--white);color:var(--red);font-weight:800;font-size:13px;padding:9px 18px;border-radius:999px;cursor:pointer;}
+  .vbtn.active{background:var(--red);color:var(--white);}
+
   /* interior viewer */
   .viewer-box{position:relative;height:62vh;min-height:420px;border-radius:16px;overflow:hidden;border:4px solid var(--white);box-shadow:0 16px 40px rgba(28,26,23,.18);background:linear-gradient(#efe6d2,#fdf6e6);margin-top:26px;}
   .viewer-box canvas{display:block;}
@@ -125,11 +136,30 @@
   </div>
 </section>
 
+<!-- PERSPECTIVE GALLERY -->
+<section style="padding-top:0;">
+  <span class="sec-label">PERSPECTIVE</span>
+  <h2>完成イメージパース。</h2>
+  <p class="lead">3Dモデルをもとに描き起こした外観・俯瞰の完成イメージです（クリックで拡大）。</p>
+  <div class="pers-grid">
+    <a href="images/pers-01.jpg" target="_blank"><img src="images/pers-01.jpg" alt="パース1" loading="lazy"></a>
+    <a href="images/pers-02.jpg" target="_blank"><img src="images/pers-02.jpg" alt="パース2" loading="lazy"></a>
+    <a href="images/pers-03.jpg" target="_blank"><img src="images/pers-03.jpg" alt="パース3" loading="lazy"></a>
+    <a href="images/pers-04.jpg" target="_blank"><img src="images/pers-04.jpg" alt="パース4" loading="lazy"></a>
+    <a href="images/pers-05.jpg" target="_blank"><img src="images/pers-05.jpg" alt="パース5" loading="lazy"></a>
+    <a href="images/pers-06.jpg" target="_blank"><img src="images/pers-06.jpg" alt="パース6" loading="lazy"></a>
+  </div>
+</section>
+
 <!-- INTERIOR 3D -->
 <section style="padding-top:0;">
   <span class="sec-label">INSIDE</span>
   <h2>ドールハウスでのぞく、中のようす。</h2>
-  <p class="lead">1階のダイナーとキッチン、螺旋階段、2階の吹き抜けとグッズ売り場までまるごと3Dで。</p>
+  <p class="lead">1階のダイナーとキッチン、螺旋階段、2階の吹き抜けとグッズ売り場までまるごと3Dで。ボタンで「2階を外した1Fプランビュー」にも切り替えられます。</p>
+  <div class="viewer-switch">
+    <button class="vbtn active" data-glb="./poc2planb.glb">フル内装（2F付き）</button>
+    <button class="vbtn" data-glb="./poc2planb1f.glb">1Fプラン（2F取り外し）</button>
+  </div>
   <div class="viewer-box">
     <div id="plan3d" style="position:absolute;inset:0;"></div>
     <div class="viewer-tag">INTERIOR — ドラッグで回転</div>
@@ -146,7 +176,7 @@ import * as THREE from './lib/three.module.js';
 import { OrbitControls } from './lib/jsm/controls/OrbitControls.js';
 import { GLTFLoader } from './lib/jsm/loaders/GLTFLoader.js';
 
-const VER = "?v=81";
+const VER = "?v=83";
 
 function initViewer(el, url, opts = {}) {
   const scene = new THREE.Scene();
@@ -171,20 +201,26 @@ function initViewer(el, url, opts = {}) {
   controls.autoRotateSpeed = 0.9;
   controls.maxPolarAngle = Math.PI * 0.495;
 
-  new GLTFLoader().load(url + VER, (g) => {
-    const root = g.scene;
-    // Z-up (ForgeCAD) -> Y-up
-    root.rotation.x = -Math.PI / 2;
-    scene.add(root);
-    const box = new THREE.Box3().setFromObject(root);
-    const c = box.getCenter(new THREE.Vector3());
-    const size = box.getSize(new THREE.Vector3()).length();
-    controls.target.copy(c);
-    const d = size * (opts.dist || 0.62);
-    camera.position.set(c.x + d * 0.72, c.y + d * (opts.height || 0.5), c.z + d * 0.72);
-    camera.near = size / 500; camera.far = size * 6;
-    camera.updateProjectionMatrix();
-  });
+  let currentRoot = null;
+  function loadModel(u) {
+    new GLTFLoader().load(u + VER, (g) => {
+      if (currentRoot) scene.remove(currentRoot);
+      const root = g.scene;
+      // Z-up (ForgeCAD) -> Y-up
+      root.rotation.x = -Math.PI / 2;
+      scene.add(root);
+      currentRoot = root;
+      const box = new THREE.Box3().setFromObject(root);
+      const c = box.getCenter(new THREE.Vector3());
+      const size = box.getSize(new THREE.Vector3()).length();
+      controls.target.copy(c);
+      const d = size * (opts.dist || 0.62);
+      camera.position.set(c.x + d * 0.72, c.y + d * (opts.height || 0.5), c.z + d * 0.72);
+      camera.near = size / 500; camera.far = size * 6;
+      camera.updateProjectionMatrix();
+    });
+  }
+  loadModel(url);
 
   function resize() {
     const w = el.clientWidth, h = el.clientHeight;
@@ -196,10 +232,20 @@ function initViewer(el, url, opts = {}) {
   resize();
 
   renderer.setAnimationLoop(() => { controls.update(); renderer.render(scene, camera); });
+  return { loadModel };
 }
 
 initViewer(document.getElementById('hero3d'), './planext.glb', { autoRotate: true, dist: 1.15, height: 0.5 });
-initViewer(document.getElementById('plan3d'), './poc2planb.glb', { dist: 1.05, height: 0.75 });
+const planViewer = initViewer(document.getElementById('plan3d'), './poc2planb.glb', { dist: 1.05, height: 0.75 });
+
+// 内装ビューアの モデル切替（フル内装 ⇄ 1Fプラン）
+document.querySelectorAll('.vbtn').forEach((btn) => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.vbtn').forEach((b) => b.classList.remove('active'));
+    btn.classList.add('active');
+    planViewer.loadModel(btn.dataset.glb);
+  });
+});
 </script>
 </body>
 </html>
