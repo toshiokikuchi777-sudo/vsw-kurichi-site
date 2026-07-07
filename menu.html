@@ -172,6 +172,33 @@ body{
   max-width:460px;
 }
 
+/* ===== Featured (premium & fuwamochi) larger, standard compact — screen only ===== */
+@media screen and (min-width:641px){
+  /* premium: 2-up large, fuwamochi: 3-up large */
+  .items-lg .item-img{aspect-ratio:1/1;padding:26px;}
+  .items-lg .item-body{padding:20px 26px 26px;}
+  .items-lg .item-name{font-size:19px;}
+  .items-lg .item-desc{font-size:13px;margin-top:9px;}
+  .items-lg .item-price{margin-top:16px;padding-top:14px;}
+  .items-lg .item-price .yen{font-size:32px;}
+  .items-lg .item-price .tax{font-size:12px;}
+
+  .items-cols3{grid-template-columns:repeat(3,1fr);}
+
+  /* standard: 4-up compact */
+  .items-compact{grid-template-columns:repeat(4,1fr);gap:22px;}
+  .items-compact .item-img{padding:14px;}
+  .items-compact .item-body{padding:14px 16px 16px;}
+  .items-compact .item-name{font-size:14px;}
+  .items-compact .item-price{margin-top:10px;padding-top:10px;}
+  .items-compact .item-price .yen{font-size:22px;}
+  .items-compact .item-price .tax{font-size:10px;}
+}
+/* tablet: featured & compact fall back to 2-up */
+@media screen and (min-width:641px) and (max-width:900px){
+  .items-cols3,.items-compact{grid-template-columns:repeat(2,1fr);}
+}
+
 /* ===== Footer ===== */
 .menu-footer{
   text-align:center;
@@ -305,7 +332,7 @@ body{
     <span class="en">Premium Series</span>
   </div>
 
-  <div class="items">
+  <div class="items items-lg">
     <article class="item">
       <div class="item-img"><img src="assets/products/ny-lemon.png" alt="NY#クリチ（レモンプラリネ）"></div>
       <div class="item-body">
@@ -335,7 +362,7 @@ body{
   </div>
   <p class="sec-lead">ふわもち食感の白バンズに、なめらかなクリームチーズのコクを閉じ込めた「クリチdisc」と軽やかなホイップ。ひんやり、ふわり、もちり。</p>
 
-  <div class="items">
+  <div class="items items-lg items-cols3">
     <article class="item">
       <div class="item-img"><img src="assets/products/fuwamochi-strawberry.png" alt="ふわもち#クリチ（いちご）"></div>
       <div class="item-body">
@@ -358,7 +385,7 @@ body{
       <div class="item-img"><img src="assets/products/fuwamochi-blueberry.png" alt="ふわもち#クリチ（ブルーベリー）"></div>
       <div class="item-body">
         <h3 class="item-name">ふわもち<span class="hash">#</span>クリチ（ブルーベリー）</h3>
-        <p class="item-desc">ブルーベリークリチdisc × みずみずしい果実の粒</p>
+        <p class="item-desc">ブルーベリークリチdisc × とろけるブルーベリーソース</p>
         <p class="item-price"><span class="yen">¥600</span><span class="tax">税抜</span></p>
       </div>
     </article>
@@ -374,7 +401,7 @@ body{
   </div>
   <p class="sec-lead">ごほうび時間に、とっておきのひんやりスイーツ。幅広い層に愛される定番ラインナップ。</p>
 
-  <div class="items">
+  <div class="items items-compact">
     <article class="item">
       <div class="item-img"><img src="assets/products/teiban-marron.png" alt="#クリチ（マロン）"></div>
       <div class="item-body">
