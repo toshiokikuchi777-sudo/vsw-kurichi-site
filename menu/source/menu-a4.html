@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>#KURICHI MENU A4</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&family=Noto+Sans+JP:wght@400;500;700;900&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --cream:#faf6ec;
+  --cream2:#f4ecd8;
+  --cheese:#f2c14e;
+  --tomato:#d64541;
+  --char:#2b2320;
+  --line:rgba(43,35,32,.14);
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+@page{ size:A4 portrait; margin:0; }
+html,body{background:#fff;}
+body{
+  font-family:'Noto Sans JP',sans-serif;
+  color:var(--char);
+  line-height:1.5;
+}
+
+/* ===== A4 sheet ===== */
+.sheet{
+  width:210mm;
+  height:297mm;
+  margin:0 auto;
+  background:var(--cream);
+  padding:10mm 13mm 7mm;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  position:relative;
+  overflow:hidden;
+}
+.sheet::before{ /* striped shop awning with scalloped bottom */
+  content:"";
+  position:absolute; top:0; left:0; right:0; height:9mm; z-index:3;
+  background:repeating-linear-gradient(90deg,var(--tomato) 0 6mm,#fff 6mm 12mm);
+  -webkit-mask:radial-gradient(circle 3mm at 50% 100%,#0000 3mm,#000 3.3mm) bottom left/6mm 100% repeat-x;
+          mask:radial-gradient(circle 3mm at 50% 100%,#0000 3mm,#000 3.3mm) bottom left/6mm 100% repeat-x;
+}
+
+/* ===== Header ===== */
+.hd{ text-align:center; padding:2mm 0 2.5mm; position:relative; }
+.hd .deco{ position:absolute; z-index:2; pointer-events:none; }
+.hd .deco-girl{ left:-13mm; top:-7mm; width:62mm; }
+.hd .deco-sweets{ right:-9mm; top:-2mm; width:61mm; }
+.hd .kick{
+  font-family:'Montserrat',sans-serif; font-weight:700;
+  font-size:8pt; letter-spacing:.42em; color:var(--tomato);
+  text-transform:uppercase;
+}
+.hd h1{
+  font-family:'Playfair Display',serif; font-weight:700;
+  font-size:34pt; letter-spacing:.06em; line-height:1; margin:1.5mm 0 1mm;
+}
+.hd .sub{ font-size:9.5pt; font-weight:700; letter-spacing:.04em; }
+.hd .tag{
+  display:inline-block; margin-top:1.8mm;
+  font-family:'Playfair Display',serif; font-style:italic;
+  font-size:8pt; color:var(--tomato);
+}
+.hd .rule{
+  width:26mm; height:2px; background:var(--char); margin:2.6mm auto 0; opacity:.85;
+}
+
+/* ===== Section ===== */
+.sec{ margin-top:0; }
+.sec-head{
+  display:flex; align-items:baseline; gap:2.4mm;
+  border-bottom:1.4px solid var(--char); padding-bottom:1.2mm;
+}
+.sec-head .num{
+  font-family:'Montserrat',sans-serif; font-weight:800;
+  font-size:8pt; color:var(--tomato); letter-spacing:.12em;
+}
+.sec-head h2{ font-size:12pt; font-weight:900; letter-spacing:.02em; }
+.sec-head .en{
+  margin-left:auto; font-family:'Montserrat',sans-serif; font-weight:600;
+  font-size:6.5pt; letter-spacing:.24em; text-transform:uppercase;
+  color:rgba(43,35,32,.45); white-space:nowrap;
+}
+.sec .lead{
+  font-size:7.4pt; color:rgba(43,35,32,.72); margin-top:1.4mm; line-height:1.45;
+}
+
+/* ===== Cards grid ===== */
+.grid{ display:grid; gap:2.8mm; margin-top:2.2mm; }
+.g2{ grid-template-columns:repeat(2,1fr); }
+.g3{ grid-template-columns:repeat(3,1fr); }
+.g4{ grid-template-columns:repeat(4,1fr); }
+.g1{ grid-template-columns:minmax(0,120mm); justify-content:center; }
+
+/* ===== Top row: 01 premium (left) + 04 soichi (right) ===== */
+.toprow{ display:flex; gap:5mm; align-items:stretch; }
+.toprow .sec{ margin-top:0; }
+.col-premium{ flex:1 1 auto; min-width:0; }
+.col-soichi{ flex:0 0 54mm; display:flex; flex-direction:column; }
+.col-soichi .sec-head .en{ display:none; }
+.col-soichi .grid{ margin-top:auto; }
+.col-soichi .card .ph{ height:26mm; }
+.col-soichi .nm{ font-size:8.2pt; }
+.col-soichi .ds{ font-size:6.4pt; }
+.col-soichi .pr .y{ font-size:15pt; }
+
+.card{
+  background:#fff; border:1px solid var(--line); border-radius:4mm;
+  overflow:hidden; display:flex; flex-direction:column;
+  box-shadow:0 1.2mm 3mm rgba(43,35,32,.10);
+}
+.card .ph{
+  background:linear-gradient(160deg,var(--cream) 0%,var(--cream2) 100%);
+  display:flex; align-items:center; justify-content:center;
+  padding:2mm;
+}
+.card .ph img{ width:100%; height:100%; object-fit:contain; display:block; }
+.card .bd{ padding:2.4mm 3mm 2.8mm; display:flex; flex-direction:column; flex:1; }
+.card .nm{ font-size:8.4pt; font-weight:900; letter-spacing:.01em; line-height:1.3; }
+.g4 .nm{ white-space:nowrap; }
+.card .nm .h{ color:var(--tomato); }
+.card .ds{
+  font-size:6.6pt; color:rgba(43,35,32,.7); line-height:1.4; margin-top:1mm;
+}
+.card .pr{
+  margin-top:auto; padding-top:2mm; display:flex; align-items:baseline; gap:1.4mm;
+  border-top:1px dashed rgba(43,35,32,.28);
+}
+.card .pr .y{
+  font-family:'Montserrat',sans-serif; font-weight:800; color:var(--tomato);
+  font-size:15pt; line-height:1;
+}
+.card .pr .t{ font-size:6pt; color:rgba(43,35,32,.55); }
+
+/* size variants */
+.g2 .ph{ height:26mm; }
+.g2 .nm{ font-size:9.4pt; }
+.g2 .pr .y{ font-size:17pt; }
+.g3 .ph{ height:25mm; }
+.g4 .ph{ height:21mm; }
+.g4 .bd{ padding:2mm 2.4mm 2.4mm; }
+.g4 .nm{ font-size:7pt; }
+.g4 .pr .y{ font-size:13pt; }
+
+/* premium panel emphasis */
+.sec.premium .card{ border-color:rgba(214,69,65,.35); }
+.badges{ display:flex; gap:1.6mm; margin-top:2mm; flex-wrap:wrap; }
+.hd .badges{ justify-content:center; margin-top:2.6mm; }
+.badge{
+  font-size:6pt; font-weight:700; letter-spacing:.04em;
+  color:var(--tomato); background:rgba(214,69,65,.09);
+  border:1px solid rgba(214,69,65,.3); border-radius:999px;
+  padding:.6mm 2.2mm;
+}
+
+/* ===== Footer ===== */
+.ft{ padding-top:3mm; text-align:center; border-top:1.4px solid var(--char); }
+.ft .note{ font-size:6.6pt; color:rgba(43,35,32,.62); }
+.ft .brand{
+  margin-top:1.4mm; font-family:'Montserrat',sans-serif; font-weight:700;
+  font-size:6.6pt; letter-spacing:.26em; color:var(--tomato); text-transform:uppercase;
+}
+</style>
+</head>
+<body>
+<div class="sheet">
+
+  <header class="hd">
+    <img class="deco deco-girl" src="assets/decor/voxel-girl.png" alt="">
+    <img class="deco deco-sweets" src="assets/decor/voxel-sweets.png" alt="">
+    <p class="kick">Frozen Sweets Burger</p>
+    <h1>#KURICHI</h1>
+    <p class="sub">冷凍スイーツバーガー「#クリチ」 MENU</p>
+    <p class="tag">"KURICHI" — a nickname for cream cheese in Japan</p>
+    <div class="badges">
+      <span class="badge">冷凍アイス感</span>
+      <span class="badge">20分解凍でなめらか</span>
+      <span class="badge">手土産にも</span>
+    </div>
+    <div class="rule"></div>
+  </header>
+
+  <!-- TOP ROW: 01 PREMIUM + 04 SOICHI -->
+  <div class="toprow">
+
+  <!-- 01 PREMIUM -->
+  <section class="sec premium col-premium">
+    <div class="sec-head">
+      <span class="num">01</span>
+      <h2>プレミアム#クリチ</h2>
+      <span class="en">Premium Series</span>
+    </div>
+    <p class="lead">竹炭を練り込んだモード系ストライプバンズ。ほろ苦い柑橘ピール香るクリームチーズに、香ばしいキャラメリゼナッツのプラリネを重ねた、手土産にも映えるご褒美ライン。</p>
+    <div class="grid g2">
+      <article class="card">
+        <div class="ph"><img src="assets/products/ny-lemon.png" alt=""></div>
+        <div class="bd">
+          <h3 class="nm">NY<span class="h">#</span>クリチ（レモンプラリネ）</h3>
+          <p class="ds">竹炭の黒白ストライプバンズ × ほろ苦レモンピールのクリームチーズ × キャラメリゼナッツ。</p>
+          <p class="pr"><span class="y">¥600</span><span class="t">税抜</span></p>
+        </div>
+      </article>
+      <article class="card">
+        <div class="ph"><img src="assets/products/ny-orange.png" alt=""></div>
+        <div class="bd">
+          <h3 class="nm">NY<span class="h">#</span>クリチ（オレンジプラリネ）</h3>
+          <p class="ds">赤（ビーツ）×黒ストライプバンズ × 華やかオレンジピールのクリームチーズ × キャラメリゼナッツ。</p>
+          <p class="pr"><span class="y">¥600</span><span class="t">税抜</span></p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- 04 SOICHI (right of premium) -->
+  <section class="sec col-soichi">
+    <div class="sec-head">
+      <span class="num">04</span>
+      <h2>米粉#ソイチ</h2>
+      <span class="en">Health &amp; Gluten-Free</span>
+    </div>
+    <div class="grid g1">
+      <article class="card">
+        <div class="ph"><img src="assets/products/soichi-tea.png" alt=""></div>
+        <div class="bd">
+          <h3 class="nm">米粉<span class="h">#</span>ソイチ（紅茶いちご）</h3>
+          <p class="ds">豆乳ベースのヘルシークリームチーズ × 紅茶香る米粉バンズ。グルテンフリーの#クリチ。</p>
+          <p class="pr"><span class="y">¥550</span><span class="t">税抜</span></p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  </div><!-- /toprow -->
+
+  <!-- 02 FUWAMOCHI -->
+  <section class="sec">
+    <div class="sec-head">
+      <span class="num">02</span>
+      <h2>ふわもち#クリチ</h2>
+      <span class="en">Fuwa-Mochi</span>
+    </div>
+    <p class="lead">ふわもち食感の白バンズに、なめらかなクリームチーズのコクを閉じ込めた「クリチdisc」と軽やかなホイップ。ひんやり、ふわり、もちり。</p>
+    <div class="grid g3">
+      <article class="card">
+        <div class="ph"><img src="assets/products/fuwamochi-strawberry.png" alt=""></div>
+        <div class="bd">
+          <h3 class="nm">ふわもち<span class="h">#</span>クリチ（いちご）</h3>
+          <p class="ds">ドライいちご入り苺クリチdisc × とろけるいちごソース</p>
+          <p class="pr"><span class="y">¥600</span><span class="t">税抜</span></p>
+        </div>
+      </article>
+      <article class="card">
+        <div class="ph"><img src="assets/products/fuwamochi-matcha.png" alt=""></div>
+        <div class="bd">
+          <h3 class="nm">ふわもち<span class="h">#</span>クリチ（抹茶あんこ）</h3>
+          <p class="ds">抹茶クリチdisc × 中心でほどけるあんこ</p>
+          <p class="pr"><span class="y">¥600</span><span class="t">税抜</span></p>
+        </div>
+      </article>
+      <article class="card">
+        <div class="ph"><img src="assets/products/fuwamochi-blueberry.png" alt=""></div>
+        <div class="bd">
+          <h3 class="nm">ふわもち<span class="h">#</span>クリチ（ブルーベリー）</h3>
+          <p class="ds">ブルーベリークリチdisc × とろけるブルーベリーソース</p>
+          <p class="pr"><span class="y">¥600</span><span class="t">税抜</span></p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- 03 STANDARD -->
+  <section class="sec">
+    <div class="sec-head">
+      <span class="num">03</span>
+      <h2>スタンダード#クリチ</h2>
+      <span class="en">The Standard</span>
+    </div>
+    <p class="lead">ごほうび時間に、とっておきのひんやりスイーツ。幅広い層に愛される定番ラインナップ。</p>
+    <div class="grid g4">
+      <article class="card">
+        <div class="ph"><img src="assets/products/teiban-marron.png" alt=""></div>
+        <div class="bd">
+          <h3 class="nm"><span class="h">#</span>クリチ（マロン）</h3>
+          <p class="ds">マロンクリーム × なめらかクリームチーズ</p>
+          <p class="pr"><span class="y">¥500</span><span class="t">税抜</span></p>
+        </div>
+      </article>
+      <article class="card">
+        <div class="ph"><img src="assets/products/teiban-matcha.png" alt=""></div>
+        <div class="bd">
+          <h3 class="nm"><span class="h">#</span>クリチ（抹茶あんこ）</h3>
+          <p class="ds">抹茶クリームチーズ × 粒あん</p>
+          <p class="pr"><span class="y">¥500</span><span class="t">税抜</span></p>
+        </div>
+      </article>
+      <article class="card">
+        <div class="ph"><img src="assets/products/teiban-cranberry.png" alt=""></div>
+        <div class="bd">
+          <h3 class="nm"><span class="h">#</span>クリチ（クランベリーナッツ）</h3>
+          <p class="ds">クランベリー × 香ばしナッツ × クリームチーズ</p>
+          <p class="pr"><span class="y">¥500</span><span class="t">税抜</span></p>
+        </div>
+      </article>
+      <article class="card">
+        <div class="ph"><img src="assets/products/teiban-fig.png" alt=""></div>
+        <div class="bd">
+          <h3 class="nm"><span class="h">#</span>クリチ（いちじくナッツ）</h3>
+          <p class="ds">いちじく × ローストナッツ × クリームチーズ</p>
+          <p class="pr"><span class="y">¥500</span><span class="t">税抜</span></p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <footer class="ft">
+    <p class="note">※価格はすべて税抜表記です　※写真はイメージです</p>
+    <p class="brand">NY Inspired &times; Osaka Craft — #KURICHI / Vsw Inc.</p>
+  </footer>
+
+</div>
+</body>
+</html>
