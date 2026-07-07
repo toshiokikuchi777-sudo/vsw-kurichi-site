@@ -157,8 +157,18 @@ body{
 }
 
 /* ===== Footer ===== */
-.allergy{ text-align:center; }
-.allergy img{ display:block; width:auto; height:14mm; max-width:100%; margin:0 auto; }
+.allergy{
+  display:flex; align-items:center; justify-content:center; gap:3.5mm;
+  max-width:162mm; margin:0 auto; background:#fff;
+  border:1px solid rgba(43,35,32,.12); border-radius:2.5mm; padding:2mm 4mm;
+}
+.al-left{ display:flex; flex-direction:column; align-items:flex-start; gap:1mm; flex:0 0 auto; }
+.al-head{ font-size:6.6pt; font-weight:800; color:var(--char); letter-spacing:.01em; white-space:nowrap; }
+.al-icons{ height:5.6mm; width:auto; display:block; }
+.al-note{
+  font-size:6.1pt; line-height:1.45; color:rgba(43,35,32,.82);
+  border-left:1px dashed rgba(43,35,32,.4); padding-left:3.5mm;
+}
 .ft{ padding-top:2.4mm; text-align:center; border-top:1.4px solid var(--char); }
 .ft .note{ font-size:6.6pt; color:rgba(43,35,32,.62); }
 .ft .brand{
@@ -258,7 +268,7 @@ body{
         <div class="ph"><img src="assets/products/fuwamochi-matcha.png" alt=""></div>
         <div class="bd">
           <h3 class="nm">ふわもち<span class="h">#</span>クリチ（抹茶あんこ）</h3>
-          <p class="ds">抹茶クリチdisc × 中心でほどけるあんこ</p>
+          <p class="ds">抹茶クリチdisc × 中心でほどけるあんこ × 黒蜜ソース</p>
           <p class="pr"><span class="y">¥600</span><span class="t">税抜</span></p>
         </div>
       </article>
@@ -266,7 +276,7 @@ body{
         <div class="ph"><img src="assets/products/fuwamochi-blueberry.png" alt=""></div>
         <div class="bd">
           <h3 class="nm">ふわもち<span class="h">#</span>クリチ（ブルーベリー）</h3>
-          <p class="ds">ブルーベリークリチdisc × とろけるブルーベリーソース</p>
+          <p class="ds">プレーンクリチdisc × ブルーベリーソース × ブルーベリー果肉トッピング</p>
           <p class="pr"><span class="y">¥600</span><span class="t">税抜</span></p>
         </div>
       </article>
@@ -286,7 +296,7 @@ body{
         <div class="ph"><img src="assets/products/teiban-marron.png" alt=""></div>
         <div class="bd">
           <h3 class="nm"><span class="h">#</span>クリチ（マロン）</h3>
-          <p class="ds">マロンクリーム × なめらかクリームチーズ</p>
+          <p class="ds">マロンクリーム × マロンダイス × パイクラム × なめらかクリームチーズ</p>
           <p class="pr"><span class="y">¥500</span><span class="t">税抜</span></p>
         </div>
       </article>
@@ -317,7 +327,13 @@ body{
     </div>
   </section>
 
-  <div class="allergy"><img src="assets/allergy.svg" alt="アレルギー表示：小麦・卵・乳成分／くるみ・ピーナッツ・アーモンド・そば・ゴマ・オレンジ・キウイ・もも・大豆・豚肉・牛肉・鶏肉・さば・ゼラチン・カシューナッツを使用した設備で製造"></div>
+  <div class="allergy">
+    <div class="al-left">
+      <p class="al-head">【アレルギー表示: 小麦, 卵, 乳成分, くるみ】</p>
+      <img class="al-icons" src="assets/allergy-icons.svg" alt="アレルギー：小麦・卵・乳成分・くるみ">
+    </div>
+    <p class="al-note">ピーナッツ、アーモンド、そば、ゴマ、オレンジ、キュウイ、もも、大豆、豚肉、牛肉、鶏肉、さば、ゼラチン、カシューナッツ、エビを使用した設備で製造</p>
+  </div>
 
   <footer class="ft">
     <p class="note">※価格はすべて税抜表記です　※写真はイメージです</p>

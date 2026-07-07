@@ -80,11 +80,18 @@ header.hero{ text-align:center; padding:34px 20px 10px; }
 .hint{
   text-align:center; font-size:12.5px; color:rgba(43,35,32,.55); margin-top:14px;
 }
-.allergy{ margin:22px auto 0; max-width:680px; }
-.allergy img{
-  display:block; width:100%; height:auto; background:#fff;
-  border:1px solid rgba(43,35,32,.12); border-radius:12px;
-  padding:16px 18px; box-shadow:0 8px 22px rgba(43,35,32,.08);
+.allergy{
+  display:flex; align-items:center; justify-content:center; gap:20px; flex-wrap:wrap;
+  max-width:720px; margin:24px auto 0; background:#fff;
+  border:1px solid rgba(43,35,32,.12); border-radius:14px;
+  padding:16px 22px; box-shadow:0 8px 22px rgba(43,35,32,.08);
+}
+.al-left{ display:flex; flex-direction:column; gap:7px; flex:0 0 auto; }
+.al-head{ font-size:13px; font-weight:800; color:var(--char); }
+.al-icons{ height:34px; width:auto; display:block; }
+.al-note{
+  font-size:12.5px; line-height:1.55; color:rgba(43,35,32,.82);
+  border-left:1px dashed rgba(43,35,32,.4); padding-left:18px; flex:1; min-width:240px;
 }
 
 /* footer */
@@ -128,7 +135,11 @@ footer .brand{
   </a>
   <p class="hint">※価格はすべて税抜表記です　※写真はイメージです</p>
   <div class="allergy">
-    <img src="/menu/allergy.svg" alt="アレルギー表示：小麦・卵・乳成分／くるみ・ピーナッツ・アーモンド・そば・ゴマ・オレンジ・キウイ・もも・大豆・豚肉・牛肉・鶏肉・さば・ゼラチン・カシューナッツを使用した設備で製造">
+    <div class="al-left">
+      <p class="al-head">【アレルギー表示: 小麦, 卵, 乳成分, くるみ】</p>
+      <img class="al-icons" src="/menu/allergy-icons.svg" alt="アレルギー：小麦・卵・乳成分・くるみ">
+    </div>
+    <p class="al-note">ピーナッツ、アーモンド、そば、ゴマ、オレンジ、キュウイ、もも、大豆、豚肉、牛肉、鶏肉、さば、ゼラチン、カシューナッツ、エビを使用した設備で製造</p>
   </div>
 </div>
 
