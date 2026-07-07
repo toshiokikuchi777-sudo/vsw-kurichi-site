@@ -106,7 +106,7 @@
   <h2>数字でみるクリチランド</h2>
   <div class="numbers">
     <div class="num-card"><div class="v">655<small>㎡</small></div><div class="k">敷地面積（25.0m × 26.2m）</div></div>
-    <div class="num-card"><div class="v">205<small>㎡</small></div><div class="k">建物面積（2階建・最高高さ9.8m）</div></div>
+    <div class="num-card"><div class="v">195<small>㎡</small></div><div class="k">建物面積（2階建・最高高さ10.25m）</div></div>
     <div class="num-card"><div class="v">450<small>㎡</small></div><div class="k">屋外テラスガーデン</div></div>
   </div>
 </section>
@@ -146,7 +146,7 @@ import * as THREE from './lib/three.module.js';
 import { OrbitControls } from './lib/jsm/controls/OrbitControls.js';
 import { GLTFLoader } from './lib/jsm/loaders/GLTFLoader.js';
 
-const VER = "?v=63";
+const VER = "?v=81";
 
 function initViewer(el, url, opts = {}) {
   const scene = new THREE.Scene();
@@ -198,7 +198,7 @@ function initViewer(el, url, opts = {}) {
   renderer.setAnimationLoop(() => { controls.update(); renderer.render(scene, camera); });
 }
 
-initViewer(document.getElementById('hero3d'), './poc2ext3z.glb', { autoRotate: true, dist: 1.15, height: 0.5 });
+initViewer(document.getElementById('hero3d'), './planext.glb', { autoRotate: true, dist: 1.15, height: 0.5 });
 initViewer(document.getElementById('plan3d'), './poc2planb.glb', { dist: 1.05, height: 0.75 });
 </script>
 </body>
