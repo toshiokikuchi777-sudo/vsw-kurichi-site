@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MENU | #クリチ - VSW</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&family=Noto+Sans+JP:wght@400;500;700;900&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --cream:#faf6ec;
+  --cheese:#f2c14e;
+  --tomato:#d64541;
+  --char:#2b2320;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{
+  font-family:'Noto Sans JP',sans-serif;
+  background:var(--cream);
+  color:var(--char);
+  line-height:1.7;
+}
+
+/* ===== Header ===== */
+.menu-header{
+  text-align:center;
+  padding:56px 20px 36px;
+  border-bottom:3px solid var(--char);
+}
+.menu-header .brand{
+  font-family:'Montserrat',sans-serif;
+  font-weight:700;
+  font-size:13px;
+  letter-spacing:.35em;
+  color:var(--tomato);
+  text-transform:uppercase;
+}
+.menu-header h1{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(44px,9vw,76px);
+  letter-spacing:.08em;
+  margin:8px 0 4px;
+}
+.menu-header .sub{
+  font-size:14px;
+  font-weight:500;
+}
+.menu-header .tagline{
+  display:inline-block;
+  margin-top:14px;
+  font-family:'Playfair Display',serif;
+  font-style:italic;
+  font-size:15px;
+  color:var(--tomato);
+}
+
+/* ===== Section ===== */
+.menu-section{
+  max-width:960px;
+  margin:0 auto;
+  padding:48px 20px 8px;
+}
+.sec-head{
+  display:flex;
+  align-items:baseline;
+  gap:14px;
+  border-bottom:2px solid var(--char);
+  padding-bottom:10px;
+  margin-bottom:28px;
+}
+.sec-head .num{
+  font-family:'Montserrat',sans-serif;
+  font-weight:800;
+  font-size:14px;
+  color:var(--tomato);
+  letter-spacing:.15em;
+}
+.sec-head h2{
+  font-size:clamp(20px,4vw,26px);
+  font-weight:900;
+  letter-spacing:.04em;
+}
+.sec-head .en{
+  margin-left:auto;
+  font-family:'Montserrat',sans-serif;
+  font-weight:600;
+  font-size:11px;
+  letter-spacing:.25em;
+  color:rgba(43,35,32,.5);
+  text-transform:uppercase;
+  white-space:nowrap;
+}
+.sec-lead{
+  font-size:14px;
+  margin:-14px 0 26px;
+  color:rgba(43,35,32,.75);
+}
+
+/* ===== Item grid ===== */
+.items{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:32px 28px;
+  margin-bottom:24px;
+}
+.item{
+  background:#fff;
+  border:1px solid rgba(43,35,32,.12);
+  border-radius:20px;
+  overflow:hidden;
+  box-shadow:0 10px 24px rgba(43,35,32,.10), 0 2px 6px rgba(43,35,32,.06);
+  transition:transform .2s ease, box-shadow .2s ease;
+}
+.item:hover{
+  transform:translateY(-4px);
+  box-shadow:0 16px 34px rgba(43,35,32,.14), 0 3px 8px rgba(43,35,32,.07);
+}
+.item-img{
+  aspect-ratio:4/3;
+  background:var(--cream);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:rgba(43,35,32,.4);
+  font-size:12px;
+  letter-spacing:.15em;
+  padding:18px;
+}
+.item-img img{
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  display:block;
+}
+.item-body{padding:18px 22px 22px;}
+.item-name{
+  font-size:17px;
+  font-weight:900;
+  letter-spacing:.02em;
+}
+.item-name .hash{color:var(--tomato);}
+.item-desc{
+  font-size:12.5px;
+  color:rgba(43,35,32,.75);
+  margin-top:8px;
+  min-height:2.6em;
+}
+.item-price{
+  margin-top:14px;
+  display:flex;
+  align-items:baseline;
+  gap:6px;
+  border-top:1px dashed rgba(43,35,32,.3);
+  padding-top:12px;
+}
+.item-price .yen{
+  font-family:'Montserrat',sans-serif;
+  font-weight:800;
+  font-size:26px;
+  color:var(--tomato);
+}
+.item-price .tax{
+  font-size:11px;
+  color:rgba(43,35,32,.55);
+}
+
+/* ===== Single-item layout (soichi) ===== */
+.items-single{
+  grid-template-columns:1fr;
+  max-width:460px;
+}
+
+/* ===== Footer ===== */
+.menu-footer{
+  text-align:center;
+  padding:36px 20px 48px;
+  border-top:3px solid var(--char);
+  margin-top:48px;
+}
+.menu-footer .note{
+  font-size:12px;
+  color:rgba(43,35,32,.65);
+}
+.menu-footer .brand-line{
+  margin-top:14px;
+  font-family:'Montserrat',sans-serif;
+  font-weight:700;
+  font-size:11px;
+  letter-spacing:.3em;
+  color:var(--tomato);
+  text-transform:uppercase;
+}
+
+/* ===== Responsive ===== */
+@media (max-width:640px){
+  .items{grid-template-columns:1fr;gap:24px;}
+  .items-single{max-width:none;}
+  .sec-head .en{display:none;}
+}
+
+/* ===== Print (A4 one-page) ===== */
+@page{
+  size:A4 portrait;
+  margin:12mm;
+}
+@media print{
+  body{background:#fff;font-size:9pt;line-height:1.4;}
+
+  .menu-header{
+    padding:0 0 4mm;
+    margin-bottom:4mm;
+    border-bottom-width:2px;
+  }
+  .menu-header .brand{font-size:7.5pt;letter-spacing:.2em;line-height:1.1;}
+  .menu-header h1{font-size:20pt;line-height:1.1;margin:1mm 0;}
+  .menu-header .sub{font-size:7.5pt;line-height:1.1;}
+  .menu-header .tagline{font-size:7.5pt;line-height:1.1;margin-top:1.5mm;}
+
+  .menu-section{
+    max-width:none;
+    padding:0;
+    margin:0 0 3.5mm;
+    page-break-inside:avoid;
+  }
+  .sec-head{margin-bottom:2mm;padding-bottom:1mm;border-bottom-width:1.5px;}
+  .sec-head h2{font-size:10pt;line-height:1.2;}
+  .sec-head .num{font-size:7.5pt;}
+  .sec-head .en{font-size:6.5pt;}
+  .sec-lead{font-size:7pt;line-height:1.25;margin:-1mm 0 2.5mm;}
+
+  .items{
+    display:flex;
+    flex-direction:column;
+    grid-template-columns:none;
+    gap:1.2mm;
+    margin-bottom:0;
+  }
+  .items-single{max-width:none;}
+
+  .item{
+    display:flex;
+    align-items:center;
+    gap:2.5mm;
+    box-shadow:none;
+    border:1px solid rgba(43,35,32,.18);
+    border-radius:8px;
+    page-break-inside:avoid;
+    -webkit-print-color-adjust:exact;
+    print-color-adjust:exact;
+  }
+  .item-img{
+    width:15mm;
+    height:15mm;
+    flex-shrink:0;
+    aspect-ratio:auto;
+    padding:1.5mm;
+    border-right:1px solid rgba(43,35,32,.12);
+  }
+  .item-body{
+    flex:1;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:3mm;
+    padding:0 3mm 0 0;
+  }
+  .item-name{font-size:9pt;}
+  .item-desc{display:none;}
+  .item-price{
+    margin:0;
+    border-top:none;
+    padding-top:0;
+    flex-shrink:0;
+  }
+  .item-price .yen{font-size:11pt;}
+  .item-price .tax{font-size:6.5pt;}
+
+  .menu-footer{
+    margin-top:3mm;
+    padding:2mm 0 0;
+    border-top-width:1.5px;
+  }
+  .menu-footer .note{font-size:6.5pt;line-height:1.2;}
+  .menu-footer .brand-line{font-size:6.5pt;line-height:1.2;margin-top:1.5mm;}
+}
+</style>
+</head>
+<body>
+
+<header class="menu-header">
+  <p class="brand">Frozen Sweets Burger</p>
+  <h1>#KURICHI</h1>
+  <p class="sub">冷凍スイーツバーガー「#クリチ」 MENU</p>
+  <p class="tagline">"KURICHI" a nickname for cream cheese in Japan</p>
+</header>
+
+<!-- 01 プレミアム -->
+<section class="menu-section">
+  <div class="sec-head">
+    <span class="num">01</span>
+    <h2>プレミアム#クリチ</h2>
+    <span class="en">Premium Series</span>
+  </div>
+
+  <div class="items">
+    <article class="item">
+      <div class="item-img"><img src="assets/products/ny-lemon.png" alt="NY#クリチ（レモンプラリネ）"></div>
+      <div class="item-body">
+        <h3 class="item-name">NY<span class="hash">#</span>クリチ（レモンプラリネ）</h3>
+        <p class="item-desc">竹炭を練り込んだ黒白ストライプのモード系バンズ。ほろ苦いレモンピール香るクリームチーズに、香ばしいキャラメリゼナッツのプラリネ。</p>
+        <p class="item-price"><span class="yen">¥600</span><span class="tax">税抜</span></p>
+      </div>
+    </article>
+
+    <article class="item">
+      <div class="item-img"><img src="assets/products/ny-orange.png" alt="NY#クリチ（オレンジプラリネ）"></div>
+      <div class="item-body">
+        <h3 class="item-name">NY<span class="hash">#</span>クリチ（オレンジプラリネ）</h3>
+        <p class="item-desc">赤（ビーツ）×黒ストライプ（竹炭）のバンズに、オレンジピールが華やかに香るクリームチーズ。キャラメリゼナッツのプラリネが重なります。</p>
+        <p class="item-price"><span class="yen">¥600</span><span class="tax">税抜</span></p>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- 02 ふわもち -->
+<section class="menu-section">
+  <div class="sec-head">
+    <span class="num">02</span>
+    <h2>ふわもち#クリチ</h2>
+    <span class="en">Fuwa-Mochi</span>
+  </div>
+  <p class="sec-lead">ふわもち食感の白バンズに、なめらかなクリームチーズのコクを閉じ込めた「クリチdisc」と軽やかなホイップ。ひんやり、ふわり、もちり。</p>
+
+  <div class="items">
+    <article class="item">
+      <div class="item-img"><img src="assets/products/fuwamochi-strawberry.png" alt="ふわもち#クリチ（いちご）"></div>
+      <div class="item-body">
+        <h3 class="item-name">ふわもち<span class="hash">#</span>クリチ（いちご）</h3>
+        <p class="item-desc">ドライいちご入り苺クリチdisc × とろけるいちごソース</p>
+        <p class="item-price"><span class="yen">¥600</span><span class="tax">税抜</span></p>
+      </div>
+    </article>
+
+    <article class="item">
+      <div class="item-img"><img src="assets/products/fuwamochi-matcha.png" alt="ふわもち#クリチ（抹茶あんこ）"></div>
+      <div class="item-body">
+        <h3 class="item-name">ふわもち<span class="hash">#</span>クリチ（抹茶あんこ）</h3>
+        <p class="item-desc">抹茶クリチdisc × 中心でほどけるあんこ</p>
+        <p class="item-price"><span class="yen">¥600</span><span class="tax">税抜</span></p>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- 03 スタンダード -->
+<section class="menu-section">
+  <div class="sec-head">
+    <span class="num">03</span>
+    <h2>ノーマル#クリチ（The Standard）</h2>
+    <span class="en">The Standard</span>
+  </div>
+  <p class="sec-lead">ごほうび時間に、とっておきのひんやりスイーツ。幅広い層に愛される定番ラインナップ。</p>
+
+  <div class="items">
+    <article class="item">
+      <div class="item-img"><img src="assets/products/teiban-marron.png" alt="#クリチ（マロン）"></div>
+      <div class="item-body">
+        <h3 class="item-name"><span class="hash">#</span>クリチ（マロン）</h3>
+        <p class="item-price"><span class="yen">¥500</span><span class="tax">税抜</span></p>
+      </div>
+    </article>
+
+    <article class="item">
+      <div class="item-img"><img src="assets/products/teiban-matcha.png" alt="#クリチ（抹茶あんこ）"></div>
+      <div class="item-body">
+        <h3 class="item-name"><span class="hash">#</span>クリチ（抹茶あんこ）</h3>
+        <p class="item-price"><span class="yen">¥500</span><span class="tax">税抜</span></p>
+      </div>
+    </article>
+
+    <article class="item">
+      <div class="item-img"><img src="assets/products/teiban-cranberry.png" alt="#クリチ（クランベリーナッツ）"></div>
+      <div class="item-body">
+        <h3 class="item-name"><span class="hash">#</span>クリチ（クランベリーナッツ）</h3>
+        <p class="item-price"><span class="yen">¥500</span><span class="tax">税抜</span></p>
+      </div>
+    </article>
+
+    <article class="item">
+      <div class="item-img"><img src="assets/products/teiban-fig.png" alt="#クリチ（いちじくナッツ）"></div>
+      <div class="item-body">
+        <h3 class="item-name"><span class="hash">#</span>クリチ（いちじくナッツ）</h3>
+        <p class="item-price"><span class="yen">¥500</span><span class="tax">税抜</span></p>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- 04 米粉ソイチ -->
+<section class="menu-section">
+  <div class="sec-head">
+    <span class="num">04</span>
+    <h2>米粉#ソイチ</h2>
+    <span class="en">Health &amp; Gluten-Free</span>
+  </div>
+  <p class="sec-lead">豆乳ベースのヘルシークリームチーズに、ふわふわの紅茶香る米粉バンズ。グルテンフリーの#クリチ。</p>
+
+  <div class="items items-single">
+    <article class="item">
+      <div class="item-img"><img src="assets/products/soichi-tea.png" alt="米粉#ソイチ（紅茶いちご）"></div>
+      <div class="item-body">
+        <h3 class="item-name">米粉<span class="hash">#</span>ソイチ（紅茶いちご）</h3>
+        <p class="item-price"><span class="yen">¥550</span><span class="tax">税抜</span></p>
+      </div>
+    </article>
+  </div>
+</section>
+
+<footer class="menu-footer">
+  <p class="note">※価格はすべて税抜表記です　※写真はイメージです</p>
+  <p class="brand-line">NY Inspired &times; Osaka Craft — #KURICHI / Vsw Inc.</p>
+</footer>
+
+</body>
+</html>
