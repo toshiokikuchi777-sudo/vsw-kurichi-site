@@ -37,12 +37,11 @@ body{
   position:relative;
   overflow:hidden;
 }
-.sheet::before{ /* striped shop awning with scalloped bottom */
+.sheet::before{ /* striped shop awning with scalloped bottom (SVG, per-tab solid color) */
   content:"";
-  position:absolute; top:0; left:0; right:0; height:9mm; z-index:3;
-  background:repeating-linear-gradient(90deg,var(--tomato) 0 6mm,#fff 6mm 12mm);
-  -webkit-mask:radial-gradient(circle 3mm at 50% 100%,#0000 3mm,#000 3.3mm) bottom left/6mm 100% repeat-x;
-          mask:radial-gradient(circle 3mm at 50% 100%,#0000 3mm,#000 3.3mm) bottom left/6mm 100% repeat-x;
+  position:absolute; top:0; left:0; right:0; height:8mm; z-index:3;
+  background:url("data:image/svg+xml,<svg%20xmlns='http://www.w3.org/2000/svg'%20width='48'%20height='30'><path%20d='M0%200H24V18A12%2012%200%200%201%200%2018Z'%20fill='%23d64541'/><path%20d='M24%200H48V18A12%2012%200%200%201%2024%2018Z'%20fill='%23fff'/></svg>") repeat-x top left;
+  background-size:12.8mm 8mm;
 }
 
 /* ===== Header ===== */
