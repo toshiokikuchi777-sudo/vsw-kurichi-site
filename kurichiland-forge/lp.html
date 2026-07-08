@@ -57,6 +57,9 @@
   .pers-grid a{display:block;}
   .pers-grid img{width:100%;height:100%;object-fit:cover;aspect-ratio:4/3;border-radius:12px;border:4px solid var(--white);box-shadow:0 10px 26px rgba(28,26,23,.14);transition:transform .25s;}
   .pers-grid img:hover{transform:scale(1.02);}
+  .pers-wide{grid-column:1/-1;}
+  .pers-wide img{aspect-ratio:4/3;}
+  @media (min-width:761px){ .pers-wide img{aspect-ratio:16/10;} }
 
   /* viewer switch */
   .viewer-switch{display:flex;gap:10px;margin-top:22px;}
@@ -143,6 +146,7 @@
   <h2>完成イメージパース。</h2>
   <p class="lead">3Dモデルをもとに描き起こした外観・俯瞰の完成イメージです（クリックで拡大）。</p>
   <div class="pers-grid">
+    <a class="pers-wide" href="images/pers-interior.jpg" target="_blank"><img src="images/pers-interior.jpg" alt="1F内装 俯瞰パース" loading="lazy"></a>
     <a href="images/pers-01.jpg" target="_blank"><img src="images/pers-01.jpg" alt="パース1" loading="lazy"></a>
     <a href="images/pers-02.jpg" target="_blank"><img src="images/pers-02.jpg" alt="パース2" loading="lazy"></a>
     <a href="images/pers-03.jpg" target="_blank"><img src="images/pers-03.jpg" alt="パース3" loading="lazy"></a>
@@ -188,7 +192,7 @@ import * as THREE from './lib/three.module.js';
 import { OrbitControls } from './lib/jsm/controls/OrbitControls.js';
 import { GLTFLoader } from './lib/jsm/loaders/GLTFLoader.js';
 
-const VER = "?v=84";
+const VER = "?v=85";
 
 function initViewer(el, url, opts = {}) {
   const scene = new THREE.Scene();
