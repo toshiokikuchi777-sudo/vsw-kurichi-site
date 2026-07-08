@@ -13,7 +13,9 @@
 
   /* ---------- HERO ---------- */
   .hero{position:relative;height:100vh;min-height:560px;overflow:hidden;background:linear-gradient(#f4ead2 0%, #fdf6e6 70%);}
-  #hero3d{position:absolute;inset:0;}
+  .hero-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 62%;}
+  .hero::after{content:'';position:absolute;inset:0;background:linear-gradient(rgba(253,246,230,.72) 0%, rgba(253,246,230,.25) 26%, rgba(253,246,230,0) 45%);pointer-events:none;}
+  .hero-overlay{z-index:2;}
   .hero-overlay{position:absolute;inset:0;pointer-events:none;display:flex;flex-direction:column;justify-content:flex-start;align-items:center;padding-top:7vh;}
   .hero-kicker{letter-spacing:.35em;font-size:13px;font-weight:700;color:var(--red);background:var(--white);border:2px solid var(--red);border-radius:999px;padding:6px 18px;}
   .hero-title{margin-top:16px;font-size:clamp(30px,5.4vw,64px);font-weight:900;line-height:1.15;text-align:center;text-shadow:0 2px 0 var(--white);}
@@ -78,15 +80,14 @@
 </head>
 <body>
 
-<!-- HERO: 3D model -->
+<!-- HERO: key visual -->
 <div class="hero">
-  <div id="hero3d"></div>
+  <img class="hero-img" src="images/pers-03.jpg" alt="KURICHI LAND 完成イメージ">
   <div class="hero-overlay">
     <div class="hero-kicker">KURICHI LAND</div>
     <div class="hero-title">アメリカンダイナー<span class="x">×</span>サーカス</div>
     <div class="hero-sub">クリームチーズスイーツの旗艦店、はじまる。</div>
   </div>
-  <div class="hero-hint">ドラッグで回転・ピンチ/ホイールでズーム</div>
 </div>
 <div class="checker"></div>
 
@@ -151,6 +152,17 @@
   </div>
 </section>
 
+<!-- EXTERIOR 3D -->
+<section style="padding-top:0;">
+  <span class="sec-label">3D MODEL</span>
+  <h2>模型を、自分の手で回す。</h2>
+  <p class="lead">設計データそのままの3Dモデル。ドラッグで回転、ホイールでズームできます。</p>
+  <div class="viewer-box">
+    <div id="hero3d" style="position:absolute;inset:0;"></div>
+    <div class="viewer-tag">EXTERIOR — ドラッグで回転</div>
+  </div>
+</section>
+
 <!-- INTERIOR 3D -->
 <section style="padding-top:0;">
   <span class="sec-label">INSIDE</span>
@@ -176,7 +188,7 @@ import * as THREE from './lib/three.module.js';
 import { OrbitControls } from './lib/jsm/controls/OrbitControls.js';
 import { GLTFLoader } from './lib/jsm/loaders/GLTFLoader.js';
 
-const VER = "?v=83";
+const VER = "?v=84";
 
 function initViewer(el, url, opts = {}) {
   const scene = new THREE.Scene();
