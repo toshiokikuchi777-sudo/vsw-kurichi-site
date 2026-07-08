@@ -63,6 +63,21 @@
   .pers-wide img{aspect-ratio:4/3;}
   @media (min-width:761px){ .pers-wide img{aspect-ratio:16/10;} }
 
+  /* perspective slideshow */
+  .pers-slideshow{position:relative;margin-top:26px;border-radius:16px;overflow:hidden;border:4px solid var(--white);box-shadow:0 14px 36px rgba(28,26,23,.16);}
+  .pers-track{display:flex;transition:transform .45s cubic-bezier(.4,0,.2,1);}
+  .pers-slide{flex:0 0 100%;}
+  .pers-slide img{width:100%;aspect-ratio:4/3;object-fit:cover;display:block;}
+  @media (min-width:761px){ .pers-slide img{aspect-ratio:16/10;} }
+  .pers-nav{position:absolute;top:50%;transform:translateY(-50%);width:44px;height:44px;border-radius:50%;border:none;background:rgba(28,26,23,.5);color:var(--white);font-size:24px;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .2s;}
+  .pers-nav:hover{background:rgba(227,38,29,.85);}
+  .pers-nav.prev{left:14px;}
+  .pers-nav.next{right:14px;}
+  .pers-dots{position:absolute;bottom:14px;left:50%;transform:translateX(-50%);display:flex;gap:8px;}
+  .pers-dots button{width:9px;height:9px;border-radius:50%;border:none;background:rgba(253,250,242,.55);cursor:pointer;padding:0;}
+  .pers-dots button.active{background:var(--red);}
+  @media (max-width:760px){ .pers-nav{width:36px;height:36px;font-size:19px;} }
+
   /* viewer switch */
   .viewer-switch{display:flex;gap:10px;margin-top:22px;}
   .vbtn{border:2px solid var(--red);background:var(--white);color:var(--red);font-weight:800;font-size:13px;padding:9px 18px;border-radius:999px;cursor:pointer;}
@@ -138,15 +153,20 @@
 <section style="padding-top:0;">
   <span class="sec-label">PERSPECTIVE</span>
   <h2>完成イメージパース。</h2>
-  <p class="lead">3Dモデルをもとに描き起こした外観・俯瞰の完成イメージです（クリックで拡大）。</p>
-  <div class="pers-grid">
-    <a class="pers-wide" href="images/pers-interior.jpg" target="_blank"><img src="images/pers-interior.jpg" alt="1F内装 俯瞰パース" loading="lazy"></a>
-    <a href="images/pers-01.jpg" target="_blank"><img src="images/pers-01.jpg" alt="パース1" loading="lazy"></a>
-    <a href="images/pers-02.jpg" target="_blank"><img src="images/pers-02.jpg" alt="パース2" loading="lazy"></a>
-    <a href="images/pers-03.jpg" target="_blank"><img src="images/pers-03.jpg" alt="パース3" loading="lazy"></a>
-    <a href="images/pers-04.jpg" target="_blank"><img src="images/pers-04.jpg" alt="パース4" loading="lazy"></a>
-    <a href="images/pers-05.jpg" target="_blank"><img src="images/pers-05.jpg" alt="パース5" loading="lazy"></a>
-    <a href="images/pers-06.jpg" target="_blank"><img src="images/pers-06.jpg" alt="パース6" loading="lazy"></a>
+  <p class="lead">3Dモデルをもとに描き起こした外観・俯瞰の完成イメージです（矢印でスライド）。</p>
+  <div class="pers-slideshow">
+    <div class="pers-track" id="persTrack">
+      <div class="pers-slide"><img src="images/pers-interior.jpg" alt="1F内装 俯瞰パース" loading="lazy"></div>
+      <div class="pers-slide"><img src="images/pers-01.jpg" alt="パース1" loading="lazy"></div>
+      <div class="pers-slide"><img src="images/pers-02.jpg" alt="パース2" loading="lazy"></div>
+      <div class="pers-slide"><img src="images/pers-03.jpg" alt="パース3" loading="lazy"></div>
+      <div class="pers-slide"><img src="images/pers-04.jpg" alt="パース4" loading="lazy"></div>
+      <div class="pers-slide"><img src="images/pers-05.jpg" alt="パース5" loading="lazy"></div>
+      <div class="pers-slide"><img src="images/pers-06.jpg" alt="パース6" loading="lazy"></div>
+    </div>
+    <button class="pers-nav prev" id="persPrev" type="button" aria-label="前の画像へ">‹</button>
+    <button class="pers-nav next" id="persNext" type="button" aria-label="次の画像へ">›</button>
+    <div class="pers-dots" id="persDots"></div>
   </div>
 </section>
 
@@ -267,6 +287,32 @@ document.querySelectorAll('.vbtn').forEach((btn) => {
     planViewer.loadModel(btn.dataset.glb);
   });
 });
+
+// パーススライドショー（左右矢印）
+(() => {
+  const track = document.getElementById('persTrack');
+  const dotsWrap = document.getElementById('persDots');
+  const slides = Array.from(track.children);
+  let idx = 0;
+
+  slides.forEach((_, i) => {
+    const dot = document.createElement('button');
+    dot.type = 'button';
+    dot.setAttribute('aria-label', `${i + 1}枚目へ`);
+    if (i === 0) dot.classList.add('active');
+    dot.addEventListener('click', () => go(i));
+    dotsWrap.appendChild(dot);
+  });
+  const dots = Array.from(dotsWrap.children);
+
+  function go(i) {
+    idx = (i + slides.length) % slides.length;
+    track.style.transform = `translateX(-${idx * 100}%)`;
+    dots.forEach((d, j) => d.classList.toggle('active', j === idx));
+  }
+  document.getElementById('persPrev').addEventListener('click', () => go(idx - 1));
+  document.getElementById('persNext').addEventListener('click', () => go(idx + 1));
+})();
 </script>
 </body>
 </html>
