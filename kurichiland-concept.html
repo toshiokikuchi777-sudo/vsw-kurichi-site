@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>KURICHI LAND ｜ 企画コンセプトブック</title>
+<style>
+  :root{ --red:#E3261D; --yellow:#FFC20E; --ink:#241f1a; --paper:#fbf7ee; }
+  *{box-sizing:border-box}
+  body{ margin:0; background:var(--paper); color:var(--ink);
+        font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Hiragino Sans","Yu Gothic",sans-serif;
+        line-height:1.7; }
+  .wrap{ max-width:1080px; margin:0 auto; padding:0 20px; }
+
+  /* ---- checker band ---- */
+  .checker{ display:flex; width:100%; height:10px; }
+  .checker i{ flex:1; }
+  .checker i:nth-child(odd){ background:var(--ink); }
+  .checker i:nth-child(even){ background:#fff; }
+
+  /* ---- stripe accent ---- */
+  .stripe{ height:8px; background:repeating-linear-gradient(45deg, var(--red) 0 14px, #fff 14px 28px); border-top:2px solid var(--ink); border-bottom:2px solid var(--ink); }
+
+  /* ---- hero ---- */
+  .hero{ padding:36px 0 10px; text-align:center; }
+  .hero .kicker{ display:inline-block; font-size:12px; font-weight:800; letter-spacing:.12em; background:#fff; border:2px solid var(--ink); border-radius:999px; padding:6px 16px; box-shadow:3px 3px 0 rgba(36,31,26,.18); }
+  .hero h1{ font-size:56px; margin:18px 0 6px; letter-spacing:.02em; color:var(--red);
+             -webkit-text-stroke:2px var(--ink); text-shadow:4px 4px 0 var(--ink); }
+  .hero .sub{ font-size:15px; font-weight:700; color:#5a5048; margin:0 0 10px; }
+  .hero .catch{ font-size:19px; font-weight:800; margin:6px 0 24px; }
+  .hero .catch b{ color:var(--red); }
+  .hero-img{ max-width:960px; margin:0 auto; }
+  .hero-img img{ width:100%; display:block; border:3px solid var(--ink); border-radius:18px; box-shadow:8px 8px 0 rgba(36,31,26,.18); }
+
+  section{ padding:44px 0 8px; }
+  h2.section-title{ font-size:26px; margin:0 0 6px; display:flex; align-items:center; gap:10px; }
+  h2.section-title .badge{ display:inline-flex; align-items:center; justify-content:center; width:34px; height:34px; background:var(--red); color:#fff; border-radius:50%; border:2px solid var(--ink); font-size:16px; font-weight:900; flex:0 0 auto; }
+  h2.section-title span.en{ font-size:12px; font-weight:700; color:#9a9080; letter-spacing:.1em; }
+  .lead{ margin:10px 0 22px; font-size:15px; }
+  .lead b{ color:var(--red); }
+
+  /* ---- cards ---- */
+  .cards{ display:grid; grid-template-columns:repeat(3,1fr); gap:18px; margin:20px 0 30px; }
+  @media(max-width:760px){ .cards{ grid-template-columns:1fr; } }
+  .card{ background:#fff; border:2px solid var(--ink); border-radius:16px; padding:18px 18px 16px; box-shadow:6px 6px 0 rgba(36,31,26,.14); }
+  .card h3{ margin:0 0 8px; font-size:16px; }
+  .card h3 .num{ display:inline-block; width:24px; height:24px; line-height:22px; text-align:center; background:var(--yellow); border:1.5px solid var(--ink); border-radius:50%; font-size:12px; font-weight:900; margin-right:6px; }
+  .card p{ margin:0; font-size:13.5px; color:#4a4338; }
+  .card img{ width:100%; border-radius:10px; border:2px solid var(--ink); margin-top:10px; display:block; }
+  .card .meta{ font-size:12px; color:#8a8070; margin-top:8px; }
+
+  /* ---- flow (loop) ---- */
+  .flow{ display:flex; flex-wrap:wrap; gap:10px; align-items:stretch; margin:18px 0 30px; }
+  @media(max-width:760px){ .flow{ flex-direction:column; } }
+  .flow .step{ flex:1 1 150px; background:#fff; border:2px solid var(--ink); border-radius:14px; padding:14px 14px 12px; box-shadow:5px 5px 0 rgba(36,31,26,.14); position:relative; }
+  .flow .step .circ{ display:inline-flex; align-items:center; justify-content:center; width:30px; height:30px; background:var(--red); color:#fff; border:2px solid var(--ink); border-radius:50%; font-weight:900; font-size:14px; margin-bottom:8px; }
+  .flow .step p{ margin:0; font-size:13px; }
+  .flow .arrow{ display:flex; align-items:center; justify-content:center; font-size:20px; color:var(--red); font-weight:900; flex:0 0 auto; }
+  @media(max-width:760px){ .flow .arrow{ transform:rotate(90deg); } }
+
+  /* ---- design language ---- */
+  .swatches{ display:flex; flex-wrap:wrap; gap:14px; margin:16px 0 22px; }
+  .swatch{ display:flex; align-items:center; gap:8px; background:#fff; border:2px solid var(--ink); border-radius:999px; padding:6px 14px 6px 6px; font-size:12.5px; font-weight:700; box-shadow:3px 3px 0 rgba(36,31,26,.14); }
+  .swatch i{ width:26px; height:26px; border-radius:50%; border:2px solid var(--ink); display:block; }
+  .tags{ display:flex; flex-wrap:wrap; gap:8px; margin:0 0 30px; }
+  .tags span{ background:var(--yellow); border:1.6px solid var(--ink); border-radius:999px; padding:5px 13px; font-size:12.5px; font-weight:800; }
+
+  /* ---- table ---- */
+  table.overview{ width:100%; border-collapse:collapse; background:#fff; border:2px solid var(--ink); border-radius:14px; overflow:hidden; box-shadow:6px 6px 0 rgba(36,31,26,.14); font-size:13.5px; margin:16px 0 30px; }
+  table.overview th, table.overview td{ text-align:left; padding:12px 16px; border-bottom:1px solid #e7ded0; vertical-align:top; }
+  table.overview tr:last-child th, table.overview tr:last-child td{ border-bottom:none; }
+  table.overview th{ width:130px; color:var(--red); font-weight:800; background:#fff7e8; white-space:nowrap; }
+
+  /* ---- links ---- */
+  .linkbtns{ display:flex; flex-wrap:wrap; gap:14px; margin:16px 0 36px; }
+  .linkbtns a{ display:inline-flex; align-items:center; gap:8px; background:var(--ink); color:#fff; text-decoration:none; font-weight:800; font-size:14px; padding:14px 22px; border-radius:12px; border:2px solid var(--ink); box-shadow:5px 5px 0 rgba(227,38,29,.4); transition:transform .1s; }
+  .linkbtns a:hover{ transform:translate(-2px,-2px); }
+  .linkbtns a::after{ content:'→'; }
+
+  footer{ text-align:center; padding:30px 20px 50px; font-size:12px; color:#8a8070; }
+</style>
+</head>
+<body>
+
+<div class="checker"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+<div class="stripe"></div>
+
+<!-- ===== HERO ===== -->
+<div class="hero wrap">
+  <span class="kicker">KURICHI LAND CONCEPT BOOK</span>
+  <h1>KURICHI LAND</h1>
+  <p class="sub">CREAM CHEESE SWEETS ｜ 石家庄・滹沱河 芸術生態島</p>
+  <p class="catch"><b>川辺の風を感じる、</b>家族で楽しむガーデン＆スイーツパーク。</p>
+  <div class="hero-img">
+    <img src="dinner/932e463b-00a7-4e44-9d5c-5f48106c6390.png" alt="KURICHI LAND 外観イメージ">
+  </div>
+</div>
+
+<div class="stripe" style="margin-top:36px;"></div>
+
+<!-- ===== CONCEPT ===== -->
+<div class="wrap">
+<section>
+  <h2 class="section-title"><span class="badge">01</span>レトロダイナー × サーカス<span class="en">CONCEPT</span></h2>
+  <p class="lead">流線型のダイナーボディに、サーカステントの冠。懐かしいレトロの高鳴りと、ビッグトップの高揚感を<b>クリームチーズスイーツ「クリチ」</b>の世界観で焼き上げた、テーマパーク型ショップです。</p>
+
+  <div class="cards">
+    <div class="card">
+      <h3><span class="num">①</span>見せる工房</h3>
+      <p>作っているところがいつでも見える。できたてランプが点くと店内がざわつく。</p>
+    </div>
+    <div class="card">
+      <h3><span class="num">②</span>セルフで選ぶ楽しさ</h3>
+      <p>陳列からクリチを取ってレジへ。ドリンクも一緒に。</p>
+    </div>
+    <div class="card">
+      <h3><span class="num">③</span>川辺のガーデン</h3>
+      <p>芝生とエアストリーム、写真を撮りたくなる仕掛けがそこら中に。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FLOW ===== -->
+<section>
+  <h2 class="section-title"><span class="badge">02</span>体験の流れ（ループ動線）<span class="en">FLOW</span></h2>
+  <p class="lead">お客様はぐるりと一周する<b>ワンウェイのループ</b>で、迷わず・見て・買って・味わって・上る。</p>
+
+  <div class="flow">
+    <div class="step"><span class="circ">①</span><p>中央アーチから入店 → 右へ</p></div>
+    <div class="arrow">→</div>
+    <div class="step"><span class="circ">②</span><p>陳列回廊でクリチを取る（工房を見ながら）</p></div>
+    <div class="arrow">→</div>
+    <div class="step"><span class="circ">③</span><p>レジで会計＋ドリンク</p></div>
+    <div class="arrow">→</div>
+    <div class="step"><span class="circ">④</span><p>カフェ席・テラスへ</p></div>
+    <div class="arrow">→</div>
+    <div class="step"><span class="circ">⑤</span><p>階段で2Fダイナー＆ミュージアムへ</p></div>
+  </div>
+</section>
+
+<!-- ===== SPACE ===== -->
+<section>
+  <h2 class="section-title"><span class="badge">03</span>空間構成<span class="en">SPACE</span></h2>
+  <div class="cards">
+    <div class="card">
+      <h3>1F ｜ SHOP & 工房</h3>
+      <p>約185㎡・約50席。曲面ショーケース・窓際ブース・丸いベスティビュール入口。</p>
+      <img src="dinner/e4c13c33-5c27-4517-8cc7-e21fc2ef19e3.png" alt="1Fプラン図">
+      <p class="meta">1Fプラン図</p>
+    </div>
+    <div class="card">
+      <h3>2F ｜ DINER & TERRACE</h3>
+      <p>屋内約60席＋テラス約50席。円形センターブース・パラソルテラス・フォト/イベントステージ・EVなし階段動線。</p>
+      <img src="dinner/9968675b-2069-4675-9302-9c2e283c54e5.png" alt="2Fプラン図">
+      <p class="meta">2Fプラン図</p>
+    </div>
+    <div class="card">
+      <h3>GARDEN ｜ ガーデン＆スイーツスタンド</h3>
+      <p>約1,500㎡。エアストリーム型トレーラー・KURICHI LAND電球サイン＆クマのベンチ・曲線の小道と花壇。</p>
+      <img src="dinner/%E3%82%B9%E3%82%AF%E3%83%AA%E3%83%BC%E3%83%B3%E3%82%B7%E3%83%A7%E3%83%83%E3%83%88%202026-07-04%2014.09.28.png" alt="ガーデン全景">
+      <p class="meta">ガーデン全景</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== DESIGN LANGUAGE ===== -->
+<section>
+  <h2 class="section-title"><span class="badge">04</span>デザイン言語<span class="en">DESIGN LANGUAGE</span></h2>
+  <div class="swatches">
+    <div class="swatch"><i style="background:#E3261D"></i>赤 #E3261D</div>
+    <div class="swatch"><i style="background:#FFF6E0"></i>クリーム</div>
+    <div class="swatch"><i style="background:linear-gradient(135deg,#dfe3e6,#9aa1a6)"></i>クローム</div>
+    <div class="swatch"><i style="background:repeating-conic-gradient(#241f1a 0% 25%, #fff 0% 50%) 0/12px 12px"></i>黒白市松</div>
+  </div>
+  <div class="tags">
+    <span>ストリームライン</span><span>スピードライン</span><span>テントの冠</span>
+    <span>ガーランド</span><span>マーキー電球</span><span>ガラスドラム</span><span>外部階段</span>
+  </div>
+</section>
+
+<!-- ===== OVERVIEW ===== -->
+<section>
+  <h2 class="section-title"><span class="badge">05</span>プロジェクト概要<span class="en">OVERVIEW</span></h2>
+  <table class="overview">
+    <tr><th>所在地</th><td>石家庄・滹沱河 芸術生態島（Neverland滹沱河集）</td></tr>
+    <tr><th>建物</th><td>約185㎡ × 2層（footprint 14.0 × 14.4m）</td></tr>
+    <tr><th>敷地</th><td>約1,500㎡</td></tr>
+    <tr><th>座組</th><td>VSWがIP・世界観提供、現地パートナーが運営</td></tr>
+    <tr><th>備考</th><td>EVなし・階段動線、冬季は2F屋内が主力</td></tr>
+  </table>
+</section>
+
+<!-- ===== LINKS ===== -->
+<section>
+  <h2 class="section-title"><span class="badge">06</span>関連資料<span class="en">MATERIALS</span></h2>
+  <div class="linkbtns">
+    <a href="クリチランド計画/05_制作物/forgecad/gallery/index.html" target="_blank">3Dギャラリー（47モデル）</a>
+    <a href="kurichiland-floorplans.html" target="_blank">平面図＋南立面</a>
+    <a href="kurichiland-planstudy.html" target="_blank">動線プラン比較</a>
+  </div>
+</section>
+</div>
+
+<div class="stripe"></div>
+<div class="checker"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+
+<footer>KURICHI LAND concept book ｜ VSW co.,ltd ｜ 2026</footer>
+
+</body>
+</html>
