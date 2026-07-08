@@ -9,20 +9,31 @@
     --red:#E3261D; --cream:#fdf6e6; --ink:#1c1a17; --white:#fdfaf2; --chrome:#d4d8dc;
   }
   *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
   body{font-family:"Hiragino Kaku Gothic ProN","Hiragino Sans",-apple-system,sans-serif;background:var(--cream);color:var(--ink);}
+
+  /* ---------- HEADER ---------- */
+  :root{--header-h:60px;}
+  .site-header{position:fixed;top:0;left:0;right:0;z-index:20;background:rgba(253,250,242,.92);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-bottom:1px solid rgba(28,26,23,.08);}
+  .site-header-inner{max-width:1200px;margin:0 auto;height:var(--header-h);padding:0 22px;display:flex;align-items:center;justify-content:space-between;gap:18px;}
+  .site-logo{font-weight:900;font-size:14px;letter-spacing:.16em;color:var(--ink);text-decoration:none;white-space:nowrap;}
+  .site-nav{display:flex;gap:20px;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;}
+  .site-nav::-webkit-scrollbar{display:none;}
+  .site-nav a{font-size:12.5px;font-weight:700;color:#6b6156;text-decoration:none;white-space:nowrap;padding:4px 0;}
+  .site-nav a:hover{color:var(--red);}
+  section, .hero{scroll-margin-top:var(--header-h);}
 
   /* ---------- HERO ---------- */
   .hero{position:relative;height:100vh;min-height:560px;overflow:hidden;background:linear-gradient(#f4ead2 0%, #fdf6e6 70%);}
   .hero-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 62%;}
   .hero::after{content:'';position:absolute;inset:0;background:linear-gradient(rgba(253,246,230,.72) 0%, rgba(253,246,230,.25) 26%, rgba(253,246,230,0) 45%);pointer-events:none;}
   .hero-overlay{z-index:2;}
-  .hero-overlay{position:absolute;inset:0;pointer-events:none;display:flex;flex-direction:column;justify-content:flex-start;align-items:center;padding-top:7vh;}
+  .hero-overlay{position:absolute;inset:0;pointer-events:none;display:flex;flex-direction:column;justify-content:flex-start;align-items:center;padding-top:calc(var(--header-h) + 9vh);padding-left:20px;padding-right:20px;}
   .hero-kicker{letter-spacing:.35em;font-size:13px;font-weight:700;color:var(--red);background:var(--white);border:2px solid var(--red);border-radius:999px;padding:6px 18px;}
-  .hero-title{margin-top:16px;font-size:clamp(30px,5.4vw,64px);font-weight:900;line-height:1.15;text-align:center;text-shadow:0 2px 0 var(--white);}
+  .hero-title{margin-top:20px;font-size:clamp(30px,5.4vw,64px);font-weight:900;line-height:1.15;text-align:center;text-shadow:0 2px 0 var(--white);}
   .hero-title .x{color:var(--red);padding:0 .15em;}
-  .hero-catch{margin-top:14px;font-size:clamp(14px,2.1vw,19px);font-weight:800;text-align:center;color:var(--ink);text-shadow:0 2px 0 var(--white);}
+  .hero-catch{margin-top:18px;font-size:clamp(16px,2.6vw,23px);font-weight:800;text-align:center;color:var(--ink);line-height:1.6;max-width:36em;text-shadow:0 2px 0 var(--white);}
   .hero-catch b{color:var(--red);}
-  .hero-sub{margin-top:10px;font-size:clamp(13px,1.6vw,17px);font-weight:600;color:#6b6156;}
   .hero-hint{position:absolute;bottom:18px;left:50%;transform:translateX(-50%);font-size:12px;color:#8a8177;background:rgba(253,250,242,.85);border-radius:999px;padding:6px 16px;}
   .checker{height:26px;background:repeating-conic-gradient(var(--ink) 0% 25%, var(--white) 0% 50%) 0 0/52px 52px;}
 
@@ -78,6 +89,13 @@
   .pers-dots button.active{background:var(--red);}
   @media (max-width:760px){ .pers-nav{width:36px;height:36px;font-size:19px;} }
 
+  .pers-thumbs{display:flex;gap:10px;margin-top:14px;overflow-x:auto;padding-bottom:4px;scrollbar-width:thin;}
+  .pers-thumb{flex:0 0 auto;width:92px;height:66px;padding:0;border-radius:8px;border:3px solid transparent;overflow:hidden;cursor:pointer;opacity:.55;background:none;transition:opacity .2s,border-color .2s;}
+  .pers-thumb img{width:100%;height:100%;object-fit:cover;display:block;}
+  .pers-thumb:hover{opacity:.85;}
+  .pers-thumb.active{opacity:1;border-color:var(--red);}
+  @media (max-width:760px){ .pers-thumb{width:66px;height:48px;} }
+
   /* viewer switch */
   .viewer-switch{display:flex;gap:10px;margin-top:22px;}
   .vbtn{border:2px solid var(--red);background:var(--white);color:var(--red);font-weight:800;font-size:13px;padding:9px 18px;border-radius:999px;cursor:pointer;}
@@ -100,20 +118,35 @@
 </head>
 <body>
 
+<!-- HEADER -->
+<header class="site-header">
+  <div class="site-header-inner">
+    <a class="site-logo" href="#top">KURICHI LAND</a>
+    <nav class="site-nav">
+      <a href="#concept">コンセプト</a>
+      <a href="#facts">数字</a>
+      <a href="#experience">体験</a>
+      <a href="#perspective">パース</a>
+      <a href="#model3d">3Dモデル</a>
+      <a href="#inside">内部3D</a>
+      <a href="#diagram">解説図</a>
+    </nav>
+  </div>
+</header>
+
 <!-- HERO: key visual -->
-<div class="hero">
+<div class="hero" id="top">
   <img class="hero-img" src="images/pers-03.jpg" alt="KURICHI LAND 完成イメージ">
   <div class="hero-overlay">
     <div class="hero-kicker">KURICHI LAND</div>
     <div class="hero-title">レトロダイナー<span class="x">×</span>サーカス</div>
     <div class="hero-catch"><b>川辺の風を感じる、</b>家族で楽しむガーデン＆スイーツパーク。</div>
-    <div class="hero-sub">クリームチーズスイーツの旗艦店、はじまる。</div>
   </div>
 </div>
 <div class="checker"></div>
 
 <!-- CONCEPT -->
-<section>
+<section id="concept">
   <span class="sec-label">CONCEPT</span>
   <h2>まちに現れた、おいしいサーカス。</h2>
   <p class="lead">クリームとレッドのストライプ、ぐるりと一周する丸い庇、てっぺんに旗めくビッグテント。1階はクリチが並ぶレトロダイナー、2階はテントの中のグッズマーケット。入口のゲートをくぐった瞬間から、ショーが始まります。</p>
@@ -125,7 +158,7 @@
 </section>
 
 <!-- NUMBERS -->
-<section style="padding-top:0;">
+<section id="facts" style="padding-top:0;">
   <span class="sec-label">FACTS</span>
   <h2>数字でみるクリチランド</h2>
   <div class="numbers">
@@ -136,7 +169,7 @@
 </section>
 
 <!-- FEATURES -->
-<section style="padding-top:0;">
+<section id="experience" style="padding-top:0;">
   <span class="sec-label">EXPERIENCE</span>
   <h2>ワクワクは、入口の手前から。</h2>
   <div class="features">
@@ -150,10 +183,10 @@
 </section>
 
 <!-- PERSPECTIVE GALLERY -->
-<section style="padding-top:0;">
+<section id="perspective" style="padding-top:0;">
   <span class="sec-label">PERSPECTIVE</span>
   <h2>完成イメージパース。</h2>
-  <p class="lead">3Dモデルをもとに描き起こした外観・俯瞰の完成イメージです（矢印でスライド）。</p>
+  <p class="lead">3Dモデルをもとに描き起こした外観・俯瞰の完成イメージです（矢印・サムネイルでスライド）。</p>
   <div class="pers-slideshow">
     <div class="pers-track" id="persTrack">
       <div class="pers-slide"><img src="images/pers-interior.jpg" alt="1F内装 俯瞰パース" loading="lazy"></div>
@@ -168,10 +201,19 @@
     <button class="pers-nav next" id="persNext" type="button" aria-label="次の画像へ">›</button>
     <div class="pers-dots" id="persDots"></div>
   </div>
+  <div class="pers-thumbs" id="persThumbs">
+    <button class="pers-thumb" type="button" data-index="0" aria-label="1F内装 俯瞰パースを表示"><img src="images/pers-interior.jpg" alt="" loading="lazy"></button>
+    <button class="pers-thumb" type="button" data-index="1" aria-label="パース1を表示"><img src="images/pers-01.jpg" alt="" loading="lazy"></button>
+    <button class="pers-thumb" type="button" data-index="2" aria-label="パース2を表示"><img src="images/pers-02.jpg" alt="" loading="lazy"></button>
+    <button class="pers-thumb" type="button" data-index="3" aria-label="パース3を表示"><img src="images/pers-03.jpg" alt="" loading="lazy"></button>
+    <button class="pers-thumb" type="button" data-index="4" aria-label="パース4を表示"><img src="images/pers-04.jpg" alt="" loading="lazy"></button>
+    <button class="pers-thumb" type="button" data-index="5" aria-label="パース5を表示"><img src="images/pers-05.jpg" alt="" loading="lazy"></button>
+    <button class="pers-thumb" type="button" data-index="6" aria-label="パース6を表示"><img src="images/pers-06.jpg" alt="" loading="lazy"></button>
+  </div>
 </section>
 
 <!-- EXTERIOR 3D -->
-<section style="padding-top:0;">
+<section id="model3d" style="padding-top:0;">
   <span class="sec-label">3D MODEL</span>
   <h2>模型を、自分の手で回す。</h2>
   <p class="lead">設計データそのままの3Dモデル。ドラッグで回転、ホイールでズームできます。</p>
@@ -182,7 +224,7 @@
 </section>
 
 <!-- INTERIOR 3D -->
-<section style="padding-top:0;">
+<section id="inside" style="padding-top:0;">
   <span class="sec-label">INSIDE</span>
   <h2>ドールハウスでのぞく、中のようす。</h2>
   <p class="lead">1階のダイナーとキッチン、螺旋階段、2階の吹き抜けとグッズ売り場までまるごと3Dで。ボタンで「2階を外した1Fプランビュー」にも切り替えられます。</p>
@@ -197,7 +239,7 @@
 </section>
 
 <!-- SPEC DIAGRAMS -->
-<section style="padding-top:0;">
+<section id="diagram" style="padding-top:0;">
   <span class="sec-label">DIAGRAM</span>
   <h2>解説図でみる、設計のすべて。</h2>
   <p class="lead">1F内装の要素番号解説と、建物全体のブランド仕様をまとめた解説図です（クリックで拡大）。</p>
@@ -288,11 +330,13 @@ document.querySelectorAll('.vbtn').forEach((btn) => {
   });
 });
 
-// パーススライドショー（左右矢印）
+// パーススライドショー（左右矢印＋サムネイル）
 (() => {
   const track = document.getElementById('persTrack');
   const dotsWrap = document.getElementById('persDots');
+  const thumbsWrap = document.getElementById('persThumbs');
   const slides = Array.from(track.children);
+  const thumbs = Array.from(thumbsWrap.children);
   let idx = 0;
 
   slides.forEach((_, i) => {
@@ -305,10 +349,16 @@ document.querySelectorAll('.vbtn').forEach((btn) => {
   });
   const dots = Array.from(dotsWrap.children);
 
+  thumbs.forEach((thumb, i) => {
+    if (i === 0) thumb.classList.add('active');
+    thumb.addEventListener('click', () => go(i));
+  });
+
   function go(i) {
     idx = (i + slides.length) % slides.length;
     track.style.transform = `translateX(-${idx * 100}%)`;
     dots.forEach((d, j) => d.classList.toggle('active', j === idx));
+    thumbs.forEach((t, j) => t.classList.toggle('active', j === idx));
   }
   document.getElementById('persPrev').addEventListener('click', () => go(idx - 1));
   document.getElementById('persNext').addEventListener('click', () => go(idx + 1));
