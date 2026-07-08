@@ -99,19 +99,10 @@
   <span class="sec-label">CONCEPT</span>
   <h2>まちに現れた、おいしいサーカス。</h2>
   <p class="lead">クリームとレッドのストライプ、ぐるりと一周する丸い庇、てっぺんに旗めくビッグテント。1階はクリチが並ぶアメリカンダイナー、2階はテントの中のグッズマーケット。入口のゲートをくぐった瞬間から、ショーが始まります。</p>
-  <div class="concept-grid">
-    <div>
-      <img src="images/lp-concept.png" alt="コンセプトアート">
-      <div class="plans">
-        <img src="images/lp-plan1.png" alt="1F プラン">
-        <img src="images/lp-plan2.png" alt="2F プラン">
-      </div>
-    </div>
-    <div class="concept-copy">
-      <h3>DINER × CIRCUS × KURICHI</h3>
-      <p>ストリームライン・モダンの流線型ボディに、サーカステントの高揚感を重ねた「おいしい建築」。レッドカーペットの先の円形大階段、ガラスドラムから見上げる16分割の大テント、吹き抜け越しに交差する視線——建物そのものがフォトスポットであり、ブランド体験の舞台です。</p>
-      <p style="margin-top:12px;">日当たりのいい正面はオーニングを伸ばしたオープンテラス。ガーデンにはシルバーのエアストリームが停まり、焼きたての香りを漂わせます。</p>
-    </div>
+  <div class="concept-copy" style="margin-top:26px;">
+    <h3>DINER × CIRCUS × KURICHI</h3>
+    <p>ストリームライン・モダンの流線型ボディに、サーカステントの高揚感を重ねた「おいしい建築」。レッドカーペットの先の円形大階段、ガラスドラムから見上げる16分割の大テント、吹き抜け越しに交差する視線——建物そのものがフォトスポットであり、ブランド体験の舞台です。</p>
+    <p style="margin-top:12px;">日当たりのいい正面はオーニングを伸ばしたオープンテラス。ガーデンにはシルバーのエアストリームが停まり、焼きたての香りを漂わせます。</p>
   </div>
 </section>
 
@@ -182,6 +173,17 @@
   </div>
 </section>
 
+<!-- SPEC DIAGRAMS -->
+<section style="padding-top:0;">
+  <span class="sec-label">DIAGRAM</span>
+  <h2>解説図でみる、設計のすべて。</h2>
+  <p class="lead">1F内装の要素番号解説と、建物全体のブランド仕様をまとめた解説図です（クリックで拡大）。</p>
+  <div class="pers-grid">
+    <a class="pers-wide" href="images/diagram-1f.jpg" target="_blank"><img src="images/diagram-1f.jpg" alt="KURICHI LAND 1F 内装解説図" loading="lazy"></a>
+    <a class="pers-wide" href="images/diagram-overview.jpg" target="_blank"><img src="images/diagram-overview.jpg" alt="KURICHI LAND 全体解説図" loading="lazy"></a>
+  </div>
+</section>
+
 <footer>
   <div class="logo">KURICHI LAND</div>
   AMERICAN DINER × CIRCUS — VSW co.,ltd
@@ -192,7 +194,7 @@ import * as THREE from './lib/three.module.js';
 import { OrbitControls } from './lib/jsm/controls/OrbitControls.js';
 import { GLTFLoader } from './lib/jsm/loaders/GLTFLoader.js';
 
-const VER = "?v=85";
+const VER = "?v=86";
 
 function initViewer(el, url, opts = {}) {
   const scene = new THREE.Scene();
