@@ -30,6 +30,8 @@ pdf() { # src out  (qlmanage 800px -> rename)
 
 ### 新商品 KURICHI POP (20260620) ###
 A="$POP/20260620KURICHI_POP"
+pdf "$A/catalog.pdf"          doc-catalog.jpg
+pdf "$A/catalog2.pdf"         doc-catalog2.jpg
 img "$A/pop/NYクリチBK.png"   ny-bk1.jpg
 img "$A/pop/NYクリチBK2.png"  ny-bk2.jpg
 img "$A/pop/pannofes.jpg"     pop-pannofes.jpg
