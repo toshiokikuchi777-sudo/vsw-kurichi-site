@@ -70,8 +70,18 @@ header.hero{ text-align:center; padding:34px 20px 10px; }
 }
 .btn-ghost:hover{ transform:translateY(-2px); border-color:var(--tomato); color:var(--tomato); }
 
+/* version labels */
+.ver-label{
+  text-align:center; margin:26px auto 0; font-family:'Montserrat',sans-serif;
+  font-weight:800; font-size:12px; letter-spacing:.18em; color:var(--tomato);
+  text-transform:uppercase; display:flex; align-items:center; justify-content:center; gap:10px;
+}
+.ver-label::before,.ver-label::after{ content:""; width:26px; height:2px; background:var(--tomato); opacity:.5; }
+.ver-desc{ text-align:center; font-size:13px; color:rgba(43,35,32,.7); margin-top:6px; }
+.ver-divider{ height:1px; background:rgba(43,35,32,.14); margin:44px auto 0; max-width:760px; }
+
 /* preview */
-.preview-wrap{ padding:20px 20px 8px; }
+.preview-wrap{ padding:16px 20px 8px; }
 .preview{
   display:block; width:100%; height:auto; max-width:820px; margin:0 auto;
   aspect-ratio:1489 / 2105;
@@ -118,6 +128,7 @@ footer .brand{
   <p class="tag">"KURICHI" — a nickname for cream cheese in Japan</p>
 </header>
 
+<p class="ver-label">ビジュアル版</p>
 <div class="actions">
   <a class="btn btn-primary" href="/menu/kurichi-menu.pdf" download="kurichi-menu.pdf">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m0 0l-4-4m4 4l4-4M4 21h16"/></svg>
@@ -131,7 +142,28 @@ footer .brand{
 
 <div class="preview-wrap wrap">
   <a href="/menu/kurichi-menu.pdf" target="_blank" rel="noopener" title="PDFで開く">
-    <img class="preview" src="/menu/preview.jpg" alt="#クリチ（KURICHI）冷凍スイーツバーガー メニュー" width="1489" height="2105">
+    <img class="preview" src="/menu/preview.jpg" alt="#クリチ（KURICHI）冷凍スイーツバーガー メニュー（ビジュアル版）" width="1489" height="2105">
+  </a>
+</div>
+
+<div class="ver-divider wrap"></div>
+
+<p class="ver-label">詳細版（商品説明入り）</p>
+<p class="ver-desc">各商品の説明・アレルギー表示を掲載したA4版です。</p>
+<div class="actions">
+  <a class="btn btn-primary" href="/menu/kurichi-menu-detail.pdf" download="kurichi-menu-detail.pdf">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m0 0l-4-4m4 4l4-4M4 21h16"/></svg>
+    詳細版PDFをダウンロード
+  </a>
+  <a class="btn btn-ghost" href="/menu/kurichi-menu-detail.pdf" target="_blank" rel="noopener">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6M21 3l-9 9M10 5H5a2 2 0 00-2 2v12a2 2 0 002 2h12a2 2 0 002-2v-5"/></svg>
+    別タブで開く
+  </a>
+</div>
+
+<div class="preview-wrap wrap">
+  <a href="/menu/kurichi-menu-detail.pdf" target="_blank" rel="noopener" title="PDFで開く">
+    <img class="preview" src="/menu/preview-detail.jpg" alt="#クリチ 詳細版メニュー（商品説明入り）" width="1500" height="2122">
   </a>
 </div>
 
