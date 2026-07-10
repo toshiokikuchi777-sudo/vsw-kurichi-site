@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>管理者 ｜ 進行中の企画 - VSW</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&family=Playfair+Display:ital,wght@0,700;1,700&family=Montserrat:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --cream:#fff7e6;
+  --cream-2:#ffeccb;
+  --tomato:#e63946;
+  --cheese:#f4a629;
+  --ink:#2b2320;
+  --line:rgba(26,22,19,.12);
+}
+*{box-sizing:border-box}
+body{
+  margin:0;font-family:'Noto Sans JP',sans-serif;
+  background:var(--cream);color:var(--ink);
+  -webkit-font-smoothing:antialiased;
+}
+a{color:inherit}
+
+/* ===== パスワードゲート ===== */
+.gate{
+  position:fixed;inset:0;z-index:100;
+  display:flex;align-items:center;justify-content:center;padding:24px;
+  background:linear-gradient(135deg,#2b2320 0%,#3a2f28 100%);
+}
+.gate-card{
+  width:100%;max-width:380px;background:#fff;border-radius:20px;
+  padding:40px 32px;text-align:center;
+  box-shadow:0 30px 60px -20px rgba(0,0,0,.5);
+}
+.gate-lock{font-size:40px;margin-bottom:8px}
+.gate-card h1{
+  font-family:'Playfair Display',serif;font-size:22px;margin:0 0 4px;
+}
+.gate-card p{font-size:13px;color:#8a7a6e;margin:0 0 24px}
+.gate-card input{
+  width:100%;padding:14px 16px;font-size:16px;border:1.5px solid var(--line);
+  border-radius:12px;text-align:center;letter-spacing:.15em;
+  background:var(--cream);outline:none;transition:border-color .2s;
+}
+.gate-card input:focus{border-color:var(--tomato)}
+.gate-card button{
+  width:100%;margin-top:14px;padding:14px;font-size:15px;font-weight:700;
+  color:#fff;background:var(--tomato);border:none;border-radius:999px;cursor:pointer;
+  transition:transform .15s,box-shadow .15s;
+  box-shadow:0 10px 24px -8px rgba(230,57,70,.55);
+}
+.gate-card button:hover{transform:translateY(-2px)}
+.gate-err{
+  color:var(--tomato);font-size:13px;font-weight:700;
+  margin-top:12px;min-height:18px;
+}
+
+/* ===== 管理ダッシュボード ===== */
+.admin{display:none}
+.admin.show{display:block}
+.topbar{
+  background:#2b2320;color:#fff;padding:16px 0;
+}
+.wrap{max-width:1100px;margin:0 auto;padding:0 24px}
+.topbar .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px}
+.topbar .brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:15px}
+.topbar .dot{width:9px;height:9px;border-radius:50%;background:var(--tomato)}
+.topbar a.home{
+  font-size:12px;color:#fff;text-decoration:none;opacity:.75;
+  border:1px solid rgba(255,255,255,.3);border-radius:999px;padding:6px 14px;
+}
+.topbar a.home:hover{opacity:1}
+
+.head{padding:44px 0 8px}
+.head .eyebrow{
+  font-size:12px;letter-spacing:.22em;color:var(--tomato);font-weight:700;
+  text-transform:uppercase;margin-bottom:8px;
+}
+.head h2{
+  font-family:'Playfair Display',serif;font-size:34px;margin:0 0 10px;
+}
+.head p{color:#8a7a6e;font-size:14px;margin:0}
+
+.grid{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));
+  gap:22px;padding:32px 0 80px;
+}
+.pcard{
+  display:flex;flex-direction:column;background:#fff;border-radius:18px;
+  border:1px solid var(--line);overflow:hidden;text-decoration:none;color:inherit;
+  transition:transform .18s,box-shadow .18s;
+}
+.pcard:hover{transform:translateY(-4px);box-shadow:0 22px 40px -20px rgba(43,35,32,.4)}
+.pcard-top{
+  position:relative;height:160px;
+  background:linear-gradient(135deg,var(--cheese),var(--tomato));
+  overflow:hidden;
+}
+.pcard-top img{
+  width:100%;height:100%;object-fit:cover;display:block;
+  transition:transform .3s;
+}
+.pcard:hover .pcard-top img{transform:scale(1.05)}
+.pcard-top .emoji{
+  position:absolute;top:10px;right:12px;font-size:24px;
+  filter:drop-shadow(0 2px 6px rgba(0,0,0,.4));
+}
+.pcard-top .status{
+  position:absolute;top:12px;left:12px;font-size:10px;font-weight:800;
+  letter-spacing:.08em;color:#fff;background:rgba(0,0,0,.28);
+  padding:5px 10px;border-radius:999px;backdrop-filter:blur(4px);
+}
+.pcard-body{padding:18px 18px 20px;flex:1;display:flex;flex-direction:column}
+.pcard-body .kana{
+  font-size:10px;color:var(--tomato);letter-spacing:.18em;font-weight:700;
+  text-transform:uppercase;margin-bottom:6px;
+}
+.pcard-body h3{font-size:16px;margin:0 0 8px;line-height:1.4}
+.pcard-body .desc{font-size:12.5px;color:#7a6b60;line-height:1.6;margin:0 0 16px;flex:1}
+.pcard-body .more{
+  font-size:13px;font-weight:700;color:var(--tomato);
+  display:inline-flex;align-items:center;gap:6px;
+}
+.note{
+  max-width:1100px;margin:0 auto 60px;padding:16px 20px;
+  background:var(--cream-2);border-radius:12px;font-size:12px;color:#8a7a6e;
+}
+@media(max-width:560px){
+  .head h2{font-size:26px}
+}
+</style>
+</head>
+<body>
+
+<!-- ===== パスワードゲート ===== -->
+<div class="gate" id="gate">
+  <div class="gate-card">
+    <div class="gate-lock">🔒</div>
+    <h1>管理者ページ</h1>
+    <p>パスワードを入力してください</p>
+    <form id="gate-form">
+      <input type="password" id="pw" placeholder="Password" autocomplete="current-password" autofocus>
+      <button type="submit">ログイン</button>
+      <div class="gate-err" id="err"></div>
+    </form>
+  </div>
+</div>
+
+<!-- ===== ダッシュボード ===== -->
+<div class="admin" id="admin">
+  <div class="topbar">
+    <div class="wrap">
+      <div class="brand"><span class="dot"></span>VSW / #クリチ ｜ 管理者</div>
+      <a class="home" href="index.html">← サイトトップへ戻る</a>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <div class="head">
+      <div class="eyebrow">Projects in Progress</div>
+      <h2>進行中の企画</h2>
+      <p>社内・関係者向け。現在進めている企画ページの一覧です。</p>
+    </div>
+
+    <div class="grid" id="grid">
+      <!-- カードはJSで描画 -->
+    </div>
+
+    <div class="note">
+      ※ このページは検索エンジンに登録されません（noindex）。パスワードは簡易的な閲覧制限であり、機密情報の保護には別途対策が必要です。
+    </div>
+  </div>
+</div>
+
+<script>
+/* ===== 進行中の企画データ ===== */
+/* 追加したいときは下の配列に1件足すだけ */
+const PROJECTS = [
+  {
+    title:"KURICHI LAND — レトロダイナー × サーカス",
+    kana:"Kurichi Land LP",
+    emoji:"🎪",
+    status:"制作中",
+    desc:"クリチランドの世界観LP。3Dダイナー空間とサーカス演出のランディングページ。",
+    thumb:"kurichiland-forge/images/pers-03.jpg",
+    url:"kurichiland-forge/lp.html"
+  },
+  {
+    title:"KURICHI LAND ｜ 石家庄 Neverland 旗艦構想",
+    kana:"China Flagship",
+    emoji:"🇨🇳",
+    status:"構想中",
+    desc:"河心島の旗艦650㎡出店構想。IP提供型の座組で進める海外旗艦プロジェクト。",
+    thumb:"assets/kurichiland-china/booth-front.png",
+    url:"kurichiland-china.html"
+  },
+  {
+    title:"ハリチくん 3Dウォーク",
+    kana:"Harichi Walk 3D",
+    emoji:"🚶",
+    status:"公開中",
+    desc:"アバターで4mハリチくんとクリチランド館内を歩ける3Dウォークスルー体験。",
+    thumb:"assets/harichi/hero.webp",
+    url:"harichi-walk.html"
+  },
+  {
+    title:"KURICHI LAND ｜ 企画コンセプトブック",
+    kana:"Concept Book",
+    emoji:"📖",
+    status:"制作中",
+    desc:"クリチランド全体の世界観・企画意図をまとめたコンセプトブック。",
+    thumb:"dinner/932e463b-00a7-4e44-9d5c-5f48106c6390.png",
+    url:"kurichiland-concept.html"
+  },
+  {
+    title:"クリチランド ｜ フロア別 実寸平面図",
+    kana:"Floor Plans",
+    emoji:"📐",
+    status:"設計中",
+    desc:"各フロアの実寸schematic平面図。設計・レベルデザイン検討用の資料。",
+    thumb:"kurichiland-forge/images/diagram-overview.jpg",
+    url:"kurichiland-floorplans.html"
+  },
+  {
+    title:"クリチランド ｜ 1F 動線プラン比較（4案）",
+    kana:"Plan Study",
+    emoji:"🗺️",
+    status:"検討中",
+    desc:"1F動線プランの4案比較スタディ。レイアウトの意思決定用ドキュメント。",
+    thumb:"kurichiland-forge/images/diagram-1f.jpg",
+    url:"kurichiland-planstudy.html"
+  },
+  {
+    title:"販売店向け ダウンロードセンター",
+    kana:"Dealer Center",
+    emoji:"📦",
+    status:"公開中",
+    desc:"販売店向けの動画・画像・カタログPDFの配布ページ。",
+    thumb:"assets/business/image-1-2.jpg",
+    url:"dealer.html"
+  }
+];
+
+function renderCards(){
+  const grid = document.getElementById('grid');
+  grid.innerHTML = PROJECTS.map(p => `
+    <a class="pcard" href="${p.url}" target="_blank" rel="noopener">
+      <div class="pcard-top">
+        <img src="${p.thumb}" alt="${p.title}" loading="lazy"
+             onerror="this.style.display='none'">
+        <span class="status">${p.status}</span>
+        <span class="emoji">${p.emoji}</span>
+      </div>
+      <div class="pcard-body">
+        <div class="kana">${p.kana}</div>
+        <h3>${p.title}</h3>
+        <p class="desc">${p.desc}</p>
+        <span class="more">ページを開く →</span>
+      </div>
+    </a>
+  `).join('');
+}
+
+/* ===== パスワード認証（簡易） ===== */
+const PASSWORD = "vsw2026";
+const KEY = "vsw_admin_ok";
+
+function unlock(){
+  document.getElementById('gate').style.display = 'none';
+  document.getElementById('admin').classList.add('show');
+  renderCards();
+}
+
+// セッション中は再入力不要
+if(sessionStorage.getItem(KEY) === "1"){
+  unlock();
+}
+
+document.getElementById('gate-form').addEventListener('submit', function(e){
+  e.preventDefault();
+  const val = document.getElementById('pw').value;
+  const err = document.getElementById('err');
+  if(val === PASSWORD){
+    sessionStorage.setItem(KEY, "1");
+    unlock();
+  }else{
+    err.textContent = "パスワードが違います";
+    document.getElementById('pw').value = "";
+    document.getElementById('pw').focus();
+  }
+});
+</script>
+</body>
+</html>
