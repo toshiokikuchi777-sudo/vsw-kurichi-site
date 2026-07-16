@@ -1,0 +1,3979 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>ForgeCAD テキストスパイラル｜クリチランド</title>
+<style>
+  :root{ color-scheme: dark; }
+  *{ box-sizing:border-box; }
+  html,body{ margin:0; padding:0; width:100%; height:100%; overflow:hidden; background:#02030a;
+    font-family:-apple-system,"Hiragino Sans","Hiragino Kaku Gothic ProN",sans-serif; }
+  #app{ position:fixed; inset:0; }
+  canvas{ display:block; touch-action:none; }
+
+  #loader{ position:fixed; inset:0; z-index:50; display:flex; align-items:center; justify-content:center;
+    background:radial-gradient(ellipse at 50% 40%, #14172c 0%, #05060f 70%, #02030a 100%); color:#dfe6ff;
+    transition:opacity .5s ease; }
+  #loader.hide{ opacity:0; pointer-events:none; }
+  #loader .spin{ width:46px; height:46px; border-radius:50%; border:3px solid rgba(255,255,255,.15);
+    border-top-color:#8fd7ff; animation:sp 0.9s linear infinite; margin:0 auto 14px; }
+  @keyframes sp{ to{ transform:rotate(360deg); } }
+  #loader b{ font-size:15px; letter-spacing:.06em; font-weight:600; }
+
+  /* ==== ブランドロゴ（左上） ==== */
+  #brand{ position:fixed; top:14px; left:16px; z-index:20; color:#cfe0ff; font-size:12px;
+    letter-spacing:.04em; opacity:.82; text-shadow:0 1px 6px rgba(0,0,0,.6); pointer-events:none;
+    display:flex; align-items:center; gap:6px; }
+  #brand .dot{ width:7px; height:7px; border-radius:50%;
+    background:linear-gradient(135deg,#ffd76b,#ff8bcb,#7fd7ff); box-shadow:0 0 8px rgba(255,255,255,.6); }
+  #brand small{ opacity:.65; font-weight:400; }
+
+  /* ==== X1: モード切替ボタン（🌀スパイラル ⇄ 🌊海）／中央上部 ==== */
+  #btnSeaMode{ position:fixed; top:12px; left:50%; transform:translateX(-50%); z-index:33;
+    height:38px; padding:0 20px; border-radius:999px; border:1px solid rgba(255,255,255,.2); cursor:pointer;
+    background:rgba(14,16,30,.6); backdrop-filter:blur(14px) saturate(140%); -webkit-backdrop-filter:blur(14px) saturate(140%);
+    color:#eef2ff; font-size:14px; font-weight:700; letter-spacing:.02em;
+    display:flex; align-items:center; gap:8px; box-shadow:0 8px 26px rgba(0,0,0,.4);
+    transition:background .25s ease, transform .15s ease, box-shadow .25s ease; }
+  #btnSeaMode:hover{ transform:translateX(-50%) translateY(-1px); }
+  #btnSeaMode:active{ transform:translateX(-50%) scale(.96); }
+  #btnSeaMode .smIcon{ font-size:17px; }
+  #btnSeaMode.sea{ background:linear-gradient(135deg,rgba(30,90,140,.75),rgba(10,40,80,.75));
+    border-color:rgba(140,220,255,.4); box-shadow:0 8px 26px rgba(20,120,200,.45); }
+
+  /* ==== X4: ムービー背景トグル ==== */
+  #btnLiveBg{ width:50px; height:50px; flex:none; border-radius:50%; border:1px solid rgba(255,255,255,.18); cursor:pointer;
+    background:rgba(20,16,30,.6); backdrop-filter:blur(14px) saturate(140%); -webkit-backdrop-filter:blur(14px) saturate(140%);
+    color:#f2f5ff; font-size:19px; display:flex; align-items:center; justify-content:center;
+    box-shadow:0 8px 24px rgba(0,0,0,.35); transition:transform .15s ease, filter .15s ease, background .2s ease, border-color .2s ease; }
+  #btnLiveBg:hover{ filter:brightness(1.15); transform:translateY(-1px); }
+  #btnLiveBg:active{ transform:translateY(0px) scale(.94); }
+  #btnLiveBg.on{ background:linear-gradient(135deg,#ff6ea0,#a68bff); border-color:transparent;
+    box-shadow:0 8px 24px rgba(255,110,160,.45); }
+
+  /* ==== 入力UI（下中央） ==== */
+  #inputStack{ position:fixed; left:50%; bottom:22px; transform:translateX(-50%); z-index:30;
+    display:flex; flex-direction:column; gap:8px; width:min(640px, 92vw); }
+  #inputBar{ display:flex; gap:8px; align-items:center; }
+  #wordInput{ flex:1; padding:15px 18px; border-radius:999px; border:1px solid rgba(255,255,255,.16);
+    background:rgba(14,16,30,.62); backdrop-filter:blur(14px) saturate(140%); -webkit-backdrop-filter:blur(14px) saturate(140%);
+    color:#f2f5ff; font-size:16px; outline:none; box-shadow:0 8px 30px rgba(0,0,0,.35), inset 0 0 0 1px rgba(255,255,255,.02); }
+  #wordInput::placeholder{ color:#8993b8; }
+  #wordInput:focus{ border-color:rgba(140,200,255,.55); box-shadow:0 8px 30px rgba(0,0,0,.4), 0 0 0 3px rgba(120,190,255,.15); }
+  #addBtn{ padding:0 24px; height:50px; border-radius:999px; border:none; cursor:pointer;
+    background:linear-gradient(135deg,#7fd7ff,#a68bff 55%,#ff8bcb); color:#101225; font-weight:700; font-size:15px;
+    letter-spacing:.03em; box-shadow:0 8px 24px rgba(120,150,255,.35); transition:transform .15s ease, filter .15s ease; }
+  #addBtn:hover{ filter:brightness(1.08); transform:translateY(-1px); }
+  #addBtn:active{ transform:translateY(0px) scale(.97); }
+
+  #camBtn{ width:50px; height:50px; flex:none; border-radius:50%; border:1px solid rgba(255,255,255,.18); cursor:pointer;
+    background:rgba(20,16,30,.6); backdrop-filter:blur(14px) saturate(140%); -webkit-backdrop-filter:blur(14px) saturate(140%);
+    color:#f2f5ff; font-size:20px; display:flex; align-items:center; justify-content:center;
+    box-shadow:0 8px 24px rgba(0,0,0,.35); transition:transform .15s ease, filter .15s ease; }
+  #camBtn:hover{ filter:brightness(1.15); transform:translateY(-1px); }
+  #camBtn:active{ transform:translateY(0px) scale(.94); }
+
+  /* ==== Z1: 観客参加（QR）トグル ==== */
+  #btnAudience{ width:50px; height:50px; flex:none; border-radius:50%; border:1px solid rgba(255,255,255,.18); cursor:pointer;
+    background:rgba(20,16,30,.6); backdrop-filter:blur(14px) saturate(140%); -webkit-backdrop-filter:blur(14px) saturate(140%);
+    color:#f2f5ff; font-size:19px; display:flex; align-items:center; justify-content:center; position:relative;
+    box-shadow:0 8px 24px rgba(0,0,0,.35); transition:transform .15s ease, filter .15s ease, background .2s ease, border-color .2s ease; }
+  #btnAudience:hover{ filter:brightness(1.15); transform:translateY(-1px); }
+  #btnAudience:active{ transform:translateY(0px) scale(.94); }
+  #btnAudience.on{ background:linear-gradient(135deg,#7fffc8,#7fd7ff); border-color:transparent;
+    box-shadow:0 8px 24px rgba(120,220,180,.45); }
+  #btnAudience .audDot{ position:absolute; top:3px; right:3px; width:9px; height:9px; border-radius:50%;
+    background:#7fffc8; box-shadow:0 0 6px rgba(127,255,200,.8); opacity:0; transition:opacity .2s ease; }
+  #btnAudience.always .audDot{ opacity:1; }
+
+  /* ==== Z2: 観客参加パネル（オーバーレイ） ==== */
+  #audiencePanel{ position:fixed; inset:0; z-index:58; display:flex; align-items:center; justify-content:center;
+    background:rgba(2,3,10,.82); backdrop-filter:blur(6px); opacity:0; pointer-events:none; transition:opacity .22s ease; }
+  #audiencePanel.show{ opacity:1; pointer-events:auto; }
+  #audienceCard{ position:relative; width:min(360px, 90vw); border-radius:24px; padding:28px 26px 24px;
+    background:#12142a; box-shadow:0 30px 90px rgba(0,0,0,.6), 0 0 0 1px rgba(255,255,255,.08);
+    text-align:center; color:#f2f5ff; }
+  #audienceClose{ position:absolute; top:12px; right:12px; width:32px; height:32px; border-radius:50%; border:none; cursor:pointer;
+    background:rgba(255,255,255,.08); color:#f2f5ff; font-size:15px; display:flex; align-items:center; justify-content:center; }
+  #audienceClose:hover{ background:rgba(255,255,255,.16); }
+  #audienceTitle{ font-size:15px; font-weight:700; margin:4px 0 16px; letter-spacing:.02em; }
+  #audienceQrBox{ width:260px; height:260px; margin:0 auto; border-radius:16px; background:#fff; padding:14px;
+    display:flex; align-items:center; justify-content:center; box-shadow:0 10px 30px rgba(0,0,0,.3); }
+  #audienceQrBox img, #audienceQrBox canvas{ width:100% !important; height:100% !important; }
+  #audienceUrl{ margin-top:14px; font-size:12px; color:#a8b2d9; word-break:break-all; letter-spacing:.02em; }
+  #audienceUnavailable{ font-size:13px; line-height:1.7; color:#ffd18f; padding:20px 4px; display:none; }
+  #audienceToggleRow{ display:flex; align-items:center; justify-content:center; gap:10px; margin-top:18px;
+    padding-top:16px; border-top:1px solid rgba(255,255,255,.1); font-size:12.5px; color:#c9d0ef; }
+
+  /* ==== Z3: 常時表示コンパクトQR（右下） ==== */
+  #audienceCompact{ position:fixed; right:16px; bottom:22px; z-index:28; width:110px; height:110px;
+    border-radius:14px; background:rgba(255,255,255,.92); padding:8px; box-shadow:0 8px 24px rgba(0,0,0,.4);
+    opacity:.72; transition:opacity .2s ease; display:none; }
+  #audienceCompact:hover{ opacity:1; }
+  #audienceCompact.show{ display:block; }
+  #audienceCompact img, #audienceCompact canvas{ width:100% !important; height:100% !important; }
+
+  /* ==== Y1: ビートシンク（マイク）トグル ==== */
+  #btnBeat{ width:50px; height:50px; flex:none; border-radius:50%; border:1px solid rgba(255,255,255,.18); cursor:pointer;
+    background:rgba(20,16,30,.6); backdrop-filter:blur(14px) saturate(140%); -webkit-backdrop-filter:blur(14px) saturate(140%);
+    color:#f2f5ff; font-size:19px; display:flex; align-items:center; justify-content:center; position:relative;
+    box-shadow:0 8px 24px rgba(0,0,0,.35); transition:transform .15s ease, filter .15s ease, background .2s ease, border-color .2s ease; }
+  #btnBeat:hover{ filter:brightness(1.15); transform:translateY(-1px); }
+  #btnBeat:active{ transform:translateY(0px) scale(.94); }
+  #btnBeat.on{ background:linear-gradient(135deg,#ff6ea0,#ffcf6b); border-color:transparent;
+    box-shadow:0 8px 24px rgba(255,150,60,.45); }
+  #btnBeat.on.kick{ transform:scale(1.12); }
+  #bpmTag{ position:absolute; bottom:-16px; left:50%; transform:translateX(-50%); font-size:9px; color:#ffd8a8;
+    background:rgba(20,14,6,.7); padding:1px 6px; border-radius:999px; white-space:nowrap; opacity:0; transition:opacity .3s ease; pointer-events:none; }
+  #btnBeat.on #bpmTag{ opacity:.9; }
+
+  /* ==== Y2: DROPボタン ==== */
+  #btnDrop{ flex:none; height:50px; padding:0 20px; border-radius:999px; border:1px solid rgba(255,140,110,.4); cursor:pointer;
+    background:linear-gradient(135deg,#ff5f7a,#ff9f4e); color:#1a0a08; font-weight:800; font-size:14px; letter-spacing:.03em;
+    box-shadow:0 8px 26px rgba(255,90,90,.4); transition:transform .12s ease, filter .15s ease, box-shadow .15s ease; white-space:nowrap; }
+  #btnDrop:hover{ filter:brightness(1.1); transform:translateY(-1px); }
+  #btnDrop:active{ transform:translateY(0px) scale(.94); }
+  #btnDrop:disabled{ opacity:.45; filter:grayscale(.4); pointer-events:none; }
+  #btnDrop.pulse{ animation:dropPulse .5s ease; }
+  @keyframes dropPulse{ 0%{ box-shadow:0 0 0 0 rgba(255,110,90,.7); } 100%{ box-shadow:0 0 0 22px rgba(255,110,90,0); } }
+
+  /* ==== Y3: AI連想モードトグル ==== */
+  #btnAssoc{ width:50px; height:50px; flex:none; border-radius:50%; border:1px solid rgba(255,255,255,.18); cursor:pointer;
+    background:rgba(20,16,30,.6); backdrop-filter:blur(14px) saturate(140%); -webkit-backdrop-filter:blur(14px) saturate(140%);
+    color:#f2f5ff; font-size:19px; display:flex; align-items:center; justify-content:center;
+    box-shadow:0 8px 24px rgba(0,0,0,.35); transition:transform .15s ease, filter .15s ease, background .2s ease, border-color .2s ease; }
+  #btnAssoc:hover{ filter:brightness(1.15); transform:translateY(-1px); }
+  #btnAssoc:active{ transform:translateY(0px) scale(.94); }
+  #btnAssoc.on{ background:linear-gradient(135deg,#a68bff,#7f6bff); border-color:transparent;
+    box-shadow:0 8px 24px rgba(150,110,255,.5); animation:assocGlow 2.4s ease-in-out infinite; }
+  @keyframes assocGlow{ 0%,100%{ filter:brightness(1); } 50%{ filter:brightness(1.25); } }
+
+  /* ==== Y4: AI実況テロップ ==== */
+  #tickerBar{ position:fixed; left:50%; bottom:186px; transform:translateX(-50%); z-index:29; width:min(680px,94vw);
+    text-align:center; pointer-events:none; opacity:0; transition:opacity .35s ease, transform .35s ease; }
+  #tickerBar.show{ opacity:1; transform:translateX(-50%) translateY(0); }
+  #tickerBar span{ display:inline-block; padding:9px 22px; border-radius:999px; font-size:14px; font-weight:700; letter-spacing:.02em;
+    background:rgba(14,10,26,.55); backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px);
+    background-image:linear-gradient(135deg,#7fd7ff,#a68bff 45%,#ff8bcb 85%);
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+    text-shadow:0 2px 18px rgba(120,150,255,.35); box-shadow:0 8px 26px rgba(0,0,0,.35), inset 0 0 0 1px rgba(255,255,255,.08); }
+  #tickerBar.drop span{ font-size:19px; background-image:linear-gradient(135deg,#ff5f7a,#ffcf6b 60%,#ff8bcb); }
+
+  /* ==== Y3: AI追加語のバッジ表示（wordList内） ==== */
+  #wordList .aiTag{ font-size:9px; margin-left:2px; opacity:.85; }
+
+  #modelBar{ display:flex; gap:8px; align-items:center; }
+  #modelInput{ flex:1; padding:12px 16px; border-radius:999px; border:1px solid rgba(255,180,120,.28);
+    background:rgba(20,14,10,.5); backdrop-filter:blur(14px) saturate(140%); -webkit-backdrop-filter:blur(14px) saturate(140%);
+    color:#f2f5ff; font-size:14px; outline:none; box-shadow:0 6px 22px rgba(0,0,0,.3); }
+  #modelInput::placeholder{ color:#c9a37a; }
+  #modelInput:focus{ border-color:rgba(255,190,120,.6); box-shadow:0 6px 22px rgba(0,0,0,.35), 0 0 0 3px rgba(255,180,120,.15); }
+  #modelBtn{ padding:0 18px; height:42px; border-radius:999px; border:none; cursor:pointer;
+    background:linear-gradient(135deg,#ffb066,#ff8bcb 60%,#a68bff); color:#1a1008; font-weight:700; font-size:13px;
+    letter-spacing:.02em; box-shadow:0 6px 20px rgba(255,150,100,.3); transition:transform .15s ease, filter .15s ease; white-space:nowrap; }
+  #modelBtn:hover{ filter:brightness(1.08); transform:translateY(-1px); }
+  #modelBtn:active{ transform:translateY(0px) scale(.97); }
+  #modelBar.disabled #modelInput,
+  #modelBar.disabled #modelBtn{ opacity:.4; pointer-events:none; filter:grayscale(0.6); }
+  #modelOffline{ font-size:10.5px; color:#c9a37a; opacity:.8; padding:0 4px; display:none; letter-spacing:.02em; }
+  #modelBar.disabled + #modelOffline{ display:block; }
+
+  /* ==== W1: 修正チャットトグル ==== */
+  #refineToggle{ flex:none; height:42px; padding:0 12px; border-radius:999px; cursor:pointer;
+    border:1px solid rgba(255,255,255,.18); background:rgba(20,16,30,.5); color:#c9d0ef;
+    font-size:12px; font-weight:600; letter-spacing:.02em; white-space:nowrap;
+    transition:background .15s ease, color .15s ease, border-color .15s ease, transform .15s ease; }
+  #refineToggle:hover{ transform:translateY(-1px); }
+  #refineToggle.on{ background:linear-gradient(135deg,#7fd7ff,#a68bff); border-color:transparent; color:#101225;
+    box-shadow:0 6px 18px rgba(120,150,255,.35); }
+  #refineToggle.hidden{ display:none; }
+  #wordList .refineBtn{ margin-left:6px; padding:2px 8px; border-radius:999px; border:1px solid rgba(140,200,255,.4);
+    background:rgba(140,200,255,.12); color:#bfe4ff; font-size:9.5px; cursor:pointer; letter-spacing:.02em; }
+  #wordList .refineBtn:hover{ background:rgba(140,200,255,.24); }
+
+  /* ==== W3: ジョブ開始フラッシュ ==== */
+  #vjFlash{ position:fixed; inset:0; z-index:15; background:radial-gradient(ellipse at 50% 46%, rgba(180,220,255,.55), rgba(180,220,255,0) 70%);
+    opacity:0; pointer-events:none; }
+  #vjFlash.flashing{ animation:vjFlashAnim .5s ease-out; }
+  @keyframes vjFlashAnim{ 0%{ opacity:.9; } 100%{ opacity:0; } }
+
+  #hint{ position:fixed; left:50%; bottom:132px; transform:translateX(-50%); z-index:29; color:#9aa6cf;
+    font-size:11.5px; opacity:.68; letter-spacing:.02em; text-shadow:0 1px 4px rgba(0,0,0,.6); pointer-events:none;
+    white-space:nowrap; }
+
+  /* ==== モデリング進行ミニウィンドウ（左下） ==== */
+  #jobStack{ position:fixed; left:16px; bottom:22px; z-index:32; display:flex; flex-direction:column-reverse; gap:8px;
+    width:250px; max-width:80vw; }
+  .jobCard{ position:relative; padding:10px 30px 10px 12px; border-radius:12px; border:1px solid rgba(255,255,255,.14);
+    background:rgba(14,16,30,.72); backdrop-filter:blur(14px) saturate(140%); -webkit-backdrop-filter:blur(14px) saturate(140%);
+    color:#eef1ff; font-size:11.5px; box-shadow:0 10px 30px rgba(0,0,0,.4); animation:jobIn .25s ease; }
+  @keyframes jobIn{ from{ opacity:0; transform:translateY(8px); } to{ opacity:1; transform:translateY(0); } }
+  .jobCard .jcName{ font-weight:700; font-size:12.5px; display:flex; align-items:center; gap:6px; }
+  .jobCard .jcName .icon{ font-size:13px; }
+  .jobCard .jcStage{ margin-top:3px; opacity:.85; display:flex; align-items:center; gap:6px; }
+  .jobCard .jcDots{ display:inline-flex; gap:3px; }
+  .jobCard .jcDots i{ width:4px; height:4px; border-radius:50%; background:#8fd7ff; opacity:.35; animation:jcBlink 1.1s ease-in-out infinite; }
+  .jobCard .jcDots i:nth-child(2){ animation-delay:.18s; }
+  .jobCard .jcDots i:nth-child(3){ animation-delay:.36s; }
+  @keyframes jcBlink{ 0%,100%{ opacity:.25; transform:scale(1); } 40%{ opacity:1; transform:scale(1.3); } }
+  .jobCard .jcBar{ margin-top:7px; height:4px; border-radius:99px; background:rgba(255,255,255,.1); overflow:hidden; }
+  .jobCard .jcBarFill{ height:100%; border-radius:99px; background:linear-gradient(90deg,#7fd7ff,#a68bff,#ff8bcb);
+    background-size:200% 100%; animation:jcFlow 1.6s linear infinite; width:30%; }
+  @keyframes jcFlow{ from{ background-position:0% 0; } to{ background-position:200% 0; } }
+  .jobCard .jcMeta{ margin-top:5px; opacity:.55; font-size:10px; }
+  .jobCard.error{ border-color:rgba(255,110,110,.45); }
+  .jobCard.error .jcStage{ color:#ffb0b0; }
+  .jobCard.done{ border-color:rgba(140,255,190,.4); }
+  .jobCard .jcClose{ position:absolute; top:8px; right:9px; opacity:.5; cursor:pointer; font-size:12px; line-height:1; }
+  .jobCard .jcClose:hover{ opacity:1; }
+
+  /* ==== コントロールパネル（右上） ==== */
+  #panelToggle{ position:fixed; top:14px; right:14px; z-index:31; width:34px; height:34px; border-radius:10px;
+    border:1px solid rgba(255,255,255,.14); background:rgba(14,16,30,.55); backdrop-filter:blur(10px);
+    color:#dfe6ff; cursor:pointer; font-size:15px; display:flex; align-items:center; justify-content:center; }
+  #panel{ position:fixed; top:56px; right:14px; z-index:30; width:240px; max-height:calc(100vh - 90px); overflow:auto;
+    padding:14px 14px 16px; border-radius:16px; border:1px solid rgba(255,255,255,.12);
+    background:rgba(12,14,26,.68); backdrop-filter:blur(16px) saturate(140%); -webkit-backdrop-filter:blur(16px) saturate(140%);
+    color:#e7ecff; font-size:12.5px; box-shadow:0 12px 40px rgba(0,0,0,.45); transition:opacity .2s ease, transform .2s ease; }
+  #panel.hide{ opacity:0; pointer-events:none; transform:translateY(-6px); }
+  #panel h4{ margin:0 0 8px; font-size:11px; letter-spacing:.08em; opacity:.65; font-weight:600; text-transform:uppercase; }
+  #panel .row{ margin:10px 0; }
+  #panel label{ display:flex; justify-content:space-between; margin-bottom:4px; opacity:.85; }
+  #panel input[type=range]{ width:100%; accent-color:#8fd7ff; }
+  #panel .toggleRow{ display:flex; align-items:center; justify-content:space-between; margin:10px 0; }
+  .swtch{ position:relative; width:38px; height:21px; border-radius:999px; background:rgba(255,255,255,.15); cursor:pointer; }
+  .swtch.on{ background:linear-gradient(135deg,#7fd7ff,#a68bff); }
+  .swtch i{ position:absolute; top:2px; left:2px; width:17px; height:17px; border-radius:50%; background:#fff;
+    transition:left .15s ease; box-shadow:0 1px 4px rgba(0,0,0,.4); }
+  .swtch.on i{ left:19px; }
+  /* ==== X3: 背景カスタマイズ ==== */
+  #bgSection{ margin-top:10px; border-top:1px solid rgba(255,255,255,.1); padding-top:10px; }
+  #bgChips{ display:flex; flex-wrap:wrap; gap:6px; margin-top:6px; }
+  .bgChip{ padding:5px 10px; border-radius:999px; font-size:10.5px; cursor:pointer;
+    border:1px solid rgba(255,255,255,.18); background:rgba(255,255,255,.06); color:#dfe6ff;
+    transition:background .15s ease, border-color .15s ease; white-space:nowrap; }
+  .bgChip:hover{ background:rgba(255,255,255,.14); }
+  .bgChip.active{ background:linear-gradient(135deg,#7fd7ff,#a68bff); border-color:transparent; color:#101225; font-weight:700; }
+  #bgColorRow{ display:flex; align-items:center; gap:8px; margin-top:8px; }
+  #bgColorPicker{ width:34px; height:26px; border-radius:6px; border:1px solid rgba(255,255,255,.2); background:none; cursor:pointer; padding:0; }
+  #bgColorClear{ font-size:10.5px; opacity:.65; cursor:pointer; text-decoration:underline; }
+  #bgColorClear:hover{ opacity:1; }
+
+  /* ==== S3: ライブ映像フィルター（🎥ムービー背景ON時のみ有効） ==== */
+  #videoFilterSection{ margin-top:10px; border-top:1px solid rgba(255,255,255,.1); padding-top:10px;
+    transition:opacity .2s ease; }
+  #videoFilterSection.dim{ opacity:.4; pointer-events:none; }
+  #vfSwatches{ display:flex; flex-wrap:wrap; gap:6px; margin-top:6px; }
+  .vfSwatch{ padding:5px 10px; border-radius:999px; font-size:10.5px; cursor:pointer;
+    border:1px solid rgba(255,255,255,.18); background:rgba(255,255,255,.06); color:#dfe6ff;
+    transition:background .15s ease, border-color .15s ease; white-space:nowrap; }
+  .vfSwatch:hover{ background:rgba(255,255,255,.14); }
+  .vfSwatch.active{ background:linear-gradient(135deg,#7fd7ff,#a68bff); border-color:transparent; color:#101225; font-weight:700; }
+  #vfColorRow{ display:flex; align-items:center; gap:8px; margin-top:8px; }
+  #vfColorPicker{ width:34px; height:26px; border-radius:6px; border:1px solid rgba(255,255,255,.2); background:none; cursor:pointer; padding:0; }
+  #vfStrengthRow{ margin-top:8px; }
+  #vfStrengthRow label{ display:flex; justify-content:space-between; margin-bottom:4px; opacity:.85; font-size:12.5px; }
+  #vfStrengthRow input[type=range]{ width:100%; accent-color:#8fd7ff; }
+  #vfMonoRow{ display:flex; align-items:center; justify-content:space-between; margin-top:8px; }
+
+  #wordList{ margin-top:10px; border-top:1px solid rgba(255,255,255,.1); padding-top:10px; max-height:220px; overflow:auto; }
+  #wordList .wi{ display:flex; align-items:center; gap:6px; padding:5px 6px; border-radius:8px; cursor:pointer;
+    font-size:11.5px; }
+  #wordList .wi:hover{ background:rgba(255,255,255,.08); }
+  #wordList .sw{ width:9px; height:9px; border-radius:50%; flex:none; }
+  #wordList .wt{ flex:1; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  #wordList .wm{ opacity:.5; font-size:9.5px; }
+  #wordList .rm{ opacity:.4; font-size:12px; }
+  #wordList .wi:hover .rm{ opacity:.9; }
+  #panel .empty{ opacity:.45; padding:6px 2px; font-size:11.5px; }
+
+  #aiState{ position:fixed; top:14px; left:50%; transform:translateX(-50%); z-index:20; font-size:10.5px;
+    color:#9fb; opacity:0; transition:opacity .4s ease; letter-spacing:.03em; text-shadow:0 1px 4px rgba(0,0,0,.7);
+    pointer-events:none; }
+  #aiState.show{ opacity:.75; }
+  #aiState.fallback{ color:#ffd18f; }
+
+  ::-webkit-scrollbar{ width:6px; height:6px; }
+  ::-webkit-scrollbar-thumb{ background:rgba(255,255,255,.18); border-radius:99px; }
+
+  /* ==== カメラオーバーレイ ==== */
+  #camOverlay{ position:fixed; inset:0; z-index:60; display:flex; align-items:center; justify-content:center;
+    background:rgba(2,3,10,.88); backdrop-filter:blur(6px); opacity:0; pointer-events:none; transition:opacity .22s ease; }
+  #camOverlay.show{ opacity:1; pointer-events:auto; }
+  #camStage{ position:relative; width:min(560px, 92vw); aspect-ratio:3/4; border-radius:26px; overflow:hidden;
+    background:#0a0b16; box-shadow:0 30px 90px rgba(0,0,0,.6), 0 0 0 1px rgba(255,255,255,.08); }
+  #camVideo{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; transform:scaleX(-1); background:#000; }
+  #camCanvas{ display:none; }
+  #camFlash{ position:absolute; inset:0; background:#fff; opacity:0; pointer-events:none; }
+  #camFlash.flashing{ animation:camFlashAnim .28s ease-out; }
+  @keyframes camFlashAnim{ 0%{ opacity:0.95; } 100%{ opacity:0; } }
+  #camMsg{ position:absolute; inset:0; display:none; align-items:center; justify-content:center; text-align:center;
+    padding:28px; color:#f2f5ff; font-size:14px; line-height:1.7; white-space:pre-line; }
+  #camMsg.show{ display:flex; }
+  #camClose{ position:absolute; top:12px; right:12px; width:36px; height:36px; border-radius:50%; border:none; cursor:pointer;
+    background:rgba(10,10,20,.55); color:#f2f5ff; font-size:16px; display:flex; align-items:center; justify-content:center;
+    backdrop-filter:blur(8px); z-index:2; }
+  #camClose:hover{ background:rgba(10,10,20,.8); }
+  #camToast{ position:absolute; left:50%; top:14px; transform:translateX(-50%); z-index:2; color:#ffe3b0; font-size:11.5px;
+    background:rgba(20,14,6,.68); padding:6px 14px; border-radius:999px; opacity:0; transition:opacity .3s ease; pointer-events:none;
+    white-space:nowrap; }
+  #camToast.show{ opacity:1; }
+  #camControls{ position:absolute; left:0; right:0; bottom:18px; display:flex; align-items:center; justify-content:center; z-index:2; }
+  #shutterBtn{ width:72px; height:72px; border-radius:50%; border:4px solid rgba(255,255,255,.85); cursor:pointer;
+    background:rgba(255,255,255,.18); box-shadow:0 6px 24px rgba(0,0,0,.4); transition:transform .12s ease, background .12s ease; }
+  #shutterBtn:hover{ background:rgba(255,255,255,.32); }
+  #shutterBtn:active{ transform:scale(.9); }
+  #shutterBtn:disabled{ opacity:.4; pointer-events:none; }
+
+  /* ==== レスポンシブ（狭幅時のUI詰まり対策）：末尾に置き、同specificityの基本ルールへ確実に勝つ ==== */
+  @media (max-width:640px){
+    #btnSeaMode{ height:30px; padding:0 12px; font-size:11.5px; top:8px; gap:5px; }
+    #btnSeaMode .smIcon{ font-size:13px; }
+    #inputStack{ width:94vw; }
+    #inputBar{ gap:5px; }
+    #wordInput{ padding:13px 14px; font-size:14px; }
+    #addBtn{ padding:0 14px; height:44px; font-size:13px; white-space:nowrap; }
+    #camBtn, #btnLiveBg, #btnAudience{ width:44px; height:44px; font-size:16px; flex:none; }
+  }
+  @media (max-width:400px){
+    #btnSeaMode .smLabel{ display:none; }
+    #btnSeaMode{ padding:0 10px; }
+  }
+</style>
+</head>
+<body>
+<div id="app"></div>
+
+<div id="loader"><div><div class="spin"></div><b>ForgeCAD テキストスパイラルを準備中…</b></div></div>
+
+<div id="brand"><span class="dot"></span>ForgeCAD テキストスパイラル｜クリチランド</div>
+<button id="btnSeaMode" title="スパイラル⇄海モード切替"><span class="smIcon">🌀</span><span class="smLabel">スパイラル</span></button>
+<div id="aiState">AI判定中…</div>
+
+<div id="hint">ドラッグで回転・ホイールでズーム／ことばを入力すると螺旋にのぼります</div>
+<div id="jobStack"></div>
+<div id="tickerBar"><span id="tickerText"></span></div>
+<div id="inputStack">
+  <div id="inputBar">
+    <input id="wordInput" type="text" placeholder="ことばを入力…" maxlength="24" autocomplete="off" />
+    <button id="addBtn">追加</button>
+    <button id="camBtn" title="カメラで撮影">📷</button>
+    <button id="btnLiveBg" title="いま撮っているカメラ映像を背景にする">🎥</button>
+    <button id="btnAudience" title="観客参加（スマホでQRを読み取り、ことばを送ってもらう）">📱</button>
+    <button id="btnBeat" title="マイクでビートシンク"><span>🎤</span><span id="bpmTag"></span></button>
+    <button id="btnAssoc" title="AIが連想して自動で言葉を増やす">🧠</button>
+    <button id="btnDrop" title="Shift+SpaceでもDROP！">💥DROP</button>
+  </div>
+  <div id="modelBar" class="disabled">
+    <input id="modelInput" type="text" placeholder="🔧 つくるものを入力（例: スピーカー）" maxlength="30" autocomplete="off" />
+    <button id="refineToggle" class="hidden" title="ONにすると、次の送信はセンターのモデルへの修正指示になります">✏修正</button>
+    <button id="modelBtn">モデリング</button>
+  </div>
+  <div id="modelOffline">スパイラル起動.commandから起動するとAIモデリングが使えます</div>
+</div>
+<div id="vjFlash"></div>
+
+<div id="camOverlay">
+  <div id="camStage">
+    <button id="camClose" title="閉じる">✕</button>
+    <div id="camToast"></div>
+    <video id="camVideo" autoplay playsinline muted></video>
+    <canvas id="camCanvas"></canvas>
+    <div id="camFlash"></div>
+    <div id="camMsg"></div>
+    <div id="camControls"><button id="shutterBtn" title="撮影"></button></div>
+  </div>
+</div>
+
+<div id="audiencePanel">
+  <div id="audienceCard">
+    <button id="audienceClose" title="閉じる">✕</button>
+    <div id="audienceTitle">スマホで読み取って、ことばを送ってね！</div>
+    <div id="audienceQrBox"></div>
+    <div id="audienceUrl"></div>
+    <div id="audienceUnavailable">観客参加はスパイラル起動.commandからの起動が必要です</div>
+    <div id="audienceToggleRow">
+      <span>QRを常時表示</span>
+      <div class="swtch" id="swAudienceAlways"><i></i></div>
+    </div>
+  </div>
+</div>
+<div id="audienceCompact" title="観客参加QR"></div>
+
+<button id="panelToggle" title="表示設定">⚙</button>
+<div id="panel">
+  <h4>表示設定</h4>
+  <div class="row">
+    <label><span>回転速度</span><span id="vSpeed">1.0</span></label>
+    <input type="range" id="rngSpeed" min="0" max="3" step="0.05" value="1">
+  </div>
+  <div class="row">
+    <label><span>ブルーム強さ</span><span id="vBloom">1.1</span></label>
+    <input type="range" id="rngBloom" min="0" max="2.5" step="0.05" value="1.1">
+  </div>
+  <div class="row">
+    <label><span>スパークル量</span><span id="vSpark">1.0</span></label>
+    <input type="range" id="rngSpark" min="0" max="2" step="0.05" value="1">
+  </div>
+  <div class="toggleRow">
+    <span>自動回転</span>
+    <div class="swtch on" id="swAuto"><i></i></div>
+  </div>
+  <div id="vjSection" style="margin-top:10px;border-top:1px solid rgba(255,255,255,.1);padding-top:10px;">
+    <h4>VJ演出</h4>
+    <div class="row">
+      <label><span>🎤ビート感度</span><span id="vBeatSens">1.0</span></label>
+      <input type="range" id="rngBeatSens" min="0.4" max="2" step="0.05" value="1">
+    </div>
+    <div class="toggleRow">
+      <span>💬実況テロップ</span>
+      <div class="swtch on" id="swTicker"><i></i></div>
+    </div>
+  </div>
+  <div id="bgSection">
+    <h4>背景</h4>
+    <div id="bgChips">
+      <div class="bgChip" data-bg="cosmos">宇宙</div>
+      <div class="bgChip" data-bg="deepsea">深海</div>
+      <div class="bgChip" data-bg="sunset">夕焼け</div>
+      <div class="bgChip" data-bg="neon">ネオン紫</div>
+      <div class="bgChip" data-bg="black">漆黒</div>
+    </div>
+    <div id="bgColorRow">
+      <input type="color" id="bgColorPicker" value="#0a0e24" title="単色で背景を上書き">
+      <span id="bgColorClear">解除</span>
+    </div>
+  </div>
+  <div id="videoFilterSection" class="dim">
+    <h4>映像フィルター</h4>
+    <div id="vfSwatches">
+      <div class="vfSwatch" data-vf="#ff7a3c">夕焼けオレンジ</div>
+      <div class="vfSwatch" data-vf="#ff4fd8">ネオンピンク</div>
+      <div class="vfSwatch" data-vf="#1f6fff">深海ブルー</div>
+      <div class="vfSwatch" data-vf="mono">モノクロ</div>
+    </div>
+    <div id="vfColorRow">
+      <input type="color" id="vfColorPicker" value="#ff7a3c" title="フィルター色を指定">
+      <span id="vfColorClear">解除</span>
+    </div>
+    <div id="vfStrengthRow">
+      <label><span>強さ</span><span id="vVfStrength">0%</span></label>
+      <input type="range" id="rngVfStrength" min="0" max="100" step="1" value="0">
+    </div>
+  </div>
+  <div id="wordList"><div class="empty">まだことばがありません</div></div>
+</div>
+
+<script src="lib/qrcode.min.js"></script>
+<script type="module">
+import * as THREE from './lib/three.module.js';
+import { OrbitControls } from './lib/jsm/controls/OrbitControls.js';
+import { RoomEnvironment } from './lib/jsm/environments/RoomEnvironment.js';
+import { EffectComposer } from './lib/jsm/postprocessing/EffectComposer.js';
+import { RenderPass } from './lib/jsm/postprocessing/RenderPass.js';
+import { UnrealBloomPass } from './lib/jsm/postprocessing/UnrealBloomPass.js';
+import { OutputPass } from './lib/jsm/postprocessing/OutputPass.js';
+import { GLTFLoader } from './lib/jsm/loaders/GLTFLoader.js';
+
+(function(){ function fail(m){var l=document.getElementById('loader');if(!l)return;
+  l.innerHTML='<div style="text-align:center;padding:22px;max-width:320px"><b style="font-size:16px">表示できませんでした</b><div style="font-size:12px;margin-top:8px;opacity:.8">'+(m||'')+'<br>ローカルサーバで開いてください（file://不可）。</div></div>';}
+  window.__tsFail=fail; window.addEventListener('error',e=>{ if(!window.__TS_READY) fail(e.message); });
+  setTimeout(()=>{ if(!window.__TS_READY) fail('読み込みに失敗しました。'); }, 15000);
+})();
+
+try{
+
+/* =====================================================================
+ * ForgeCAD テキストスパイラル
+ * 入力した単語を立体文字化し、螺旋(ヘリックス)経路に沿って上昇させ続けるインタラクティブ演出。
+ * 文字→3D抽出パイプライン（textToShapes / buildText3dGeometry 系）は
+ * kurichiland-forge/index.html の J1〜J4実装を移植したもの（Canvasラスタ→二値マスク→
+ * 境界追跡→Douglas-Peucker単純化→THREE.Shape(+holes)→ExtrudeGeometry）。
+ * ===================================================================== */
+
+/* ---------------------------------------------------------------------
+ * 1) 文字 → 3D ジオメトリ・パイプライン（index.htmlのJ1〜J4を自己完結移植）
+ * ------------------------------------------------------------------- */
+const FONT_DEFS={
+  gothic:  { label:'ゴシック',   family:'-apple-system,"Hiragino Sans",sans-serif' },
+  heavy:   { label:'極太',       family:'"Hiragino Sans W8","Hiragino Sans",sans-serif', weight:900 },
+  mincho:  { label:'明朝',       family:'"Hiragino Mincho ProN","Yu Mincho",serif' },
+  maru:    { label:'丸ゴシック', family:'"Hiragino Maru Gothic ProN","Hiragino Sans",sans-serif' },
+};
+const FONT_DEFAULT='gothic';
+function fontDefOf(key){ return FONT_DEFS[key] || FONT_DEFS[FONT_DEFAULT]; }
+
+const T3D_RASTER_H=180;      // ラスタライズ基準の文字高さ(px)。演出用途なので軽量寄り
+const T3D_CANVAS_MAX=3200;
+const T3D_PAD=8;
+
+function t3dRasterize(text, weightBold, fontKey){
+  const str=(text||' ');
+  const measureCv=document.createElement('canvas');
+  const mctx=measureCv.getContext('2d');
+  let H=T3D_RASTER_H;
+  const fontDef=fontDefOf(fontKey);
+  const fontWeight = fontDef.weight!=null ? fontDef.weight : (weightBold?900:400);
+  const fontOf=(h)=> fontWeight+' '+h+'px '+fontDef.family;
+  mctx.font=fontOf(H);
+  let metrics=mctx.measureText(str);
+  let textW=Math.max(1, metrics.width);
+  let totalW=textW+T3D_PAD*2;
+  if(totalW>T3D_CANVAS_MAX){
+    const scale=T3D_CANVAS_MAX/totalW;
+    H=Math.max(24, Math.floor(H*scale));
+    mctx.font=fontOf(H);
+    metrics=mctx.measureText(str);
+    textW=Math.max(1, metrics.width);
+    totalW=textW+T3D_PAD*2;
+  }
+  const ascent = metrics.actualBoundingBoxAscent || H*0.82;
+  const descent = metrics.actualBoundingBoxDescent || H*0.22;
+  const cvW=Math.max(8, Math.ceil(textW+T3D_PAD*2));
+  const cvH=Math.max(8, Math.ceil(ascent+descent+T3D_PAD*2));
+  const cv=document.createElement('canvas');
+  cv.width=cvW; cv.height=cvH;
+  const ctx=cv.getContext('2d');
+  ctx.clearRect(0,0,cvW,cvH);
+  ctx.fillStyle='#000';
+  ctx.font=fontOf(H);
+  ctx.textAlign='left';
+  ctx.textBaseline='alphabetic';
+  ctx.fillText(str, T3D_PAD, T3D_PAD+ascent);
+  const imgData=ctx.getImageData(0,0,cvW,cvH);
+  return { imgData, width:cvW, height:cvH, rasterH:H };
+}
+function t3dBinaryMask(imgData){
+  const {data,width,height}=imgData;
+  const mask=new Uint8Array(width*height);
+  for(let i=0;i<width*height;i++){ mask[i]= data[i*4+3]>128 ? 1 : 0; }
+  return { mask, width, height };
+}
+function t3dSignedArea(pts){
+  let a=0;
+  for(let i=0;i<pts.length;i++){
+    const [x1,y1]=pts[i], [x2,y2]=pts[(i+1)%pts.length];
+    a += (x1*y2 - x2*y1);
+  }
+  return a/2;
+}
+function t3dTraceContours(maskObj){
+  const { mask, width, height } = maskObj;
+  const px=(x,y)=> (x>=0&&x<width&&y>=0&&y<height) ? mask[y*width+x] : 0;
+  const edges=[];
+  for(let y=0;y<height;y++){
+    for(let x=0;x<width;x++){
+      if(px(x,y)!==1) continue;
+      if(px(x,y-1)!==1) edges.push([x,y, x+1,y]);
+      if(px(x+1,y)!==1) edges.push([x+1,y, x+1,y+1]);
+      if(px(x,y+1)!==1) edges.push([x+1,y+1, x,y+1]);
+      if(px(x-1,y)!==1) edges.push([x,y+1, x,y]);
+    }
+  }
+  const fromMap=new Map();
+  edges.forEach((e,i)=>{
+    const k=e[0]+','+e[1];
+    if(!fromMap.has(k)) fromMap.set(k, []);
+    fromMap.get(k).push(i);
+  });
+  const used=new Uint8Array(edges.length);
+  const loops=[];
+  for(let i=0;i<edges.length;i++){
+    if(used[i]) continue;
+    const loop=[];
+    let curIdx=i;
+    const startKey=edges[i][0]+','+edges[i][1];
+    let guard=0; const guardMax=edges.length+16;
+    while(true){
+      used[curIdx]=1;
+      const [x1,y1,x2,y2]=edges[curIdx];
+      loop.push([x1,y1]);
+      const key=x2+','+y2;
+      if(key===startKey) break;
+      const candidates=(fromMap.get(key)||[]).filter(idx=>!used[idx]);
+      if(!candidates.length) break;
+      curIdx=candidates[0];
+      guard++;
+      if(guard>guardMax) break;
+    }
+    if(loop.length>=4) loops.push(loop);
+  }
+  const outerLoops=[], innerLoops=[];
+  loops.forEach(loop=>{
+    const area=t3dSignedArea(loop);
+    if(Math.abs(area)<0.5) return;
+    if(area>0) outerLoops.push(loop); else innerLoops.push(loop);
+  });
+  return { outerLoops, innerLoops };
+}
+function t3dSimplify(points, tolerance){
+  if(points.length<=2) return points.slice();
+  function perpDist(p, a, b){
+    const dx=b[0]-a[0], dy=b[1]-a[1];
+    const len2=dx*dx+dy*dy;
+    if(len2<1e-9) return Math.hypot(p[0]-a[0], p[1]-a[1]);
+    let t=((p[0]-a[0])*dx+(p[1]-a[1])*dy)/len2;
+    t=Math.max(0,Math.min(1,t));
+    const px=a[0]+t*dx, py=a[1]+t*dy;
+    return Math.hypot(p[0]-px, p[1]-py);
+  }
+  function dp(pts){
+    if(pts.length<=2) return pts;
+    let maxD=-1, idx=-1;
+    for(let i=1;i<pts.length-1;i++){
+      const d=perpDist(pts[i], pts[0], pts[pts.length-1]);
+      if(d>maxD){ maxD=d; idx=i; }
+    }
+    if(maxD>tolerance){
+      const left=dp(pts.slice(0,idx+1));
+      const right=dp(pts.slice(idx));
+      return left.slice(0,-1).concat(right);
+    }
+    return [pts[0], pts[pts.length-1]];
+  }
+  return dp(points);
+}
+function t3dPointInLoop(p, loop){
+  let inside=false;
+  for(let i=0,j=loop.length-1;i<loop.length;j=i++){
+    const xi=loop[i][0], yi=loop[i][1], xj=loop[j][0], yj=loop[j][1];
+    const intersect = ((yi>p[1])!==(yj>p[1])) && (p[0] < (xj-xi)*(p[1]-yi)/((yj-yi)||1e-12) + xi);
+    if(intersect) inside=!inside;
+  }
+  return inside;
+}
+function textToShapes(text, weightBold, fontKey){
+  const { imgData, width, height, rasterH } = t3dRasterize(text, weightBold, fontKey);
+  const maskObj = t3dBinaryMask(imgData);
+  const { outerLoops, innerLoops } = t3dTraceContours(maskObj);
+  const tol = 1.1;
+  const outers = outerLoops.map(loop=>{
+    let simp=t3dSimplify(loop, tol);
+    if(simp.length>=3 && t3dSignedArea(simp)<0) simp=simp.slice().reverse();
+    return simp;
+  }).filter(l=>l.length>=3);
+  const inners = innerLoops.map(loop=>{
+    let simp=t3dSimplify(loop, tol);
+    if(simp.length>=3 && t3dSignedArea(simp)>0) simp=simp.slice().reverse();
+    return simp;
+  }).filter(l=>l.length>=3);
+  const shapes=outers.map(outer=>({ outer, holes:[] }));
+  inners.forEach(hole=>{
+    const rep=hole[0];
+    let bestIdx=-1, bestArea=Infinity;
+    shapes.forEach((s,i)=>{
+      if(t3dPointInLoop(rep, s.outer)){
+        const area=Math.abs(t3dSignedArea(s.outer));
+        if(area<bestArea){ bestArea=area; bestIdx=i; }
+      }
+    });
+    if(bestIdx>=0) shapes[bestIdx].holes.push(hole);
+  });
+  const toLocal=(p)=>[ p[0]-width/2, (height-p[1]) ];
+  const shapeObjs=shapes.map(s=>{
+    const outerLocal=s.outer.map(toLocal);
+    const shape=new THREE.Shape();
+    outerLocal.forEach((p,i)=>{ if(i===0) shape.moveTo(p[0],p[1]); else shape.lineTo(p[0],p[1]); });
+    shape.closePath();
+    s.holes.forEach(h=>{
+      const holeLocal=h.map(toLocal);
+      const path=new THREE.Path();
+      holeLocal.forEach((p,i)=>{ if(i===0) path.moveTo(p[0],p[1]); else path.lineTo(p[0],p[1]); });
+      path.closePath();
+      shape.holes.push(path);
+    });
+    return shape;
+  });
+  return { shapes: shapeObjs, rasterW:width, rasterH:height };
+}
+
+/* buildText3dGeometry: desc={text,size,depth,bevel,bold,font} → ExtrudeGeometry（正面+Z・底辺y=0接地・中心x=0） */
+function buildText3dGeometry(desc){
+  const size=Math.max(6, +desc.size||46);
+  const depth=Math.max(1, +desc.depth||14);
+  let bevel=Math.max(0, desc.bevel!=null ? +desc.bevel : 1.6);
+  bevel=Math.min(bevel, size/10, depth/2 - 0.1);
+  bevel=Math.max(0, bevel);
+  const bevelEnabled=bevel>0.05;
+  const { shapes, rasterH } = textToShapes(desc.text||' ', desc.bold!==false, desc.font);
+  if(!shapes.length) return new THREE.BoxGeometry(size*0.4, size*0.4, depth);
+  const scale = size/rasterH;
+  const curveSeg = desc.lowQuality ? 3 : 6;
+  const extrudeSettings={
+    depth: depth,
+    bevelEnabled: bevelEnabled,
+    bevelSize: bevelEnabled ? bevel : 0,
+    bevelThickness: bevelEnabled ? bevel : 0,
+    bevelSegments: 2,
+    curveSegments: curveSeg
+  };
+  let geo=new THREE.ExtrudeGeometry(shapes, extrudeSettings);
+  geo.scale(scale, scale, 1);
+  geo.computeBoundingBox();
+  const bb=geo.boundingBox;
+  const cx=(bb.min.x+bb.max.x)/2;
+  const minY=bb.min.y;
+  geo.translate(-cx, -minY, 0);
+  geo.computeVertexNormals();
+  return geo;
+}
+
+/* ---------------------------------------------------------------------
+ * 2) 単語ごとのビジュアル判定（AI優先／ヒューリスティック フォールバック）
+ * ------------------------------------------------------------------- */
+const MATERIAL_KINDS=['gold','silver','rainbow','neon','glass','pearl'];
+const STYLE_KINDS=['normal','outline','dance'];
+const CREATURE_KINDS=['fish','octopus','squid','seaweed','jelly','none'];
+
+const KEYWORD_RULES=[
+  { re:/(金|王|kin|king|gold|冠|黄金|王様|王女|富|勝利)/i, material:'gold' },
+  { re:/(月|銀|雪|冬|silver|moon|snow|白銀|氷)/i, material:'silver' },
+  { re:/(虹|夢|rainbow|dream|希望|奇跡|レインボー)/i, material:'rainbow' },
+  { re:/(夜|光|電気|neon|ネオン|星|スター|未来|電脳|都市)/i, material:'neon' },
+  { re:/(海|空|水|青|glass|sea|sky|water|blue|涙|氷河|クリスタル)/i, material:'glass' },
+  { re:/(花|愛|恋|pink|love|flower|桜|ピンク|甘い|優しい)/i, material:'pearl' },
+];
+function hashStr(s){ let h=0; for(let i=0;i<s.length;i++){ h=(h*31 + s.charCodeAt(i))|0; } return Math.abs(h); }
+function heuristicDecide(word){
+  const w=(word||'').trim();
+  let material=null;
+  for(const rule of KEYWORD_RULES){ if(rule.re.test(w)){ material=rule.material; break; } }
+  const h=hashStr(w||'x');
+  if(!material) material=MATERIAL_KINDS[h%MATERIAL_KINDS.length];
+  const hue=(h % 360);
+  const color = hslToHex(hue, 0.62, 0.58);
+  const styleRoll = (h>>3)%10;
+  let style='normal';
+  if(styleRoll<2) style='outline'; else if(styleRoll<4) style='dance';
+  return { color, material, style, reason:'ヒューリスティック判定' };
+}
+function hslToHex(h,s,l){
+  const c=(1-Math.abs(2*l-1))*s, x=c*(1-Math.abs((h/60)%2-1)), m=l-c/2;
+  let r=0,g=0,b=0;
+  if(h<60){r=c;g=x;b=0;}else if(h<120){r=x;g=c;b=0;}else if(h<180){r=0;g=c;b=x;}
+  else if(h<240){r=0;g=x;b=c;}else if(h<300){r=x;g=0;b=c;}else{r=c;g=0;b=x;}
+  const R=Math.round((r+m)*255), G=Math.round((g+m)*255), B=Math.round((b+m)*255);
+  return '#'+[R,G,B].map(v=>v.toString(16).padStart(2,'0')).join('');
+}
+async function fetchAiDecision(word){
+  const ctrl=new AbortController();
+  const timer=setTimeout(()=>ctrl.abort(), 6000);
+  try{
+    const res=await fetch(BRIDGE_ORIGIN+'/ai', {
+      method:'POST',
+      headers:{ 'Content-Type':'application/json' },
+      body: JSON.stringify({ word }),
+      signal: ctrl.signal
+    });
+    clearTimeout(timer);
+    if(!res.ok) throw new Error('http '+res.status);
+    const json=await res.json();
+    if(!json || json.error) throw new Error(json && json.error || 'no data');
+    const material = MATERIAL_KINDS.includes(json.material) ? json.material : null;
+    const style = STYLE_KINDS.includes(json.style) ? json.style : 'normal';
+    const creature = CREATURE_KINDS.includes(json.creature) ? json.creature : 'none';
+    const color = /^#([0-9a-f]{6}|[0-9a-f]{3})$/i.test(json.color||'') ? json.color : null;
+    if(!material || !color) throw new Error('invalid fields');
+    return { color, material, style, creature, reason: json.reason||'AI判定', ai:true };
+  }catch(e){
+    clearTimeout(timer);
+    return null;
+  }
+}
+
+/* ---------------------------------------------------------------------
+ * 3) Three.js シーン初期化
+ * ------------------------------------------------------------------- */
+const appEl=document.getElementById('app');
+const renderer=new THREE.WebGLRenderer({ antialias:true, powerPreference:'high-performance' });
+renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+renderer.shadowMap.enabled=true;
+renderer.shadowMap.type=THREE.PCFSoftShadowMap;
+renderer.outputColorSpace=THREE.SRGBColorSpace;
+renderer.toneMapping=THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure=0.92;
+appEl.appendChild(renderer.domElement);
+
+const scene=new THREE.Scene();
+
+/* ---------------------------------------------------------------------
+ * X3) 背景カスタマイズ：プリセット・単色上書き・モード既定
+ * scene.background は毎回CanvasTexture(8x256の縦グラデ)を再生成して差し替える。
+ * ------------------------------------------------------------------- */
+const BG_PRESETS={
+  cosmos:  { stops:['#0a0e24','#050716','#010103'], fog:0x05060f },
+  deepsea: { stops:['#0f3a52','#062033','#01070d'], fog:0x03222f },
+  sunset:  { stops:['#37172f','#7a3a3a','#1a0a12'], fog:0x2a1420 },
+  neon:    { stops:['#1c0a33','#2a0838','#050110'], fog:0x180428 },
+  black:   { stops:['#0a0a0c','#040405','#000000'], fog:0x030303 },
+};
+const MODE_DEFAULT_BG={ spiral:'cosmos', sea:'deepsea' };
+let bgCustomColor=null; // 単色上書き（#hex）。nullならプリセット/モード既定を使う
+let bgPresetKey='cosmos';
+let liveBgOn=false; // X4: ムービー背景（カメラ映像）ON中はapplyBackground()での上書きをスキップ
+// X4/S2/S3: ライブ映像背景まわりの状態（resize()より先に宣言し、初回resize()実行時のTDZを避ける）
+let liveBgStream=null;
+let liveBgVideoEl=null;
+let liveBgTexture=null;
+let liveBgQuad=null;       // フルブリード背景クワッド（カメラ追従・cover UV・tintシェーダ）
+// S3: 映像フィルター（tint）設定。localStorageへ永続化（既存 kland-bg と同様の命名慣習）
+let vfColor=null;          // '#rrggbb' or null（フィルターOFF）
+let vfStrength=0;          // 0〜1
+let vfMono=false;          // モノクロ化
+const bgCanvas=document.createElement('canvas'); bgCanvas.width=8; bgCanvas.height=256;
+const bgCtx=bgCanvas.getContext('2d');
+const bgTex=new THREE.CanvasTexture(bgCanvas);
+bgTex.colorSpace=THREE.SRGBColorSpace;
+scene.background=bgTex;
+scene.fog=new THREE.FogExp2(0x05060f, 0.0016);
+
+function hexToRgb(hex){
+  const m=/^#?([0-9a-f]{6})$/i.exec(hex||'');
+  if(!m) return {r:10,g:14,b:36};
+  const n=parseInt(m[1],16);
+  return { r:(n>>16)&255, g:(n>>8)&255, b:n&255 };
+}
+function shadeHex(hex, mul){
+  const {r,g,b}=hexToRgb(hex);
+  const c=v=>Math.max(0,Math.min(255,Math.round(v*mul)));
+  return '#'+[c(r),c(g),c(b)].map(v=>v.toString(16).padStart(2,'0')).join('');
+}
+function applyBackground(){
+  let stops, fog;
+  if(bgCustomColor){
+    stops=[ shadeHex(bgCustomColor,1.15), bgCustomColor, shadeHex(bgCustomColor,0.28) ];
+    fog=parseInt(hexToRgb(bgCustomColor).r.toString(16).padStart(2,'0')+hexToRgb(bgCustomColor).g.toString(16).padStart(2,'0')+hexToRgb(bgCustomColor).b.toString(16).padStart(2,'0'),16);
+  } else {
+    const preset=BG_PRESETS[bgPresetKey]||BG_PRESETS.cosmos;
+    stops=preset.stops; fog=preset.fog;
+  }
+  const grad=bgCtx.createLinearGradient(0,0,0,256);
+  grad.addColorStop(0, stops[0]);
+  grad.addColorStop(0.45, stops[1]);
+  grad.addColorStop(1, stops[2]);
+  bgCtx.fillStyle=grad; bgCtx.fillRect(0,0,8,256);
+  bgTex.needsUpdate=true;
+  if(!liveBgOn){
+    scene.background=bgTex;
+    scene.fog.color.setHex(fog);
+  }
+}
+function setBgPreset(key, opts){
+  opts=opts||{};
+  bgPresetKey=BG_PRESETS[key] ? key : 'cosmos';
+  if(!opts.keepCustom) bgCustomColor=null;
+  applyBackground();
+  updateBgPanelUi();
+  if(!opts.skipSave) saveBgPref();
+}
+function setBgCustomColor(hex){
+  bgCustomColor=/^#[0-9a-fA-F]{6}$/.test(hex) ? hex : null;
+  applyBackground();
+  updateBgPanelUi();
+  saveBgPref();
+}
+function saveBgPref(){
+  try{ localStorage.setItem('kland-bg', JSON.stringify({ preset:bgPresetKey, custom:bgCustomColor })); }catch(e){}
+}
+function loadBgPref(){
+  try{
+    const raw=localStorage.getItem('kland-bg');
+    if(!raw) return false;
+    const obj=JSON.parse(raw);
+    if(obj && obj.preset && BG_PRESETS[obj.preset]) bgPresetKey=obj.preset;
+    if(obj && obj.custom && /^#[0-9a-fA-F]{6}$/.test(obj.custom)) bgCustomColor=obj.custom;
+    return true;
+  }catch(e){ return false; }
+}
+function updateBgPanelUi(){
+  document.querySelectorAll('.bgChip').forEach(el=>{
+    el.classList.toggle('active', !bgCustomColor && el.dataset.bg===bgPresetKey);
+  });
+  const picker=document.getElementById('bgColorPicker');
+  if(picker && bgCustomColor) picker.value=bgCustomColor;
+}
+// 起動時：保存済み設定があればそれを、無ければ現行モード(スパイラル)の既定を使う
+const bgHadSavedPref=loadBgPref();
+if(!bgHadSavedPref) bgPresetKey=MODE_DEFAULT_BG.spiral;
+applyBackground();
+
+const camera=new THREE.PerspectiveCamera(48, innerWidth/innerHeight, 0.1, 4000);
+camera.position.set(260, 210, 420);
+
+const controls=new OrbitControls(camera, renderer.domElement);
+controls.enableDamping=true; controls.dampingFactor=0.07;
+controls.minDistance=80; controls.maxDistance=1100;
+controls.target.set(0, 190, 0);
+controls.maxPolarAngle=Math.PI*0.94;
+
+// 環境ライティング（IBL）で金属反射
+const pmrem=new THREE.PMREMGenerator(renderer);
+const envTex=pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
+scene.environment=envTex;
+
+const hemi=new THREE.HemisphereLight(0x8fb0ff, 0x0a0612, 0.55); scene.add(hemi);
+const key=new THREE.DirectionalLight(0xfff1e0, 0.85);
+key.position.set(180, 420, 220); key.castShadow=true;
+key.shadow.mapSize.set(1024,1024);
+key.shadow.camera.left=-400; key.shadow.camera.right=400;
+key.shadow.camera.top=400; key.shadow.camera.bottom=-400;
+key.shadow.camera.far=1400; key.shadow.bias=-0.0006;
+scene.add(key);
+const rim=new THREE.PointLight(0x7fd7ff, 120, 900, 2); rim.position.set(-220,260,-160); scene.add(rim);
+const rim2=new THREE.PointLight(0xff8bcb, 110, 900, 2); rim2.position.set(220,120,-260); scene.add(rim2);
+
+/* 床のうっすら反射風の暗い円盤 */
+{
+  const floorGeo=new THREE.CircleGeometry(340, 96);
+  const floorMat=new THREE.MeshStandardMaterial({
+    color:0x05070f, roughness:0.18, metalness:0.75, envMapIntensity:1.3,
+    transparent:true, opacity:0.88
+  });
+  const floor=new THREE.Mesh(floorGeo, floorMat);
+  floor.rotation.x=-Math.PI/2; floor.position.y=-1; floor.receiveShadow=true;
+  scene.add(floor);
+  const ring=new THREE.Mesh(new THREE.RingGeometry(336,340,96), new THREE.MeshBasicMaterial({ color:0x8fd7ff, transparent:true, opacity:0.28, side:THREE.DoubleSide }));
+  ring.rotation.x=-Math.PI/2; ring.position.y=-0.9;
+  scene.add(ring);
+}
+
+/* ---- ポストプロセス：ブルーム発光 ---- */
+const composer=new EffectComposer(renderer);
+const renderPass=new RenderPass(scene, camera);
+composer.addPass(renderPass);
+const bloomPass=new UnrealBloomPass(new THREE.Vector2(innerWidth, innerHeight), 1.1, 0.55, 0.42);
+composer.addPass(bloomPass);
+const outputPass=new OutputPass();
+composer.addPass(outputPass);
+
+function resize(){
+  const w=innerWidth, h=innerHeight;
+  camera.aspect=w/h; camera.updateProjectionMatrix();
+  renderer.setSize(w,h);
+  composer.setSize(w,h);
+  bloomPass.setSize(w,h);
+  if(typeof updateLiveBgQuadGeometry==='function') updateLiveBgQuadGeometry();
+  if(typeof updateLiveBgCoverUv==='function') updateLiveBgCoverUv();
+}
+addEventListener('resize', resize); resize();
+
+/* ---------------------------------------------------------------------
+ * 4) 螺旋（ヘリックス）経路 ＋ 虹ライン
+ * ------------------------------------------------------------------- */
+const SPIRAL={
+  radius: 150,
+  turns: 6,
+  height: 560,     // 天井相当の高さ（ここで消えて下から再登場）
+  baseY: 6,
+};
+function spiralPoint(t){
+  // t: 0(底)〜1(天井)
+  const ang = t * SPIRAL.turns * Math.PI*2;
+  const r = SPIRAL.radius * (0.62 + 0.38*Math.sin(t*Math.PI*0.5)); // 上に向かってやや広がる
+  const y = SPIRAL.baseY + t*SPIRAL.height;
+  return new THREE.Vector3(Math.cos(ang)*r, y, Math.sin(ang)*r);
+}
+function spiralTangent(t){
+  const dt=0.001;
+  const a=spiralPoint(Math.max(0,t-dt)), b=spiralPoint(Math.min(1,t+dt));
+  return b.clone().sub(a).normalize();
+}
+
+// 虹色に光る螺旋ライン（頂点カラー、色相がゆっくり流れる）
+const spiralLineGroup=new THREE.Group(); scene.add(spiralLineGroup);
+let spiralLine;
+{
+  const N=420;
+  const positions=new Float32Array(N*3);
+  const colors=new Float32Array(N*3);
+  for(let i=0;i<N;i++){
+    const t=i/(N-1);
+    const p=spiralPoint(t);
+    positions[i*3]=p.x; positions[i*3+1]=p.y; positions[i*3+2]=p.z;
+  }
+  const geo=new THREE.BufferGeometry();
+  geo.setAttribute('position', new THREE.BufferAttribute(positions,3));
+  geo.setAttribute('color', new THREE.BufferAttribute(colors,3));
+  const mat=new THREE.LineBasicMaterial({ vertexColors:true, transparent:true, opacity:0.75, linewidth:1 });
+  spiralLine=new THREE.Line(geo, mat);
+  spiralLineGroup.add(spiralLine);
+}
+function updateSpiralLineColors(hueShift){
+  const colAttr=spiralLine.geometry.getAttribute('color');
+  const N=colAttr.count;
+  const tmp=new THREE.Color();
+  for(let i=0;i<N;i++){
+    const t=i/(N-1);
+    const hue=( (t*360*2) + hueShift ) % 360;
+    tmp.setHSL(hue/360, 0.85, 0.58);
+    colAttr.setXYZ(i, tmp.r, tmp.g, tmp.b);
+  }
+  colAttr.needsUpdate=true;
+}
+
+/* ---------------------------------------------------------------------
+ * X1) モード切替：🌀スパイラル ⇄ 🌊海
+ * 既存の螺旋の位置更新ロジック（placeEntry内の螺旋計算）はupdateEntrySpiralへ、
+ * 新しい海の遊泳ロジックはupdateEntrySeaへ分離する。呼び出し元のplaceEntryは
+ * appMode を見てどちらかに委譲するだけにし、既存の螺旋挙動そのものは変更しない。
+ * 海の遊泳範囲は螺旋と同程度の空間（半径・高さ）に収める。
+ * ------------------------------------------------------------------- */
+let appMode='spiral'; // 'spiral' | 'sea'
+const SEA={
+  radius: SPIRAL.radius*1.05,          // 回遊できる水平半径（螺旋の空間感と同程度）
+  yMin: SPIRAL.baseY - 4,
+  yMax: SPIRAL.baseY + SPIRAL.height*0.86,
+  seaweedYBand: 46,                    // 海藻が根を張る海底付近の帯
+  swimYMin: SPIRAL.baseY + 22,          // 泳ぐ生き物（fish/octopus/squid/jelly）が海底に張り付いて見えないための下限
+};
+function clampToSeaBounds(pos, opts){
+  // 境界に達したら緩やかに押し戻す（呼び出し側でvel反転にも使う簡易版）
+  opts=opts||{};
+  const rXZ=Math.hypot(pos.x, pos.z);
+  if(rXZ>SEA.radius){
+    const k=SEA.radius/rXZ;
+    pos.x*=k; pos.z*=k;
+  }
+  const yFloor = opts.swim ? SEA.swimYMin : SEA.yMin;
+  if(pos.y<yFloor) pos.y=yFloor;
+  if(pos.y>SEA.yMax) pos.y=SEA.yMax;
+  return pos;
+}
+
+/* 単語辞書から creature 種別をフォールバック判定（AIのcreatureが無い/noneの場合に使用） */
+const CREATURE_DICT_RULES=[
+  { re:/(タコ|たこ|octopus)/i, creature:'octopus' },
+  { re:/(イカ|いか|squid)/i, creature:'squid' },
+  { re:/(海藻|わかめ|ワカメ|昆布|こんぶ|kelp|seaweed)/i, creature:'seaweed' },
+  { re:/(クラゲ|くらげ|jellyfish|jelly)/i, creature:'jelly' },
+  { re:/(魚|さかな|サカナ|マグロ|まぐろ|サメ|さめ|金魚|きんぎょ|タイ|たい|カツオ|かつお|fish|tuna|shark)/i, creature:'fish' },
+];
+function dictDecideCreature(word){
+  const w=(word||'').trim();
+  for(const rule of CREATURE_DICT_RULES){ if(rule.re.test(w)) return rule.creature; }
+  return 'fish'; // 海モードでは全員泳ぐ＝既定はfish
+}
+/* decision.creature（AI由来、'none'含む）を実際の遊泳種別に正規化。wordは辞書フォールバック用 */
+function resolveSwimCreature(decision, word){
+  const c=decision && decision.creature;
+  if(c && c!=='none' && ['fish','octopus','squid','seaweed','jelly'].includes(c)) return c;
+  return dictDecideCreature(word || '');
+}
+
+/* 巡航深度（targetY）の抽選：SEA.swimYMin〜yMaxをCRUISE_LAYERS層に分け、
+ * ラウンドロビンで層を回して縦方向に自然に分散させる（同じ層に固まらない）。
+ * 各層の中でさらにランダムオフセットを加えるので、層の境界は見た目には現れない。 */
+const CRUISE_LAYERS=5;
+let cruiseLayerSeq=Math.floor(Math.random()*CRUISE_LAYERS);
+function pickCruiseDepth(){
+  const layer=(cruiseLayerSeq++)%CRUISE_LAYERS;
+  const bandH=(SEA.yMax-SEA.swimYMin)/CRUISE_LAYERS;
+  return SEA.swimYMin + (layer + Math.random())*bandH;
+}
+function pickRetargetInterval(){ return 10 + Math.random()*10; } // 10〜20s+ランダムで再抽選
+
+/* エントリーに海用の遊泳ステートを初期化（初回のみ・以後はentry.seaに保持） */
+function ensureSeaState(entry){
+  if(entry.sea) return entry.sea;
+  // 写真(kind:'photo')は自動的にjelly扱い、モデル(kind:'model')は既存通りfishでよい
+  const creature = entry.kind==='photo' ? 'jelly' : resolveSwimCreature(entry.decision, entry.text);
+  const ang=Math.random()*Math.PI*2;
+  const rad=SEA.radius*(0.25+Math.random()*0.65);
+  let y;
+  if(creature==='seaweed'){
+    y=SEA.yMin + Math.random()*SEA.seaweedYBand;
+  } else {
+    y=SEA.swimYMin + Math.random()*(SEA.yMax-SEA.swimYMin);
+  }
+  entry.sea={
+    creature,
+    pos:new THREE.Vector3(Math.cos(ang)*rad, y, Math.sin(ang)*rad),
+    heading: Math.random()*Math.PI*2,      // 水平方向（rad）
+    headingTarget: Math.random()*Math.PI*2,
+    speed: 6+Math.random()*8,
+    phase: Math.random()*Math.PI*2,
+    phase2: Math.random()*Math.PI*2,
+    burstT: 0,                              // squid/fishの加速演出タイマー
+    burstCooldown: 1.5+Math.random()*3,
+    rootPos: null,                          // seaweed用：根本固定位置
+    targetY: pickCruiseDepth(),             // fish/octopus/squid用：巡航深度（縦回遊の目標y）
+    retargetT: pickRetargetInterval(),      // targetY再抽選までの残り秒数
+  };
+  if(creature==='seaweed'){
+    entry.sea.rootPos=entry.sea.pos.clone();
+  }
+  return entry.sea;
+}
+
+/* fish/octopus/squid共通：巡航深度への緩やかな上下回遊。
+ * 現在yからtargetYへ数秒スケールで補間し、一定時間ごとにtargetYを再抽選する。
+ * 補間係数 dt*0.35 ≒ 時定数約3秒（1フレームあたり残差の約0.6%(60fps時)を詰める）。 */
+function updateCruiseDepth(s, dt){
+  s.retargetT -= dt;
+  if(s.retargetT<=0){
+    s.targetY=pickCruiseDepth();
+    s.retargetT=pickRetargetInterval();
+  }
+  s.pos.y += (s.targetY - s.pos.y)*Math.min(1, dt*0.35);
+}
+
+/* 螺旋位置(現在t由来のposition)から海のposへ滑らかに遷移させるための初期化。
+ * モード切替の瞬間に呼び、entry.seaが無ければ現在位置ベースで作る（座標ジャンプ防止）。 */
+function seedSeaStateFromCurrentPosition(entry){
+  const s=ensureSeaState(entry);
+  if(!s.__seeded){
+    if(s.creature==='seaweed'){
+      // 海藻はrootPos（根本＝海底の定位置）を正とする。現在の螺旋位置は流用しない
+      // （螺旋の高所からいきなり海底へワープして見えるのを避けるため、根本のx/zだけ
+      //   現在位置の水平方向へ寄せ、yは常にensureSeaState由来の海底帯に保つ）
+      const cur=entry.group.position;
+      const ang=Math.atan2(cur.z, cur.x);
+      const rad=Math.min(SEA.radius*0.92, Math.hypot(cur.x, cur.z));
+      s.rootPos.set(Math.cos(ang)*rad, s.rootPos.y, Math.sin(ang)*rad);
+      s.pos.copy(s.rootPos);
+    } else {
+      s.pos.copy(entry.group.position);
+      clampToSeaBounds(s.pos, { swim:true });
+    }
+    s.__seeded=true;
+  }
+}
+
+/* --- 既存の螺旋の位置更新（従来のplaceEntry本体をそのまま移設。挙動は変更しない） --- */
+function updateEntrySpiral(entry, dt){
+  const baseSpeed=0.028; // 1秒あたりのt増分の基準値
+  entry.t += baseSpeed*entry.speedMul*dt*globalSpeed;
+  if(entry.t>1) entry.t -= 1; // 天井まで来たら下からループ再登場
+  const p=spiralPoint(entry.t);
+  const tan=spiralTangent(entry.t);
+  entry.group.position.copy(p);
+  // 進行方向を向かせつつ、螺旋の外向きにも少し開く
+  const outward=new THREE.Vector3(p.x, 0, p.z).normalize();
+  const lookTarget=p.clone().add(tan);
+  entry.group.up.set(0,1,0);
+  entry.group.lookAt(lookTarget);
+  entry.group.rotateY(Math.PI/2);
+  // 少し外向きに傾けて視認性UP
+  entry.group.position.add(outward.multiplyScalar(0));
+}
+
+/* --- 海モードの遊泳ロジック：creature種別ごとに位置・向き・スケール演出を計算 --- */
+function updateEntrySea(entry, dt){
+  seedSeaStateFromCurrentPosition(entry);
+  const s=entry.sea;
+  const now=performance.now()*0.001;
+  const g=entry.group;
+
+  if(s.creature==='seaweed'){
+    // 海底に係留・根本固定・先端がゆらゆら（rotation.zをsin波、positionはほぼ固定）
+    g.position.copy(s.rootPos);
+    g.rotation.set(0,0, Math.sin(now*0.9+s.phase)*0.22 + Math.sin(now*0.37+s.phase2)*0.09);
+    g.rotation.y = s.phase*0.3;
+    g.scale.setScalar(g.scale.x||1); // スケールは既存のまま維持
+    return;
+  }
+
+  if(s.creature==='jelly'){
+    // ふわ〜っと上下（写真ポラロイドは自動的にjelly扱い）
+    s.pos.y += Math.sin(now*0.5+s.phase)*dt*4.0;
+    s.pos.x += Math.sin(now*0.13+s.phase2)*dt*2.2;
+    s.pos.z += Math.cos(now*0.11+s.phase2)*dt*2.2;
+    clampToSeaBounds(s.pos, { swim:true });
+    g.position.copy(s.pos);
+    g.rotation.y += dt*0.12;
+    return;
+  }
+
+  if(s.creature==='octopus'){
+    // ゆっくり脈動（scale 1±0.06）しながら不規則に漂う。yは巡航深度へゆっくり回遊
+    s.headingTarget += (Math.random()-0.5)*dt*0.8;
+    s.heading += (s.headingTarget - s.heading)*Math.min(1, dt*0.6);
+    const drift=1.6;
+    s.pos.x += Math.cos(s.heading)*drift*dt;
+    s.pos.z += Math.sin(s.heading)*drift*dt;
+    updateCruiseDepth(s, dt);
+    s.pos.y += Math.sin(now*0.22+s.phase)*dt*1.4;
+    clampToSeaBounds(s.pos, { swim:true });
+    g.position.copy(s.pos);
+    g.up.set(0,1,0);
+    g.lookAt(s.pos.x+Math.cos(s.heading), s.pos.y, s.pos.z+Math.sin(s.heading));
+    const pulse=1 + Math.sin(now*1.8+s.phase)*0.06;
+    g.scale.setScalar((g.userData.baseScaleForSwim||(g.userData.baseScaleForSwim=g.scale.x||1))*pulse);
+    return;
+  }
+
+  if(s.creature==='squid'){
+    // 静止→ジェット噴射でスッと直進→減速、を繰り返す
+    s.burstCooldown -= dt;
+    if(s.burstCooldown<=0 && s.burstT<=0){
+      s.burstT=0.55;
+      s.heading=Math.random()*Math.PI*2;
+      s.burstCooldown=2.2+Math.random()*3.2;
+      burstSparkle(g.position.clone()); // 噴射時の小さな泡バースト（既存burstSparkle流用）
+    }
+    let curSpeed=0.6; // 静止時のわずかな漂い
+    if(s.burstT>0){
+      const jetProgress=1-(s.burstT/0.55);
+      curSpeed = 34*(1-jetProgress*jetProgress); // 加速→減速カーブ
+      s.burstT=Math.max(0, s.burstT-dt);
+    }
+    s.pos.x += Math.cos(s.heading)*curSpeed*dt;
+    s.pos.z += Math.sin(s.heading)*curSpeed*dt;
+    updateCruiseDepth(s, dt);
+    s.pos.y += Math.sin(now*0.3+s.phase)*dt*0.8;
+    clampToSeaBounds(s.pos, { swim:true });
+    g.position.copy(s.pos);
+    g.up.set(0,1,0);
+    g.lookAt(s.pos.x+Math.cos(s.heading), s.pos.y, s.pos.z+Math.sin(s.heading));
+    return;
+  }
+
+  // fish（既定）: 水平基調のS字遊泳。進行方向へ向きを合わせ、方向転換時に体をロール。ときどきスッと加速
+  s.burstCooldown -= dt;
+  if(s.burstCooldown<=0 && s.burstT<=0){
+    s.burstT=0.8;
+    s.burstCooldown=3+Math.random()*4;
+  }
+  s.headingTarget += Math.sin(now*0.6+s.phase)*dt*1.1; // S字にうねる方向転換
+  if(Math.random()<0.004) s.headingTarget += (Math.random()-0.5)*1.4; // 境界などでの気まぐれな転回
+  s.heading += (s.headingTarget - s.heading)*Math.min(1, dt*1.8);
+  let curSpeed=s.speed;
+  if(s.burstT>0){ curSpeed=s.speed*2.4; s.burstT=Math.max(0, s.burstT-dt); }
+  // 境界に近づいたら中心方向へ緩やかに向きを補正（画面外へ出ない）
+  const rXZ=Math.hypot(s.pos.x, s.pos.z);
+  if(rXZ>SEA.radius*0.88){
+    const toCenter=Math.atan2(-s.pos.z, -s.pos.x);
+    s.headingTarget = toCenter;
+  }
+  if(s.pos.y<SEA.swimYMin+14) s.headingTarget=s.heading; // 上下はheadingでなく巡航深度で別途制御
+  s.pos.x += Math.cos(s.heading)*curSpeed*dt;
+  s.pos.z += Math.sin(s.heading)*curSpeed*dt;
+  updateCruiseDepth(s, dt);
+  s.pos.y += Math.sin(now*0.4+s.phase2)*dt*2.0;
+  clampToSeaBounds(s.pos, { swim:true });
+  g.position.copy(s.pos);
+  g.up.set(0,1,0);
+  g.lookAt(s.pos.x+Math.cos(s.heading), s.pos.y+Math.sin(now*0.4+s.phase2)*0.001, s.pos.z+Math.sin(s.heading));
+  // 方向転換時に体をロール
+  const turnRate=s.headingTarget-s.heading;
+  g.rotateZ(Math.max(-0.5, Math.min(0.5, turnRate*1.4)));
+}
+
+function updateEntry(entry, dt){
+  if(appMode==='sea') updateEntrySea(entry, dt);
+  else updateEntrySpiral(entry, dt);
+}
+
+/* モード切替本体：背景・虹ライン/光カーテン・スパークル/泡の見た目を差し替え、
+ * 既存entriesは現在位置ベースで海ステートを起こすため座標ジャンプしない。 */
+function setAppMode(mode, opts){
+  opts=opts||{};
+  mode = mode==='sea' ? 'sea' : 'spiral';
+  if(mode===appMode && !opts.force) return;
+  appMode=mode;
+  const btn=document.getElementById('btnSeaMode');
+  if(btn){
+    btn.classList.toggle('sea', mode==='sea');
+    btn.querySelector('.smIcon').textContent = mode==='sea' ? '🌊' : '🌀';
+    btn.querySelector('.smLabel').textContent = mode==='sea' ? '海' : 'スパイラル';
+  }
+  spiralLineGroup.visible = (mode==='spiral');
+  lightCurtainGroup.visible = (mode==='sea');
+  sparkMat.map = (mode==='sea') ? bubbleTex : sparkleTex;
+  sparkMat.needsUpdate=true;
+
+  // 単語エントリーが海の遊泳ステートを持っていない場合、現在位置から起こす
+  if(mode==='sea'){
+    words.forEach(w=> seedSeaStateFromCurrentPosition(w));
+  }
+
+  // 背景既定：ユーザーがカスタム/プリセットを明示保存していない限り、モード既定へ切替
+  if(!bgCustomColor && !opts.keepBgPreset){
+    setBgPreset(MODE_DEFAULT_BG[mode], { skipSave:true });
+  }
+  try{ localStorage.setItem('kland-spiral-mode', mode); }catch(e){}
+}
+
+/* ---------------------------------------------------------------------
+ * X1) 光のカーテン（海モード：上から差し込む光。薄い半透明の細長いPlane数枚、加算合成でゆらゆら）
+ * ------------------------------------------------------------------- */
+const lightCurtainGroup=new THREE.Group(); scene.add(lightCurtainGroup);
+lightCurtainGroup.visible=false;
+const lightCurtains=[];
+{
+  const N=6;
+  const curtainH=SPIRAL.height*0.95;
+  for(let i=0;i<N;i++){
+    const w=22+Math.random()*20;
+    const geo=new THREE.PlaneGeometry(w, curtainH, 1, 12);
+    const mat=new THREE.MeshBasicMaterial({
+      color:new THREE.Color().setHSL(0.52+Math.random()*0.06, 0.55, 0.72),
+      transparent:true, opacity:0.10+Math.random()*0.06, side:THREE.DoubleSide,
+      blending:THREE.AdditiveBlending, depthWrite:false
+    });
+    const mesh=new THREE.Mesh(geo, mat);
+    const ang=(i/N)*Math.PI*2 + Math.random()*0.4;
+    const rad=SEA.radius*(0.5+Math.random()*0.4);
+    mesh.position.set(Math.cos(ang)*rad, SPIRAL.baseY+curtainH/2, Math.sin(ang)*rad);
+    mesh.rotation.y = -ang + Math.PI/2;
+    mesh.userData.baseX=mesh.position.x;
+    mesh.userData.baseZ=mesh.position.z;
+    mesh.userData.phase=Math.random()*Math.PI*2;
+    mesh.userData.sway=3+Math.random()*4;
+    lightCurtainGroup.add(mesh);
+    lightCurtains.push(mesh);
+  }
+}
+function updateLightCurtains(dt, now){
+  if(!lightCurtainGroup.visible) return;
+  lightCurtains.forEach(mesh=>{
+    const ph=mesh.userData.phase;
+    mesh.position.x = mesh.userData.baseX + Math.sin(now*0.25+ph)*mesh.userData.sway;
+    mesh.position.z = mesh.userData.baseZ + Math.cos(now*0.2+ph)*mesh.userData.sway;
+    mesh.material.opacity = (0.10+Math.sin(now*0.4+ph)*0.04);
+  });
+}
+
+/* ---------------------------------------------------------------------
+ * 5) スパークル（Points、加算合成）
+ * ------------------------------------------------------------------- */
+function makeSparkleTexture(){
+  const cv=document.createElement('canvas'); cv.width=64; cv.height=64;
+  const ctx=cv.getContext('2d');
+  ctx.clearRect(0,0,64,64);
+  const cx=32, cy=32;
+  const grad=ctx.createRadialGradient(cx,cy,0,cx,cy,30);
+  grad.addColorStop(0,'rgba(255,255,255,1)');
+  grad.addColorStop(0.25,'rgba(255,255,255,0.9)');
+  grad.addColorStop(1,'rgba(255,255,255,0)');
+  ctx.fillStyle=grad; ctx.beginPath(); ctx.arc(cx,cy,30,0,Math.PI*2); ctx.fill();
+  ctx.strokeStyle='rgba(255,255,255,0.95)'; ctx.lineWidth=2;
+  ctx.beginPath(); ctx.moveTo(cx,4); ctx.lineTo(cx,60); ctx.moveTo(4,cy); ctx.lineTo(60,cy); ctx.stroke();
+  const tex=new THREE.CanvasTexture(cv);
+  return tex;
+}
+/* X1(海モード): 泡テクスチャ。白い小さな円の縁取り＋淡いハイライト */
+function makeBubbleTexture(){
+  const cv=document.createElement('canvas'); cv.width=64; cv.height=64;
+  const ctx=cv.getContext('2d');
+  ctx.clearRect(0,0,64,64);
+  const cx=32, cy=32, r=26;
+  ctx.beginPath(); ctx.arc(cx,cy,r,0,Math.PI*2);
+  const grad=ctx.createRadialGradient(cx,cy,0,cx,cy,r);
+  grad.addColorStop(0,'rgba(255,255,255,0.05)');
+  grad.addColorStop(0.7,'rgba(210,240,255,0.16)');
+  grad.addColorStop(1,'rgba(255,255,255,0.55)');
+  ctx.fillStyle=grad; ctx.fill();
+  ctx.strokeStyle='rgba(255,255,255,0.75)'; ctx.lineWidth=2; ctx.stroke();
+  // 小さなハイライト
+  ctx.beginPath(); ctx.arc(cx-8,cy-9,5,0,Math.PI*2);
+  ctx.fillStyle='rgba(255,255,255,0.85)'; ctx.fill();
+  const tex=new THREE.CanvasTexture(cv);
+  return tex;
+}
+const sparkleTex=makeSparkleTexture();
+const bubbleTex=makeBubbleTexture();
+const SPARK_COUNT_MAX=260;
+const sparkGeo=new THREE.BufferGeometry();
+const sparkPos=new Float32Array(SPARK_COUNT_MAX*3);
+const sparkCol=new Float32Array(SPARK_COUNT_MAX*3);
+const sparkSize=new Float32Array(SPARK_COUNT_MAX);
+const sparkData=[]; // {basePos, phase, speed, life, size}
+for(let i=0;i<SPARK_COUNT_MAX;i++){
+  const t=Math.random();
+  const p=spiralPoint(t);
+  const ang=Math.random()*Math.PI*2, rad=18+Math.random()*46;
+  const px=p.x+Math.cos(ang)*rad, pz=p.z+Math.sin(ang)*rad, py=p.y+(Math.random()-0.5)*40;
+  sparkData.push({ t, ang, rad, yOff:(Math.random()-0.5)*40, phase:Math.random()*Math.PI*2, speed:0.15+Math.random()*0.3, size: 2.4+Math.random()*4.2, burst:0 });
+  sparkPos[i*3]=px; sparkPos[i*3+1]=py; sparkPos[i*3+2]=pz;
+  const c=new THREE.Color().setHSL(Math.random(),0.7,0.75);
+  sparkCol[i*3]=c.r; sparkCol[i*3+1]=c.g; sparkCol[i*3+2]=c.b;
+  sparkSize[i]=sparkData[i].size;
+}
+sparkGeo.setAttribute('position', new THREE.BufferAttribute(sparkPos,3));
+sparkGeo.setAttribute('color', new THREE.BufferAttribute(sparkCol,3));
+sparkGeo.setAttribute('size', new THREE.BufferAttribute(sparkSize,1));
+const sparkMat=new THREE.PointsMaterial({
+  size:6, map:sparkleTex, transparent:true, depthWrite:false, blending:THREE.AdditiveBlending,
+  vertexColors:true, sizeAttenuation:true
+});
+const sparkPoints=new THREE.Points(sparkGeo, sparkMat);
+scene.add(sparkPoints);
+let sparkleAmount=1.0;
+
+function burstSparkle(atPos){
+  // 新しい単語出現時のキラッと弾ける小バースト：既存スパークルの一部を瞬間的にそのポイント付近へ寄せて明るくする
+  let n=0;
+  for(let i=0;i<SPARK_COUNT_MAX && n<26;i++){
+    if(Math.random()<0.12){
+      sparkData[i].burst=1.0;
+      const ang=Math.random()*Math.PI*2, r=Math.random()*22;
+      sparkPos[i*3]=atPos.x+Math.cos(ang)*r;
+      sparkPos[i*3+1]=atPos.y+(Math.random()-0.5)*18;
+      sparkPos[i*3+2]=atPos.z+Math.sin(ang)*r;
+      n++;
+    }
+  }
+}
+
+/* ---------------------------------------------------------------------
+ * 6) 質感（マテリアル）ビルダー
+ * ------------------------------------------------------------------- */
+function buildMaterial(kind, colorHex, opts){
+  opts=opts||{};
+  const col=new THREE.Color(colorHex);
+  switch(kind){
+    case 'gold': {
+      const c=col.clone().offsetHSL(0, 0.05, 0.02).lerp(new THREE.Color(0xffcf6b), 0.35);
+      return new THREE.MeshStandardMaterial({ color:c, metalness:0.9, roughness:0.42, envMapIntensity:1.05, emissive:new THREE.Color(0x2a1a00), emissiveIntensity:0.1 });
+    }
+    case 'silver': {
+      const c=col.clone().lerp(new THREE.Color(0xdfe7ef), 0.4);
+      return new THREE.MeshStandardMaterial({ color:c, metalness:0.9, roughness:0.38, envMapIntensity:1.1 });
+    }
+    case 'rainbow': {
+      return new THREE.MeshStandardMaterial({ color:0xffffff, vertexColors:true, metalness:0.35, roughness:0.35, envMapIntensity:1.1, emissive:new THREE.Color(0x220033), emissiveIntensity:0.22 });
+    }
+    case 'neon': {
+      return new THREE.MeshStandardMaterial({ color:col, metalness:0.1, roughness:0.4, emissive:col.clone(), emissiveIntensity:0.85 });
+    }
+    case 'glass': {
+      const c=col.clone().lerp(new THREE.Color(0x8fd7ff), 0.5);
+      return new THREE.MeshPhysicalMaterial({ color:c, transparent:true, opacity:0.55, roughness:0.08, metalness:0.05, envMapIntensity:1.8, transmission:0.55, thickness:1.2, ior:1.35, emissive:c.clone(), emissiveIntensity:0.08 });
+    }
+    case 'pearl': {
+      const c=col.clone().lerp(new THREE.Color(0xffe3f2), 0.45);
+      return new THREE.MeshPhysicalMaterial({ color:c, roughness:0.18, metalness:0.15, clearcoat:1.0, clearcoatRoughness:0.12, envMapIntensity:1.4, sheen:1.0, sheenColor:new THREE.Color(0xffd6ea) });
+    }
+    default:
+      return new THREE.MeshStandardMaterial({ color:col, metalness:0.2, roughness:0.5 });
+  }
+}
+function applyRainbowVertexColors(geo){
+  geo.computeBoundingBox();
+  const bb=geo.boundingBox;
+  const w=Math.max(1e-4, bb.max.x-bb.min.x);
+  const pos=geo.attributes.position;
+  const colors=new Float32Array(pos.count*3);
+  const c=new THREE.Color();
+  for(let i=0;i<pos.count;i++){
+    const x=pos.getX(i);
+    const t=(x-bb.min.x)/w;
+    c.setHSL((t*0.85)%1, 0.85, 0.62);
+    colors[i*3]=c.r; colors[i*3+1]=c.g; colors[i*3+2]=c.b;
+  }
+  geo.setAttribute('color', new THREE.BufferAttribute(colors,3));
+}
+
+/* ---------------------------------------------------------------------
+ * 7) 単語メッシュ生成（袋文字／踊る文字 対応）
+ * ------------------------------------------------------------------- */
+const MAX_WORDS=40;
+let words=[]; // {id, text, group, decision, t, speedMul, createdAt, danceMeshes?, phase}
+let idSeq=1;
+
+function buildWordVisual(text, decision){
+  const group=new THREE.Group();
+  const desc={ text, size:38, depth:12, bevel:1.6, bold:true, font: decision.material==='gold'||decision.material==='silver' ? 'heavy':'gothic' };
+
+  if(decision.style==='dance'){
+    // 文字ごとに個別メッシュ化して上下ウェーブ＋回転を位相ずらしでアニメ
+    const chars=Array.from(text.length ? text : ' ');
+    const subGroups=[];
+    let cursorX=0;
+    const gap=6;
+    chars.forEach((ch, idx)=>{
+      const cdesc=Object.assign({}, desc, { text: ch, size: desc.size });
+      const geo=buildText3dGeometry(cdesc);
+      geo.computeBoundingBox();
+      const w=geo.boundingBox.max.x-geo.boundingBox.min.x;
+      if(decision.material==='rainbow') applyRainbowVertexColors(geo);
+      const mat=buildMaterial(decision.material, decision.color);
+      const mesh=new THREE.Mesh(geo, mat);
+      mesh.castShadow=true; mesh.receiveShadow=true;
+      const sub=new THREE.Group();
+      sub.add(mesh);
+      sub.position.x = cursorX;
+      sub.userData.phase = idx*0.55;
+      subGroups.push(sub);
+      group.add(sub);
+      cursorX += w + gap;
+    });
+    // 全体を中央寄せ
+    const totalW=cursorX-gap;
+    subGroups.forEach(sg=>{ sg.position.x -= totalW/2; });
+    group.userData.danceGroups=subGroups;
+  } else if(decision.style==='outline'){
+    // 袋文字：本体 + わずかに大きい縁メッシュ（BackSide・別色）を重ねる
+    const geo=buildText3dGeometry(desc);
+    if(decision.material==='rainbow') applyRainbowVertexColors(geo);
+    const mat=buildMaterial(decision.material, decision.color);
+    const mesh=new THREE.Mesh(geo, mat);
+    mesh.castShadow=true; mesh.receiveShadow=true;
+    group.add(mesh);
+
+    const outlineGeo=buildText3dGeometry(Object.assign({}, desc, { bevel:desc.bevel*0.6 }));
+    outlineGeo.scale(1.09,1.09,1.0);
+    outlineGeo.computeBoundingBox();
+    const ob=outlineGeo.boundingBox;
+    outlineGeo.translate(-(ob.min.x+ob.max.x)/2*0.0, 0, 0); // スケール後の中心ずれは無視できる程度
+    const outlineColor=new THREE.Color(decision.color).offsetHSL(0,0,-0.28);
+    const outlineMat=new THREE.MeshStandardMaterial({ color:outlineColor, side:THREE.BackSide, metalness:0.1, roughness:0.7 });
+    const outlineMesh=new THREE.Mesh(outlineGeo, outlineMat);
+    outlineMesh.position.z=-1.2;
+    outlineMesh.castShadow=false;
+    group.add(outlineMesh);
+  } else {
+    // normal
+    const geo=buildText3dGeometry(desc);
+    if(decision.material==='rainbow') applyRainbowVertexColors(geo);
+    const mat=buildMaterial(decision.material, decision.color);
+    const mesh=new THREE.Mesh(geo, mat);
+    mesh.castShadow=true; mesh.receiveShadow=true;
+    group.add(mesh);
+  }
+
+  // ほんのり発光オーラ（neon強調・その他は控えめ）
+  return group;
+}
+
+/* ---------------------------------------------------------------------
+ * 8) 単語の追加／削除／配置更新
+ * ------------------------------------------------------------------- */
+const wordRoot=new THREE.Group(); scene.add(wordRoot);
+let pendingCount=0;
+
+function addWordEntry(text, decision){
+  const group=buildWordVisual(text, decision);
+  return addEntryToSpiral(text, decision, group, 'word');
+}
+
+/* AIモデリングで完成したGLBを螺旋に投入するための共通ロジック（単語と同じ entries 管理に乗せる） */
+function addEntryToSpiral(text, decision, group, kind){
+  const t0 = Math.random()*0.06; // 開始位置を少しばらけさせる
+  const entry={
+    id: idSeq++, text, group, decision,
+    kind: kind||'word',
+    t: t0,
+    speedMul: 0.75+Math.random()*0.5,
+    phase: Math.random()*Math.PI*2,
+    createdAt: performance.now()
+  };
+  wordRoot.add(group);
+  words.push(entry);
+  if(words.length>MAX_WORDS){
+    const oldest=words.shift();
+    wordRoot.remove(oldest.group);
+    disposeGroup(oldest.group);
+  }
+  placeEntry(entry, 0);
+  burstSparkle(spiralPoint(entry.t));
+  renderWordList();
+  return entry;
+}
+function disposeGroup(g){
+  g.traverse(o=>{
+    if(o.isMesh){
+      if(o.geometry) o.geometry.dispose();
+      if(o.material){
+        (Array.isArray(o.material)?o.material:[o.material]).forEach(m=>m.dispose());
+      }
+    }
+  });
+}
+function removeWordEntry(id){
+  if(centerModel && centerModel.id===id){
+    removeCenterModel();
+    return;
+  }
+  const idx=words.findIndex(w=>w.id===id);
+  if(idx<0) return;
+  const [w]=words.splice(idx,1);
+  wordRoot.remove(w.group);
+  disposeGroup(w.group);
+  renderWordList();
+}
+/* X1: モードごとの位置更新関数（updateEntrySpiral / updateEntrySea）へ委譲。
+ * 既存呼び出し元（animateループ等）はplaceEntryのままでよいよう、薄いラッパーとして残す。
+ * Y2: DROP演出中（entry.dropVelあり＝爆散/再集結フェーズ中）は、position/rotationの
+ * 見た目はupdateDropVisualsが専有する。ただし内部の進行度(t / sea.pos)は本来の軌道を
+ * 保つため止めずに進める必要があるので、position/rotationだけ退避→復元する。 */
+function placeEntry(entry, dt){
+  if(entry.dropVel){
+    const savedPos=entry.group.position.clone();
+    const savedQuat=entry.group.quaternion.clone();
+    updateEntry(entry, dt);
+    entry.group.position.copy(savedPos);
+    entry.group.quaternion.copy(savedQuat);
+    return;
+  }
+  updateEntry(entry, dt);
+  // Z2: 観客ワードの「飛び込み」演出中（entry.introFromあり）は、本来の軌道位置(=updateEntry後のposition)へ
+  // 画面端の開始位置からease-outで寄せていく。スケールも0.15→1.0でズームインさせる。
+  if(entry.introFrom){
+    entry.introT = Math.min(1, (entry.introT||0) + dt/AUDIENCE_INTRO_DURATION);
+    const k = 1 - Math.pow(1-entry.introT, 3); // ease-out cubic
+    const target=entry.group.position.clone();
+    entry.group.position.lerpVectors(entry.introFrom, target, k);
+    const baseScale = entry.introBaseScale || (entry.introBaseScale = entry.group.scale.x||1);
+    const s = baseScale * (0.15 + 0.85*k);
+    entry.group.scale.setScalar(s);
+    if(entry.introT>=1){
+      entry.group.scale.setScalar(baseScale);
+      entry.introFrom=null;
+    }
+  }
+}
+
+/* ---------------------------------------------------------------------
+ * 8.5) センターステージ（AIモデリング生成物の特等席）
+ * 螺旋の中心軸上（x=0,z=0）に単語の約2.5〜3倍の存在感で配置し、
+ * ゆっくり自転＋わずかな浮遊で「特別な一体」を演出する。
+ * 新しいモデルが完成したら、先代は通常サイズへ縮んで螺旋へ移籍（words配列へ合流）。
+ *
+ * S1対応：センターの高さは「カメラから見て画面のド真ん中」に来る必要がある。
+ * OrbitControlsはカメラのforward方向を常にcontrols.targetへ向けるため、
+ * x=0,z=0（カメラ視線とY軸の交点）のY座標はちょうどcontrols.target.yに一致する
+ * （= NDC原点＝画面中心に投影される）。よって固定値ではなく起動時のtarget.yを基準にする。
+ * ウィンドウリサイズはaspectしか変えずtargetの投影位置には影響しないため、リサイズ後も中心を保つ。
+ * ------------------------------------------------------------------- */
+const CENTER_STAGE={
+  y: controls.target.y,                    // 画面中心＝カメラ注視点の高さ（x=0,z=0軸との交点）
+  sizeMul: 2.7,                            // 単語サイズの約2.7倍の存在感
+  maxRadius: SPIRAL.radius*0.62,           // 螺旋の内径からはみ出しすぎない上限（バウンディング半径基準）
+  spinSpeed: 0.3,                          // ターンテーブル自転（rad/s）
+  floatAmp: 4.5,                           // 上下浮遊の振幅
+  floatSpeed: 0.6,                         // 上下浮遊の速さ
+  introDuration: 0.8,                      // 登場スケールアニメの時間(s)
+};
+let centerModel=null; // { id, text, group, decision, kind:'model-center', baseScale, spinAngle, floatPhase, introT, introDone, jobId }
+
+function easeOutCubic(x){ return 1 - Math.pow(1-x, 3); }
+
+/* 単語同様のバウンディングボックス基準で、センター向けにスケールし直す
+ * （loadGlbAsGroupで一度 MODEL_TARGET_SIZE=42 相当に正規化済み・group.scaleにその倍率が入った状態で受け取り、
+ *   その「現在のscale」を基準にさらにsizeMul倍する。ただしmaxRadiusを超える場合は縮めて内径に収める。
+ *   ※ group.scaleを絶対値で上書きすると、GLB原寸→単語サイズへの正規化倍率が失われてしまうため、
+ *     必ず現在のscaleに対する相対倍率(mul)として算出し、最終的に「現在scale × mul」を目標スケールにする） */
+function fitGroupToCenterStage(group){
+  group.updateMatrixWorld(true);
+  const box=new THREE.Box3().setFromObject(group);
+  const size=new THREE.Vector3(); box.getSize(size);
+  const horizRadius=Math.max(size.x, size.z)/2 * CENTER_STAGE.sizeMul;
+  let mul=CENTER_STAGE.sizeMul;
+  if(horizRadius>CENTER_STAGE.maxRadius && horizRadius>1e-4){
+    mul *= CENTER_STAGE.maxRadius/horizRadius;
+  }
+  // group.scaleは等方（setScalarで設定済み）前提。現在の倍率にmulを掛けた絶対スケールを返す。
+  const currentScale=group.scale.x || 1;
+  return currentScale*mul;
+}
+
+/* AIモデリング完成時：センターに新モデルを迎える（既存センターがあれば先に螺旋へ移籍）
+ * opts.jobId: このモデルを生成したジョブID（修正チャットの系譜追跡に使用）
+ * opts.replaceInPlace: true の場合、W1の「修正チャット」完成時の差し替え。
+ *   先代を螺旋へ送らず、centerModelのGLBだけを新しいものに差し替える（自転・浮遊の位相は引き継ぐ）。 */
+function promoteToCenterStage(text, decision, group, opts){
+  opts=opts||{};
+  const prevSpinAngle = (opts.replaceInPlace && centerModel) ? centerModel.spinAngle : null;
+  const prevFloatPhase = (opts.replaceInPlace && centerModel) ? centerModel.floatPhase : null;
+  if(centerModel){
+    if(opts.replaceInPlace){
+      // 先代の土台グループだけ場から下げる（螺旋へは送らない）
+      wordRoot.remove(centerModel.group);
+      disposeGroup(centerModel.group);
+      centerModel=null;
+    } else {
+      retireCenterModelToSpiral();
+    }
+  }
+  const baseScale=fitGroupToCenterStage(group);
+  group.position.set(0, CENTER_STAGE.y, 0);
+  group.scale.setScalar(0.0001); // スケール0から登場アニメを開始
+  wordRoot.add(group);
+  const entry={
+    id: idSeq++, text, group, decision,
+    kind:'model-center',
+    baseScale,
+    spinAngle: prevSpinAngle!=null ? prevSpinAngle : Math.random()*Math.PI*2,
+    floatPhase: prevFloatPhase!=null ? prevFloatPhase : Math.random()*Math.PI*2,
+    introT: 0,
+    introDone: false,
+    createdAt: performance.now(),
+    jobId: opts.jobId || null
+  };
+  centerModel=entry;
+  group.rotation.y=entry.spinAngle;
+  // 登場演出：センター位置で大きめのスパークルバースト＋一瞬の強い発光リング
+  burstSparkle(new THREE.Vector3(0, CENTER_STAGE.y, 0));
+  burstSparkle(new THREE.Vector3(0, CENTER_STAGE.y, 0));
+  spawnCenterDebutRing();
+  renderWordList();
+  focusCameraOnCenter();
+  return entry;
+}
+
+/* 先代センターモデルを通常サイズに縮めて螺旋の軌道（words配列）へ合流させる */
+function retireCenterModelToSpiral(){
+  if(!centerModel) return;
+  const c=centerModel;
+  centerModel=null;
+  // センターの土台グループをそのまま螺旋entriesへ移籍。以後は通常の🔧モデル同様に扱う。
+  // baseScaleはloadGlbAsGroup由来の単語相当スケール×centerStageSizeMul相当なので、
+  // sizeMulで割り戻して元の単語サイズ（≒MODEL_TARGET_SIZE）に戻す。
+  const normalScale = c.baseScale / CENTER_STAGE.sizeMul;
+  c.group.scale.setScalar(normalScale);
+  c.group.rotation.set(0,0,0);
+  const t0=Math.random()*0.06;
+  const entry={
+    id: c.id, text:c.text, group:c.group, decision:c.decision,
+    kind:'model',
+    t: t0,
+    speedMul: 0.75+Math.random()*0.5,
+    phase: Math.random()*Math.PI*2,
+    createdAt: performance.now()
+  };
+  words.push(entry);
+  if(words.length>MAX_WORDS){
+    const oldest=words.shift();
+    wordRoot.remove(oldest.group);
+    disposeGroup(oldest.group);
+  }
+  placeEntry(entry, 0);
+}
+
+/* センターモデルの✕削除：空席のままでよい */
+function removeCenterModel(){
+  if(!centerModel) return;
+  wordRoot.remove(centerModel.group);
+  disposeGroup(centerModel.group);
+  centerModel=null;
+  renderWordList();
+}
+
+/* 登場演出：センター位置に一瞬だけ広がる発光リング（既存のPoints/Lineの仕組みを流用し、専用の簡易リングメッシュを追加してフェードアウト） */
+const centerRingPool=[];
+function spawnCenterDebutRing(){
+  const geo=new THREE.RingGeometry(1, 1.4, 48);
+  const mat=new THREE.MeshBasicMaterial({ color:0x9fe0ff, transparent:true, opacity:0.9, side:THREE.DoubleSide, blending:THREE.AdditiveBlending, depthWrite:false });
+  const ring=new THREE.Mesh(geo, mat);
+  ring.position.set(0, CENTER_STAGE.y, 0);
+  ring.rotation.x=-Math.PI/2;
+  scene.add(ring);
+  centerRingPool.push({ mesh:ring, born:performance.now() });
+}
+function updateCenterRings(){
+  const now=performance.now();
+  for(let i=centerRingPool.length-1;i>=0;i--){
+    const r=centerRingPool[i];
+    const t=(now-r.born)/900; // 0.9sで消える
+    if(t>=1){
+      scene.remove(r.mesh);
+      r.mesh.geometry.dispose(); r.mesh.material.dispose();
+      centerRingPool.splice(i,1);
+      continue;
+    }
+    const scale=1 + t*38;
+    r.mesh.scale.setScalar(scale);
+    r.mesh.material.opacity=0.9*(1-t);
+  }
+}
+
+/* センターモデルの毎フレーム更新：登場イージング＋自転＋浮遊 */
+function placeCenterModel(dt){
+  if(!centerModel) return;
+  const c=centerModel;
+  if(!c.introDone){
+    c.introT=Math.min(1, c.introT + dt/CENTER_STAGE.introDuration);
+    const eased=easeOutCubic(c.introT);
+    c.group.scale.setScalar(Math.max(0.0001, c.baseScale*eased));
+    if(c.introT>=1) c.introDone=true;
+  } else {
+    c.group.scale.setScalar(c.baseScale);
+  }
+  c.spinAngle += dt*CENTER_STAGE.spinSpeed;
+  c.group.rotation.y=c.spinAngle;
+  const now=performance.now()*0.001;
+  const floatY=Math.sin(now*CENTER_STAGE.floatSpeed+c.floatPhase)*CENTER_STAGE.floatAmp;
+  c.group.position.set(0, CENTER_STAGE.y+floatY, 0);
+}
+
+/* V2: モデル完成の瞬間、カメラを少しだけセンターへ寄せる控えめなイージング（ドラッグ中はスキップ） */
+let camFocusAnim=null; // { fromPos, toPos, fromTarget, toTarget, t0, duration }
+function focusCameraOnCenter(){
+  if(controls._tsDragging) return; // ユーザー操作中は演出をスキップ
+  const targetPos=new THREE.Vector3(0, CENTER_STAGE.y, 0);
+  const dir=camera.position.clone().sub(controls.target);
+  const newTarget=controls.target.clone().lerp(targetPos, 0.35);
+  const shrunkDir=dir.clone().multiplyScalar(0.87); // 半径を約13%縮める（控えめ）
+  const newCamPos=newTarget.clone().add(shrunkDir);
+  camFocusAnim={
+    fromPos:camera.position.clone(), toPos:newCamPos,
+    fromTarget:controls.target.clone(), toTarget:newTarget,
+    t0:performance.now(), duration:1200
+  };
+}
+function updateCameraFocusAnim(){
+  if(!camFocusAnim) return;
+  if(controls._tsDragging){ camFocusAnim=null; return; } // 演出中にドラッグ開始されたら即中断
+  const elapsed=performance.now()-camFocusAnim.t0;
+  const t=Math.min(1, elapsed/camFocusAnim.duration);
+  const eased=easeOutCubic(t);
+  camera.position.lerpVectors(camFocusAnim.fromPos, camFocusAnim.toPos, eased);
+  controls.target.lerpVectors(camFocusAnim.fromTarget, camFocusAnim.toTarget, eased);
+  if(t>=1) camFocusAnim=null;
+}
+controls.addEventListener('start', ()=>{ controls._tsDragging=true; camFocusAnim=null; });
+controls.addEventListener('end', ()=>{ controls._tsDragging=false; });
+
+/* ---------------------------------------------------------------------
+ * 8.6) W2: Matrixコードレイン（センターCAD空間のライブ演出）
+ * ジョブ実行中、センター空間に縦長の半透明ホログラムパネルを出し、
+ * /model/log を700ms間隔でポーリングして増分テキストを上から下へ流す。
+ * さらに周囲に控えめな文字雨（カタカナ/数字/記号のCanvasTextureストリップ）を追加する。
+ * 完成/エラー時は0.6sで溶けるようにフェードアウトしてからcenter登場演出へバトンタッチする。
+ * ------------------------------------------------------------------- */
+const CODE_RAIN={
+  panelW: 96, panelH: 150,           // パネルの実寸（ワールド単位・単語sizeと同系統のスケール感）
+  y: CENTER_STAGE.y,                  // センターステージと同じ高さを中心に配置
+  spinSpeed: 0.12,                    // ゆるやかな自転（rad/s）
+  pollIntervalMs: 700,
+  canvasW: 1024, canvasH: 1024,
+  fadeMs: 600,
+  streamerCount: 5,                   // 周囲の文字雨ストリップ本数
+};
+const CODE_RAIN_GLYPHS='ｱｲｳｴｵｶｷｸｹｺｻｼｽｾｿﾀﾁﾂﾃﾄﾅﾆﾇﾈﾉﾊﾋﾌﾍﾎﾏﾐﾑﾒﾓﾔﾕﾖﾗﾘﾙﾚﾛﾜﾝ0123456789ForgeCAD{}();=><.';
+
+function randGlyph(){ return CODE_RAIN_GLYPHS[(Math.random()*CODE_RAIN_GLYPHS.length)|0]; }
+
+/* --- パネル本体：CanvasTexture(1024x1024)に「ステージ名（上部）＋流れるテキスト」を描画 --- */
+function createCodeRainPanel(){
+  const cv=document.createElement('canvas');
+  cv.width=CODE_RAIN.canvasW; cv.height=CODE_RAIN.canvasH;
+  const ctx=cv.getContext('2d');
+  const tex=new THREE.CanvasTexture(cv);
+  tex.colorSpace=THREE.SRGBColorSpace;
+
+  const geo=new THREE.PlaneGeometry(CODE_RAIN.panelW, CODE_RAIN.panelH);
+  const mat=new THREE.MeshBasicMaterial({
+    map:tex, transparent:true, opacity:0, side:THREE.DoubleSide,
+    blending:THREE.AdditiveBlending, depthWrite:false
+  });
+  const mesh=new THREE.Mesh(geo, mat);
+  mesh.position.set(0, CODE_RAIN.y, 0);
+  mesh.renderOrder=5;
+
+  // 背面にもう1枚重ねてX字にクロスさせ、どの角度から見ても文字が読めるホログラム感を出す
+  const mesh2=new THREE.Mesh(geo, mat.clone());
+  mesh2.rotation.y=Math.PI/2;
+  mesh2.renderOrder=5;
+
+  const group=new THREE.Group();
+  group.add(mesh); group.add(mesh2);
+  group.visible=false;
+  scene.add(group);
+
+  return {
+    group, mesh, mesh2, cv, ctx, tex,
+    lines:[],            // 表示中の行（下が最新）
+    curLine:'',           // 現在組み立て中の行
+    stageLabel:'AI設計中…',
+    cursorOn:true,
+    cursorPhase:0,
+    spinAngle:0,
+    opacity:0,
+    state:'idle',         // idle | in | active | out
+    tStart:0,
+    errorFlash:false,
+  };
+}
+const codeRainPanel=createCodeRainPanel();
+
+const CODE_RAIN_MAX_LINES=26;
+const CODE_RAIN_CHARS_PER_LINE=34;
+
+function codeRainPushText(text){
+  if(!text) return;
+  for(const ch of text){
+    if(ch==='\n'){
+      codeRainPanel.lines.push(codeRainPanel.curLine);
+      codeRainPanel.curLine='';
+    } else {
+      codeRainPanel.curLine += ch;
+      if(codeRainPanel.curLine.length>=CODE_RAIN_CHARS_PER_LINE){
+        codeRainPanel.lines.push(codeRainPanel.curLine);
+        codeRainPanel.curLine='';
+      }
+    }
+  }
+  while(codeRainPanel.lines.length>CODE_RAIN_MAX_LINES){
+    codeRainPanel.lines.shift();
+  }
+}
+
+function drawCodeRainCanvas(){
+  const p=codeRainPanel;
+  const ctx=p.ctx, W=CODE_RAIN.canvasW, H=CODE_RAIN.canvasH;
+  ctx.clearRect(0,0,W,H);
+
+  // 背景のうっすらグラデーションパネル（ホログラムの土台感）
+  const errTint = p.errorFlash;
+  const baseGrad=ctx.createLinearGradient(0,0,0,H);
+  if(errTint){
+    baseGrad.addColorStop(0,'rgba(60,4,4,0.55)');
+    baseGrad.addColorStop(1,'rgba(30,0,0,0.15)');
+  } else {
+    baseGrad.addColorStop(0,'rgba(10,30,26,0.5)');
+    baseGrad.addColorStop(1,'rgba(4,10,14,0.12)');
+  }
+  ctx.fillStyle=baseGrad;
+  ctx.fillRect(0,0,W,H);
+  ctx.strokeStyle = errTint ? 'rgba(255,110,110,0.55)' : 'rgba(140,255,210,0.35)';
+  ctx.lineWidth=6;
+  ctx.strokeRect(3,3,W-6,H-6);
+
+  // 上部：ステージ名（大きめ・W3）
+  ctx.textAlign='center';
+  ctx.textBaseline='alphabetic';
+  ctx.font='700 46px "Courier New",monospace';
+  ctx.fillStyle = errTint ? 'rgba(255,150,150,0.95)' : 'rgba(180,255,230,0.95)';
+  ctx.shadowColor = errTint ? 'rgba(255,80,80,0.9)' : 'rgba(120,255,210,0.85)';
+  ctx.shadowBlur=18;
+  ctx.fillText(p.stageLabel||'', W/2, 74);
+  ctx.shadowBlur=0;
+  ctx.strokeStyle='rgba(140,255,210,0.25)';
+  ctx.lineWidth=2;
+  ctx.beginPath(); ctx.moveTo(60,96); ctx.lineTo(W-60,96); ctx.stroke();
+
+  // 本体：等幅フォントでログを上→下へ（最新行が下）流す。行が新しいほど明るい。
+  ctx.textAlign='left';
+  const fontSize=25;
+  ctx.font=fontSize+'px "Courier New",monospace';
+  const lineH=32;
+  const bodyTop=130;
+  const bodyBottom=H-40;
+  const maxLines=Math.floor((bodyBottom-bodyTop)/lineH);
+  const shown=p.lines.slice(-maxLines);
+  const n=shown.length;
+  for(let i=0;i<n;i++){
+    const y=bodyBottom-(n-1-i)*lineH;
+    if(y<bodyTop-lineH) continue;
+    const ageRatio = (n-1-i)/Math.max(1,maxLines-1); // 0=最新(下), 1=最古(上)
+    const alpha=Math.max(0.12, 1-ageRatio*0.85);
+    ctx.fillStyle = errTint
+      ? 'rgba(255,'+Math.round(120+90*(1-ageRatio))+',120,'+alpha.toFixed(2)+')'
+      : 'rgba('+Math.round(120+90*(1-ageRatio))+',255,'+Math.round(190+50*(1-ageRatio))+','+alpha.toFixed(2)+')';
+    let line=shown[i];
+    if(line.length>CODE_RAIN_CHARS_PER_LINE) line=line.slice(0,CODE_RAIN_CHARS_PER_LINE);
+    ctx.fillText(line, 44, y);
+  }
+  // 現在行（うっすら明滅カーソル付き）
+  const curY=bodyBottom+lineH*0.02;
+  if(curY>=bodyTop-lineH){
+    ctx.fillStyle = errTint ? 'rgba(255,190,190,0.95)' : 'rgba(220,255,240,0.95)';
+    let curLine=p.curLine;
+    if(curLine.length>CODE_RAIN_CHARS_PER_LINE) curLine=curLine.slice(-CODE_RAIN_CHARS_PER_LINE);
+    ctx.fillText(curLine, 44, Math.min(curY, bodyBottom));
+    if(p.cursorOn){
+      const cw=ctx.measureText(curLine).width;
+      ctx.fillRect(44+cw+4, Math.min(curY, bodyBottom)-fontSize+4, 14, fontSize*0.85);
+    }
+  }
+  p.tex.needsUpdate=true;
+}
+
+/* --- 周囲の文字雨（数本の縦ストリップPlane。各ストリップは独自CanvasTextureで数字/カタカナが流れる） --- */
+function createCodeRainStreamers(){
+  const streamers=[];
+  const n=CODE_RAIN.streamerCount;
+  for(let i=0;i<n;i++){
+    const cv=document.createElement('canvas');
+    cv.width=64; cv.height=512;
+    const ctx=cv.getContext('2d');
+    const tex=new THREE.CanvasTexture(cv);
+    tex.colorSpace=THREE.SRGBColorSpace;
+    const geo=new THREE.PlaneGeometry(7, 130);
+    const mat=new THREE.MeshBasicMaterial({
+      map:tex, transparent:true, opacity:0, side:THREE.DoubleSide,
+      blending:THREE.AdditiveBlending, depthWrite:false
+    });
+    const mesh=new THREE.Mesh(geo, mat);
+    const ang=(i/n)*Math.PI*2 + Math.random()*0.3;
+    const radius=CENTER_STAGE.maxRadius*0.92 + Math.random()*10;
+    mesh.userData.angle=ang;
+    mesh.userData.radius=radius;
+    mesh.userData.speed=0.35+Math.random()*0.4; // 縦スクロール速度
+    mesh.userData.colOffset=Math.random()*100;
+    mesh.userData.cols=[]; // 各列の文字配列（縦に流れる）
+    const colCount=3;
+    for(let c=0;c<colCount;c++){
+      const chars=[];
+      const rows=16;
+      for(let r=0;r<rows;r++) chars.push(randGlyph());
+      mesh.userData.cols.push({ x:c, chars, headY:Math.random()*rows });
+    }
+    mesh.visible=false;
+    scene.add(mesh);
+    streamers.push({ mesh, ctx, cv, tex });
+  }
+  return streamers;
+}
+const codeRainStreamers=createCodeRainStreamers();
+
+function drawStreamerCanvas(s, dt){
+  const ctx=s.ctx, W=s.cv.width, H=s.cv.height;
+  ctx.clearRect(0,0,W,H);
+  const cols=s.mesh.userData.cols;
+  const rowH=H/16;
+  cols.forEach(col=>{
+    col.headY += s.mesh.userData.speed*dt*10;
+    if(col.headY>20){
+      col.headY=0;
+      col.chars=col.chars.map(()=>randGlyph());
+    }
+    // たまに文字を差し替えてチラつかせる
+    if(Math.random()<0.06){
+      const idx=(Math.random()*col.chars.length)|0;
+      col.chars[idx]=randGlyph();
+    }
+    const colX=(col.x+0.5)*(W/cols.length);
+    ctx.textAlign='center';
+    ctx.font='700 22px "Courier New",monospace';
+    col.chars.forEach((ch,ri)=>{
+      const y=((ri - col.headY)%18+18)%18 * rowH;
+      const distFromHead=Math.abs((ri - col.headY + 18)%18);
+      const bright=Math.max(0, 1-distFromHead/12);
+      if(bright<=0.02) return;
+      ctx.fillStyle='rgba('+Math.round(140+60*bright)+',255,'+Math.round(160+70*bright)+','+(0.15+bright*0.8).toFixed(2)+')';
+      ctx.fillText(ch, colX, y+rowH*0.8);
+    });
+  });
+  s.tex.needsUpdate=true;
+}
+
+/* --- ジョブ管理：どのジョブが現在パネルを占有しているか --- */
+let codeRainActiveJobId=null;
+let codeRainLogOffset=0;
+let codeRainPollTimer=null;
+
+function startCodeRain(jobId, promptText, isRefine){
+  codeRainActiveJobId=jobId;
+  codeRainLogOffset=0;
+  const p=codeRainPanel;
+  p.lines=[]; p.curLine=''; p.errorFlash=false;
+  p.stageLabel = (isRefine?'修正チャット設計中…':'AI設計中…');
+  p.state='in'; p.tStart=performance.now(); p.opacity=0;
+  p.group.visible=true;
+  codeRainStreamers.forEach(s=>{ s.mesh.visible=true; s.mesh.material.opacity=0; });
+  clearTimeout(codeRainPollTimer);
+  pollCodeRainLog();
+}
+async function pollCodeRainLog(){
+  const jobId=codeRainActiveJobId;
+  if(!jobId) return;
+  try{
+    const res=await fetch(BRIDGE_ORIGIN+'/model/log?id='+encodeURIComponent(jobId)+'&from='+codeRainLogOffset);
+    if(res.ok){
+      const json=await res.json();
+      if(json && typeof json.text==='string' && json.text){
+        codeRainPushText(json.text);
+      }
+      if(json && typeof json.next==='number') codeRainLogOffset=json.next;
+    }
+  }catch(e){ /* ポーリング失敗は静かに次回へ */ }
+  if(codeRainActiveJobId===jobId){
+    codeRainPollTimer=setTimeout(pollCodeRainLog, CODE_RAIN.pollIntervalMs);
+  }
+}
+function updateCodeRainStage(jobId, status){
+  if(codeRainActiveJobId!==jobId) return;
+  const stage=status.stage||'queued';
+  const label = MODEL_STAGE_JA[stage] || status.stageLabel || stage;
+  codeRainPanel.stageLabel = status.detail || label;
+}
+function failCodeRain(jobId){
+  if(codeRainActiveJobId!==jobId) return;
+  codeRainPanel.errorFlash=true;
+  codeRainPanel.stageLabel='エラー';
+  // 赤く明滅させてから少し待ってフェードアウト
+  setTimeout(()=>{ finishCodeRain(jobId); }, 550);
+}
+function finishCodeRain(jobId){
+  return new Promise((resolve)=>{
+    if(codeRainActiveJobId!==jobId){ resolve(); return; }
+    codeRainActiveJobId=null;
+    clearTimeout(codeRainPollTimer);
+    const p=codeRainPanel;
+    p.state='out'; p.tStart=performance.now();
+    setTimeout(()=>{
+      p.group.visible=false;
+      codeRainStreamers.forEach(s=>{ s.mesh.visible=false; });
+      resolve();
+    }, CODE_RAIN.fadeMs + 30);
+  });
+}
+
+function updateCodeRain(dt){
+  const p=codeRainPanel;
+  if(p.group.visible){
+    // フェードイン/アウト
+    if(p.state==='in'){
+      const t=Math.min(1,(performance.now()-p.tStart)/280);
+      p.opacity=t;
+      if(t>=1) p.state='active';
+    } else if(p.state==='out'){
+      const t=Math.min(1,(performance.now()-p.tStart)/CODE_RAIN.fadeMs);
+      p.opacity=1-t;
+    } else {
+      p.opacity=1;
+    }
+    p.mesh.material.opacity=Math.max(0,p.opacity)*0.92;
+    p.mesh2.material.opacity=Math.max(0,p.opacity)*0.92;
+
+    // 自転＋わずかな浮遊
+    p.spinAngle += dt*CODE_RAIN.spinSpeed;
+    p.group.rotation.y=p.spinAngle;
+    const floatY=Math.sin(performance.now()*0.0006)*3.2;
+    p.group.position.set(0, CODE_RAIN.y+floatY, 0);
+
+    // カーソル明滅
+    p.cursorPhase += dt*3.2;
+    p.cursorOn = Math.sin(p.cursorPhase)>0;
+
+    // エラー明滅（赤フラッシュ）
+    if(p.errorFlash){
+      const flick=0.5+0.5*Math.sin(performance.now()*0.02);
+      p.mesh.material.opacity=Math.max(0,p.opacity)*(0.6+flick*0.4);
+      p.mesh2.material.opacity=p.mesh.material.opacity;
+    }
+    drawCodeRainCanvas();
+  }
+  // 文字雨ストリップ：パネル表示中のみ描画更新（パフォーマンス優先で控えめに）
+  const streamersOn = p.group.visible && p.opacity>0.02;
+  codeRainStreamers.forEach(s=>{
+    if(!s.mesh.visible) return;
+    const targetOp = streamersOn ? Math.min(0.55, p.opacity*0.55) : 0;
+    s.mesh.material.opacity += (targetOp - s.mesh.material.opacity)*0.12;
+    if(streamersOn){
+      const ang=s.mesh.userData.angle + performance.now()*0.00004;
+      const r=s.mesh.userData.radius;
+      s.mesh.position.set(Math.cos(ang)*r, CODE_RAIN.y - 8, Math.sin(ang)*r);
+      s.mesh.lookAt(0, CODE_RAIN.y-8, 0);
+      drawStreamerCanvas(s, dt);
+    }
+  });
+}
+
+/* ---------------------------------------------------------------------
+ * 9) 単語投入フロー（入力欄 → AI判定 or フォールバック → メッシュ生成）
+ * ------------------------------------------------------------------- */
+const aiStateEl=document.getElementById('aiState');
+function showAiState(text, fallback){
+  aiStateEl.textContent=text;
+  aiStateEl.classList.add('show');
+  aiStateEl.classList.toggle('fallback', !!fallback);
+  clearTimeout(showAiState._t);
+  showAiState._t=setTimeout(()=>aiStateEl.classList.remove('show'), 2200);
+}
+
+/* W3: ジョブ開始時の一瞬のフラッシュ（既存ブルームと干渉しない程度の控えめな明滅） */
+const vjFlashEl=document.getElementById('vjFlash');
+function flashVj(){
+  vjFlashEl.classList.remove('flashing');
+  void vjFlashEl.offsetWidth; // reflow でアニメ再トリガー
+  vjFlashEl.classList.add('flashing');
+}
+
+async function submitWord(raw){
+  const text=(raw||'').trim();
+  if(!text) return;
+  pendingCount++;
+  showAiState('AIが「'+text+'」の色味を判定中…', false);
+  let decision=await fetchAiDecision(text);
+  let usedFallback=false;
+  if(!decision){
+    decision=heuristicDecide(text);
+    usedFallback=true;
+  }
+  pendingCount--;
+  showAiState(usedFallback ? ('ヒューリスティック判定：'+decision.material) : ('AI判定：'+decision.material+'（'+(decision.reason||'')+'）'), usedFallback);
+  // Y4: AI判定にreasonがある場合のみ実況テロップを流す（フォールバック時は嘘の実況をしない）
+  if(!usedFallback && decision.reason) tickerShow('『'+text+'』— '+decision.reason);
+  addWordEntry(text, decision);
+}
+
+/* ---------------------------------------------------------------------
+ * 9.5) AIモデリング（ForgeCADブリッジ /model 系）
+ * テキスト入力 → ai-bridge.py の /model でジョブ起動 → 1.5s間隔でポーリングし
+ * 左下のミニウィンドウに進行状況を表示 → 完成したらGLBをロードして螺旋に投入する。
+ * ------------------------------------------------------------------- */
+/* ?bridge=8789 でテスト用ブリッジのポートへ切替できる（既定は8788・本番のまま）。
+ * 例: text-spiral.html?bridge=8789 */
+function resolveBridgeOrigin(){
+  try{
+    const qp=new URLSearchParams(location.search).get('bridge');
+    const port=(qp && /^\d{2,6}$/.test(qp)) ? qp : '8788';
+    return 'http://localhost:'+port;
+  }catch(e){ return 'http://localhost:8788'; }
+}
+const BRIDGE_ORIGIN=resolveBridgeOrigin();
+const MODEL_STAGE_JA={
+  queued:'順番待ち…', design:'AI設計中…', validate:'検証中…',
+  repair:'修正中…', export:'書き出し中…', done:'完成', error:'エラー'
+};
+const modelJobsUi=new Map(); // id -> { el, timer, startedAt }
+let bridgeOnline=false;
+let bridgeNested=false;   // ブリッジが開発セッション(Claude Code)内から起動されている＝claude認証を引き継げない
+let photoRestoreDone=false;
+
+async function checkBridgeHealth(){
+  try{
+    const ctrl=new AbortController();
+    const timer=setTimeout(()=>ctrl.abort(), 4000);
+    const res=await fetch(BRIDGE_ORIGIN+'/health', { signal: ctrl.signal });
+    clearTimeout(timer);
+    if(!res.ok) throw new Error('http '+res.status);
+    const json=await res.json();
+    bridgeOnline = !!(json && json.ok);
+    bridgeNested = !!(json && json.nested);
+  }catch(e){
+    bridgeOnline=false;
+    bridgeNested=false;
+  }
+  updateModelBarState();
+  if(bridgeOnline && !photoRestoreDone){
+    photoRestoreDone=true;
+    restoreRecentPhotos();
+  }
+}
+function updateModelBarState(){
+  const bar=document.getElementById('modelBar');
+  const usable = bridgeOnline && !bridgeNested;
+  bar.classList.toggle('disabled', !usable);
+  const noteEl=document.getElementById('modelOffline');
+  if(noteEl){
+    if(bridgeOnline && bridgeNested){
+      noteEl.textContent='⚠ AIブリッジを「スパイラル起動.command」から起動し直してください（今のブリッジではAIを呼べません）';
+    }else{
+      noteEl.textContent='スパイラル起動.commandから起動するとAIモデリングが使えます';
+    }
+  }
+}
+
+function jobCardHtml(name){
+  return (
+    '<div class="jcClose" title="閉じる">✕</div>'+
+    '<div class="jcName"><span class="icon">🔧</span><span class="jcNameText"></span></div>'+
+    '<div class="jcStage"><span class="jcStageText">順番待ち…</span><span class="jcDots"><i></i><i></i><i></i></span></div>'+
+    '<div class="jcBar"><div class="jcBarFill"></div></div>'+
+    '<div class="jcMeta"><span class="jcElapsed">0.0s</span></div>'
+  );
+}
+
+function createJobCard(jobId, name){
+  const stack=document.getElementById('jobStack');
+  const card=document.createElement('div');
+  card.className='jobCard';
+  card.innerHTML=jobCardHtml(name);
+  card.querySelector('.jcNameText').textContent=name;
+  card.querySelector('.jcClose').addEventListener('click', ()=> destroyJobCard(jobId));
+  stack.appendChild(card);
+  const info={ el:card, startedAt:performance.now(), timer:null };
+  modelJobsUi.set(jobId, info);
+  return info;
+}
+function destroyJobCard(jobId){
+  const info=modelJobsUi.get(jobId);
+  if(!info) return;
+  if(info.timer) clearTimeout(info.timer);
+  if(info.el && info.el.parentNode) info.el.parentNode.removeChild(info.el);
+  modelJobsUi.delete(jobId);
+}
+function updateJobCard(jobId, status){
+  const info=modelJobsUi.get(jobId);
+  if(!info) return;
+  const card=info.el;
+  const stage=status.stage||'queued';
+  const label = MODEL_STAGE_JA[stage] || status.stageLabel || stage;
+  card.querySelector('.jcStageText').textContent = status.detail || label;
+  card.querySelector('.jcElapsed').textContent = (status.elapsed!=null ? status.elapsed.toFixed(1) : '0.0')+'s';
+  card.classList.toggle('error', stage==='error');
+  card.classList.toggle('done', stage==='done');
+  const fill=card.querySelector('.jcBarFill');
+  const stageOrder=['queued','design','validate','repair','export','done'];
+  const idx=Math.max(0, stageOrder.indexOf(stage));
+  const pct=stage==='done' ? 100 : Math.min(92, 12 + idx*20);
+  fill.style.width=pct+'%';
+  if(stage==='error'){
+    fill.style.width='100%';
+    fill.style.background='linear-gradient(90deg,#ff6e6e,#ff9f6e)';
+    card.querySelector('.jcStageText').textContent = status.error || 'エラーが発生しました';
+    card.querySelector('.jcDots').style.display='none';
+  }
+  if(stage==='done'){
+    card.querySelector('.jcDots').style.display='none';
+  }
+}
+
+async function pollModelJob(jobId){
+  const info=modelJobsUi.get(jobId);
+  if(!info) return; // カードが閉じられていたら追跡終了
+  try{
+    const res=await fetch(BRIDGE_ORIGIN+'/model/status?id='+encodeURIComponent(jobId));
+    if(!res.ok) throw new Error('http '+res.status);
+    const status=await res.json();
+    updateJobCard(jobId, status);
+    updateCodeRainStage(jobId, status);
+    if(status.done){
+      if(status.stage==='done' && status.glbUrl){
+        await handleModelDone(jobId, status);
+        // 完成カードは少し見せてから自動で消す
+        info.timer=setTimeout(()=>destroyJobCard(jobId), 1800);
+      } else if(status.stage==='error'){
+        failCodeRain(jobId);
+      }
+      // error時はユーザーが✕で閉じるまで残す
+      return;
+    }
+    info.timer=setTimeout(()=>pollModelJob(jobId), 1500);
+  }catch(e){
+    updateJobCard(jobId, { stage:'error', error:'ブリッジへの接続に失敗しました', elapsed:0 });
+    failCodeRain(jobId);
+  }
+}
+
+async function submitModelPrompt(raw){
+  const text=(raw||'').trim();
+  if(!text || !bridgeOnline) return;
+  const isRefine = refineMode && !!centerModel;
+  const baseId = isRefine ? centerModel.jobId : null;
+  if(isRefine && !baseId){
+    // センターモデルの由来ジョブIDが無い（起動時デモ等）場合は修正チャットできない
+    showAiState('このモデルは修正チャットに未対応です（新規モデリングをお試しください）', true);
+    setRefineMode(false);
+    return;
+  }
+  try{
+    const body={ prompt: text };
+    if(baseId) body.baseId=baseId;
+    const res=await fetch(BRIDGE_ORIGIN+'/model', {
+      method:'POST',
+      headers:{ 'Content-Type':'application/json' },
+      body: JSON.stringify(body)
+    });
+    if(!res.ok) throw new Error('http '+res.status);
+    const json=await res.json();
+    if(!json || !json.ok || !json.id) throw new Error('invalid response');
+    createJobCard(json.id, text);
+    startCodeRain(json.id, text, isRefine);
+    flashVj();
+    pollModelJob(json.id);
+  }catch(e){
+    // 起動自体に失敗した場合も簡易カードでエラー表示
+    const tmpId='local-'+Date.now();
+    createJobCard(tmpId, text);
+    updateJobCard(tmpId, { stage:'error', error:'モデリングの起動に失敗しました', elapsed:0 });
+  }
+}
+
+/* GLBをロードしてバウンディングボックスを単語と同程度のサイズに正規化 → 螺旋へ投入 */
+const gltfLoader=new GLTFLoader();
+const MODEL_TARGET_SIZE=42; // 単語の size:38 相当に揃える目安
+function loadGlbAsGroup(url){
+  return new Promise((resolve, reject)=>{
+    gltfLoader.load(url, (gltf)=>{
+      const root=new THREE.Group();
+      const inner=gltf.scene || (gltf.scenes && gltf.scenes[0]);
+      if(!inner){ reject(new Error('empty gltf scene')); return; }
+      // ForgeCAD産はZ-up。Three.jsのY-upへ変換。
+      inner.rotation.x=-Math.PI/2;
+      root.add(inner);
+      inner.traverse(o=>{
+        if(o.isMesh){ o.castShadow=true; o.receiveShadow=true; }
+      });
+      // バウンディングボックスで正規化スケール（回転適用後の実寸で測る）
+      root.updateMatrixWorld(true);
+      const box=new THREE.Box3().setFromObject(root);
+      const size=new THREE.Vector3(); box.getSize(size);
+      const maxDim=Math.max(size.x, size.y, size.z, 1e-4);
+      const scale=MODEL_TARGET_SIZE/maxDim;
+      root.scale.setScalar(scale);
+      // 底面をy=0に接地、中心をx=0/z=0に
+      root.updateMatrixWorld(true);
+      const box2=new THREE.Box3().setFromObject(root);
+      const center=new THREE.Vector3(); box2.getCenter(center);
+      root.position.x -= center.x;
+      root.position.z -= center.z;
+      root.position.y -= box2.min.y;
+      resolve(root);
+    }, undefined, (err)=> reject(err));
+  });
+}
+
+async function handleModelDone(jobId, status){
+  try{
+    const group=await loadGlbAsGroup(status.glbUrl);
+    const decision=heuristicDecide(status.name||'モデル');
+    // モデル系は質感をヒューリスティックの色そのまま使い、材質ラベルだけ明示
+    decision.material = decision.material || 'silver';
+    decision.style='normal';
+    decision.reason = status.refined ? 'AIモデリング修正完了' : 'AIモデリング完成';
+    // コードレインパネル：溶けるようにフェードアウト→センター登場演出へバトンタッチ
+    await finishCodeRain(jobId);
+    // 完成したAIモデルは螺旋に直接乗せず、まず螺旋中心のセンターステージへ迎える
+    // （修正チャット完成時は先代を螺旋へ送らずセンターのGLBだけ差し替える。
+    //   通常の新規モデリング完成時は、先代がいれば自動的に通常サイズへ縮んで螺旋へ移籍する）
+    promoteToCenterStage(status.name||'モデル', decision, group, { jobId, replaceInPlace: !!status.refined });
+    showAiState(status.refined ? '「'+(status.name||'モデル')+'」を修正しました！' : '「'+(status.name||'モデル')+'」が完成しました！', false);
+    // Y4: モデリング完成の実況テロップ
+    tickerShow(status.refined ? 'AIが『'+(status.name||'モデル')+'』を修正しました' : 'AIが『'+(status.name||'モデル')+'』を実体化しました');
+    if(refineMode) setRefineMode(false);
+  }catch(e){
+    console.error('GLB読み込みに失敗', e);
+    showAiState('モデルの読み込みに失敗しました', true);
+  }
+}
+
+/* ---------------------------------------------------------------------
+ * 9.6) カメラ撮影 ＋ ポラロイド風カードのスパイラル投入
+ * フロントカメラでライブプレビュー → シャッターでcanvasキャプチャ → ブリッジ /photo へ保存
+ * → ポラロイド風の板ジオメトリ（白フチ＋写真テクスチャ）を作って既存entries機構に乗せる。
+ * ------------------------------------------------------------------- */
+const PHOTO_TARGET_SIZE=42; // 単語のsize:38、モデルのMODEL_TARGET_SIZE=42相当に揃える
+const PHOTO_LONG_EDGE=960;
+const PHOTO_JPEG_QUALITY=0.85;
+
+const camOverlay=document.getElementById('camOverlay');
+const camVideo=document.getElementById('camVideo');
+const camCanvas=document.getElementById('camCanvas');
+const camMsgEl=document.getElementById('camMsg');
+const camFlashEl=document.getElementById('camFlash');
+const camToastEl=document.getElementById('camToast');
+const camCloseBtn=document.getElementById('camClose');
+const shutterBtn=document.getElementById('shutterBtn');
+const camBtn=document.getElementById('camBtn');
+
+let camStream=null;
+
+function showCamMsg(text){
+  camMsgEl.textContent=text;
+  camMsgEl.classList.add('show');
+  camVideo.style.display='none';
+  shutterBtn.disabled=true;
+}
+function hideCamMsg(){
+  camMsgEl.classList.remove('show');
+  camVideo.style.display='';
+  shutterBtn.disabled=false;
+}
+function showCamToast(text){
+  camToastEl.textContent=text;
+  camToastEl.classList.add('show');
+  clearTimeout(showCamToast._t);
+  showCamToast._t=setTimeout(()=>camToastEl.classList.remove('show'), 2600);
+}
+
+function describeCameraError(e){
+  let msg='カメラを起動できませんでした。';
+  if(e && e.name==='NotAllowedError') msg='カメラへのアクセスが許可されていません。\n①ブラウザのアドレスバー左のアイコン→カメラを「許可」\n②macの システム設定→プライバシーとセキュリティ→カメラ で、お使いのブラウザをONにして、ブラウザを再起動してください。';
+  else if(e && e.name==='NotFoundError' || (e && e.name==='OverconstrainedError')) msg='カメラが見つかりませんでした。（'+(e.name||'')+'）\n外付け/内蔵カメラの接続を確認してください。';
+  else if(e && e.name==='NotReadableError') msg='カメラが他のアプリ（Zoom/FaceTime等）で使用中の可能性があります。他のアプリを閉じて再度お試しください。';
+  else msg+='（'+((e&&e.name)||'不明なエラー')+'）';
+  return msg;
+}
+
+/* X4: 🎥ムービー背景と📷撮影オーバーレイで同一のgetUserMediaストリームを共有する。
+ * どちらか一方が既にストリームを保持していれば、それをそのまま使い回して二重要求を避ける。 */
+async function acquireSharedCamStream(){
+  if(camStream) return camStream;
+  if(liveBgStream) return liveBgStream;
+  return navigator.mediaDevices.getUserMedia({ video:{ facingMode:'user' }, audio:false });
+}
+
+async function openCamera(){
+  camOverlay.classList.add('show');
+  hideCamMsg();
+  if(!window.isSecureContext){
+    showCamMsg('このURL（'+location.origin+'）ではカメラを使えません。\n「スパイラル起動.command」から http://localhost:8787/… で開いてください。');
+    return;
+  }
+  if(!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia){
+    showCamMsg('このブラウザではカメラ機能を利用できません。SafariかChromeでお試しください。');
+    return;
+  }
+  try{
+    camStream=await acquireSharedCamStream();
+    camVideo.srcObject=camStream;
+  }catch(e){
+    showCamMsg(describeCameraError(e));
+    console.warn('camera error', e);
+  }
+}
+function closeCamera(){
+  camOverlay.classList.remove('show');
+  // 🎥ムービー背景が同じストリームを使用中なら、トラックは止めずに参照だけ外す
+  if(camStream && camStream!==liveBgStream){
+    camStream.getTracks().forEach(tr=>tr.stop());
+  }
+  camStream=null;
+  camVideo.srcObject=null;
+}
+camCloseBtn.addEventListener('click', closeCamera);
+camBtn.addEventListener('click', openCamera);
+
+/* ---------------------------------------------------------------------
+ * X4/S2/S3) 🎥ムービー背景（ライブカメラ）
+ * ON: getUserMedia映像を、カメラに追従するフルスクリーンの背面クワッド（ShaderMaterial）へ
+ *     VideoTextureとして流し込む。scene.backgroundへ直接入れるとaspect比の自動クロップが効かず
+ *     間延び/切り抜き板のように見えてしまうため、以下の方式に変更：
+ *       - クワッドはカメラ直前・視錐台にジャストフィットするサイズで毎フレーム追従
+ *         （depthTest/depthWrite無効・renderOrderを最背面にして常に一番奥に描画）
+ *       - フラグメントシェーダー側でvideoのUVにscale/offsetを掛けてcover相当のクロップを行う
+ *         （画面比とvideo比の差分だけを短辺方向にトリミングし、歪ませない）
+ *       - 同じシェーダーでS3の色フィルター（tint）を乗算合成。3D文字/螺旋には一切影響しない
+ * OFF: クワッドを非表示にし、直前の背景（色/グラデ）へ復帰＋（📷撮影が使っていなければ）トラック停止。
+ * ------------------------------------------------------------------- */
+const btnLiveBgEl=document.getElementById('btnLiveBg');
+const BLOOM_BASE_STRENGTH=1.1; // 起動時のUnrealBloomPass初期値と一致させる
+let bloomUserStrength=BLOOM_BASE_STRENGTH; // rngBloomユーザー設定値（liveBg中の自動減衰と分離管理）
+
+/* S3: プリセットtint（夕焼けオレンジ・ネオンピンク・深海ブルー・モノクロ） */
+const VF_PRESETS={
+  '#ff7a3c':'夕焼けオレンジ',
+  '#ff4fd8':'ネオンピンク',
+  '#1f6fff':'深海ブルー',
+};
+
+const liveBgQuadUniforms={
+  map:        { value:null },
+  uvScale:    { value:new THREE.Vector2(1,1) },
+  uvOffset:   { value:new THREE.Vector2(0,0) },
+  tintColor:  { value:new THREE.Color(0xffffff) },
+  tintStrength:{ value:0 },
+  mono:       { value:0 },
+};
+function createLiveBgQuad(){
+  const geo=new THREE.PlaneGeometry(1,1);
+  const mat=new THREE.ShaderMaterial({
+    uniforms: liveBgQuadUniforms,
+    depthTest:false, depthWrite:false, toneMapped:false,
+    vertexShader:`
+      varying vec2 vUv;
+      void main(){
+        vUv = uv;
+        gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+      }
+    `,
+    fragmentShader:`
+      uniform sampler2D map;
+      uniform vec2 uvScale;
+      uniform vec2 uvOffset;
+      uniform vec3 tintColor;
+      uniform float tintStrength;
+      uniform float mono;
+      varying vec2 vUv;
+      void main(){
+        vec2 uv = (vUv - 0.5) * uvScale + 0.5 + uvOffset;
+        vec4 texel = texture2D(map, clamp(uv, 0.0, 1.0));
+        vec3 col = texel.rgb;
+        // S3: 色フィルター。mix(videoColor, videoColor*tintColor, strength)
+        vec3 tinted = col * tintColor;
+        col = mix(col, tinted, tintStrength);
+        if(mono>0.5){
+          float g = dot(col, vec3(0.299,0.587,0.114));
+          col = vec3(g);
+        }
+        gl_FragColor = vec4(col, 1.0);
+      }
+    `
+  });
+  const mesh=new THREE.Mesh(geo, mat);
+  mesh.renderOrder=-1000;
+  mesh.frustumCulled=false;
+  mesh.visible=false;
+  scene.add(mesh);
+  return mesh;
+}
+liveBgQuad=createLiveBgQuad();
+
+/* リサイズ/カメラ変更時：クワッドをカメラ直前(near*1.05)に置き、その距離の視錐台サイズにジャストフィットさせる */
+function updateLiveBgQuadGeometry(){
+  if(!liveBgQuad) return;
+  const dist=camera.near*1.05 + 0.05;
+  const vFov=THREE.MathUtils.degToRad(camera.fov);
+  const h=2*Math.tan(vFov/2)*dist;
+  const w=h*camera.aspect;
+  liveBgQuad.geometry.dispose();
+  liveBgQuad.geometry=new THREE.PlaneGeometry(w, h);
+  liveBgQuad.userData.dist=dist;
+}
+/* 毎フレーム：カメラの正面・向きへ完全追従させる（animate内から呼ぶ） */
+function followCameraForLiveBgQuad(){
+  if(!liveBgQuad || !liveBgQuad.visible) return;
+  const dist=liveBgQuad.userData.dist || (camera.near*1.05+0.05);
+  const dir=new THREE.Vector3();
+  camera.getWorldDirection(dir);
+  liveBgQuad.position.copy(camera.position).addScaledVector(dir, dist);
+  liveBgQuad.quaternion.copy(camera.quaternion);
+}
+/* cover相当のUVクロップ：画面アスペクトとvideoアスペクトの差分だけ短辺側をトリミング（歪ませない） */
+function updateLiveBgCoverUv(){
+  if(!liveBgVideoEl || !liveBgVideoEl.videoWidth || !liveBgVideoEl.videoHeight) return;
+  const screenAspect=innerWidth/innerHeight;
+  const videoAspect=liveBgVideoEl.videoWidth/liveBgVideoEl.videoHeight;
+  let sx=1, sy=1;
+  if(videoAspect>screenAspect){
+    // 映像の方が横長 → 横方向を切る
+    sx=screenAspect/videoAspect;
+  } else {
+    // 映像の方が縦長（または同じ） → 縦方向を切る
+    sy=videoAspect/screenAspect;
+  }
+  liveBgQuadUniforms.uvScale.value.set(sx, sy);
+  liveBgQuadUniforms.uvOffset.value.set(0,0);
+}
+
+/* S3: 映像フィルター（tint）をシェーダuniformへ反映 */
+function applyVideoFilterUniforms(){
+  const c=vfColor ? hexToRgb(vfColor) : {r:255,g:255,b:255};
+  liveBgQuadUniforms.tintColor.value.setRGB(c.r/255, c.g/255, c.b/255);
+  liveBgQuadUniforms.tintStrength.value=vfMono ? Math.max(vfStrength,0.0001) : (vfColor ? vfStrength : 0);
+  liveBgQuadUniforms.mono.value=vfMono?1:0;
+}
+
+async function enableLiveBg(){
+  if(!window.isSecureContext){
+    showAiState('このURLではカメラを使えません（🎥ムービー背景）', true);
+    return;
+  }
+  if(!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia){
+    showAiState('このブラウザではカメラ機能を利用できません', true);
+    return;
+  }
+  try{
+    liveBgStream=await acquireSharedCamStream();
+  }catch(e){
+    showAiState(describeCameraError(e).split('\n')[0], true);
+    console.warn('live bg camera error', e);
+    return;
+  }
+  liveBgVideoEl=document.createElement('video');
+  liveBgVideoEl.srcObject=liveBgStream;
+  liveBgVideoEl.muted=true;
+  liveBgVideoEl.playsInline=true;
+  await liveBgVideoEl.play().catch(()=>{});
+  liveBgTexture=new THREE.VideoTexture(liveBgVideoEl);
+  liveBgTexture.colorSpace=THREE.SRGBColorSpace;
+  liveBgQuadUniforms.map.value=liveBgTexture;
+  updateLiveBgQuadGeometry();
+  updateLiveBgCoverUv();
+  applyVideoFilterUniforms();
+  liveBgQuad.visible=true;
+  followCameraForLiveBgQuad();
+  liveBgOn=true;
+  btnLiveBgEl.classList.add('on');
+  updateVideoFilterPanelUi();
+  // videoのメタデータ確定（解像度確定）後に改めてcover計算し直す（初回はまだ0の場合があるため）
+  liveBgVideoEl.addEventListener('loadedmetadata', updateLiveBgCoverUv, { once:true });
+  // ブルームがビデオ背景の明部で暴れないよう控えめに自動調整
+  bloomPass.strength=bloomUserStrength*0.6;
+  // 📷オーバーレイが開いていれば同ストリームを流用してプレビューさせる
+  if(camOverlay.classList.contains('show') && !camStream){
+    camStream=liveBgStream;
+    camVideo.srcObject=camStream;
+  }
+}
+function disableLiveBg(){
+  liveBgOn=false;
+  btnLiveBgEl.classList.remove('on');
+  bloomPass.strength=bloomUserStrength;
+  if(liveBgQuad){ liveBgQuad.visible=false; }
+  liveBgQuadUniforms.map.value=null;
+  if(liveBgVideoEl){ liveBgVideoEl.pause(); liveBgVideoEl.srcObject=null; liveBgVideoEl=null; }
+  if(liveBgTexture){ liveBgTexture.dispose(); liveBgTexture=null; }
+  // 📷撮影オーバーレイが今もこのストリームを使っていなければトラックを止める
+  if(liveBgStream && liveBgStream!==camStream){
+    liveBgStream.getTracks().forEach(tr=>tr.stop());
+  }
+  liveBgStream=null;
+  applyBackground(); // 直前の色/グラデ背景へ復帰
+  updateVideoFilterPanelUi();
+}
+btnLiveBgEl.addEventListener('click', ()=>{
+  if(liveBgOn) disableLiveBg(); else enableLiveBg();
+});
+
+function flashShutter(){
+  camFlashEl.classList.remove('flashing');
+  // reflow でアニメーションを再トリガー
+  void camFlashEl.offsetWidth;
+  camFlashEl.classList.add('flashing');
+}
+
+/* video現在フレーム → 長辺960pxのJPEG dataURL（ミラー表示のまま保存＝左右反転して自然な向きに） */
+function captureVideoFrameDataUrl(video){
+  const vw=video.videoWidth||720, vh=video.videoHeight||960;
+  const scale=Math.min(1, PHOTO_LONG_EDGE/Math.max(vw,vh));
+  const cw=Math.max(1, Math.round(vw*scale)), ch=Math.max(1, Math.round(vh*scale));
+  camCanvas.width=cw; camCanvas.height=ch;
+  const ctx=camCanvas.getContext('2d');
+  ctx.save();
+  ctx.translate(cw,0); ctx.scale(-1,1); // プレビューと同じ左右ミラーで保存
+  ctx.drawImage(video, 0,0, cw,ch);
+  ctx.restore();
+  return camCanvas.toDataURL('image/jpeg', PHOTO_JPEG_QUALITY);
+}
+
+async function savePhotoToBridge(dataUrl){
+  const res=await fetch(BRIDGE_ORIGIN+'/photo', {
+    method:'POST',
+    headers:{ 'Content-Type':'application/json' },
+    body: JSON.stringify({ dataUrl })
+  });
+  const json=await res.json().catch(()=>null);
+  if(!res.ok || !json || !json.ok) throw new Error((json&&json.error)||'save failed');
+  return json;
+}
+
+/* ポラロイド風の板ジオメトリ：白フチの薄い箱＋写真面はCanvasTextureで貼る */
+function buildPolaroidGroup(dataUrl){
+  return new Promise((resolve)=>{
+    const img=new Image();
+    img.onload=()=>{
+      const group=new THREE.Group();
+      const frameW=44, frameH=52, frameDepth=1.6;
+      const photoMargin=3.4, photoBottomMargin=11; // 下フチ広め
+
+      // 白フチ本体（薄い箱）
+      const frameGeo=new THREE.BoxGeometry(frameW, frameH, frameDepth);
+      const frameMat=new THREE.MeshStandardMaterial({ color:0xf6f3ea, roughness:0.82, metalness:0.02 });
+      const frameMesh=new THREE.Mesh(frameGeo, frameMat);
+      frameMesh.castShadow=true; frameMesh.receiveShadow=true;
+      group.add(frameMesh);
+
+      // 写真面（正方形寄りにセンタークロップしたCanvasTexture）
+      const photoW=frameW - photoMargin*2;
+      const photoH=frameH - photoBottomMargin - photoMargin;
+      const cv=document.createElement('canvas');
+      const cvSize=512;
+      cv.width=cvSize; cv.height=Math.round(cvSize*(photoH/photoW));
+      const ctx=cv.getContext('2d');
+      const srcAspect=img.width/img.height, dstAspect=cv.width/cv.height;
+      let sx=0, sy=0, sw=img.width, sh=img.height;
+      if(srcAspect>dstAspect){ sw=img.height*dstAspect; sx=(img.width-sw)/2; }
+      else{ sh=img.width/dstAspect; sy=(img.height-sh)/2; }
+      ctx.drawImage(img, sx,sy,sw,sh, 0,0, cv.width,cv.height);
+      const photoTex=new THREE.CanvasTexture(cv);
+      photoTex.colorSpace=THREE.SRGBColorSpace;
+      photoTex.needsUpdate=true;
+
+      const photoGeo=new THREE.PlaneGeometry(photoW, photoH);
+      const photoMat=new THREE.MeshStandardMaterial({ map:photoTex, roughness:0.55, metalness:0.0, side:THREE.DoubleSide });
+      const photoMesh=new THREE.Mesh(photoGeo, photoMat);
+      const photoCenterY = frameH/2 - photoMargin - photoH/2;
+      photoMesh.position.set(0, photoCenterY, frameDepth/2 + 0.03);
+      photoMesh.castShadow=true;
+      group.add(photoMesh);
+
+      // 底辺をy=0に接地・ほんの少しランダム傾き
+      group.position.y = frameH/2;
+      group.rotation.z = (Math.random()-0.5)*0.14;
+      group.rotation.y = (Math.random()-0.5)*0.05;
+
+      // サイズを単語・モデルと同程度に正規化
+      const scale = PHOTO_TARGET_SIZE/frameH;
+      const outer=new THREE.Group();
+      outer.add(group);
+      outer.scale.setScalar(scale);
+      resolve(outer);
+    };
+    img.onerror=()=>{
+      // 万一の画像読み込み失敗時は簡易プレースホルダー板を返す
+      const geo=new THREE.BoxGeometry(PHOTO_TARGET_SIZE*0.86, PHOTO_TARGET_SIZE, 1.6);
+      const mat=new THREE.MeshStandardMaterial({ color:0xf6f3ea, roughness:0.82 });
+      const mesh=new THREE.Mesh(geo, mat);
+      mesh.position.y=PHOTO_TARGET_SIZE/2;
+      const outer=new THREE.Group(); outer.add(mesh);
+      resolve(outer);
+    };
+    img.src=dataUrl;
+  });
+}
+
+async function addPhotoEntry(dataUrl, label){
+  const group=await buildPolaroidGroup(dataUrl);
+  const decision={ color:'#f6f3ea', material:'pearl', style:'normal', reason:'撮影した写真' };
+  const entry=addEntryToSpiral(label||'写真', decision, group, 'photo');
+  burstSparkle(spiralPoint(entry.t));
+  return entry;
+}
+
+/* 撮影処理本体：canvasキャプチャ → ブリッジ保存（失敗してもin-memoryで続行）→ ポラロイド投入 */
+async function capturePhoto(){
+  if(!camStream || camVideo.readyState<2){ return; }
+  flashShutter();
+  const dataUrl=captureVideoFrameDataUrl(camVideo);
+  const label='写真 '+new Date().toLocaleTimeString('ja-JP',{ hour:'2-digit', minute:'2-digit', second:'2-digit' });
+  try{
+    await savePhotoToBridge(dataUrl);
+  }catch(e){
+    showCamToast('保存できませんでした（表示のみ）');
+  }
+  await addPhotoEntry(dataUrl, label);
+}
+shutterBtn.addEventListener('click', capturePhoto);
+
+/* 起動時復元：ブリッジ接続時、GET /photos の最新5枚を賑やかしとして自動投入 */
+const PHOTO_RESTORE_LIMIT=5;
+async function restoreRecentPhotos(){
+  try{
+    const res=await fetch(BRIDGE_ORIGIN+'/photos');
+    if(!res.ok) throw new Error('http '+res.status);
+    const json=await res.json();
+    const list=(json && json.photos) || [];
+    const picked=list.slice(0, PHOTO_RESTORE_LIMIT).reverse(); // 古い順に投入して自然に賑わわせる
+    for(const p of picked){
+      try{
+        // p.url は "/kurichiland-forge/photos/…" というサイトルート相対パス。
+        // 静的ファイルはブリッジ(8788)ではなくページと同じオリジンの静的サーバから配信されるため、
+        // BRIDGE_ORIGINを付けずページ相対で取得する（generated/*.glbのURLの扱いと同様）。
+        const imgRes=await fetch(p.url);
+        if(!imgRes.ok) continue;
+        const blob=await imgRes.blob();
+        const dataUrl=await new Promise((resolve,reject)=>{
+          const r=new FileReader();
+          r.onload=()=>resolve(r.result);
+          r.onerror=reject;
+          r.readAsDataURL(blob);
+        });
+        await addPhotoEntry(dataUrl, p.name||'写真');
+        await new Promise(r=>setTimeout(r, 160));
+      }catch(e){ /* 個別の1枚失敗はスキップ */ }
+    }
+  }catch(e){ /* ブリッジ未接続時は静かにスキップ */ }
+}
+
+/* ---------------------------------------------------------------------
+ * Y4) AI実況テロップ
+ * 画面下部のテロップ帯。キュー式で1件ずつフェードイン→表示→フェードアウトする。
+ * reasonが無い（フォールバック判定等）ケースはtickerShowを呼ばない＝嘘の実況をしない。
+ * 設定パネルの「実況テロップ」スイッチでON/OFF（localStorage kland-vj-ticker）。
+ * ------------------------------------------------------------------- */
+const tickerBarEl=document.getElementById('tickerBar');
+const tickerTextEl=document.getElementById('tickerText');
+let tickerEnabled=true;
+(function loadTickerPref(){
+  try{ const v=localStorage.getItem('kland-vj-ticker'); if(v!=null) tickerEnabled = v==='1'; }catch(e){}
+})();
+const tickerQueue=[];
+let tickerBusy=false;
+function tickerShow(text, opts){
+  if(!text) return;
+  if(!tickerEnabled) return;
+  opts=opts||{};
+  tickerQueue.push({ text, big:!!opts.big });
+  pumpTickerQueue();
+}
+function pumpTickerQueue(){
+  if(tickerBusy || !tickerQueue.length) return;
+  tickerBusy=true;
+  const item=tickerQueue.shift();
+  tickerTextEl.textContent=item.text;
+  tickerBarEl.classList.toggle('drop', item.big);
+  tickerBarEl.classList.add('show');
+  clearTimeout(pumpTickerQueue._hideT);
+  clearTimeout(pumpTickerQueue._nextT);
+  const showMs = item.big ? 1600 : 3500;
+  pumpTickerQueue._hideT=setTimeout(()=>{
+    tickerBarEl.classList.remove('show');
+    pumpTickerQueue._nextT=setTimeout(()=>{ tickerBusy=false; pumpTickerQueue(); }, 360);
+  }, showMs);
+}
+
+/* ---------------------------------------------------------------------
+ * Y1) 🎤ビートシンク
+ * getUserMedia(audio)→AnalyserNodeで低域(約40-130Hz)のエネルギー移動平均を監視し、
+ * 閾値超過の立ち上がりをキックとして検出。直近ビート間隔の中央値からBPMを推定して表示する。
+ * ビート検出時：①bloom瞬間+0.35→200msで減衰 ②全entriesが位相をずらしてバウンス
+ * ③スパークルバースト ④センターモデルがあれば軽くキック回転。
+ * 無音/弱信号時も音量に応じた連続ゆらぎ(bloom±0.1)で「生きてる」感を出す。
+ * ------------------------------------------------------------------- */
+const btnBeatEl=document.getElementById('btnBeat');
+const bpmTagEl=document.getElementById('bpmTag');
+const rngBeatSensEl=document.getElementById('rngBeatSens');
+const vBeatSensEl=document.getElementById('vBeatSens');
+
+let beatOn=false;
+let beatSensitivity=1.0;
+(function loadBeatSensPref(){
+  try{ const v=parseFloat(localStorage.getItem('kland-vj-beatsens')); if(!isNaN(v)) beatSensitivity=Math.max(0.4,Math.min(2,v)); }catch(e){}
+  if(rngBeatSensEl) rngBeatSensEl.value=String(beatSensitivity);
+  if(vBeatSensEl) vBeatSensEl.textContent=beatSensitivity.toFixed(2);
+})();
+
+let beatAudioCtx=null, beatAnalyser=null, beatSourceNode=null, beatDataArr=null;
+let beatStream=null;
+let beatBloomBoost=0;      // 瞬間加算分（200msで減衰）
+let beatAmbient=0;         // 連続ゆらぎ（音量ベース）
+let beatLowEnergyAvg=0;    // 低域エネルギーの移動平均（動的閾値のベースライン）
+const beatIntervals=[];    // 直近ビート間隔(ms)
+let beatLastTime=0;
+let beatBpm=0;
+let beatRafId=null;
+let beatKickCooldown=0;    // 連続誤検出防止（ms残り）
+
+function toastOnce(msg){ showAiState(msg, true); }
+
+async function enableBeatSync(){
+  if(!window.isSecureContext){ toastOnce('このURLではマイクを使えません（🎤ビートシンク）'); return; }
+  if(!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia){ toastOnce('このブラウザではマイク機能を利用できません'); return; }
+  try{
+    beatStream=await navigator.mediaDevices.getUserMedia({ audio:true });
+  }catch(e){
+    toastOnce('マイクへのアクセスが許可されていません（🎤ビートシンク）');
+    console.warn('beat mic error', e);
+    return;
+  }
+  try{
+    beatAudioCtx=new (window.AudioContext||window.webkitAudioContext)();
+    beatSourceNode=beatAudioCtx.createMediaStreamSource(beatStream);
+    beatAnalyser=beatAudioCtx.createAnalyser();
+    beatAnalyser.fftSize=1024;
+    beatAnalyser.smoothingTimeConstant=0.0; // 自前でスムージングするため生値を取る
+    beatDataArr=new Uint8Array(beatAnalyser.frequencyBinCount);
+    beatSourceNode.connect(beatAnalyser);
+  }catch(e){
+    toastOnce('マイク解析の初期化に失敗しました');
+    disableBeatSync();
+    return;
+  }
+  beatOn=true;
+  beatLowEnergyAvg=0;
+  beatIntervals.length=0;
+  beatLastTime=0;
+  beatBpm=0;
+  btnBeatEl.classList.add('on');
+  bpmTagEl.textContent='検出中…';
+  beatLoop();
+}
+function disableBeatSync(){
+  beatOn=false;
+  btnBeatEl.classList.remove('on');
+  bpmTagEl.textContent='';
+  if(beatRafId){ cancelAnimationFrame(beatRafId); beatRafId=null; }
+  if(beatSourceNode){ try{ beatSourceNode.disconnect(); }catch(e){} beatSourceNode=null; }
+  if(beatAnalyser){ beatAnalyser=null; }
+  if(beatAudioCtx){ try{ beatAudioCtx.close(); }catch(e){} beatAudioCtx=null; }
+  if(beatStream){ beatStream.getTracks().forEach(tr=>tr.stop()); beatStream=null; }
+  beatBloomBoost=0; beatAmbient=0;
+}
+btnBeatEl.addEventListener('click', ()=>{ beatOn ? disableBeatSync() : enableBeatSync(); });
+if(rngBeatSensEl){
+  rngBeatSensEl.addEventListener('input', ()=>{
+    beatSensitivity=+rngBeatSensEl.value;
+    vBeatSensEl.textContent=beatSensitivity.toFixed(2);
+    try{ localStorage.setItem('kland-vj-beatsens', String(beatSensitivity)); }catch(e){}
+  });
+}
+
+/* 低域(約40-130Hz)ビンのエネルギー平均を取り、移動平均比×感度しきい値でキックを検出する。
+ * fftSize=1024・sampleRate依存でビン幅=sampleRate/1024（通常48000Hzなら約46.9Hz/bin）。
+ * 40〜130Hzはおおよそbin index 1〜3。 */
+function readBeatFrame(){
+  if(!beatAnalyser || !beatDataArr) return null;
+  beatAnalyser.getByteFrequencyData(beatDataArr);
+  const sampleRate=beatAudioCtx.sampleRate||48000;
+  const binHz=sampleRate/beatAnalyser.fftSize;
+  const loBin=Math.max(1, Math.round(40/binHz));
+  const hiBin=Math.max(loBin, Math.round(130/binHz));
+  let sum=0, n=0;
+  for(let i=loBin;i<=hiBin && i<beatDataArr.length;i++){ sum+=beatDataArr[i]; n++; }
+  const lowEnergy = n ? sum/n/255 : 0; // 0..1
+  // 全帯域の音量（連続ゆらぎ用）
+  let sumAll=0;
+  for(let i=0;i<beatDataArr.length;i++) sumAll+=beatDataArr[i];
+  const overallLevel=sumAll/beatDataArr.length/255;
+  return { lowEnergy, overallLevel };
+}
+
+function onBeatDetected(){
+  const now=performance.now();
+  if(beatLastTime>0){
+    const interval=now-beatLastTime;
+    if(interval>200 && interval<2000){ // 30〜300BPM相当のみ採用
+      beatIntervals.push(interval);
+      if(beatIntervals.length>8) beatIntervals.shift();
+      if(beatIntervals.length>=3){
+        const sorted=beatIntervals.slice().sort((a,b)=>a-b);
+        const median=sorted[Math.floor(sorted.length/2)];
+        beatBpm=Math.round(60000/median);
+        bpmTagEl.textContent=beatBpm+' BPM';
+      }
+    }
+  }
+  beatLastTime=now;
+  triggerBeatPulse();
+}
+
+/* ビート反応本体：bloom瞬間ブースト・全entriesバウンス・スパークル強化・センターキック回転。
+ * beatPulse() として window.__textSpiral からもQA用に呼べる（マイク無しでも演出確認できるように）。 */
+function triggerBeatPulse(){
+  beatBloomBoost=Math.max(beatBloomBoost, 0.35);
+  beatPulseTime=performance.now();
+  burstSparkle(spiralPoint(Math.random()));
+  if(appMode==='sea'){
+    // 海モードでは画面内のランダム位置にも小バーストを足して賑やかに
+    burstSparkle(new THREE.Vector3((Math.random()-0.5)*SEA.radius, SEA.swimYMin+Math.random()*(SEA.yMax-SEA.swimYMin), (Math.random()-0.5)*SEA.radius));
+  }
+  if(centerModel){
+    centerModel.spinAngle += Math.PI*0.14; // 軽いキック回転
+  }
+}
+let beatPulseTime=0;
+const BEAT_BOUNCE_DURATION=260; // ms
+
+function beatLoop(){
+  if(!beatOn) return;
+  beatRafId=requestAnimationFrame(beatLoop);
+  const frame=readBeatFrame();
+  if(!frame) return;
+  const { lowEnergy, overallLevel } = frame;
+  // 移動平均（ベースライン）を緩やかに更新
+  beatLowEnergyAvg = beatLowEnergyAvg*0.92 + lowEnergy*0.08;
+  const threshold = beatLowEnergyAvg*1.5/beatSensitivity + 0.05;
+  if(beatKickCooldown>0) beatKickCooldown -= 16;
+  if(lowEnergy>threshold && lowEnergy>0.12 && beatKickCooldown<=0){
+    beatKickCooldown=180; // 連続検出防止（ms）
+    onBeatDetected();
+  }
+  // 連続的なゆらぎ（音が弱くても常にわずかに反応）
+  beatAmbient = overallLevel*0.1;
+}
+
+/* 毎フレーム呼び出し：bloomのビート/アンビエント反映、全entriesのビートバウンス */
+function updateBeatVisuals(dt){
+  // bloom: 瞬間ブーストを200msで減衰させつつ、連続ゆらぎも加算
+  beatBloomBoost=Math.max(0, beatBloomBoost - dt*(0.35/0.2));
+  const base = liveBgOn ? bloomUserStrength*0.6 : bloomUserStrength;
+  bloomPass.strength = base + beatBloomBoost + (beatOn ? beatAmbient : 0);
+
+  // 全entriesのバウンス（ビート直後のみ）
+  if(beatPulseTime>0){
+    const elapsed=performance.now()-beatPulseTime;
+    if(elapsed<BEAT_BOUNCE_DURATION){
+      const tt=elapsed/BEAT_BOUNCE_DURATION;
+      words.forEach(w=>{
+        const ph=(w.phase||0)*0.15; // 個体ごとにわずかに位相をずらす
+        const localT=Math.max(0, Math.min(1, tt - ph*0.08));
+        const bounce = Math.sin(localT*Math.PI); // 0→1→0
+        const s=1 + bounce*0.08;
+        w.group.scale.setScalar((w.baseScaleForBeat || (w.baseScaleForBeat = w.group.scale.x||1))*s);
+      });
+    } else if(elapsed<BEAT_BOUNCE_DURATION+40){
+      // バウンス終了直後、基準スケールへ戻す
+      words.forEach(w=>{ if(w.baseScaleForBeat) w.group.scale.setScalar(w.baseScaleForBeat); });
+    }
+  }
+}
+
+/* ---------------------------------------------------------------------
+ * Y2) 💥DROP（クライマックス演出）
+ * 発動：①白フラッシュ＋bloom一時2倍 ②全entries(単語/写真。センターモデルは除く)が
+ * 中心から外向きへ爆発的に散る ③スパークル大量バースト ④約1.6秒後、各自の
+ * 本来の軌道位置へease-in-outで再集結。非破壊（entriesのデータは不変・位置のみ演出）。
+ * 連打はクールダウン2秒。ビートシンク中はDROP後1小節ぶんbloom高め維持。
+ * センターモデルは爆発せずその場で1回転＋リング再発光。
+ * ------------------------------------------------------------------- */
+const btnDropEl=document.getElementById('btnDrop');
+let dropCooldownUntil=0;
+let dropActive=false;
+let dropStartTime=0;
+const DROP_EXPLODE_MS=1600;
+const DROP_SUSTAIN_BLOOM_MS=2000; // ビートシンク中の1小節相当の高bloom維持
+
+function dropNow(){
+  const now=performance.now();
+  if(now<dropCooldownUntil) return;
+  dropCooldownUntil=now+2000;
+  dropActive=true;
+  dropStartTime=now;
+
+  // ①白フラッシュ＋bloom一時2倍
+  flashVj();
+  const whiteFlash=document.getElementById('vjFlash');
+  if(whiteFlash){ whiteFlash.classList.remove('flashing'); void whiteFlash.offsetWidth; whiteFlash.classList.add('flashing'); }
+  dropBloomOverride = (liveBgOn ? bloomUserStrength*0.6 : bloomUserStrength) * 2;
+  dropBloomOverrideUntil = now + 500;
+  if(beatOn) dropBloomOverrideUntil = Math.max(dropBloomOverrideUntil, now + DROP_SUSTAIN_BLOOM_MS);
+
+  // ②全entriesを中心から外向きに爆発
+  words.forEach(w=>{
+    const p=w.group.position;
+    const dir=new THREE.Vector3(p.x, 0, p.z);
+    if(dir.lengthSq()<1e-6) dir.set(Math.random()-0.5, 0, Math.random()-0.5);
+    dir.normalize();
+    const speed=90+Math.random()*140;
+    w.dropVel = new THREE.Vector3(dir.x*speed, (0.4+Math.random()*0.8)*speed*0.5, dir.z*speed);
+    w.dropSpin = new THREE.Vector3((Math.random()-0.5)*10, (Math.random()-0.5)*10, (Math.random()-0.5)*10);
+    w.dropOrigin = p.clone();
+    w.dropT = 0;
+  });
+
+  // ③スパークル大量バースト
+  for(let i=0;i<8;i++){
+    burstSparkle(new THREE.Vector3((Math.random()-0.5)*SPIRAL.radius*1.4, SPIRAL.baseY+Math.random()*SPIRAL.height*0.7, (Math.random()-0.5)*SPIRAL.radius*1.4));
+  }
+
+  // ④センターモデルは爆発しない代わりにその場で1回転＋リング再発光
+  if(centerModel){
+    centerModel.dropSpinBoost = Math.PI*2; // 1回転ぶんを短時間で加算
+    spawnCenterDebutRing();
+  }
+
+  btnDropEl.classList.remove('pulse'); void btnDropEl.offsetWidth; btnDropEl.classList.add('pulse');
+  tickerShow('DROP!!', { big:true });
+}
+let dropBloomOverride=0, dropBloomOverrideUntil=0;
+
+function easeInOutCubic(x){ return x<0.5 ? 4*x*x*x : 1-Math.pow(-2*x+2,3)/2; }
+
+function updateDropVisuals(dt){
+  if(!dropActive) return;
+  const now=performance.now();
+  const elapsed=now-dropStartTime;
+  const EXPLODE_PHASE=350; // ms: 爆発的に飛び散るフェーズ
+  words.forEach(w=>{
+    if(!w.dropVel) return;
+    w.dropT += dt;
+    if(elapsed<EXPLODE_PHASE){
+      // 飛び散りフェーズ：速度に従って外側へ
+      const k=dt;
+      w.group.position.addScaledVector(w.dropVel, k);
+      w.dropVel.multiplyScalar(0.965); // 減衰
+      w.group.rotation.x += w.dropSpin.x*dt;
+      w.group.rotation.y += w.dropSpin.y*dt;
+      w.group.rotation.z += w.dropSpin.z*dt;
+      w.dropReturnFrom = w.group.position.clone();
+    } else if(elapsed<DROP_EXPLODE_MS){
+      // 再集結フェーズ：現在位置から本来の軌道位置へease-in-outで戻す
+      const homePos = appMode==='sea'
+        ? (w.sea ? w.sea.pos : spiralPoint(w.t))
+        : spiralPoint(w.t);
+      const tt=Math.min(1, (elapsed-EXPLODE_PHASE)/(DROP_EXPLODE_MS-EXPLODE_PHASE));
+      const eased=easeInOutCubic(tt);
+      if(!w.dropReturnFrom) w.dropReturnFrom=w.group.position.clone();
+      w.group.position.lerpVectors(w.dropReturnFrom, homePos, eased);
+      w.group.rotation.x *= (1-eased*0.3);
+      w.group.rotation.z *= (1-eased*0.3);
+    } else {
+      // 演出終了：通常の placeEntry に委ねる
+      delete w.dropVel; delete w.dropSpin; delete w.dropOrigin; delete w.dropT; delete w.dropReturnFrom;
+    }
+  });
+  if(elapsed>=DROP_EXPLODE_MS){
+    dropActive=false;
+  }
+  // bloomオーバーライドの減衰
+  if(now<dropBloomOverrideUntil){
+    const base=(liveBgOn ? bloomUserStrength*0.6 : bloomUserStrength);
+    const remain=(dropBloomOverrideUntil-now)/((beatOn?DROP_SUSTAIN_BLOOM_MS:500));
+    bloomPass.strength=Math.max(bloomPass.strength, base + (dropBloomOverride-base)*Math.max(0,Math.min(1,remain)));
+  }
+  // センターモデルの1回転演出
+  if(centerModel && centerModel.dropSpinBoost>0){
+    const step=Math.min(centerModel.dropSpinBoost, dt*Math.PI*2.4);
+    centerModel.spinAngle += step;
+    centerModel.dropSpinBoost -= step;
+  }
+}
+btnDropEl.addEventListener('click', dropNow);
+addEventListener('keydown', e=>{
+  if(e.code==='Space' && e.shiftKey){
+    e.preventDefault();
+    dropNow();
+  }
+});
+
+/* ---------------------------------------------------------------------
+ * Y3) 🧠AI連想モード
+ * ONの間、約12秒間隔（±3秒ランダム）で直近追加語からAIに連想語を求め自動投入する。
+ * ブリッジ契約: POST {ai}/ai {"assoc":"海","avoid":["クジラ","潮",...]}
+ *   → {"word":"灯台","reason":"海を見守る光"}
+ * まだ未実装/失敗する場合は内蔵の連想辞書＋簡易連鎖ロジックへフォールバックし、
+ * トグルは常に機能する。AI追加語は🤖バッジ＋紫フラッシュ＋テロップ演出で差別化。
+ * コードレイン表示中（ジョブ実行中）はタイマーを一時停止する。
+ * ------------------------------------------------------------------- */
+const btnAssocEl=document.getElementById('btnAssoc');
+let assocOn=false;
+let assocTimer=null;
+const assocRecentWords=[]; // 直近10語（avoid用）
+
+/* 内蔵フォールバック連想辞書（種語→連想候補の配列。約30語規模のシード） */
+const ASSOC_SEED_DICT={
+  '海':['波','灯台','潮風','貝殻','水平線','漁船','珊瑚'],
+  '空':['雲','星','虹','風','鳥','太陽','月'],
+  '山':['雪','森','岩','霧','滝','谷','頂'],
+  '花':['蝶','蜜','香り','蕾','花束','庭','露'],
+  '光':['影','鏡','虹','星屑','灯り','煌めき'],
+  '夜':['月','星','静寂','夢','灯火','闇'],
+  '金':['宝','冠','輝き','富','太陽','鍵'],
+  '氷':['雪','霜','結晶','冷気','氷河'],
+  '炎':['灰','熱','太陽','溶岩','火花'],
+  '風':['嵐','そよ風','旗','凧','雲'],
+  '夢':['眠り','願い','幻','記憶','未来'],
+  'クリチランド':['ハリチ','冒険','笑顔','旗','出発'],
+};
+const ASSOC_FALLBACK_POOL=['星屑','記憶','旅路','余韻','鼓動','静寂','煌めき','足跡','残響','蜃気楼','花びら','潮騒','灯台','蜘蛛の糸','万華鏡','陽炎','こだま','水面','雫','羅針盤'];
+
+function assocFallbackDecide(seedWord, avoidList){
+  const avoidSet=new Set(avoidList||[]);
+  let candidates=ASSOC_SEED_DICT[seedWord] ? ASSOC_SEED_DICT[seedWord].slice() : [];
+  // 文字連鎖：種語の先頭・末尾の文字を含む候補をプールから拾う（簡易連鎖ロジック）
+  if(seedWord && seedWord.length){
+    const headCh=seedWord[0], tailCh=seedWord[seedWord.length-1];
+    ASSOC_FALLBACK_POOL.forEach(w=>{
+      if(w.includes(headCh) || w.includes(tailCh)) candidates.push(w);
+    });
+  }
+  candidates = candidates.concat(ASSOC_FALLBACK_POOL);
+  const filtered=candidates.filter(w=>w && !avoidSet.has(w));
+  const pick = filtered.length ? filtered[Math.floor(Math.random()*filtered.length)] : ('連想'+Math.floor(Math.random()*999));
+  const reasons=['ふと浮かんだ言葉','そこから連なるイメージ','余韻から生まれた一語','響き合う言葉'];
+  return { word:pick, reason:reasons[Math.floor(Math.random()*reasons.length)] };
+}
+
+async function fetchAssocWord(seedWord, avoidList){
+  const ctrl=new AbortController();
+  const timer=setTimeout(()=>ctrl.abort(), 6000);
+  try{
+    const res=await fetch(BRIDGE_ORIGIN+'/ai', {
+      method:'POST',
+      headers:{ 'Content-Type':'application/json' },
+      body: JSON.stringify({ assoc: seedWord, avoid: avoidList }),
+      signal: ctrl.signal
+    });
+    clearTimeout(timer);
+    if(!res.ok) throw new Error('http '+res.status);
+    const json=await res.json();
+    if(!json || json.error || !json.word) throw new Error('invalid assoc response');
+    const word=String(json.word).trim().slice(0,24);
+    if(!word) throw new Error('empty word');
+    return { word, reason: json.reason||'', ai:true };
+  }catch(e){
+    clearTimeout(timer);
+    return null;
+  }
+}
+
+function pickAssocSeed(){
+  if(assocRecentWords.length) return assocRecentWords[assocRecentWords.length-1];
+  if(words.length) return words[words.length-1].text;
+  return 'クリチランド';
+}
+
+function trackAssocRecent(word){
+  assocRecentWords.push(word);
+  if(assocRecentWords.length>10) assocRecentWords.shift();
+}
+
+async function runAssocTick(){
+  if(!assocOn) return;
+  // ジョブ実行中（コードレイン表示中）は見せ場の邪魔をしないよう一時停止
+  if(codeRainPanel.group.visible){ scheduleAssocTick(); return; }
+  const seed=pickAssocSeed();
+  let result=await fetchAssocWord(seed, assocRecentWords);
+  let usedFallback=false;
+  if(!result){
+    result=assocFallbackDecide(seed, assocRecentWords);
+    usedFallback=true;
+  }
+  const word=result.word;
+  trackAssocRecent(word);
+  // ビジュアル判定はAI(color/material)を優先、無ければ通常のsubmitWordと同じ経路（AI優先→フォールバック）
+  let decision=await fetchAiDecision(word);
+  let decisionFallback=false;
+  if(!decision){ decision=heuristicDecide(word); decisionFallback=true; }
+  decision.aiAssoc=true; // 🤖バッジ用フラグ
+  decision.assocReason=result.reason||'';
+  const entry=addWordEntry(word, decision);
+  // 登場演出差別化：紫フラッシュ＋テロップにreasonを流す
+  flashAssocPurple();
+  if(result.reason) tickerShow('『'+word+'』— '+result.reason);
+  scheduleAssocTick();
+}
+function scheduleAssocTick(){
+  if(!assocOn) return;
+  clearTimeout(assocTimer);
+  const delay=(12+ (Math.random()*6-3))*1000; // 12秒±3秒
+  assocTimer=setTimeout(runAssocTick, Math.max(3000, delay));
+}
+function flashAssocPurple(){
+  const el=document.getElementById('vjFlash');
+  if(!el) return;
+  el.style.background='radial-gradient(ellipse at 50% 46%, rgba(166,139,255,.55), rgba(166,139,255,0) 70%)';
+  el.classList.remove('flashing'); void el.offsetWidth; el.classList.add('flashing');
+  setTimeout(()=>{ el.style.background=''; }, 520);
+}
+function setAssocMode(on){
+  assocOn=!!on;
+  btnAssocEl.classList.toggle('on', assocOn);
+  try{ localStorage.setItem('kland-vj-assoc', assocOn?'1':'0'); }catch(e){}
+  clearTimeout(assocTimer);
+  if(assocOn) scheduleAssocTick();
+}
+btnAssocEl.addEventListener('click', ()=> setAssocMode(!assocOn));
+(function restoreAssocPref(){
+  let on=false;
+  try{ on = localStorage.getItem('kland-vj-assoc')==='1'; }catch(e){}
+  if(on) setAssocMode(true);
+})();
+
+/* ---------------------------------------------------------------------
+ * Z) 観客スマホ参加（say.html連携）
+ * 📱ボタンで観客参加パネルを開閉。起動時に {bridge}/lanip でLAN IPを取得し、
+ * http://<ip>:8787/kurichiland-forge/say.html を大きなQRで表示する
+ * （lib/qrcode.min.jsのQRCodeコンストラクタを使用）。
+ * ip取得不能時（スパイラル起動.commandからの起動でない等）は案内文を出す。
+ * パネルを一度でも開く／常時表示QRをONにすると、{bridge}/say/queue を2秒間隔でポーリングし、
+ * 新着ワードを1語/1.2秒に間引きながら既存の単語追加フローへ流す（audience=trueバッジ＋飛び込み演出）。
+ * ------------------------------------------------------------------- */
+const AUDIENCE_INTRO_DURATION=0.8; // 飛び込み演出の時間(s)
+const AUDIENCE_POLL_INTERVAL_MS=2000;
+const AUDIENCE_INTAKE_MIN_GAP_MS=1200; // 連続大量流入時の間引き：最大1語/1.2秒
+const AUDIENCE_QR_PORT=8787; // say.htmlは8787番ポートで配信される想定（QR埋め込みURL用）
+
+const btnAudienceEl=document.getElementById('btnAudience');
+const audiencePanelEl=document.getElementById('audiencePanel');
+const audienceCloseEl=document.getElementById('audienceClose');
+const audienceQrBoxEl=document.getElementById('audienceQrBox');
+const audienceUrlEl=document.getElementById('audienceUrl');
+const audienceUnavailableEl=document.getElementById('audienceUnavailable');
+const audienceCompactEl=document.getElementById('audienceCompact');
+const swAudienceAlwaysEl=document.getElementById('swAudienceAlways');
+
+let audiencePanelOpenState=false;
+let audienceQrAlways=false;
+let audienceQrRendered=false;   // QR描画を一度試みたら再描画しない（成功/失敗いずれも）
+let audiencePollActive=false;   // ポーリングが必要な状態か（パネルを一度開いた or 常時表示ON）
+let audiencePollTimer=null;
+let audienceSeqNext=null;       // 初回ポーリングは「現在のnext」から取得＝過去分は再取り込みしない
+let audienceIntakeQueue=[];     // 間引き用の待機列
+let audienceIntakeBusy=false;
+let audienceLastIntakeAt=0;
+
+function audienceQrTargetUrl(ip){
+  return 'http://'+ip+':'+AUDIENCE_QR_PORT+'/kurichiland-forge/say.html';
+}
+
+async function fetchLanIp(){
+  try{
+    const ctrl=new AbortController();
+    const timer=setTimeout(()=>ctrl.abort(), 4000);
+    const res=await fetch(BRIDGE_ORIGIN+'/lanip', { signal: ctrl.signal });
+    clearTimeout(timer);
+    if(!res.ok) return null;
+    const json=await res.json();
+    return (json && json.ip) ? json.ip : null;
+  }catch(e){ return null; }
+}
+
+function renderQrInto(el, url){
+  el.innerHTML='';
+  if(typeof QRCode==='undefined'){ return false; }
+  try{
+    new QRCode(el, { text:url, width: el===audienceQrBoxEl?232:94, height: el===audienceQrBoxEl?232:94,
+      correctLevel: QRCode.CorrectLevel.M });
+    return true;
+  }catch(e){ return false; }
+}
+
+async function ensureAudienceQr(){
+  if(audienceQrRendered) return;
+  audienceQrRendered=true;
+  const ip=await fetchLanIp();
+  if(!ip){
+    audienceUnavailableEl.style.display='flex';
+    audienceQrBoxEl.style.display='none';
+    audienceUrlEl.style.display='none';
+    return;
+  }
+  const url=audienceQrTargetUrl(ip);
+  audienceUnavailableEl.style.display='none';
+  audienceQrBoxEl.style.display='flex';
+  audienceUrlEl.style.display='block';
+  audienceUrlEl.textContent=url;
+  renderQrInto(audienceQrBoxEl, url);
+  renderQrInto(audienceCompactEl, url);
+}
+
+function audiencePanelOpen(){
+  audiencePanelOpenState=true;
+  audiencePanelEl.classList.add('show');
+  ensureAudienceQr();
+  ensureAudiencePolling();
+}
+function audiencePanelClose(){
+  audiencePanelOpenState=false;
+  audiencePanelEl.classList.remove('show');
+}
+btnAudienceEl.addEventListener('click', ()=>{
+  if(audiencePanelEl.classList.contains('show')) audiencePanelClose();
+  else audiencePanelOpen();
+});
+audienceCloseEl.addEventListener('click', audiencePanelClose);
+audiencePanelEl.addEventListener('click', (e)=>{ if(e.target===audiencePanelEl) audiencePanelClose(); });
+
+function setQrAlways(on){
+  audienceQrAlways=!!on;
+  swAudienceAlwaysEl.classList.toggle('on', audienceQrAlways);
+  btnAudienceEl.classList.toggle('always', audienceQrAlways);
+  audienceCompactEl.classList.toggle('show', audienceQrAlways);
+  try{ localStorage.setItem('kland-vj-qr', audienceQrAlways?'1':'0'); }catch(e){}
+  if(audienceQrAlways){ ensureAudienceQr(); ensureAudiencePolling(); }
+}
+swAudienceAlwaysEl.addEventListener('click', ()=> setQrAlways(!audienceQrAlways));
+(function restoreQrAlwaysPref(){
+  let on=false;
+  try{ on = localStorage.getItem('kland-vj-qr')==='1'; }catch(e){}
+  if(on) setQrAlways(true);
+})();
+
+/* ---- 観客ワードのポーリング ---- */
+function ensureAudiencePolling(){
+  if(audiencePollActive) return;
+  audiencePollActive=true;
+  scheduleAudiencePoll(true);
+}
+function scheduleAudiencePoll(immediate){
+  clearTimeout(scheduleAudiencePoll._t);
+  scheduleAudiencePoll._t=setTimeout(pollAudienceQueue, immediate ? 0 : AUDIENCE_POLL_INTERVAL_MS);
+}
+async function pollAudienceQueue(){
+  if(!audiencePollActive) return;
+  try{
+    // 初回：過去分は取り込まず「現在のnext」だけ確定させる
+    if(audienceSeqNext==null){
+      const res=await fetch(BRIDGE_ORIGIN+'/say/queue?from=999999999');
+      if(res.ok){
+        const json=await res.json();
+        audienceSeqNext = (json && typeof json.next==='number') ? json.next : 1;
+      } else {
+        audienceSeqNext=1;
+      }
+    } else {
+      const res=await fetch(BRIDGE_ORIGIN+'/say/queue?from='+encodeURIComponent(audienceSeqNext-1));
+      if(res.ok){
+        const json=await res.json();
+        const items=(json && Array.isArray(json.items)) ? json.items : [];
+        items.forEach(it=>{
+          if(it && typeof it.word==='string' && it.word){
+            audienceIntakeQueue.push(it.word);
+          }
+        });
+        if(json && typeof json.next==='number') audienceSeqNext=json.next;
+        if(items.length) pumpAudienceIntake();
+      }
+    }
+  }catch(e){ /* ブリッジ未接続時は静かにスキップ、次回リトライ */ }
+  scheduleAudiencePoll(false);
+}
+
+/* 連続大量流入対策：最大1語/1.2秒に間引いて取り込む */
+function pumpAudienceIntake(){
+  if(audienceIntakeBusy) return;
+  const now=performance.now();
+  const wait=Math.max(0, AUDIENCE_INTAKE_MIN_GAP_MS-(now-audienceLastIntakeAt));
+  audienceIntakeBusy=true;
+  setTimeout(()=>{
+    audienceIntakeBusy=false;
+    const word=audienceIntakeQueue.shift();
+    audienceLastIntakeAt=performance.now();
+    if(word) intakeAudienceWord(word);
+    if(audienceIntakeQueue.length) pumpAudienceIntake();
+  }, wait);
+}
+
+/* 観客ワード1件を取り込み：AI判定→3D化→飛び込み演出（画面端からズームイン）＋スパークル＋テロップ */
+async function intakeAudienceWord(word){
+  let decision=await fetchAiDecision(word);
+  let usedFallback=false;
+  if(!decision){ decision=heuristicDecide(word); usedFallback=true; }
+  decision.audience=true; // 📱バッジ用フラグ
+  const entry=addWordEntry(word, decision);
+  // 飛び込み開始位置：画面端（ランダムな左右）からのオフセットを螺旋座標系に射影して設定
+  const side = Math.random()<0.5 ? -1 : 1;
+  const dirRight=new THREE.Vector3(); camera.getWorldDirection(dirRight); // カメラ前方
+  const camRight=new THREE.Vector3().crossVectors(dirRight, camera.up).normalize();
+  const target=entry.group.position.clone();
+  entry.introFrom = target.clone().add(camRight.multiplyScalar(side*260)).add(new THREE.Vector3(0, 40, 0));
+  entry.introT=0;
+  entry.group.position.copy(entry.introFrom);
+  entry.group.scale.setScalar((entry.group.scale.x||1)*0.15);
+  burstSparkle(spiralPoint(entry.t));
+  flashAudienceGreen();
+  tickerShow('📱『'+word+'』が届きました！');
+}
+function flashAudienceGreen(){
+  const el=document.getElementById('vjFlash');
+  if(!el) return;
+  el.style.background='radial-gradient(ellipse at 50% 46%, rgba(127,255,200,.5), rgba(127,255,200,0) 70%)';
+  el.classList.remove('flashing'); void el.offsetWidth; el.classList.add('flashing');
+  setTimeout(()=>{ el.style.background=''; }, 520);
+}
+
+/* QA用：ポーリングを介さず飛び込み演出を直接テストする */
+function audienceSimulate(word){
+  return intakeAudienceWord(word||('観客'+Math.floor(Math.random()*999)));
+}
+
+/* ---------------------------------------------------------------------
+ * 10) UI配線
+ * ------------------------------------------------------------------- */
+const wordInput=document.getElementById('wordInput');
+const addBtn=document.getElementById('addBtn');
+function doSubmit(){
+  const v=wordInput.value;
+  if(!v.trim()) return;
+  submitWord(v);
+  wordInput.value='';
+}
+addBtn.addEventListener('click', doSubmit);
+wordInput.addEventListener('keydown', e=>{ if(e.key==='Enter') doSubmit(); });
+
+/* X1: モード切替ボタン。localStorage('kland-spiral-mode')で永続、起動時に復元。 */
+const btnSeaMode=document.getElementById('btnSeaMode');
+btnSeaMode.addEventListener('click', ()=> setAppMode(appMode==='sea' ? 'spiral' : 'sea'));
+(function restoreSavedMode(){
+  let saved='spiral';
+  try{ saved=localStorage.getItem('kland-spiral-mode')||'spiral'; }catch(e){}
+  setAppMode(saved, { force:true, keepBgPreset: bgHadSavedPref });
+})();
+
+const modelInput=document.getElementById('modelInput');
+const modelBtn=document.getElementById('modelBtn');
+function doModelSubmit(){
+  if(!bridgeOnline) return;
+  const v=modelInput.value;
+  if(!v.trim()) return;
+  submitModelPrompt(v);
+  modelInput.value='';
+}
+modelBtn.addEventListener('click', doModelSubmit);
+modelInput.addEventListener('keydown', e=>{ if(e.key==='Enter') doModelSubmit(); });
+
+/* W1: 修正チャットトグル（ONで次の送信はセンターモデルへの修正指示になる。既定OFF=新規） */
+const refineToggleEl=document.getElementById('refineToggle');
+let refineMode=false;
+function setRefineMode(on){
+  refineMode=!!on;
+  refineToggleEl.classList.toggle('on', refineMode);
+  updateRefineToggleVisibility();
+  modelInput.placeholder = refineMode
+    ? '✏ センターのモデルへの修正指示を入力（例: もっと丸く）'
+    : '🔧 つくるものを入力（例: スピーカー）';
+  modelBtn.textContent = refineMode ? '修正' : 'モデリング';
+}
+function updateRefineToggleVisibility(){
+  // センターにモデルが無い時は修正トグル自体を隠す（新規しかできないため）
+  const hasCenter = !!(centerModel && centerModel.jobId);
+  refineToggleEl.classList.toggle('hidden', !hasCenter);
+  if(!hasCenter && refineMode) setRefineMode(false);
+}
+refineToggleEl.addEventListener('click', ()=> setRefineMode(!refineMode));
+updateRefineToggleVisibility();
+
+checkBridgeHealth();
+setInterval(checkBridgeHealth, 10000);
+
+const panelToggle=document.getElementById('panelToggle');
+const panel=document.getElementById('panel');
+panelToggle.addEventListener('click', ()=> panel.classList.toggle('hide'));
+
+const rngSpeed=document.getElementById('rngSpeed');
+const vSpeed=document.getElementById('vSpeed');
+let globalSpeed=1.0;
+rngSpeed.addEventListener('input', ()=>{ globalSpeed=+rngSpeed.value; vSpeed.textContent=globalSpeed.toFixed(2); });
+
+const rngBloom=document.getElementById('rngBloom');
+const vBloom=document.getElementById('vBloom');
+rngBloom.addEventListener('input', ()=>{
+  bloomUserStrength=+rngBloom.value;
+  bloomPass.strength = liveBgOn ? bloomUserStrength*0.6 : bloomUserStrength;
+  vBloom.textContent=bloomUserStrength.toFixed(2);
+});
+
+const rngSpark=document.getElementById('rngSpark');
+const vSpark=document.getElementById('vSpark');
+rngSpark.addEventListener('input', ()=>{ sparkleAmount=+rngSpark.value; vSpark.textContent=sparkleAmount.toFixed(2); });
+
+const swAuto=document.getElementById('swAuto');
+let autoRotate=true;
+swAuto.addEventListener('click', ()=>{ autoRotate=!autoRotate; swAuto.classList.toggle('on', autoRotate); });
+
+/* Y4: 実況テロップ ON/OFF スイッチ */
+const swTicker=document.getElementById('swTicker');
+if(swTicker){
+  swTicker.classList.toggle('on', tickerEnabled);
+  swTicker.addEventListener('click', ()=>{
+    tickerEnabled=!tickerEnabled;
+    swTicker.classList.toggle('on', tickerEnabled);
+    try{ localStorage.setItem('kland-vj-ticker', tickerEnabled?'1':'0'); }catch(e){}
+  });
+}
+
+/* X3: 背景プリセットチップ ＋ カラーピッカー */
+document.querySelectorAll('.bgChip').forEach(chip=>{
+  chip.addEventListener('click', ()=> setBgPreset(chip.dataset.bg));
+});
+const bgColorPicker=document.getElementById('bgColorPicker');
+const bgColorClear=document.getElementById('bgColorClear');
+if(bgColorPicker) bgColorPicker.addEventListener('input', ()=> setBgCustomColor(bgColorPicker.value));
+if(bgColorClear) bgColorClear.addEventListener('click', ()=>{ bgCustomColor=null; applyBackground(); updateBgPanelUi(); saveBgPref(); });
+updateBgPanelUi();
+
+/* ---------------------------------------------------------------------
+ * S3) 映像フィルターUI：プリセットスウォッチ＋カラーピッカー＋強さスライダー
+ * ライブ映像OFF中は#videoFilterSectionをdim（.dim）表示にし操作を無効化する。
+ * 設定はlocalStorage('kland-vf')へ永続化。
+ * ------------------------------------------------------------------- */
+function saveVfPref(){
+  try{ localStorage.setItem('kland-vf', JSON.stringify({ color:vfColor, strength:vfStrength, mono:vfMono })); }catch(e){}
+}
+function loadVfPref(){
+  try{
+    const raw=localStorage.getItem('kland-vf');
+    if(!raw) return;
+    const obj=JSON.parse(raw);
+    if(obj){
+      if(obj.color===null || /^#[0-9a-fA-F]{6}$/.test(obj.color||'')) vfColor=obj.color||null;
+      if(typeof obj.strength==='number') vfStrength=Math.max(0, Math.min(1, obj.strength));
+      vfMono=!!obj.mono;
+    }
+  }catch(e){}
+}
+function updateVideoFilterPanelUi(){
+  const section=document.getElementById('videoFilterSection');
+  if(section) section.classList.toggle('dim', !liveBgOn);
+  document.querySelectorAll('.vfSwatch').forEach(el=>{
+    const key=el.dataset.vf;
+    const isActive = key==='mono' ? (vfMono && !vfColor) : (!vfMono && vfColor===key);
+    el.classList.toggle('active', isActive);
+  });
+  const picker=document.getElementById('vfColorPicker');
+  if(picker && vfColor) picker.value=vfColor;
+  const rng=document.getElementById('rngVfStrength');
+  const vLabel=document.getElementById('vVfStrength');
+  const pct=Math.round(vfStrength*100);
+  if(rng) rng.value=String(pct);
+  if(vLabel) vLabel.textContent=pct+'%';
+}
+function setVfPreset(key){
+  if(key==='mono'){
+    vfMono=true; vfColor=null;
+    if(vfStrength<=0) vfStrength=1; // モノクロは強さ0だと効果が見えないため既定でON
+  } else {
+    vfMono=false; vfColor=key;
+    if(vfStrength<=0) vfStrength=0.5;
+  }
+  applyVideoFilterUniforms();
+  updateVideoFilterPanelUi();
+  saveVfPref();
+}
+function setVfColor(hex){
+  if(!/^#[0-9a-fA-F]{6}$/.test(hex||'')) return;
+  vfMono=false; vfColor=hex;
+  applyVideoFilterUniforms();
+  updateVideoFilterPanelUi();
+  saveVfPref();
+}
+function clearVfFilter(){
+  vfColor=null; vfMono=false; vfStrength=0;
+  applyVideoFilterUniforms();
+  updateVideoFilterPanelUi();
+  saveVfPref();
+}
+function setVfStrength(pct){
+  vfStrength=Math.max(0, Math.min(1, pct/100));
+  applyVideoFilterUniforms();
+  updateVideoFilterPanelUi();
+  saveVfPref();
+}
+loadVfPref();
+applyVideoFilterUniforms();
+document.querySelectorAll('.vfSwatch').forEach(el=>{
+  el.addEventListener('click', ()=> setVfPreset(el.dataset.vf));
+});
+const vfColorPicker=document.getElementById('vfColorPicker');
+const vfColorClear=document.getElementById('vfColorClear');
+const rngVfStrength=document.getElementById('rngVfStrength');
+if(vfColorPicker) vfColorPicker.addEventListener('input', ()=> setVfColor(vfColorPicker.value));
+if(vfColorClear) vfColorClear.addEventListener('click', clearVfFilter);
+if(rngVfStrength) rngVfStrength.addEventListener('input', ()=> setVfStrength(+rngVfStrength.value));
+updateVideoFilterPanelUi();
+
+function renderWordList(){
+  const el=document.getElementById('wordList');
+  if(typeof updateRefineToggleVisibility==='function') updateRefineToggleVisibility();
+  if(!words.length && !centerModel){ el.innerHTML='<div class="empty">まだことばがありません</div>'; return; }
+  el.innerHTML='';
+  if(centerModel){
+    const w=centerModel;
+    const row=document.createElement('div');
+    row.className='wi';
+    const nameLabel='👑 '+escapeHtml(w.text);
+    const refineBtnHtml = w.jobId ? '<span class="refineBtn" title="修正モードON+入力欄へフォーカス">✏修正</span>' : '';
+    row.innerHTML='<span class="sw" style="background:'+w.decision.color+'"></span>'+
+      '<span class="wt">'+nameLabel+'</span>'+
+      refineBtnHtml+
+      '<span class="wm">センター</span>'+
+      '<span class="rm">✕</span>';
+    row.addEventListener('click', (e)=>{
+      if(e.target && e.target.classList && e.target.classList.contains('refineBtn')) return; // rm/refineは個別ハンドラ
+      if(e.target && e.target.classList && e.target.classList.contains('rm')) removeWordEntry(w.id);
+    });
+    const refineBtnEl=row.querySelector('.refineBtn');
+    if(refineBtnEl){
+      refineBtnEl.addEventListener('click', (e)=>{
+        e.stopPropagation();
+        setRefineMode(true);
+        modelInput.focus();
+      });
+    }
+    el.appendChild(row);
+  }
+  words.slice().reverse().forEach(w=>{
+    const row=document.createElement('div');
+    row.className='wi';
+    const isModel = w.kind==='model';
+    const isPhoto = w.kind==='photo';
+    const kindIcon = isModel ? '🔧 ' : (isPhoto ? '📷 ' : '');
+    const nameLabel = kindIcon + escapeHtml(w.text);
+    const aiTagHtml = (w.decision && w.decision.aiAssoc) ? '<span class="aiTag" title="AI連想で追加された言葉">🤖</span>' : '';
+    const audTagHtml = (w.decision && w.decision.audience) ? '<span class="aiTag" title="観客のスマホから届いた言葉">📱</span>' : '';
+    row.innerHTML='<span class="sw" style="background:'+w.decision.color+'"></span>'+
+      '<span class="wt">'+nameLabel+'</span>'+aiTagHtml+audTagHtml+
+      '<span class="wm">'+w.decision.material+'/'+w.decision.style+'</span>'+
+      '<span class="rm">✕</span>';
+    row.addEventListener('click', ()=> removeWordEntry(w.id));
+    el.appendChild(row);
+  });
+}
+function escapeHtml(s){ return s.replace(/[&<>"']/g, c=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c])); }
+renderWordList();
+
+/* ---------------------------------------------------------------------
+ * 11) アニメーションループ
+ * ------------------------------------------------------------------- */
+const clock=new THREE.Clock();
+let hueShift=0;
+let turntableAngle=0;
+
+function animate(){
+  requestAnimationFrame(animate);
+  const dt=Math.min(0.05, clock.getDelta());
+
+  // 単語を螺旋に沿って進める
+  words.forEach(w=>placeEntry(w, dt));
+
+  // Y1: ビートシンクのbloom/バウンス反映（音が無くても連続ゆらぎがある）。
+  // bloomPass.strengthの基準値をここで先に確定させ、DROPのbloom倍増(Y2)はこの後に上乗せする。
+  updateBeatVisuals(dt);
+
+  // Y2: DROP演出（爆散→再集結）。placeEntryの後に呼び、position/rotationを上書きする。
+  updateDropVisuals(dt);
+
+  // センターステージのAIモデル：登場イージング＋自転＋浮遊
+  placeCenterModel(dt);
+  updateCenterRings();
+  updateCameraFocusAnim();
+  updateCodeRain(dt);
+
+  // dance文字の個別ウェーブ
+  const now=performance.now()*0.001;
+  words.forEach(w=>{
+    if(w.decision.style==='dance' && w.group.userData.danceGroups){
+      w.group.userData.danceGroups.forEach(sg=>{
+        const ph=sg.userData.phase;
+        sg.position.y = Math.sin(now*3.2+ph)*4.5;
+        sg.rotation.z = Math.sin(now*2.4+ph)*0.16;
+      });
+    }
+  });
+
+  // 虹ラインの色相を流す（スパイラルモードのみ意味を持つが、非表示時は計算コストも軽いので継続してOK）
+  hueShift += dt*40;
+  updateSpiralLineColors(hueShift);
+
+  // X1: 光のカーテン（海モード）のゆらぎ
+  updateLightCurtains(dt, now);
+
+  // スパークル／泡 漂わせる（モードでロジックを切替）
+  const posAttr=sparkGeo.getAttribute('position');
+  const colAttr=sparkGeo.getAttribute('color');
+  const tmpC=new THREE.Color();
+  if(appMode==='sea'){
+    // 泡：下から上へゆっくり・左右に揺らぎながら上昇。天井付近で下からループ再登場。
+    for(let i=0;i<SPARK_COUNT_MAX;i++){
+      const d=sparkData[i];
+      d.t += dt*0.09*d.speed*(0.4+sparkleAmount);
+      if(d.t>1) d.t-=1;
+      const baseY=SEA.yMin + d.t*(SEA.yMax-SEA.yMin);
+      const wobble=Math.sin(now*d.speed*1.6+d.phase)*(4+d.rad*0.08);
+      const px=Math.cos(d.ang)*d.rad*0.5 + Math.sin(now*0.3+d.phase)*wobble*0.5;
+      const pz=Math.sin(d.ang)*d.rad*0.5 + Math.cos(now*0.3+d.phase)*wobble*0.5;
+      posAttr.setXYZ(i, px, baseY, pz);
+      let bright=0.5+0.3*Math.sin(now*2+d.phase);
+      if(d.burst>0){ bright=1.0; d.burst=Math.max(0, d.burst-dt*1.4); }
+      tmpC.setRGB(0.85+bright*0.15, 0.94+bright*0.06, 1.0);
+      colAttr.setXYZ(i, tmpC.r, tmpC.g, tmpC.b);
+    }
+  } else {
+    for(let i=0;i<SPARK_COUNT_MAX;i++){
+      const d=sparkData[i];
+      d.t += dt*0.02*d.speed*(0.4+sparkleAmount);
+      if(d.t>1) d.t-=1;
+      const p=spiralPoint(d.t);
+      const ang=d.ang + now*0.3*d.speed;
+      const wobble=Math.sin(now*d.speed*2+d.phase)*6;
+      const px=p.x+Math.cos(ang)*(d.rad+wobble);
+      const pz=p.z+Math.sin(ang)*(d.rad+wobble);
+      const py=p.y+d.yOff+Math.sin(now*1.4+d.phase)*8;
+      posAttr.setXYZ(i, px, py, pz);
+      const baseHue=(now*20+d.phase*30)%360;
+      let bright=0.55+0.35*Math.sin(now*3+d.phase);
+      if(d.burst>0){ bright=1.0; d.burst=Math.max(0, d.burst-dt*1.4); }
+      tmpC.setHSL(((baseHue/360)+0.0)%1, 0.55, Math.min(0.9,0.45+bright*0.4));
+      colAttr.setXYZ(i, tmpC.r*bright, tmpC.g*bright, tmpC.b*bright);
+    }
+  }
+  posAttr.needsUpdate=true; colAttr.needsUpdate=true;
+  sparkPoints.visible = sparkleAmount>0.001;
+  sparkMat.opacity = Math.min(1, sparkleAmount) * (appMode==='sea' ? 0.85 : 1);
+  sparkMat.size = appMode==='sea' ? 4.5 : 6;
+
+  // 自動ターンテーブル回転（ゆっくり）＋ドラッグ操作はOrbitControlsが担当
+  if(autoRotate){
+    turntableAngle += dt*0.05*globalSpeed;
+    const dist=camera.position.distanceTo(controls.target);
+    const curAng=Math.atan2(camera.position.z-controls.target.z, camera.position.x-controls.target.x);
+    const newAng=curAng + dt*0.05*globalSpeed;
+    const y=camera.position.y;
+    camera.position.x=controls.target.x+Math.cos(newAng)*Math.hypot(camera.position.x-controls.target.x, camera.position.z-controls.target.z);
+    camera.position.z=controls.target.z+Math.sin(newAng)*Math.hypot(camera.position.x-controls.target.x, camera.position.z-controls.target.z);
+  }
+
+  controls.update();
+  followCameraForLiveBgQuad();
+  composer.render();
+}
+
+/* ---------------------------------------------------------------------
+ * 12) 起動時デモ投入（賑やかさを最初から見せる）
+ * ------------------------------------------------------------------- */
+async function bootDemo(){
+  const demoWords=['クリチランド','ゴールド','虹','海','花'];
+  for(let i=0;i<demoWords.length;i++){
+    const decision=heuristicDecide(demoWords[i]);
+    addWordEntry(demoWords[i], decision);
+    await new Promise(r=>setTimeout(r, 140));
+  }
+}
+
+/* ---------------------------------------------------------------------
+ * 13) 起動
+ * ------------------------------------------------------------------- */
+window.__TS_READY=true;
+document.getElementById('loader').classList.add('hide');
+animate();
+bootDemo();
+
+// デバッグ/QA用に最低限のAPIを公開
+window.__textSpiral={
+  submitWord, words, scene, camera, renderer, composer, controls,
+  spiralPoint, heuristicDecide,
+  submitModelPrompt, checkBridgeHealth, loadGlbAsGroup,
+  addPhotoEntry, capturePhoto, openCamera, closeCamera, restoreRecentPhotos, removeWordEntry,
+  promoteToCenterStage, handleModelDone,
+  setRefineMode, startCodeRain, finishCodeRain, failCodeRain, codeRainPanel, codeRainStreamers,
+  // X1〜X4 QA用
+  setAppMode, updateEntry, resolveSwimCreature, dictDecideCreature,
+  applyBackground, setBgPreset, setBgCustomColor,
+  enableLiveBg, disableLiveBg,
+  get appMode(){ return appMode; },
+  get liveBgOn(){ return liveBgOn; },
+  get centerModel(){ return centerModel; },
+  get bridgeOnline(){ return bridgeOnline; },
+  get refineMode(){ return refineMode; },
+  get BRIDGE_ORIGIN(){ return BRIDGE_ORIGIN; },
+  // S1/S2/S3 QA用
+  get CENTER_STAGE(){ return CENTER_STAGE; },
+  fitGroupToCenterStage,
+  get liveBgQuad(){ return liveBgQuad; },
+  get liveBgQuadUniforms(){ return liveBgQuadUniforms; },
+  updateLiveBgCoverUv, updateLiveBgQuadGeometry, followCameraForLiveBgQuad,
+  setVfPreset, setVfColor, clearVfFilter, setVfStrength,
+  get vfState(){ return { color:vfColor, strength:vfStrength, mono:vfMono }; },
+  // テスト専用：VideoTextureの代わりにCanvasTexture（縞模様）をライブ背景に流し込むフック。
+  // getUserMediaが使えないヘッドレス環境でもcover/tint/リサイズ挙動を確認するために使う。
+  __qaInjectFakeLiveBg(vw, vh){
+    liveBgOn=true;
+    btnLiveBgEl.classList.add('on');
+    const cv=document.createElement('canvas'); cv.width=vw; cv.height=vh;
+    const ctx=cv.getContext('2d');
+    for(let y=0;y<vh;y+=20){
+      ctx.fillStyle = (y/20)%2===0 ? '#ffffff' : '#222222';
+      ctx.fillRect(0,y,vw,20);
+    }
+    ctx.fillStyle='#ff0000'; ctx.fillRect(0,0,20,vh);
+    ctx.fillStyle='#00ff00'; ctx.fillRect(vw-20,0,20,vh);
+    const tex=new THREE.CanvasTexture(cv);
+    tex.colorSpace=THREE.SRGBColorSpace;
+    liveBgQuadUniforms.map.value=tex;
+    liveBgVideoEl={ videoWidth:vw, videoHeight:vh }; // updateLiveBgCoverUvが参照する最低限の形
+    updateLiveBgQuadGeometry();
+    updateLiveBgCoverUv();
+    applyVideoFilterUniforms();
+    liveBgQuad.visible=true;
+    updateVideoFilterPanelUi();
+    return tex;
+  },
+  __qaClearFakeLiveBg(){
+    liveBgOn=false;
+    btnLiveBgEl.classList.remove('on');
+    liveBgQuad.visible=false;
+    liveBgQuadUniforms.map.value=null;
+    liveBgVideoEl=null;
+    updateVideoFilterPanelUi();
+  },
+  // Y1〜Y4 QA用フック
+  beatPulse: triggerBeatPulse,      // マイク無しで疑似ビートを1回発火（bloom/バウンス反応の確認用）
+  dropNow,                          // DROP演出を発火（Shift+Spaceと同等）
+  setAssocMode,                     // AI連想モードON/OFF（フォールバックでも常に機能する）
+  tickerShow,                       // 実況テロップを1件キューに積む
+  enableBeatSync, disableBeatSync,
+  runAssocTick, assocFallbackDecide, fetchAssocWord,
+  get beatOn(){ return beatOn; },
+  get beatBpm(){ return beatBpm; },
+  get assocOn(){ return assocOn; },
+  get assocRecentWords(){ return assocRecentWords.slice(); },
+  get dropActive(){ return dropActive; },
+  get tickerEnabled(){ return tickerEnabled; },
+  get beatBloomBoost(){ return beatBloomBoost; },
+  updateBeatVisuals, updateDropVisuals,
+  // Z) 観客スマホ参加 QA用フック
+  audiencePanelOpen, audiencePanelClose, setQrAlways, audienceSimulate,
+  ensureAudiencePolling, pollAudienceQueue,
+  get audiencePanelOpenState(){ return audiencePanelOpenState; },
+  get audienceQrAlways(){ return audienceQrAlways; },
+  get audiencePollActive(){ return audiencePollActive; },
+  get audienceSeqNext(){ return audienceSeqNext; },
+};
+
+}catch(err){
+  console.error(err);
+  if(window.__tsFail) window.__tsFail(err && err.message ? err.message : String(err));
+}
+</script>
+</body>
+</html>

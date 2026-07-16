@@ -1,0 +1,15 @@
+{
+  "name": "ForgeCAD ギャラリー クリチランド",
+  "short_name": "ForgeCAD",
+  "description": "クリチランドの什器・建物の3Dビューア＆建築シミュレータ",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#FFC20E",
+  "theme_color": "#E3261D",
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ]
+}
