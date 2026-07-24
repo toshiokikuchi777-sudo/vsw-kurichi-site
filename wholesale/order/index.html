@@ -1,0 +1,573 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<meta name="robots" content="noindex,nofollow" />
+<title>注文フォーム・見積作成（取引先向け） | #クリチ - VSW</title>
+<meta name="description" content="冷凍スイーツバーガー「#クリチ」取引先向け 注文フォーム。商品と個数を選ぶと見積が自動計算され、見積書PDFをダウンロードできます。" />
+<link rel="canonical" href="https://vsw.co.jp/wholesale/order/">
+<link rel="icon" type="image/gif" href="../../assets/favicon.gif">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&family=Playfair+Display:ital,wght@0,700;1,700&family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../style.css">
+<style>
+  .ord-page{padding:110px 0 120px;background:var(--cream)}
+  .ord-wrap{max-width:1040px;margin:0 auto;padding:0 18px}
+  .ord-back{display:inline-flex;align-items:center;gap:8px;color:var(--tomato);font-weight:700;font-size:13px;margin-bottom:18px;letter-spacing:.05em;text-decoration:none}
+  .ord-back:hover{text-decoration:underline}
+
+  /* Hero */
+  .ord-hero{text-align:center;margin-bottom:26px}
+  .ord-hero .eyebrow{color:var(--tomato);font-family:"Montserrat",sans-serif;font-weight:800;letter-spacing:.18em;font-size:12.5px}
+  .ord-title{font-family:"Playfair Display","Noto Sans JP",serif;font-size:clamp(29px,5vw,48px);margin:9px 0 8px;line-height:1.18}
+  .ord-title em{color:var(--tomato);font-style:italic}
+  .ord-hero .ord-sub{color:#5a4d45;font-size:14.5px;letter-spacing:.03em;line-height:1.7}
+
+  /* Lock gate（wholesale と共通セッション） */
+  .locked-content{display:none}
+  .locked-content.is-unlocked{display:revert}
+  .lock-gate{max-width:560px;margin:24px auto 0;padding:28px 24px;border-radius:16px;background:linear-gradient(180deg,#fffaf0 0%,#fff 100%);border:1px solid rgba(26,22,19,.12);box-shadow:0 20px 40px -28px rgba(26,22,19,.2);text-align:center}
+  .lock-gate .lock-ico{font-size:28px;display:block;margin-bottom:6px}
+  .lock-gate h3{margin:0 0 6px;font-size:17px;letter-spacing:.02em}
+  .lock-gate p{margin:0 0 16px;font-size:13.5px;color:#6b5e54;line-height:1.7}
+  .lock-gate form{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
+  .lock-gate input[type="password"]{flex:1;min-width:200px;max-width:280px;padding:12px 14px;border-radius:10px;border:1px solid rgba(26,22,19,.18);font-size:15px;background:#fff;font-family:inherit}
+  .lock-gate input[type="password"]:focus{outline:2px solid var(--tomato);outline-offset:1px;border-color:transparent}
+  .lock-gate button{padding:12px 22px;border:0;border-radius:10px;background:var(--tomato);color:#fff;font-weight:700;font-size:14.5px;cursor:pointer;letter-spacing:.04em;transition:transform .15s,opacity .15s}
+  .lock-gate button:hover{transform:translateY(-1px);opacity:.92}
+  .lock-gate .lock-msg{margin-top:12px;font-size:13px;color:#c0392b;min-height:1em}
+  .lock-gate.is-hidden{display:none}
+
+  /* Layout: form + summary */
+  .ord-grid{display:grid;grid-template-columns:1fr 340px;gap:26px;align-items:start}
+  @media(max-width:900px){.ord-grid{grid-template-columns:1fr}}
+
+  .ord-card{background:#fff;border:1px solid rgba(43,38,34,.10);border-radius:16px;box-shadow:0 10px 36px rgba(43,38,34,.10);padding:clamp(16px,3vw,24px);margin-bottom:22px}
+  .ord-card h2{font-size:clamp(16px,3vw,19px);font-weight:900;letter-spacing:.02em;margin:0 0 4px;display:flex;align-items:center;gap:9px}
+  .ord-card h2 .n{font-family:"Montserrat",sans-serif;font-weight:800;font-size:12px;background:var(--char);color:var(--cheese);width:26px;height:26px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;flex:none}
+  .ord-card .lead{font-size:13px;color:#6b5e54;margin:0 0 14px;line-height:1.7}
+
+  /* Product group */
+  .grp-title{font-size:12px;font-weight:800;letter-spacing:.08em;color:var(--char);background:var(--cheese);border-radius:8px;padding:6px 12px;margin:18px 0 8px}
+  .grp-title:first-of-type{margin-top:4px}
+
+  .prow{display:grid;grid-template-columns:52px 1fr auto;gap:12px;align-items:center;padding:11px 6px;border-bottom:1px solid rgba(43,38,34,.08)}
+  .prow:last-child{border-bottom:0}
+  .prow .thumb{width:52px;height:52px;border-radius:10px;background:var(--cream);object-fit:contain;flex:none}
+  .prow .thumb.ph{display:flex;align-items:center;justify-content:center;font-size:20px}
+  .prow .pinfo .pname{font-size:14px;font-weight:700;line-height:1.35}
+  .prow .pinfo .pmeta{font-size:11.5px;color:#8a8178;font-family:"Montserrat",sans-serif;margin-top:2px}
+  .prow .pinfo .pprice{font-size:12.5px;color:#4a443e;margin-top:3px}
+  .prow .pinfo .pprice b{color:var(--tomato);font-family:"Montserrat",sans-serif;font-size:14px}
+  .prow .pinfo .pprice s{color:#b3aaa2}
+
+  .qty{display:flex;align-items:center;gap:0;flex:none}
+  .qty button{width:34px;height:38px;border:1px solid rgba(43,38,34,.18);background:#fff;font-size:18px;font-weight:700;color:var(--char);cursor:pointer;line-height:1;display:flex;align-items:center;justify-content:center;transition:background .12s}
+  .qty button:first-child{border-radius:9px 0 0 9px}
+  .qty button:last-child{border-radius:0 9px 9px 0}
+  .qty button:hover{background:var(--cream)}
+  .qty button:active{background:var(--cream-2)}
+  .qty input{width:60px;height:38px;border:1px solid rgba(43,38,34,.18);border-left:0;border-right:0;text-align:center;font-size:15px;font-weight:700;font-family:"Montserrat",sans-serif;color:var(--char);-moz-appearance:textfield}
+  .qty input::-webkit-outer-spin-button,.qty input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+  .qty input:focus{outline:2px solid var(--tomato);outline-offset:-1px;position:relative;z-index:1}
+  .prow.active{background:#fffdf6}
+  .prow .linetot{font-size:11.5px;color:var(--tomato);font-weight:800;font-family:"Montserrat",sans-serif;text-align:right;min-width:82px}
+
+  @media(max-width:560px){
+    .prow{grid-template-columns:44px 1fr;grid-template-areas:"t i" "t q";row-gap:8px}
+    .prow .thumb{grid-area:t;width:44px;height:44px}
+    .prow .pinfo{grid-area:i}
+    .prow .qcell{grid-area:q;display:flex;align-items:center;gap:12px;justify-content:flex-end}
+  }
+  .qcell{display:flex;align-items:center;gap:12px;justify-content:flex-end}
+
+  /* Customer form */
+  .field{margin-bottom:14px}
+  .field label{display:block;font-size:12.5px;font-weight:700;color:#4a443e;margin-bottom:5px}
+  .field label .req{color:var(--tomato);font-size:11px;margin-left:5px}
+  .field input,.field textarea{width:100%;padding:11px 13px;border:1px solid rgba(43,38,34,.18);border-radius:10px;font-size:14.5px;background:#fff;font-family:inherit;color:var(--char)}
+  .field input:focus,.field textarea:focus{outline:2px solid var(--tomato);outline-offset:-1px;border-color:transparent}
+  .field textarea{min-height:78px;resize:vertical}
+  .field-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media(max-width:560px){.field-row{grid-template-columns:1fr}}
+
+  /* Summary (sticky) */
+  .ord-summary{position:sticky;top:24px}
+  .sum-card{background:var(--char);color:var(--cream);border-radius:16px;padding:22px 20px;box-shadow:0 18px 44px -20px rgba(26,22,19,.55)}
+  .sum-card h3{margin:0 0 14px;font-size:15px;font-weight:900;letter-spacing:.04em;display:flex;align-items:center;justify-content:space-between}
+  .sum-card h3 .cnt{font-family:"Montserrat",sans-serif;font-size:12px;font-weight:700;color:var(--cheese)}
+  .sum-lines{font-size:13.5px}
+  .sum-lines .l{display:flex;justify-content:space-between;align-items:baseline;padding:7px 0;border-bottom:1px dashed rgba(255,247,230,.18)}
+  .sum-lines .l span:first-child{color:#e6ddcf}
+  .sum-lines .l b{font-family:"Montserrat",sans-serif;font-weight:700}
+  .sum-lines .l.free b{color:var(--cheese)}
+  .sum-total{display:flex;justify-content:space-between;align-items:baseline;margin-top:12px;padding-top:12px;border-top:2px solid rgba(255,247,230,.28)}
+  .sum-total span{font-size:14px;font-weight:900}
+  .sum-total b{font-family:"Montserrat",sans-serif;font-size:26px;font-weight:800;color:var(--cheese)}
+  .sum-total small{font-size:11px;color:#cbbfae;margin-left:4px}
+  .sum-ship-note{font-size:11px;color:#cbbfae;margin-top:6px;text-align:right}
+
+  .sum-warn{margin-top:14px;font-size:12.5px;line-height:1.6;padding:10px 12px;border-radius:10px;background:rgba(230,57,70,.16);border:1px solid rgba(230,57,70,.4);color:#ffd9dc}
+  .sum-warn.ok{background:rgba(46,139,87,.16);border-color:rgba(46,139,87,.45);color:#c9f2d8}
+  .sum-warn.hide{display:none}
+
+  .dl-btn{width:100%;margin-top:16px;padding:15px;border:0;border-radius:12px;background:var(--tomato);color:#fff;font-weight:800;font-size:15px;letter-spacing:.04em;cursor:pointer;font-family:inherit;transition:transform .15s,opacity .15s,box-shadow .15s;box-shadow:0 10px 24px -8px rgba(230,57,70,.7)}
+  .dl-btn:hover:not(:disabled){transform:translateY(-2px)}
+  .dl-btn:disabled{background:#6b5e54;box-shadow:none;cursor:not-allowed;opacity:.65}
+  .dl-btn .spin{display:inline-block;width:14px;height:14px;border:2px solid rgba(255,255,255,.4);border-top-color:#fff;border-radius:50%;animation:ords 0.7s linear infinite;vertical-align:-2px;margin-right:8px}
+  @keyframes ords{to{transform:rotate(360deg)}}
+  .dl-sub{font-size:11px;color:#8a8178;text-align:center;margin-top:9px;line-height:1.6}
+  .reset-btn{display:block;margin:10px auto 0;background:none;border:0;color:#8a8178;font-size:11.5px;text-decoration:underline;cursor:pointer;font-family:inherit}
+
+  .terms-box{font-size:12px;color:#6b5e54;line-height:1.85;margin-top:2px}
+  .terms-box b{color:var(--char)}
+  .pending-note{font-size:12px;color:#8a8178;background:var(--cream);border:1px dashed rgba(43,38,34,.2);border-radius:10px;padding:10px 12px;margin-top:10px;line-height:1.6}
+
+  /* Offscreen quote doc for PDF rendering */
+  .quote-stage{position:fixed;left:-9999px;top:0;width:794px;background:#fff}
+  #quote-doc{width:794px;padding:44px 46px;background:#fff;color:#1a1613;font-family:"Noto Sans JP",sans-serif;box-sizing:border-box}
+  #quote-doc .qd-top{display:flex;justify-content:space-between;align-items:flex-start;border-bottom:3px solid #1a1613;padding-bottom:14px;margin-bottom:22px}
+  #quote-doc .qd-h1{font-size:30px;font-weight:900;letter-spacing:.5em;margin:0 0 6px}
+  #quote-doc .qd-meta{font-size:12px;color:#555;line-height:1.9}
+  #quote-doc .qd-issuer{text-align:right;font-size:12px;line-height:1.75;position:relative}
+  #quote-doc .qd-issuer .qd-co{font-size:16px;font-weight:900;margin-bottom:4px}
+  #quote-doc .qd-seal{position:absolute;left:-78px;top:2px;width:58px;height:58px;border:2px solid #e63946;border-radius:50%;color:#e63946;font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;transform:rotate(-8deg);opacity:.9;line-height:1.25;text-align:center}
+  #quote-doc .qd-to{font-size:20px;font-weight:900;border-bottom:1px solid #1a1613;padding-bottom:6px;margin-bottom:6px}
+  #quote-doc .qd-lead{font-size:12.5px;color:#444;margin:0 0 18px}
+  #quote-doc .qd-grand{display:inline-block;font-size:15px;font-weight:900;margin-bottom:18px;border-bottom:2px solid #1a1613;padding:0 6px 4px}
+  #quote-doc .qd-grand b{font-size:22px;color:#e63946;margin-left:10px}
+  #quote-doc table{width:100%;border-collapse:collapse;font-size:12.5px;margin-bottom:16px}
+  #quote-doc thead th{background:#1a1613;color:#fff;padding:9px 10px;text-align:left;font-weight:700;font-size:11.5px}
+  #quote-doc thead th.r,#quote-doc td.r{text-align:right}
+  #quote-doc thead th.c,#quote-doc td.c{text-align:center}
+  #quote-doc tbody td{padding:8px 10px;border-bottom:1px solid #e5e0d8}
+  #quote-doc tbody tr:nth-child(even){background:#fbf8f2}
+  #quote-doc .qd-sum{width:300px;margin-left:auto;font-size:13px}
+  #quote-doc .qd-sum .l{display:flex;justify-content:space-between;padding:6px 4px;border-bottom:1px solid #e5e0d8}
+  #quote-doc .qd-sum .l.tot{border-bottom:0;border-top:2px solid #1a1613;margin-top:2px;font-size:16px;font-weight:900}
+  #quote-doc .qd-sum .l.tot b{color:#e63946}
+  #quote-doc .qd-note{margin-top:20px;font-size:11px;color:#555;line-height:1.9;border-top:1px solid #e5e0d8;padding-top:12px}
+  #quote-doc .qd-note b{color:#1a1613}
+  #quote-doc .qd-cust{font-size:12px;color:#444;margin:14px 0 0;line-height:1.9}
+</style>
+</head>
+<body>
+
+<main class="ord-page">
+  <div class="ord-wrap">
+    <a href="../" class="ord-back">← 卸値表にもどる</a>
+
+    <div class="ord-hero">
+      <span class="eyebrow">ORDER &amp; QUOTATION</span>
+      <h1 class="ord-title">注文フォーム／<em>見積作成</em></h1>
+      <p class="ord-sub">商品と数量を選ぶだけで、卸価格の<b>お見積りが自動計算</b>されます。<br>そのまま<b>見積書PDF</b>をダウンロードできます（社内稟議・発注用にご利用ください）。</p>
+    </div>
+
+    <!-- ===== Lock gate ===== -->
+    <div class="lock-gate" id="ord-lock-gate">
+      <span class="lock-ico">🔒</span>
+      <h3>取引先さま限定ページ</h3>
+      <p>卸値表と同じパスワードでご覧いただけます。<br>ご不明な場合は担当までお問い合わせください。</p>
+      <form id="ord-lock-form">
+        <input type="password" id="ord-lock-input" placeholder="パスワード" aria-label="パスワード" autocomplete="off" required>
+        <button type="submit">表示する</button>
+      </form>
+      <div class="lock-msg" id="ord-lock-msg" role="status" aria-live="polite"></div>
+    </div>
+
+    <!-- ===== Locked content ===== -->
+    <div class="locked-content" data-gate="wholesale-private">
+      <div class="ord-grid">
+
+        <!-- LEFT: form -->
+        <div>
+          <!-- Products -->
+          <section class="ord-card">
+            <h2><span class="n">1</span> 商品と数量を選ぶ</h2>
+            <p class="lead">ご注文希望の商品の数量を入力してください。価格はすべて<b>税抜・通常卸値</b>です。</p>
+            <div id="product-list"><!-- JS --></div>
+            <div class="pending-note">※ 新商品「ウーピー#クリチ」は卸価格の確定後に追加予定です。ご希望の場合は備考欄にご記入ください。</div>
+          </section>
+
+          <!-- Customer -->
+          <section class="ord-card">
+            <h2><span class="n">2</span> ご注文者情報</h2>
+            <p class="lead">見積書に記載する宛先・ご連絡先をご入力ください。</p>
+            <div class="field">
+              <label for="c-company">会社名／店舗名<span class="req">必須</span></label>
+              <input type="text" id="c-company" placeholder="例）株式会社サンプル商店">
+            </div>
+            <div class="field-row">
+              <div class="field">
+                <label for="c-person">ご担当者名</label>
+                <input type="text" id="c-person" placeholder="例）山田 太郎">
+              </div>
+              <div class="field">
+                <label for="c-tel">電話番号</label>
+                <input type="tel" id="c-tel" placeholder="例）03-1234-5678">
+              </div>
+            </div>
+            <div class="field-row">
+              <div class="field">
+                <label for="c-email">メールアドレス</label>
+                <input type="email" id="c-email" placeholder="例）info@example.com">
+              </div>
+              <div class="field">
+                <label for="c-date">希望納品日</label>
+                <input type="text" id="c-date" placeholder="例）2026/08/10 頃">
+              </div>
+            </div>
+            <div class="field">
+              <label for="c-note">備考（配送先・ご要望など）</label>
+              <textarea id="c-note" placeholder="配送先住所、分納希望、OEM相談 など"></textarea>
+            </div>
+          </section>
+        </div>
+
+        <!-- RIGHT: summary -->
+        <aside class="ord-summary">
+          <div class="sum-card">
+            <h3>お見積り <span class="cnt" id="sum-count">合計 0 個</span></h3>
+            <div class="sum-lines">
+              <div class="l"><span>商品小計（税抜）</span><b id="sum-sub">¥0</b></div>
+              <div class="l"><span>消費税（軽減税率8%）</span><b id="sum-tax">¥0</b></div>
+              <div class="l" id="sum-ship-line"><span>送料</span><b id="sum-ship">別途</b></div>
+            </div>
+            <div class="sum-total"><span>合計（税込）</span><span><b id="sum-total">¥0</b></span></div>
+            <div class="sum-ship-note" id="sum-ship-note">※100個以上のご注文で送料無料</div>
+
+            <div class="sum-warn" id="sum-warn">数量を入力してください。</div>
+
+            <button class="dl-btn" id="dl-btn" disabled>見積書PDFをダウンロード</button>
+            <p class="dl-sub" id="dl-sub">商品を選ぶとダウンロードできます</p>
+            <button class="reset-btn" id="reset-btn" type="button">入力をクリア</button>
+          </div>
+
+          <div class="ord-card" style="margin-top:22px;padding:18px 18px">
+            <h2 style="font-size:14px;margin-bottom:10px"><span class="n" style="width:22px;height:22px;font-size:11px">!</span> 取引条件</h2>
+            <div class="terms-box">
+              ・最低発注：<b>50個以上</b>（#クリチdiscのみは<b>100個以上</b>）／1回<br>
+              ・<b>100個以上で送料無料</b>／100個未満は送料別途<br>
+              ・支払条件：<b>月末締め・翌月末払い</b><br>
+              ・販売価格は当社価格表に準拠いただきます<br>
+              ・卸価格は改定の場合があり、事前にお伝えします
+            </div>
+          </div>
+        </aside>
+
+      </div>
+    </div>
+  </div>
+</main>
+
+<!-- Offscreen quote for PDF -->
+<div class="quote-stage" aria-hidden="true"><div id="quote-doc"></div></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<script>
+/* ===== Password gate（wholesale と共通パスワード・共通セッション） =====
+   Password: vsw2026 */
+(function(){
+  var GATE_ID='wholesale-private';
+  var HASH='4e023c09fc9e3c096f0d5a28671d62f8c803241e60902770da5910591a7b6c2d'; // sha256('vsw2026')
+  var STORE_KEY='vsw-biz-unlocked';
+  async function sha256(str){
+    var buf=new TextEncoder().encode(str);
+    var hashBuf=await crypto.subtle.digest('SHA-256',buf);
+    return Array.from(new Uint8Array(hashBuf)).map(function(b){return b.toString(16).padStart(2,'0')}).join('');
+  }
+  function unlock(){
+    document.querySelectorAll('[data-gate="'+GATE_ID+'"]').forEach(function(el){el.classList.add('is-unlocked')});
+    var gate=document.getElementById('ord-lock-gate'); if(gate) gate.classList.add('is-hidden');
+  }
+  if(sessionStorage.getItem(STORE_KEY)==='1'){ unlock(); }
+  var form=document.getElementById('ord-lock-form');
+  var input=document.getElementById('ord-lock-input');
+  var msg=document.getElementById('ord-lock-msg');
+  if(form && input){
+    form.addEventListener('submit',async function(e){
+      e.preventDefault();
+      var val=input.value.trim(); if(!val) return;
+      if(!window.crypto || !window.crypto.subtle){ if(msg) msg.textContent='HTTPS経由でアクセスしてください'; return; }
+      var h=await sha256(val);
+      if(h===HASH){
+        sessionStorage.setItem(STORE_KEY,'1');
+        if(msg){msg.style.color='#2e8b57';msg.textContent='✅ 認証されました';}
+        setTimeout(unlock,200);
+      }else{
+        if(msg){msg.style.color='#c0392b';msg.textContent='❌ パスワードが違います';}
+        input.value=''; input.focus();
+      }
+    });
+  }
+})();
+
+/* ===== Order form & quote ===== */
+(function(){
+  var TAX_RATE=0.08; // 軽減税率（食品）
+  var IMG='../../assets/products/';
+  var PRODUCTS=[
+    {g:'プレミアム#クリチ', items:[
+      {id:'ny-lemon', name:'NY#クリチ（レモンプラリネ）', jan:'4595775904203', retail:600, whole:390, img:'ny-lemon.png'},
+      {id:'ny-orange', name:'NY#クリチ（オレンジプラリネ）', jan:'4595775904210', retail:600, whole:390, img:'ny-orange.png'}
+    ]},
+    {g:'ふわもち#クリチ', items:[
+      {id:'fuwa-ichigo', name:'ふわもち#クリチ（いちご）', jan:'4595775904500', retail:600, whole:390, img:'fuwamochi-strawberry.png'},
+      {id:'fuwa-matcha', name:'ふわもち#クリチ（抹茶あんこ）', jan:'4595775904524', retail:600, whole:390, img:'fuwamochi-matcha.png'},
+      {id:'fuwa-blueberry', name:'ふわもち#クリチ（ブルーベリー）', jan:'', retail:600, whole:390, img:'fuwamochi-blueberry.png'}
+    ]},
+    {g:'ノーマル#クリチ（The Standard）', items:[
+      {id:'teiban-marron', name:'#クリチ（マロン）', jan:'4595775904067', retail:500, whole:320, img:'teiban-marron.png'},
+      {id:'teiban-matcha', name:'#クリチ（抹茶あんこ）', jan:'4595775904081', retail:500, whole:320, img:'teiban-matcha.png'},
+      {id:'teiban-cranberry', name:'#クリチ（クランベリーナッツ）', jan:'4595775904050', retail:500, whole:320, img:'teiban-cranberry.png'},
+      {id:'teiban-fig', name:'#クリチ（いちじくナッツ）', jan:'4595775904074', retail:500, whole:320, img:'teiban-fig.png'}
+    ]},
+    {g:'米粉#ソイチ（Gluten-Free）', items:[
+      {id:'soichi-tea', name:'米粉#ソイチ（紅茶いちご）', jan:'4595775904807', retail:550, whole:350, img:'soichi-tea.png'}
+    ]},
+    {g:'#クリチdisc（OEM・御社のパンにサンド）', items:[
+      {id:'disc', name:'#クリチdisc', jan:'', retail:null, whole:220, img:'', unit:'個', disc:true, emoji:'🥯'}
+    ]},
+    {g:'GIFTセット', items:[
+      {id:'gift6', name:'おすすめ6個セット（箱込・送料別）', jan:'', retail:3700, whole:2500, img:'', unit:'セット', per:6, emoji:'🎁'}
+    ]}
+  ];
+  var ALL={}; PRODUCTS.forEach(function(g){g.items.forEach(function(it){it.qty=0; it.per=it.per||1; it.unit=it.unit||'個'; ALL[it.id]=it;});});
+
+  var yen=function(n){return '¥'+Math.round(n).toLocaleString('ja-JP');};
+
+  /* build product list */
+  var listEl=document.getElementById('product-list');
+  var html='';
+  PRODUCTS.forEach(function(g){
+    html+='<div class="grp-title">'+g.g+'</div>';
+    g.items.forEach(function(it){
+      var thumb= it.img
+        ? '<img class="thumb" src="'+IMG+it.img+'" alt="'+it.name+'" loading="lazy">'
+        : '<div class="thumb ph">'+(it.emoji||'📦')+'</div>';
+      var priceHtml='<b>'+yen(it.whole)+'</b> <span style="font-size:11px;color:#8a8178">/ '+it.unit+'</span>'+
+        (it.retail?' <s>'+yen(it.retail)+'</s>':'');
+      html+=''
+        +'<div class="prow" data-id="'+it.id+'">'
+        +  thumb
+        +  '<div class="pinfo">'
+        +    '<div class="pname">'+it.name+'</div>'
+        +    (it.jan?'<div class="pmeta">JAN '+it.jan+'</div>':'')
+        +    '<div class="pprice">'+priceHtml+'</div>'
+        +  '</div>'
+        +  '<div class="qcell">'
+        +    '<div class="linetot" data-lt="'+it.id+'"></div>'
+        +    '<div class="qty">'
+        +      '<button type="button" data-step="-1" aria-label="減らす">−</button>'
+        +      '<input type="number" inputmode="numeric" min="0" step="1" value="0" data-q="'+it.id+'" aria-label="'+it.name+' 数量">'
+        +      '<button type="button" data-step="1" aria-label="増やす">＋</button>'
+        +    '</div>'
+        +  '</div>'
+        +'</div>';
+    });
+  });
+  listEl.innerHTML=html;
+
+  /* qty interactions */
+  listEl.addEventListener('click',function(e){
+    var btn=e.target.closest('button[data-step]'); if(!btn) return;
+    var row=btn.closest('.prow'); var inp=row.querySelector('input[data-q]');
+    var v=parseInt(inp.value,10)||0; v+=parseInt(btn.getAttribute('data-step'),10);
+    if(v<0)v=0; inp.value=v; setQty(row.getAttribute('data-id'),v);
+  });
+  listEl.addEventListener('input',function(e){
+    var inp=e.target.closest('input[data-q]'); if(!inp) return;
+    var v=parseInt(inp.value,10); if(isNaN(v)||v<0)v=0;
+    setQty(inp.getAttribute('data-q'),v);
+  });
+  function setQty(id,v){
+    ALL[id].qty=v;
+    var row=listEl.querySelector('.prow[data-id="'+id+'"]');
+    row.classList.toggle('active',v>0);
+    var lt=listEl.querySelector('[data-lt="'+id+'"]');
+    lt.textContent = v>0 ? yen(ALL[id].whole*v) : '';
+    recalc();
+  }
+
+  /* totals */
+  var el=function(id){return document.getElementById(id);};
+  var state={sub:0,tax:0,total:0,pieces:0,valid:false};
+  function recalc(){
+    var sub=0, pieces=0, discPieces=0, otherPieces=0, lines=0;
+    PRODUCTS.forEach(function(g){g.items.forEach(function(it){
+      if(it.qty>0){
+        sub+=it.whole*it.qty; lines++;
+        var pc=it.qty*it.per; pieces+=pc;
+        if(it.disc) discPieces+=pc; else otherPieces+=pc;
+      }
+    });});
+    var tax=Math.floor(sub*TAX_RATE);
+    var freeShip = pieces>=100;
+    var total=sub+tax;
+    el('sum-count').textContent='合計 '+pieces.toLocaleString('ja-JP')+' 個';
+    el('sum-sub').textContent=yen(sub);
+    el('sum-tax').textContent=yen(tax);
+    var shipLine=el('sum-ship-line');
+    el('sum-ship').textContent= pieces===0 ? '—' : (freeShip?'無料':'別途');
+    shipLine.classList.toggle('free',freeShip && pieces>0);
+    el('sum-total').textContent=yen(total);
+
+    /* validation */
+    var valid=false, warn='数量を入力してください。', cls='';
+    if(pieces===0){ valid=false; warn='数量を入力してください。'; cls=''; }
+    else if(discPieces>0 && otherPieces===0 && discPieces<100){
+      valid=false; warn='⚠ #クリチdisc のみのご注文は <b>100個以上</b> が必要です（あと '+(100-discPieces)+' 個）。'; cls='';
+    }
+    else if(pieces<50){
+      valid=false; warn='⚠ 最低発注は <b>50個以上</b>です（あと '+(50-pieces)+' 個）。'; cls='';
+    }
+    else { valid=true; warn='✓ 発注条件を満たしています'+(freeShip?'（送料無料）':'（送料別途／100個以上で無料）'); cls='ok'; }
+
+    var w=el('sum-warn'); w.innerHTML=warn; w.className='sum-warn '+cls;
+
+    state={sub:sub,tax:tax,total:total,pieces:pieces,freeShip:freeShip,valid:valid,lines:lines};
+    updateBtn();
+  }
+  function companyOk(){return el('c-company').value.trim().length>0;}
+  function updateBtn(){
+    var ok=state.valid && companyOk();
+    var btn=el('dl-btn'); btn.disabled=!ok;
+    el('dl-sub').textContent = !state.valid ? '発注条件を満たすとダウンロードできます'
+      : (!companyOk() ? '会社名を入力するとダウンロードできます' : 'クリックでPDFを保存します');
+  }
+  el('c-company').addEventListener('input',updateBtn);
+
+  /* reset */
+  el('reset-btn').addEventListener('click',function(){
+    PRODUCTS.forEach(function(g){g.items.forEach(function(it){it.qty=0;});});
+    listEl.querySelectorAll('input[data-q]').forEach(function(i){i.value=0;});
+    listEl.querySelectorAll('.prow').forEach(function(r){r.classList.remove('active');});
+    listEl.querySelectorAll('.linetot').forEach(function(l){l.textContent='';});
+    ['c-company','c-person','c-tel','c-email','c-date','c-note'].forEach(function(id){el(id).value='';});
+    recalc();
+  });
+
+  /* ===== Quote number / date ===== */
+  function pad(n){return (n<10?'0':'')+n;}
+  function fmtDate(d){return d.getFullYear()+'年'+(d.getMonth()+1)+'月'+d.getDate()+'日';}
+  function ymd(d){return d.getFullYear()+pad(d.getMonth()+1)+pad(d.getDate());}
+
+  function buildQuoteDoc(){
+    var now=new Date();
+    var exp=new Date(now.getTime()+14*86400000);
+    var no='EST-'+ymd(now)+'-'+pad(now.getHours())+pad(now.getMinutes());
+    var company=el('c-company').value.trim()||'御中';
+    var person=el('c-person').value.trim();
+    var tel=el('c-tel').value.trim();
+    var email=el('c-email').value.trim();
+    var wantDate=el('c-date').value.trim();
+    var note=el('c-note').value.trim();
+
+    var rows='';
+    PRODUCTS.forEach(function(g){g.items.forEach(function(it){
+      if(it.qty>0){
+        rows+='<tr><td>'+it.name+(it.jan?'<br><span style="font-size:10px;color:#888">JAN '+it.jan+'</span>':'')+'</td>'
+          +'<td class="c">'+it.qty.toLocaleString('ja-JP')+' '+it.unit+'</td>'
+          +'<td class="r">'+yen(it.whole)+'</td>'
+          +'<td class="r">'+yen(it.whole*it.qty)+'</td></tr>';
+      }
+    });});
+
+    var custLines=[];
+    if(person) custLines.push('ご担当者：'+person+' 様');
+    if(tel) custLines.push('TEL：'+tel);
+    if(email) custLines.push('Email：'+email);
+    if(wantDate) custLines.push('希望納品日：'+wantDate);
+    if(note) custLines.push('備考：'+note);
+
+    var shipTxt = state.freeShip ? '無料' : '別途ご案内';
+    var doc=''
+      +'<div class="qd-top">'
+      +  '<div>'
+      +    '<h1 class="qd-h1">御見積書</h1>'
+      +    '<div class="qd-meta">見積番号：'+no+'<br>発行日：'+fmtDate(now)+'<br>有効期限：'+fmtDate(exp)+'（発行日より2週間）</div>'
+      +  '</div>'
+      +  '<div class="qd-issuer">'
+      +    '<div class="qd-seal">Vsw<br>PRICE</div>'
+      +    '<div class="qd-co">Vsw株式会社</div>'
+      +    '〒563-0023<br>大阪府池田市井口堂1丁目12-2<br>TEL 072-737-5444（8:00–19:00）<br>ブランド：冷凍スイーツバーガー「#クリチ」'
+      +  '</div>'
+      +'</div>'
+      +'<div class="qd-to">'+company+' 御中</div>'
+      +'<p class="qd-lead">下記のとおりお見積り申し上げます。（金額はすべて税抜・通常卸価格に基づきます）</p>'
+      +'<div class="qd-grand">お見積金額（税込）<b>'+yen(state.total)+'</b></div>'
+      +'<table>'
+      +  '<thead><tr><th>品名</th><th class="c">数量</th><th class="r">単価（税抜）</th><th class="r">金額（税抜）</th></tr></thead>'
+      +  '<tbody>'+rows+'</tbody>'
+      +'</table>'
+      +'<div class="qd-sum">'
+      +  '<div class="l"><span>商品小計（税抜）</span><span>'+yen(state.sub)+'</span></div>'
+      +  '<div class="l"><span>消費税（軽減税率8%）</span><span>'+yen(state.tax)+'</span></div>'
+      +  '<div class="l"><span>送料</span><span>'+shipTxt+'</span></div>'
+      +  '<div class="l tot"><span>合計（税込）</span><b>'+yen(state.total)+(state.freeShip?'':' ＋送料')+'</b></div>'
+      +'</div>'
+      +(custLines.length?'<div class="qd-cust">'+custLines.join('<br>')+'</div>':'')
+      +'<div class="qd-note">'
+      +  '<b>取引条件</b><br>'
+      +  '・最低発注数量：50個以上（#クリチdiscのみのご注文は100個以上）／1回あたり<br>'
+      +  '・100個以上のご注文は送料無料／100個未満は送料別途<br>'
+      +  '・支払条件：月末締め・翌月末払い<br>'
+      +  '・卸価格・販売価格は市場環境等により改定する場合があります（事前にご案内します）<br>'
+      +  '・本見積は概算です。数量・配送条件により最終金額が変わる場合があります。<br>'
+      +  '<br>※ ご発注・ご相談は TEL 072-737-5444、または本ページの担当までご連絡ください。'
+      +'</div>';
+    document.getElementById('quote-doc').innerHTML=doc;
+    return {no:no,company:company,now:now};
+  }
+
+  /* ===== PDF download ===== */
+  var dlBtn=el('dl-btn');
+  dlBtn.addEventListener('click',function(){
+    if(dlBtn.disabled) return;
+    var info=buildQuoteDoc();
+    var node=document.getElementById('quote-doc');
+    dlBtn.disabled=true;
+    var orig=dlBtn.textContent; dlBtn.innerHTML='<span class="spin"></span>PDFを作成中…';
+
+    var run=function(){
+      html2canvas(node,{scale:2,backgroundColor:'#ffffff',useCORS:true,logging:false}).then(function(canvas){
+        var jsPDF=window.jspdf.jsPDF;
+        var pdf=new jsPDF('p','mm','a4');
+        var pw=pdf.internal.pageSize.getWidth();
+        var ph=pdf.internal.pageSize.getHeight();
+        var imgW=pw, imgH=canvas.height*pw/canvas.width;
+        var img=canvas.toDataURL('image/jpeg',0.94);
+        if(imgH<=ph){
+          pdf.addImage(img,'JPEG',0,0,imgW,imgH);
+        }else{
+          var left=imgH, pos=0;
+          while(left>0){
+            pdf.addImage(img,'JPEG',0,pos,imgW,imgH);
+            left-=ph; pos-=ph;
+            if(left>0) pdf.addPage();
+          }
+        }
+        var safeCo=info.company.replace(/[\\/:*?"<>|\s　]+/g,'_').slice(0,24);
+        pdf.save('御見積書_'+safeCo+'_'+ymd(info.now)+'.pdf');
+        dlBtn.innerHTML=orig; updateBtn();
+      }).catch(function(err){
+        console.error(err);
+        alert('PDFの生成に失敗しました。印刷ダイアログから「PDFに保存」をお試しください。');
+        window.print();
+        dlBtn.innerHTML=orig; updateBtn();
+      });
+    };
+    if(window.html2canvas && window.jspdf){ setTimeout(run,60); }
+    else{ alert('PDFライブラリの読み込みに失敗しました。通信環境をご確認のうえ再読み込みしてください。'); dlBtn.innerHTML=orig; updateBtn(); }
+  });
+
+  recalc();
+})();
+</script>
+<script src="../../script.js?v=20260724" defer></script>
+</body>
+</html>
