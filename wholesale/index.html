@@ -157,6 +157,21 @@
     .wh-gift{grid-template-columns:1fr}
     .wh-price .p{flex:1;min-width:0}
   }
+
+  /* ===== スマホ：早見表を主要列（商品名・卸値）優先でコンパクト表示 ===== */
+  @media(max-width:560px){
+    .wh-tbl-wrap{overflow-x:visible}
+    table.wh-list{min-width:0;font-size:13px}
+    table.wh-list th,table.wh-list td{padding:10px 8px}
+    /* JANコード列を非表示（詳細カードに記載あり） */
+    table.wh-list thead th:nth-child(3),table.wh-list .jancell{display:none}
+    table.wh-list .thumbcell{width:42px;padding:6px 2px 6px 8px}
+    table.wh-list .thumbcell img{width:36px;height:36px}
+    table.wh-list thead th{font-size:11px;letter-spacing:0}
+    table.wh-list .retail{font-size:12px}
+    table.wh-list .whole{font-size:14px}
+    table.wh-list .grp td{font-size:12px}
+  }
 </style>
 </head>
 <body>
