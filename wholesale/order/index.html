@@ -98,6 +98,10 @@
   .sum-card{background:var(--char);color:var(--cream);border-radius:16px;padding:22px 20px;box-shadow:0 18px 44px -20px rgba(26,22,19,.55)}
   .sum-card h3{margin:0 0 14px;font-size:15px;font-weight:900;letter-spacing:.04em;display:flex;align-items:center;justify-content:space-between}
   .sum-card h3 .cnt{font-family:"Montserrat",sans-serif;font-size:12px;font-weight:700;color:var(--cheese)}
+  .sum-qty{display:flex;justify-content:space-between;align-items:center;background:rgba(255,194,60,.14);border:1px solid rgba(255,194,60,.35);border-radius:12px;padding:11px 14px;margin-bottom:14px}
+  .sum-qty span{font-size:13px;color:#e6ddcf;font-weight:700}
+  .sum-qty b{font-family:"Montserrat",sans-serif;font-weight:800;color:var(--cheese);font-size:15px}
+  .sum-qty b #sum-qty{font-size:26px;margin-right:2px}
   .sum-lines{font-size:13.5px}
   .sum-lines .l{display:flex;justify-content:space-between;align-items:baseline;padding:7px 0;border-bottom:1px dashed rgba(255,247,230,.18)}
   .sum-lines .l span:first-child{color:#e6ddcf}
@@ -144,6 +148,7 @@
   #quote-doc thead th.c,#quote-doc td.c{text-align:center}
   #quote-doc tbody td{padding:8px 10px;border-bottom:1px solid #e5e0d8}
   #quote-doc tbody tr:nth-child(even){background:#fbf8f2}
+  #quote-doc tfoot .qd-tfoot td{background:#f1ece3;font-weight:800;border-top:2px solid #1a1613;padding:9px 10px}
   #quote-doc .qd-sum{width:300px;margin-left:auto;font-size:13px}
   #quote-doc .qd-sum .l{display:flex;justify-content:space-between;padding:6px 4px;border-bottom:1px solid #e5e0d8}
   #quote-doc .qd-sum .l.tot{border-bottom:0;border-top:2px solid #1a1613;margin-top:2px;font-size:16px;font-weight:900}
@@ -229,7 +234,8 @@
         <!-- RIGHT: summary -->
         <aside class="ord-summary">
           <div class="sum-card">
-            <h3>お見積り <span class="cnt" id="sum-count">合計 0 個</span></h3>
+            <h3>お見積り <span class="cnt" id="sum-count">全 0 品目</span></h3>
+            <div class="sum-qty" id="sum-qty-box"><span>ご注文合計数量</span><b><span id="sum-qty">0</span> 個</b></div>
             <div class="sum-lines">
               <div class="l"><span>商品小計（税抜）</span><b id="sum-sub">¥0</b></div>
               <div class="l"><span>消費税（軽減税率8%）</span><b id="sum-tax">¥0</b></div>
@@ -408,7 +414,8 @@
     var tax=Math.floor(sub*TAX_RATE);
     var freeShip = pieces>=100;
     var total=sub+tax;
-    el('sum-count').textContent='合計 '+pieces.toLocaleString('ja-JP')+' 個';
+    el('sum-count').textContent='全 '+lines.toLocaleString('ja-JP')+' 品目';
+    el('sum-qty').textContent=pieces.toLocaleString('ja-JP');
     el('sum-sub').textContent=yen(sub);
     el('sum-tax').textContent=yen(tax);
     var shipLine=el('sum-ship-line');
@@ -503,8 +510,10 @@
       +'<table>'
       +  '<thead><tr><th>品名</th><th class="c">数量</th><th class="r">単価（税抜）</th><th class="r">金額（税抜）</th></tr></thead>'
       +  '<tbody>'+rows+'</tbody>'
+      +  '<tfoot><tr class="qd-tfoot"><td>合計数量</td><td class="c">'+state.pieces.toLocaleString('ja-JP')+' 個</td><td class="r">商品小計（税抜）</td><td class="r">'+yen(state.sub)+'</td></tr></tfoot>'
       +'</table>'
       +'<div class="qd-sum">'
+      +  '<div class="l"><span>ご注文合計数量</span><span>'+state.pieces.toLocaleString('ja-JP')+' 個</span></div>'
       +  '<div class="l"><span>商品小計（税抜）</span><span>'+yen(state.sub)+'</span></div>'
       +  '<div class="l"><span>消費税（軽減税率8%）</span><span>'+yen(state.tax)+'</span></div>'
       +  '<div class="l"><span>送料</span><span>'+shipTxt+'</span></div>'
@@ -539,18 +548,14 @@
         var pdf=new jsPDF('p','mm','a4');
         var pw=pdf.internal.pageSize.getWidth();
         var ph=pdf.internal.pageSize.getHeight();
-        var imgW=pw, imgH=canvas.height*pw/canvas.width;
+        var margin=6; // mm
+        var maxW=pw-margin*2, maxH=ph-margin*2;
+        // 常に1枚（A4）に収まるよう縦横比を保ってフィット
+        var imgW=maxW, imgH=canvas.height*maxW/canvas.width;
+        if(imgH>maxH){ imgH=maxH; imgW=canvas.width*maxH/canvas.height; }
+        var x=(pw-imgW)/2, y=margin;
         var img=canvas.toDataURL('image/jpeg',0.94);
-        if(imgH<=ph){
-          pdf.addImage(img,'JPEG',0,0,imgW,imgH);
-        }else{
-          var left=imgH, pos=0;
-          while(left>0){
-            pdf.addImage(img,'JPEG',0,pos,imgW,imgH);
-            left-=ph; pos-=ph;
-            if(left>0) pdf.addPage();
-          }
-        }
+        pdf.addImage(img,'JPEG',x,y,imgW,imgH);
         var safeCo=info.company.replace(/[\\/:*?"<>|\s　]+/g,'_').slice(0,24);
         pdf.save('御見積書_'+safeCo+'_'+ymd(info.now)+'.pdf');
         dlBtn.innerHTML=orig; updateBtn();
