@@ -238,7 +238,7 @@
             <div class="sum-qty" id="sum-qty-box"><span>ご注文合計数量</span><b><span id="sum-qty">0</span> 個</b></div>
             <div class="sum-lines">
               <div class="l"><span>商品小計（税抜）</span><b id="sum-sub">¥0</b></div>
-              <div class="l"><span>消費税（軽減税率8%）</span><b id="sum-tax">¥0</b></div>
+              <div class="l"><span id="sum-tax-label">消費税（軽減税率8%）</span><b id="sum-tax">¥0</b></div>
               <div class="l" id="sum-ship-line"><span>送料</span><b id="sum-ship">別途</b></div>
             </div>
             <div class="sum-total"><span>合計（税込）</span><span><b id="sum-total">¥0</b></span></div>
@@ -343,9 +343,12 @@
     ]},
     {g:'GIFTセット', items:[
       {id:'gift6', name:'おすすめ6個セット（箱込・送料別）', jan:'', retail:3700, whole:2500, img:'', unit:'セット', per:6, emoji:'🎁'}
+    ]},
+    {g:'グッズ（組み立てフィギュア）', items:[
+      {id:'figure-harichi', name:'ハリチくん 組み立てフィギュア', jan:'', retail:1500, whole:1200, img:'', unit:'個', emoji:'🧩', trate:0.10, nonfood:true}
     ]}
   ];
-  var ALL={}; PRODUCTS.forEach(function(g){g.items.forEach(function(it){it.qty=0; it.per=it.per||1; it.unit=it.unit||'個'; ALL[it.id]=it;});});
+  var ALL={}; PRODUCTS.forEach(function(g){g.items.forEach(function(it){it.qty=0; it.per=it.per||1; it.unit=it.unit||'個'; it.trate=it.trate||0.08; ALL[it.id]=it;});});
 
   var yen=function(n){return '¥'+Math.round(n).toLocaleString('ja-JP');};
 
@@ -406,20 +409,26 @@
   var el=function(id){return document.getElementById(id);};
   var state={sub:0,tax:0,total:0,pieces:0,valid:false};
   function recalc(){
-    var sub=0, pieces=0, discPieces=0, otherPieces=0, lines=0;
+    var sub=0, sub8=0, sub10=0, pieces=0, discPieces=0, otherPieces=0, lines=0;
     PRODUCTS.forEach(function(g){g.items.forEach(function(it){
       if(it.qty>0){
-        sub+=it.whole*it.qty; lines++;
+        var line=it.whole*it.qty;
+        sub+=line; lines++;
+        if(it.trate>=0.10) sub10+=line; else sub8+=line;
         var pc=it.qty*it.per; pieces+=pc;
         if(it.disc) discPieces+=pc; else otherPieces+=pc;
       }
     });});
-    var tax=Math.floor(sub*TAX_RATE);
+    /* 消費税は税率ごとに端数処理（適格請求書方式）：食品8%・非食品10% */
+    var tax8=Math.floor(sub8*0.08), tax10=Math.floor(sub10*0.10);
+    var tax=tax8+tax10;
+    var taxLabel = sub10>0 ? (sub8>0 ? '消費税（8%・10%）' : '消費税（10%）') : '消費税（軽減税率8%）';
     var freeShip = pieces>=100;
     var total=sub+tax;
     el('sum-count').textContent='全 '+lines.toLocaleString('ja-JP')+' 品目';
     el('sum-qty').textContent=pieces.toLocaleString('ja-JP');
     el('sum-sub').textContent=yen(sub);
+    el('sum-tax-label').textContent=taxLabel;
     el('sum-tax').textContent=yen(tax);
     var shipLine=el('sum-ship-line');
     el('sum-ship').textContent= pieces===0 ? '—' : (freeShip?'無料':'別途');
@@ -439,7 +448,7 @@
 
     var w=el('sum-warn'); w.innerHTML=warn; w.className='sum-warn '+cls;
 
-    state={sub:sub,tax:tax,total:total,pieces:pieces,freeShip:freeShip,valid:valid,lines:lines};
+    state={sub:sub,sub8:sub8,sub10:sub10,tax:tax,tax8:tax8,tax10:tax10,taxLabel:taxLabel,total:total,pieces:pieces,freeShip:freeShip,valid:valid,lines:lines};
     updateBtn();
   }
   function companyOk(){return el('c-company').value.trim().length>0;}
@@ -518,7 +527,10 @@
       +'<div class="qd-sum">'
       +  '<div class="l"><span>ご注文合計数量</span><span>'+state.pieces.toLocaleString('ja-JP')+' 個</span></div>'
       +  '<div class="l"><span>商品小計（税抜）</span><span>'+yen(state.sub)+'</span></div>'
-      +  '<div class="l"><span>消費税（軽減税率8%）</span><span>'+yen(state.tax)+'</span></div>'
+      +  '<div class="l"><span>'+state.taxLabel+'</span><span>'+yen(state.tax)+'</span></div>'
+      +  (state.sub10>0
+          ? '<div class="l" style="font-size:11px;color:#777"><span>　内訳：8%対象 '+yen(state.sub8)+'（税 '+yen(state.tax8)+'）／10%対象 '+yen(state.sub10)+'（税 '+yen(state.tax10)+'）</span><span></span></div>'
+          : '')
       +  '<div class="l"><span>送料</span><span>'+shipTxt+'</span></div>'
       +  '<div class="l tot"><span>合計（税込）</span><b>'+yen(state.total)+(state.freeShip?'':' ＋送料')+'</b></div>'
       +'</div>'
