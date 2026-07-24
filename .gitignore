@@ -8,3 +8,21 @@ node_modules/
 KURICHI_POP/**/*.MP4
 KURICHI_POP/**/*.mp4
 KURICHI_POP/KURICHI_movie/
+
+# BTTTLE CLUB / ForgeCADギャラリー：実行時に生成される個人データ・成果物はコミットしない
+BTTTLE CLUB/photos/
+BTTTLE CLUB/generated/*
+BTTTLE CLUB/scenes/
+BTTTLE CLUB/__pycache__/
+BTTTLE CLUB/*.bak_*
+BTTTLE CLUB/index.html.bak*
+BTTTLE CLUB/*.webloc
+kurichiland-forge/photos/
+kurichiland-forge/generated/
+# モックのコードレイン演出に必要なサンプルだけ例外的に含める
+!BTTTLE CLUB/generated/7c79079d3bc4/
+!BTTTLE CLUB/generated/7c79079d3bc4.glb
+
+# 内部資料（公開しない・ローカルのみ保持）
+導入提案書.pptx
+クリチコラボレーション.pdf
