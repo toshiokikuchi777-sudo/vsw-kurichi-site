@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ONLINE SHOP | #クリチ - VSW</title>
+<meta name="description" content="#クリチ / ハリチくん公式オンラインショップ。クリチBOX、アパレル、グッズをお届けします。">
+<link rel="canonical" href="https://vsw.co.jp/shop.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&family=Noto+Sans+JP:wght@400;500;700;900&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --cream:#faf6ec;
+  --cheese:#f2c14e;
+  --tomato:#d64541;
+  --char:#2b2320;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{
+  font-family:'Noto Sans JP',sans-serif;
+  background:var(--cream);
+  color:var(--char);
+  line-height:1.7;
+}
+a{color:inherit;}
+
+/* ===== Header ===== */
+.shop-header{
+  text-align:center;
+  padding:56px 20px 36px;
+  border-bottom:3px solid var(--char);
+}
+.shop-header .brand{
+  font-family:'Montserrat',sans-serif;
+  font-weight:700;
+  font-size:13px;
+  letter-spacing:.35em;
+  color:var(--tomato);
+  text-transform:uppercase;
+}
+.shop-header h1{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(40px,8vw,68px);
+  letter-spacing:.06em;
+  margin:8px 0 4px;
+}
+.shop-header .sub{
+  font-size:14px;
+  font-weight:500;
+}
+.shop-header .back{
+  display:inline-block;
+  margin-top:18px;
+  font-size:12px;
+  letter-spacing:.1em;
+  color:rgba(43,35,32,.6);
+  text-decoration:none;
+  border-bottom:1px solid rgba(43,35,32,.3);
+  padding-bottom:2px;
+}
+
+/* ===== Notice ===== */
+.shop-notice{
+  max-width:760px;
+  margin:28px auto 0;
+  padding:16px 20px;
+  background:#fff;
+  border:1px solid rgba(43,35,32,.15);
+  border-radius:14px;
+  font-size:12.5px;
+  color:rgba(43,35,32,.8);
+  text-align:center;
+}
+
+/* ===== Section ===== */
+.shop-section{
+  max-width:1120px;
+  margin:0 auto;
+  padding:48px 20px 8px;
+}
+.sec-head{
+  display:flex;
+  align-items:baseline;
+  gap:14px;
+  border-bottom:2px solid var(--char);
+  padding-bottom:10px;
+  margin-bottom:28px;
+}
+.sec-head .num{
+  font-family:'Montserrat',sans-serif;
+  font-weight:800;
+  font-size:14px;
+  color:var(--tomato);
+  letter-spacing:.15em;
+}
+.sec-head h2{
+  font-size:clamp(19px,4vw,24px);
+  font-weight:900;
+  letter-spacing:.04em;
+}
+.sec-head .en{
+  margin-left:auto;
+  font-family:'Montserrat',sans-serif;
+  font-weight:600;
+  font-size:11px;
+  letter-spacing:.25em;
+  color:rgba(43,35,32,.5);
+  text-transform:uppercase;
+  white-space:nowrap;
+}
+
+/* ===== Item grid ===== */
+.items{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:26px 22px;
+  margin-bottom:24px;
+}
+.item{
+  background:#fff;
+  border:1px solid rgba(43,35,32,.12);
+  border-radius:18px;
+  overflow:hidden;
+  box-shadow:0 10px 24px rgba(43,35,32,.10), 0 2px 6px rgba(43,35,32,.06);
+  transition:transform .2s ease, box-shadow .2s ease;
+  display:flex;
+  flex-direction:column;
+}
+.item:hover{
+  transform:translateY(-4px);
+  box-shadow:0 16px 34px rgba(43,35,32,.14), 0 3px 8px rgba(43,35,32,.07);
+}
+.item-img{
+  aspect-ratio:4/3;
+  background:var(--cream);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:16px;
+  position:relative;
+}
+.item-img img{
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  display:block;
+}
+.soldout-badge{
+  position:absolute;
+  top:10px;
+  right:10px;
+  background:var(--char);
+  color:#fff;
+  font-family:'Montserrat',sans-serif;
+  font-weight:700;
+  font-size:10px;
+  letter-spacing:.1em;
+  padding:4px 9px;
+  border-radius:100px;
+}
+.item-body{padding:16px 18px 18px; display:flex; flex-direction:column; flex:1;}
+.item-name{
+  font-size:14.5px;
+  font-weight:900;
+  letter-spacing:.01em;
+}
+.item-name .hash{color:var(--tomato);}
+.item-desc{
+  font-size:11.5px;
+  color:rgba(43,35,32,.72);
+  margin-top:7px;
+  flex:1;
+}
+.item-price{
+  margin-top:12px;
+  display:flex;
+  align-items:baseline;
+  gap:6px;
+  border-top:1px dashed rgba(43,35,32,.3);
+  padding-top:10px;
+}
+.item-price .yen{
+  font-family:'Montserrat',sans-serif;
+  font-weight:800;
+  font-size:21px;
+  color:var(--tomato);
+}
+.item-price .tax{
+  font-size:10px;
+  color:rgba(43,35,32,.55);
+}
+.buy-btn{
+  display:block;
+  margin-top:12px;
+  text-align:center;
+  background:var(--char);
+  color:#fff;
+  font-size:12.5px;
+  font-weight:700;
+  letter-spacing:.06em;
+  padding:11px 14px;
+  border-radius:100px;
+  text-decoration:none;
+  transition:background .2s ease;
+}
+.buy-btn:hover{background:var(--tomato);}
+.buy-btn.disabled{
+  background:rgba(43,35,32,.25);
+  pointer-events:none;
+}
+
+@media (min-width:641px) and (max-width:980px){
+  .items{grid-template-columns:repeat(2,1fr);}
+}
+@media (max-width:640px){
+  .items{grid-template-columns:1fr;gap:20px;}
+  .sec-head .en{display:none;}
+}
+
+/* ===== Footer ===== */
+.shop-footer{
+  text-align:center;
+  padding:36px 20px 56px;
+  border-top:3px solid var(--char);
+  margin-top:48px;
+}
+.shop-footer .note{
+  font-size:12px;
+  color:rgba(43,35,32,.65);
+}
+.shop-footer .brand-line{
+  margin-top:14px;
+  font-family:'Montserrat',sans-serif;
+  font-weight:700;
+  font-size:11px;
+  letter-spacing:.3em;
+  color:var(--tomato);
+  text-transform:uppercase;
+}
+.shop-footer a.brand-line{text-decoration:none;}
+</style>
+</head>
+<body>
+
+<header class="shop-header">
+  <p class="brand">Vsw Official Store</p>
+  <h1><span class="hash" style="color:var(--tomato)">#</span>KURICHI SHOP</h1>
+  <p class="sub">#クリチ / ハリチくん オンラインショップ</p>
+  <a href="index.html" class="back">← トップページに戻る</a>
+</header>
+
+<div class="shop-notice">
+  現在、購入手続きは提携ショップ(BASE)で行っております。「購入する」ボタンから商品ページに進み、そのままご注文いただけます。
+</div>
+
+<!-- 01 クリチBOX -->
+<section class="shop-section">
+  <div class="sec-head">
+    <span class="num">01</span>
+    <h2>クリチBOX</h2>
+    <span class="en">Kurichi Box Set</span>
+  </div>
+
+  <div class="items">
+    <article class="item">
+      <div class="item-img"><img src="assets/shop/box6.jpg" alt="クリチBOX（6個セット）"></div>
+      <div class="item-body">
+        <h3 class="item-name"><span class="hash">#</span>クリチBOX（6個セット）</h3>
+        <p class="item-desc">人気定番クリチを中心に詰め込んだ6種類セット。クリチを初めて購入される方にオススメな商品。</p>
+        <p class="item-price"><span class="yen">¥4,500</span></p>
+        <a href="https://kurichi.vsw.co.jp/items/91526547" target="_blank" rel="noopener" class="buy-btn">購入する →</a>
+      </div>
+    </article>
+
+    <article class="item">
+      <div class="item-img"><img src="assets/shop/box8.jpg" alt="クリチBOX（8個セット）"></div>
+      <div class="item-body">
+        <h3 class="item-name"><span class="hash">#</span>クリチBOX（8個セット）</h3>
+        <p class="item-desc">定番商品とおすすめクリチを組み合わせた8種類セット。リピーターの方にご好評いただいている商品。</p>
+        <p class="item-price"><span class="yen">¥6,000</span></p>
+        <a href="https://kurichi.vsw.co.jp/items/91527535" target="_blank" rel="noopener" class="buy-btn">購入する →</a>
+      </div>
+    </article>
+
+    <article class="item">
+      <div class="item-img"><img src="assets/shop/box12.jpg" alt="クリチBOX（12個セット）"></div>
+      <div class="item-body">
+        <h3 class="item-name"><span class="hash">#</span>クリチBOX（12個セット）</h3>
+        <p class="item-desc">定番商品とおすすめクリチを組み合わせた12種類セット。リピーターの方にご好評いただいている商品。</p>
+        <p class="item-price"><span class="yen">¥8,500</span></p>
+        <a href="https://kurichi.vsw.co.jp/items/117150189" target="_blank" rel="noopener" class="buy-btn">購入する →</a>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- 02 グッズ -->
+<section class="shop-section">
+  <div class="sec-head">
+    <span class="num">02</span>
+    <h2>グッズ</h2>
+    <span class="en">Goods</span>
+  </div>
+
+  <div class="items">
+    <article class="item">
+      <div class="item-img"><img src="assets/shop/harichi-figure.jpg" alt="ハリチくん組み立てフィギュア"></div>
+      <div class="item-body">
+        <h3 class="item-name">ハリチくん組み立てフィギュア</h3>
+        <p class="item-desc">si-gu-mi コラボ。工具不要の紙製3Dクラフト。難易度：Level3/5（対象年齢15歳以上）。</p>
+        <p class="item-price"><span class="yen">¥1,650</span></p>
+        <a href="https://kurichi.vsw.co.jp/items/144380132" target="_blank" rel="noopener" class="buy-btn">購入する →</a>
+      </div>
+    </article>
+
+    <article class="item">
+      <div class="item-img"><img src="assets/shop/keychain.jpg" alt="KURICHI KEYCHAIN"></div>
+      <div class="item-body">
+        <h3 class="item-name"><span class="hash">#</span>KURICHI KEYCHAIN</h3>
+        <p class="item-desc">アクリル製キーチェーン。クリチちゃんとVswロゴの2種類。</p>
+        <p class="item-price"><span class="yen">¥500</span></p>
+        <a href="https://kurichi.vsw.co.jp/items/116434040" target="_blank" rel="noopener" class="buy-btn">購入する →</a>
+      </div>
+    </article>
+
+    <article class="item">
+      <div class="item-img"><img src="assets/shop/cap.jpg" alt="KURICHI CAP"></div>
+      <div class="item-body">
+        <h3 class="item-name"><span class="hash">#</span>KURICHI CAP</h3>
+        <p class="item-desc">オットー製メッシュキャップ。Vswロゴ、GOT #KURICHI？の2種類。フリーサイズ。</p>
+        <p class="item-price"><span class="yen">¥3,300</span></p>
+        <a href="https://kurichi.vsw.co.jp/items/116437097" target="_blank" rel="noopener" class="buy-btn">購入する →</a>
+      </div>
+    </article>
+
+    <article class="item">
+      <div class="item-img"><img src="assets/shop/bag.jpg" alt="KURICHI BAG"></div>
+      <div class="item-body">
+        <h3 class="item-name"><span class="hash">#</span>KURICHI BAG</h3>
+        <p class="item-desc">保冷機能付き多用途バッグ。W40cm×H25cm×マチ18cm。素材：ポリエステル、アルミ。</p>
+        <p class="item-price"><span class="yen">¥3,300</span></p>
+        <a href="https://kurichi.vsw.co.jp/items/116438362" target="_blank" rel="noopener" class="buy-btn">購入する →</a>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- 03 アパレル -->
+<section class="shop-section">
+  <div class="sec-head">
+    <span class="num">03</span>
+    <h2>アパレル</h2>
+    <span class="en">Apparel</span>
+  </div>
+
+  <div class="items">
+    <article class="item">
+      <div class="item-img"><img src="assets/shop/tshirt-harichi.png" alt="HARICHI T-shirt"></div>
+      <div class="item-body">
+        <h3 class="item-name"><span class="hash">#</span>HARICHI T-shirt</h3>
+        <p class="item-desc">ハリチ君のTシャツ。オーバーサイズシルエット。白・黒2色、4種類デザイン。</p>
+        <p class="item-price"><span class="yen">¥3,500</span></p>
+        <a href="https://kurichi.vsw.co.jp/items/126609472" target="_blank" rel="noopener" class="buy-btn">購入する →</a>
+      </div>
+    </article>
+
+    <article class="item">
+      <div class="item-img"><img src="assets/shop/tshirt-nama.jpg" alt="KURICHI T-shirt white（NAMA）"></div>
+      <div class="item-body">
+        <h3 class="item-name"><span class="hash">#</span>KURICHI T-shirt white（NAMA）</h3>
+        <p class="item-desc">生クリームをイメージしたデザイン。United Athle使用。ユニセックス対応（M～XL）。</p>
+        <p class="item-price"><span class="yen">¥3,300</span></p>
+        <a href="https://kurichi.vsw.co.jp/items/116437320" target="_blank" rel="noopener" class="buy-btn">購入する →</a>
+      </div>
+    </article>
+
+    <article class="item">
+      <div class="item-img"><img src="assets/shop/tshirt-car-white.jpg" alt="KURICHI T-shirt white（CAR）"></div>
+      <div class="item-body">
+        <h3 class="item-name"><span class="hash">#</span>KURICHI T-shirt white（CAR）</h3>
+        <p class="item-desc">クリームチーズバーガーをモチーフにしたトイカー。デザイナーMASTARTOMのオリジナル。</p>
+        <p class="item-price"><span class="yen">¥3,300</span></p>
+        <a href="https://kurichi.vsw.co.jp/items/116437382" target="_blank" rel="noopener" class="buy-btn">購入する →</a>
+      </div>
+    </article>
+
+    <article class="item">
+      <div class="item-img"><img src="assets/shop/tshirt-nyc3parts-black.jpg" alt="KURICHI T-shirt black（NYC 3parts）"></div>
+      <div class="item-body">
+        <h3 class="item-name"><span class="hash">#</span>KURICHI T-shirt black（NYC 3parts）</h3>
+        <p class="item-desc">メタバースNYシーン。THE SANDBOX内#KURICHI LANDのシーンをプリント。</p>
+        <p class="item-price"><span class="yen">¥3,300</span></p>
+        <a href="https://kurichi.vsw.co.jp/items/116437396" target="_blank" rel="noopener" class="buy-btn">購入する →</a>
+      </div>
+    </article>
+
+    <article class="item">
+      <div class="item-img"><img src="assets/shop/tshirt-nycwide-white.jpg" alt="KURICHI T-shirt white（NYC wide）"></div>
+      <div class="item-body">
+        <h3 class="item-name"><span class="hash">#</span>KURICHI T-shirt white（NYC wide）</h3>
+        <p class="item-desc">メタバースNYシーン。ストリート感あふれるアートTシャツ。</p>
+        <p class="item-price"><span class="yen">¥3,300</span></p>
+        <a href="https://kurichi.vsw.co.jp/items/116437248" target="_blank" rel="noopener" class="buy-btn">購入する →</a>
+      </div>
+    </article>
+
+    <article class="item">
+      <div class="item-img"><img src="assets/shop/tshirt-nycwide-black.jpg" alt="KURICHI T-shirt black（NYC wide）"></div>
+      <div class="item-body">
+        <h3 class="item-name"><span class="hash">#</span>KURICHI T-shirt black（NYC wide）</h3>
+        <p class="item-desc">メタバースNYシーンをプリント。ストリート感にあふれた限定デザイン。</p>
+        <p class="item-price"><span class="yen">¥3,300</span></p>
+        <a href="https://kurichi.vsw.co.jp/items/116437368" target="_blank" rel="noopener" class="buy-btn">購入する →</a>
+      </div>
+    </article>
+
+    <article class="item">
+      <div class="item-img"><img src="assets/shop/tshirt-nyclong-black.jpg" alt="KURICHI T-shirt black（NYC long）"></div>
+      <div class="item-body">
+        <h3 class="item-name"><span class="hash">#</span>KURICHI T-shirt black（NYC long）</h3>
+        <p class="item-desc">メタバースNYのシーンを近未来的にアレンジ。ストリート感あふれるデザイン。</p>
+        <p class="item-price"><span class="yen">¥3,300</span></p>
+        <a href="https://kurichi.vsw.co.jp/items/116437489" target="_blank" rel="noopener" class="buy-btn">購入する →</a>
+      </div>
+    </article>
+
+    <article class="item">
+      <div class="item-img">
+        <span class="soldout-badge">SOLD OUT</span>
+        <img src="assets/shop/tshirt-got-black.jpg" alt="KURICHI T-shirt black（Got #KURICHI?）">
+      </div>
+      <div class="item-body">
+        <h3 class="item-name"><span class="hash">#</span>KURICHI T-shirt black（Got #KURICHI?）</h3>
+        <p class="item-desc">背面にカラフルなクリチちゃん。遊び心あふれるデザイン。</p>
+        <p class="item-price"><span class="yen">¥3,300</span></p>
+        <span class="buy-btn disabled">SOLD OUT</span>
+      </div>
+    </article>
+
+    <article class="item">
+      <div class="item-img">
+        <span class="soldout-badge">SOLD OUT</span>
+        <img src="assets/shop/tshirt-nyc3parts-white.jpg" alt="KURICHI T-shirt white（NYC 3parts）">
+      </div>
+      <div class="item-body">
+        <h3 class="item-name"><span class="hash">#</span>KURICHI T-shirt white（NYC 3parts）</h3>
+        <p class="item-desc">メタバースNYシーン。THE SANDBOXの近未来NYをアートに。</p>
+        <p class="item-price"><span class="yen">¥3,300</span></p>
+        <span class="buy-btn disabled">SOLD OUT</span>
+      </div>
+    </article>
+  </div>
+</section>
+
+<footer class="shop-footer">
+  <p class="note">※価格はすべて税込表記です　※写真はイメージです　※在庫状況は変動する場合があります</p>
+  <a href="index.html" class="brand-line">NY Inspired &times; Osaka Craft — #KURICHI / Vsw Inc.</a>
+</footer>
+
+</body>
+</html>
