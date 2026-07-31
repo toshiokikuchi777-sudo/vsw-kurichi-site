@@ -77,8 +77,10 @@
     font-size:clamp(14px,1.7vw,16px);line-height:2}
   .wk-flavor-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;
     max-width:920px;margin:0 auto}
-  .wk-flavor-chip{background:#fff;border-radius:16px;padding:22px 10px 18px;
-    box-shadow:0 18px 36px -22px rgba(26,22,19,.3)}
+  .wk-flavor-chip{background:#fff;border-radius:16px;padding:14px 10px 18px;
+    box-shadow:0 18px 36px -22px rgba(26,22,19,.3);overflow:hidden}
+  .wk-flavor-chip .fc-img{display:block;width:100%;aspect-ratio:1/1;object-fit:cover;
+    border-radius:12px;margin:0 0 14px}
   .wk-flavor-chip .fc-en{display:block;font-family:"Playfair Display",serif;font-style:italic;
     font-size:13px;color:var(--cheese-deep);opacity:.85;margin-bottom:4px}
   .wk-flavor-chip .fc-ja{font-family:"Noto Sans JP",sans-serif;font-weight:800;
@@ -231,10 +233,10 @@
       <h2 class="wk-flavors-h">4つのフレーバー</h2>
       <p class="wk-flavors-p">プレーンのなめらかな味わいから、果実系の爽やかさまで。気分に合わせて選べます。</p>
       <div class="wk-flavor-grid">
-        <div class="wk-flavor-chip"><span class="fc-en">Plain</span><span class="fc-ja">プレーン</span></div>
-        <div class="wk-flavor-chip"><span class="fc-en">Lemon</span><span class="fc-ja">レモン</span></div>
-        <div class="wk-flavor-chip"><span class="fc-en">Cranberry</span><span class="fc-ja">クランベリー</span></div>
-        <div class="wk-flavor-chip"><span class="fc-en">Rum Raisin</span><span class="fc-ja">ラムレーズン</span></div>
+        <div class="wk-flavor-chip"><img class="fc-img" src="../assets/blog/whoopie-kurichi/flavor-plain.jpg" alt="ウーピー#クリチ プレーン" loading="lazy"><span class="fc-en">Plain</span><span class="fc-ja">プレーン</span></div>
+        <div class="wk-flavor-chip"><img class="fc-img" src="../assets/blog/whoopie-kurichi/flavor-lemon.jpg" alt="ウーピー#クリチ レモン" loading="lazy"><span class="fc-en">Lemon</span><span class="fc-ja">レモン</span></div>
+        <div class="wk-flavor-chip"><img class="fc-img" src="../assets/blog/whoopie-kurichi/flavor-cranberry.jpg" alt="ウーピー#クリチ クランベリー" loading="lazy"><span class="fc-en">Cranberry</span><span class="fc-ja">クランベリー</span></div>
+        <div class="wk-flavor-chip"><img class="fc-img" src="../assets/blog/whoopie-kurichi/flavor-rumraisin.jpg" alt="ウーピー#クリチ ラムレーズン" loading="lazy"><span class="fc-en">Rum Raisin</span><span class="fc-ja">ラムレーズン</span></div>
       </div>
     </div>
   </section>
