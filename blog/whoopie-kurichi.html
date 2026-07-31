@@ -86,6 +86,33 @@
   .wk-flavor-chip .fc-ja{font-family:"Noto Sans JP",sans-serif;font-weight:800;
     font-size:clamp(15px,2vw,18px);color:var(--char)}
 
+  /* GALLERY / SLIDESHOW */
+  .wk-gallery{padding:96px 20px;text-align:center;background:linear-gradient(180deg,#fff8ec,#fffdf8)}
+  .wk-gallery-h{font-family:"Noto Sans JP",sans-serif;font-weight:900;
+    font-size:clamp(24px,3.6vw,36px);line-height:1.5;margin:0 0 16px;color:var(--char)}
+  .wk-gallery-p{max-width:560px;margin:0 auto 40px;color:#5a4d45;
+    font-size:clamp(14px,1.7vw,16px);line-height:2}
+  .wk-slideshow{position:relative;max-width:520px;margin:0 auto}
+  .wk-slideshow-frame{position:relative;border-radius:22px;overflow:hidden;
+    box-shadow:0 34px 66px -30px rgba(26,22,19,.45);background:#fff;aspect-ratio:3/4}
+  .wk-slideshow-track{display:flex;height:100%;transition:transform .45s cubic-bezier(.65,0,.35,1)}
+  .wk-slideshow-track img{width:100%;height:100%;object-fit:cover;flex:0 0 100%;display:block}
+  .wk-slideshow-arrow{position:absolute;top:50%;transform:translateY(-50%);
+    width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,.92);border:0;
+    display:flex;align-items:center;justify-content:center;cursor:pointer;
+    box-shadow:0 10px 24px -8px rgba(26,22,19,.4);font-size:18px;color:var(--char);
+    transition:background .2s ease,transform .2s ease}
+  .wk-slideshow-arrow:hover{background:#fff;transform:translateY(-50%) scale(1.06)}
+  .wk-slideshow-arrow--prev{left:14px}
+  .wk-slideshow-arrow--next{right:14px}
+  .wk-slideshow-count{position:absolute;right:16px;bottom:14px;background:rgba(26,22,19,.55);
+    color:#fff;font-family:"Montserrat",sans-serif;font-weight:700;font-size:12px;
+    letter-spacing:.03em;padding:5px 12px;border-radius:999px}
+  .wk-slideshow-dots{display:flex;justify-content:center;gap:8px;margin-top:20px;flex-wrap:wrap}
+  .wk-slideshow-dots button{width:8px;height:8px;border-radius:50%;border:0;
+    background:#e6d8c6;cursor:pointer;padding:0;transition:background .2s ease,transform .2s ease}
+  .wk-slideshow-dots button.is-active{background:var(--tomato);transform:scale(1.25)}
+
   /* EXPERIENCE */
   .wk-exp{padding:104px 20px;text-align:center;
     background:radial-gradient(120% 120% at 50% 0%,#fff7e6 0%,#ffeccb 100%)}
@@ -132,6 +159,8 @@
     .wk-feat--rev .wk-feat-inner{direction:ltr}
     .wk-flavors{padding:64px 18px}
     .wk-flavor-grid{grid-template-columns:repeat(2,1fr)}
+    .wk-gallery{padding:64px 18px}
+    .wk-slideshow-arrow{width:38px;height:38px;font-size:16px}
     .wk-exp{padding:72px 18px}
     .wk-compare{padding:56px 18px}
     .wk-table th,.wk-table td{padding:12px 8px;font-size:12.5px}
@@ -240,6 +269,83 @@
       </div>
     </div>
   </section>
+
+  <!-- GALLERY / SLIDESHOW -->
+  <section class="wk-gallery">
+    <div class="container">
+      <h2 class="wk-gallery-h">ウーピー#クリチ ギャラリー</h2>
+      <p class="wk-gallery-p">断面、パッケージ、4つのフレーバー。写真でめぐるウーピー#クリチ。</p>
+      <div class="wk-slideshow" id="wkSlideshow">
+        <div class="wk-slideshow-frame">
+          <div class="wk-slideshow-track" id="wkSlideTrack">
+            <img src="../assets/blog/whoopie-kurichi/gallery/slide-01.jpg" alt="ウーピー#クリチ 断面スタック 1" loading="lazy">
+            <img src="../assets/blog/whoopie-kurichi/gallery/slide-02.jpg" alt="ウーピー#クリチ 断面スタック 2" loading="lazy">
+            <img src="../assets/blog/whoopie-kurichi/gallery/slide-03.jpg" alt="ウーピー#クリチ 個包装4種と化粧箱" loading="lazy">
+            <img src="../assets/blog/whoopie-kurichi/gallery/slide-04.jpg" alt="ウーピー#クリチ 化粧箱と商品" loading="lazy">
+            <img src="../assets/blog/whoopie-kurichi/gallery/slide-05.jpg" alt="ウーピー#クリチ 化粧箱と商品 2" loading="lazy">
+            <img src="../assets/blog/whoopie-kurichi/gallery/slide-06.jpg" alt="ウーピー#クリチ 4フレーバー断面" loading="lazy">
+            <img src="../assets/blog/whoopie-kurichi/gallery/slide-07.jpg" alt="ウーピー#クリチ 断面スタック 3" loading="lazy">
+            <img src="../assets/blog/whoopie-kurichi/gallery/slide-08.jpg" alt="ウーピー#クリチ 化粧箱スタック" loading="lazy">
+            <img src="../assets/blog/whoopie-kurichi/gallery/slide-09.jpg" alt="ウーピー#クリチ クランベリー" loading="lazy">
+            <img src="../assets/blog/whoopie-kurichi/gallery/slide-10.jpg" alt="ウーピー#クリチ レモン" loading="lazy">
+            <img src="../assets/blog/whoopie-kurichi/gallery/slide-11.jpg" alt="ウーピー#クリチ プレーン" loading="lazy">
+            <img src="../assets/blog/whoopie-kurichi/gallery/slide-12.jpg" alt="ウーピー#クリチ 4フレーバー集合" loading="lazy">
+            <img src="../assets/blog/whoopie-kurichi/gallery/slide-13.jpg" alt="ウーピー#クリチ ラムレーズン" loading="lazy">
+          </div>
+          <button type="button" class="wk-slideshow-arrow wk-slideshow-arrow--prev" aria-label="前の画像">‹</button>
+          <button type="button" class="wk-slideshow-arrow wk-slideshow-arrow--next" aria-label="次の画像">›</button>
+          <div class="wk-slideshow-count" id="wkSlideCount">1 / 13</div>
+        </div>
+        <div class="wk-slideshow-dots" id="wkSlideDots"></div>
+      </div>
+    </div>
+  </section>
+  <script>
+    (function(){
+      var track = document.getElementById('wkSlideTrack');
+      var slides = track.children;
+      var total = slides.length;
+      var dotsWrap = document.getElementById('wkSlideDots');
+      var countEl = document.getElementById('wkSlideCount');
+      var root = document.getElementById('wkSlideshow');
+      var idx = 0, timer;
+
+      for(var i=0;i<total;i++){
+        var b = document.createElement('button');
+        if(i===0) b.className = 'is-active';
+        b.setAttribute('aria-label', (i+1)+'枚目へ');
+        (function(n){ b.addEventListener('click', function(){ go(n); restart(); }); })(i);
+        dotsWrap.appendChild(b);
+      }
+      var dots = dotsWrap.children;
+
+      function go(n){
+        idx = (n + total) % total;
+        track.style.transform = 'translateX(-' + (idx*100) + '%)';
+        countEl.textContent = (idx+1) + ' / ' + total;
+        for(var i=0;i<dots.length;i++){ dots[i].className = (i===idx) ? 'is-active' : ''; }
+      }
+      function next(){ go(idx+1); }
+      function prev(){ go(idx-1); }
+      function restart(){ clearInterval(timer); timer = setInterval(next, 4500); }
+
+      root.querySelector('.wk-slideshow-arrow--next').addEventListener('click', function(){ next(); restart(); });
+      root.querySelector('.wk-slideshow-arrow--prev').addEventListener('click', function(){ prev(); restart(); });
+
+      var startX = null;
+      var frame = root.querySelector('.wk-slideshow-frame');
+      frame.addEventListener('touchstart', function(e){ startX = e.touches[0].clientX; }, {passive:true});
+      frame.addEventListener('touchend', function(e){
+        if(startX===null) return;
+        var dx = e.changedTouches[0].clientX - startX;
+        if(dx > 40) prev(); else if(dx < -40) next();
+        startX = null; restart();
+      });
+
+      go(0);
+      restart();
+    })();
+  </script>
 
   <!-- EXPERIENCE -->
   <section class="wk-exp">
