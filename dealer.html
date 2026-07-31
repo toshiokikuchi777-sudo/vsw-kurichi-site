@@ -308,6 +308,42 @@ const CATS = [
     ]
   },
   {
+    id:"whoopie", icon:"🍨", title:"ウーピー#クリチ 販促キット",
+    desc:"特製クッキーで#クリチをサンドした、アイス感覚の新商品。メインビジュアル・断面・パッケージ・4フレーバー写真・ギャラリー写真をご用意しています。",
+    blogLink:{url:"blog/whoopie-kurichi.html", label:"ウーピー#クリチ 紹介ブログ記事", sub:"商品ストーリー・4フレーバーを記事で詳しく"},
+    sections:[
+      { head:"商品写真（メイン）", items:[
+        { t:"メインビジュアル", thumb:"whoopie-hero.jpg", kind:"image", type:"JPG", size:"626KB",
+          file:"assets/blog/whoopie-kurichi/hero.jpg", dl:"ウーピークリチ_メインビジュアル.jpg" },
+        { t:"断面カット", thumb:"whoopie-cross.jpg", kind:"image", type:"JPG", size:"656KB",
+          file:"assets/blog/whoopie-kurichi/cross-section.jpg", dl:"ウーピークリチ_断面.jpg" },
+        { t:"パッケージ（化粧箱）", thumb:"whoopie-box.jpg", kind:"image", type:"JPG", size:"636KB",
+          file:"assets/blog/whoopie-kurichi/box.jpg", dl:"ウーピークリチ_パッケージ.jpg" },
+        { t:"個包装（ワンハンドサイズ）", thumb:"whoopie-wrapped.jpg", kind:"image", type:"JPG", size:"459KB",
+          file:"assets/blog/whoopie-kurichi/wrapped.jpg", dl:"ウーピークリチ_個包装.jpg" },
+        { t:"店頭訴求ビジュアル", thumb:"whoopie-cta.jpg", kind:"image", type:"JPG", size:"587KB",
+          file:"assets/blog/whoopie-kurichi/cta.jpg", dl:"ウーピークリチ_訴求ビジュアル.jpg" },
+      ]},
+      { head:"4フレーバー写真", items:[
+        { t:"プレーン", thumb:"whoopie-plain.jpg", kind:"image", type:"JPG", size:"44KB",
+          file:"assets/blog/whoopie-kurichi/flavor-plain.jpg", dl:"ウーピークリチ_プレーン.jpg" },
+        { t:"レモン", thumb:"whoopie-lemon.jpg", kind:"image", type:"JPG", size:"44KB",
+          file:"assets/blog/whoopie-kurichi/flavor-lemon.jpg", dl:"ウーピークリチ_レモン.jpg" },
+        { t:"クランベリー", thumb:"whoopie-cranberry.jpg", kind:"image", type:"JPG", size:"55KB",
+          file:"assets/blog/whoopie-kurichi/flavor-cranberry.jpg", dl:"ウーピークリチ_クランベリー.jpg" },
+        { t:"ラムレーズン", thumb:"whoopie-rumraisin.jpg", kind:"image", type:"JPG", size:"56KB",
+          file:"assets/blog/whoopie-kurichi/flavor-rumraisin.jpg", dl:"ウーピークリチ_ラムレーズン.jpg" },
+      ]},
+      { head:"ギャラリー写真（全13点）", items:[
+        ...["214KB","318KB","255KB","313KB","233KB","353KB","252KB","206KB","287KB","228KB","252KB","316KB","293KB"].map((size,i)=>{
+          const n = String(i+1).padStart(2,"0");
+          return { t:"ギャラリー写真 "+(i+1), thumb:"whoopie-g"+n+".jpg", kind:"image", type:"JPG", size,
+            file:"assets/blog/whoopie-kurichi/gallery/slide-"+n+".jpg", dl:"ウーピークリチ_ギャラリー"+(i+1)+".jpg" };
+        }),
+      ]},
+    ]
+  },
+  {
     id:"sns", icon:"🎬", title:"SNS動画素材",
     desc:"Instagram / TikTok などへの投稿・リポストにご利用いただける縦型動画素材。",
     sections:[
