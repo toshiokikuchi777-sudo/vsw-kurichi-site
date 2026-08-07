@@ -26,3 +26,6 @@ kurichiland-forge/generated/
 # 内部資料（公開しない・ローカルのみ保持）
 導入提案書.pptx
 クリチコラボレーション.pdf
+
+# 非公開ゲームのローカルクローン（誤ってサイトへ公開しない）
+kurichi-dorobou/
