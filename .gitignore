@@ -28,4 +28,5 @@ kurichiland-forge/generated/
 クリチコラボレーション.pdf
 
 # 非公開ゲームのローカルクローン（誤ってサイトへ公開しない）
-kurichi-dorobou/
+# ルート直下のみ対象（assets/kurichi-dorobou/ は公開用素材のため対象外）
+/kurichi-dorobou/
