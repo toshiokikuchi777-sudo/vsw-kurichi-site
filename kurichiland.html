@@ -302,6 +302,16 @@
     .kll-hero-desc{font-size:15px;line-height:1.9}
     .kll-game-card{padding:26px 22px}
   }
+
+/* 実機プレイ映像（2026-08-20追加）。3列→タブレット2列→スマホ1列。
+   動画は音声なし・自動ループ。playsinlineでiOSが全画面を乗っ取らないようにする。 */
+.kll-clips{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.kll-clip{margin:0;border-radius:18px;overflow:hidden;background:#120f16;
+  box-shadow:0 10px 30px rgba(0,0,0,.28)}
+.kll-clip video{display:block;width:100%;height:auto;aspect-ratio:1700/1176;object-fit:cover;background:#120f16}
+.kll-clip figcaption{padding:12px 14px;font-size:14px;line-height:1.5;color:#efe7dc}
+@media (max-width:900px){.kll-clips{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:600px){.kll-clips{grid-template-columns:1fr;gap:14px}}
 </style>
 </head>
 <body>
@@ -487,6 +497,31 @@
   </section>
 
   <!-- Key Features -->
+  <!-- 実機プレイ映像（2026-08-20追加）。動画は assets/videos/kurichi-game-01〜03.mp4。
+       差し替えるときは同じファイル名で上書きすれば、この節を触らずに入れ替わる。 -->
+  <section class="kll-section">
+    <div class="container">
+      <div class="kll-section-header kll-reveal">
+        <span class="kll-tag purple">🎬 GAMEPLAY</span>
+        <h2 class="kll-title">遊んでいる<em>ところ</em></h2>
+      </div>
+      <div class="kll-clips kll-reveal">
+        <figure class="kll-clip">
+          <video src="assets/videos/kurichi-game-01.mp4" autoplay muted loop playsinline preload="metadata"></video>
+          <figcaption>ネオンの街をかけぬける</figcaption>
+        </figure>
+        <figure class="kll-clip">
+          <video src="assets/videos/kurichi-game-02.mp4" autoplay muted loop playsinline preload="metadata"></video>
+          <figcaption>お店にかくれてやりすごす</figcaption>
+        </figure>
+        <figure class="kll-clip">
+          <video src="assets/videos/kurichi-game-03.mp4" autoplay muted loop playsinline preload="metadata"></video>
+          <figcaption>夜のマーケットをさがしまわる</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
   <section class="kll-section kll-section-dark">
     <div class="container">
       <div class="kll-section-header kll-reveal">
