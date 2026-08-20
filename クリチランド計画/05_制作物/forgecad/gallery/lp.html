@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KURICHI LAND — レトロダイナー × サーカス</title>
+<style>
+  :root{
+    --red:#E3261D; --cream:#fdf6e6; --ink:#1c1a17; --white:#fdfaf2; --chrome:#d4d8dc;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{font-family:"Hiragino Kaku Gothic ProN","Hiragino Sans",-apple-system,sans-serif;background:var(--cream);color:var(--ink);}
+
+  /* ---------- HERO ---------- */
+  .hero{position:relative;height:100vh;min-height:560px;overflow:hidden;background:linear-gradient(#f4ead2 0%, #fdf6e6 70%);}
+  .hero-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 62%;}
+  .hero::after{content:'';position:absolute;inset:0;background:linear-gradient(rgba(253,246,230,.72) 0%, rgba(253,246,230,.25) 26%, rgba(253,246,230,0) 45%);pointer-events:none;}
+  .hero-overlay{z-index:2;}
+  .hero-overlay{position:absolute;inset:0;pointer-events:none;display:flex;flex-direction:column;justify-content:flex-start;align-items:center;padding-top:7vh;}
+  .hero-kicker{letter-spacing:.35em;font-size:13px;font-weight:700;color:var(--red);background:var(--white);border:2px solid var(--red);border-radius:999px;padding:6px 18px;}
+  .hero-title{margin-top:16px;font-size:clamp(30px,5.4vw,64px);font-weight:900;line-height:1.15;text-align:center;text-shadow:0 2px 0 var(--white);}
+  .hero-title .x{color:var(--red);padding:0 .15em;}
+  .hero-sub{margin-top:10px;font-size:clamp(13px,1.6vw,17px);font-weight:600;color:#6b6156;}
+  .hero-hint{position:absolute;bottom:18px;left:50%;transform:translateX(-50%);font-size:12px;color:#8a8177;background:rgba(253,250,242,.85);border-radius:999px;padding:6px 16px;}
+  .checker{height:26px;background:repeating-conic-gradient(var(--ink) 0% 25%, var(--white) 0% 50%) 0 0/52px 52px;}
+
+  /* ---------- SECTIONS ---------- */
+  section{max-width:1080px;margin:0 auto;padding:72px 24px;}
+  .sec-label{display:inline-block;font-size:12px;font-weight:800;letter-spacing:.3em;color:var(--white);background:var(--red);border-radius:4px;padding:5px 12px;margin-bottom:14px;}
+  h2{font-size:clamp(22px,3.4vw,34px);font-weight:900;margin-bottom:18px;line-height:1.3;}
+  p.lead{font-size:15.5px;line-height:2;color:#4c443b;max-width:46em;}
+
+  /* concept */
+  .concept-grid{display:grid;grid-template-columns:1.25fr 1fr;gap:28px;align-items:center;margin-top:30px;}
+  .concept-grid img{width:100%;border-radius:14px;border:4px solid var(--white);box-shadow:0 14px 36px rgba(28,26,23,.16);}
+  .concept-copy h3{font-size:19px;font-weight:800;margin-bottom:10px;color:var(--red);}
+  .concept-copy p{font-size:14.5px;line-height:1.95;color:#4c443b;}
+  .plans{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px;}
+  .plans img{width:100%;border-radius:10px;border:3px solid var(--white);box-shadow:0 8px 20px rgba(28,26,23,.12);}
+
+  /* numbers */
+  .numbers{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:26px;}
+  .num-card{background:var(--white);border-radius:14px;padding:26px 18px;text-align:center;border-top:6px solid var(--red);box-shadow:0 10px 24px rgba(28,26,23,.08);}
+  .num-card .v{font-size:clamp(28px,4vw,44px);font-weight:900;color:var(--red);}
+  .num-card .v small{font-size:.45em;color:var(--ink);font-weight:800;}
+  .num-card .k{margin-top:6px;font-size:13px;font-weight:700;color:#6b6156;}
+
+  /* features */
+  .features{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-top:26px;}
+  .feat{background:var(--white);border-radius:14px;padding:22px 20px;box-shadow:0 10px 24px rgba(28,26,23,.08);display:flex;gap:14px;align-items:flex-start;}
+  .feat .ico{flex:0 0 auto;width:44px;height:44px;border-radius:50%;background:var(--red);color:var(--white);display:flex;align-items:center;justify-content:center;font-size:21px;}
+  .feat h3{font-size:15.5px;font-weight:800;margin-bottom:6px;}
+  .feat p{font-size:13px;line-height:1.85;color:#5a5248;}
+
+  /* perspective gallery */
+  .pers-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:26px;}
+  .pers-grid a{display:block;}
+  .pers-grid img{width:100%;height:100%;object-fit:cover;aspect-ratio:4/3;border-radius:12px;border:4px solid var(--white);box-shadow:0 10px 26px rgba(28,26,23,.14);transition:transform .25s;}
+  .pers-grid img:hover{transform:scale(1.02);}
+  .pers-wide{grid-column:1/-1;}
+  .pers-wide img{aspect-ratio:4/3;}
+  @media (min-width:761px){ .pers-wide img{aspect-ratio:16/10;} }
+
+  /* viewer switch */
+  .viewer-switch{display:flex;gap:10px;margin-top:22px;}
+  .vbtn{border:2px solid var(--red);background:var(--white);color:var(--red);font-weight:800;font-size:13px;padding:9px 18px;border-radius:999px;cursor:pointer;}
+  .vbtn.active{background:var(--red);color:var(--white);}
+
+  /* interior viewer */
+  .viewer-box{position:relative;height:62vh;min-height:420px;border-radius:16px;overflow:hidden;border:4px solid var(--white);box-shadow:0 16px 40px rgba(28,26,23,.18);background:linear-gradient(#efe6d2,#fdf6e6);margin-top:26px;}
+  .viewer-box canvas{display:block;}
+  .viewer-tag{position:absolute;top:12px;left:12px;background:rgba(253,250,242,.9);border-radius:999px;padding:6px 14px;font-size:12px;font-weight:700;color:#6b6156;}
+
+  footer{background:var(--ink);color:#cfc8bd;text-align:center;padding:34px 20px;font-size:12.5px;letter-spacing:.08em;}
+  footer .logo{color:var(--white);font-weight:900;font-size:15px;letter-spacing:.25em;margin-bottom:8px;}
+
+  @media (max-width:760px){
+    .concept-grid{grid-template-columns:1fr;}
+    .numbers{grid-template-columns:1fr;}
+    .features{grid-template-columns:1fr;}
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO: key visual -->
+<div class="hero">
+  <img class="hero-img" src="images/pers-03.jpg" alt="KURICHI LAND 完成イメージ">
+  <div class="hero-overlay">
+    <div class="hero-kicker">KURICHI LAND</div>
+    <div class="hero-title">レトロダイナー<span class="x">×</span>サーカス</div>
+    <div class="hero-sub">クリームチーズスイーツの旗艦店、はじまる。</div>
+  </div>
+</div>
+<div class="checker"></div>
+
+<!-- CONCEPT -->
+<section>
+  <span class="sec-label">CONCEPT</span>
+  <h2>まちに現れた、おいしいサーカス。</h2>
+  <p class="lead">クリームとレッドのストライプ、ぐるりと一周する丸い庇、てっぺんに旗めくビッグテント。1階はクリチが並ぶレトロダイナー、2階はテントの中のグッズマーケット。入口のゲートをくぐった瞬間から、ショーが始まります。</p>
+  <div class="concept-copy" style="margin-top:26px;">
+    <h3>DINER × CIRCUS × KURICHI</h3>
+    <p>ストリームライン・モダンの流線型ボディに、サーカステントの高揚感を重ねた「おいしい建築」。レッドカーペットの先の円形大階段、ガラスドラムから見上げる16分割の大テント、吹き抜け越しに交差する視線——建物そのものがフォトスポットであり、ブランド体験の舞台です。</p>
+    <p style="margin-top:12px;">日当たりのいい正面はオーニングを伸ばしたオープンテラス。ガーデンにはシルバーのエアストリームが停まり、焼きたての香りを漂わせます。</p>
+  </div>
+</section>
+
+<!-- NUMBERS -->
+<section style="padding-top:0;">
+  <span class="sec-label">FACTS</span>
+  <h2>数字でみるクリチランド</h2>
+  <div class="numbers">
+    <div class="num-card"><div class="v">655<small>㎡</small></div><div class="k">敷地面積（25.0m × 26.2m）</div></div>
+    <div class="num-card"><div class="v">195<small>㎡</small></div><div class="k">建物面積（2階建・最高高さ10.25m）</div></div>
+    <div class="num-card"><div class="v">450<small>㎡</small></div><div class="k">屋外テラスガーデン</div></div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section style="padding-top:0;">
+  <span class="sec-label">EXPERIENCE</span>
+  <h2>ワクワクは、入口の手前から。</h2>
+  <div class="features">
+    <div class="feat"><div class="ico">🎪</div><div><h3>ウェルカムゲート &amp; レッドカーペット</h3><p>ゲートをくぐり、ランプの並ぶ赤い道を進むと円形大階段。入店までの数十歩が、そのままオープニングアクトになります。</p></div></div>
+    <div class="feat"><div class="ico">☀️</div><div><h3>オーニングのオープンテラス</h3><p>南向きの正面に赤白ストライプの庇を伸ばした日なたの特等席。プランター越しに道ゆく人と目が合う、まちに開いた客席です。</p></div></div>
+    <div class="feat"><div class="ico">🍰</div><div><h3>1F：クリチのダイナー</h3><p>市松床のダイナーで、ショーケースから選ぶクリチと見せる工房のライブ感を。テイクアウトもイートインも。</p></div></div>
+    <div class="feat"><div class="ico">🎁</div><div><h3>2F：テントの中のグッズマーケット</h3><p>螺旋階段を上るとサテライトテントから大テントの中へ。吹き抜けを一周しながら限定グッズとガチャを楽しめます。</p></div></div>
+    <div class="feat"><div class="ico">🚐</div><div><h3>ガーデン &amp; エアストリーム</h3><p>450㎡のガーデンにイベント広場とシルバーのキッチントレーラー。週末はマルシェやミニショーの舞台に。</p></div></div>
+    <div class="feat"><div class="ico">🛟</div><div><h3>安心の裏側設計</h3><p>常用の螺旋階段に加え、北側屋外に非常階段を確保。楽しさの裏で、避難動線と運営効率をきちんと支えます。</p></div></div>
+  </div>
+</section>
+
+<!-- PERSPECTIVE GALLERY -->
+<section style="padding-top:0;">
+  <span class="sec-label">PERSPECTIVE</span>
+  <h2>完成イメージパース。</h2>
+  <p class="lead">3Dモデルをもとに描き起こした外観・俯瞰の完成イメージです（クリックで拡大）。</p>
+  <div class="pers-grid">
+    <a class="pers-wide" href="images/pers-interior.jpg" target="_blank"><img src="images/pers-interior.jpg" alt="1F内装 俯瞰パース" loading="lazy"></a>
+    <a href="images/pers-01.jpg" target="_blank"><img src="images/pers-01.jpg" alt="パース1" loading="lazy"></a>
+    <a href="images/pers-02.jpg" target="_blank"><img src="images/pers-02.jpg" alt="パース2" loading="lazy"></a>
+    <a href="images/pers-03.jpg" target="_blank"><img src="images/pers-03.jpg" alt="パース3" loading="lazy"></a>
+    <a href="images/pers-04.jpg" target="_blank"><img src="images/pers-04.jpg" alt="パース4" loading="lazy"></a>
+    <a href="images/pers-05.jpg" target="_blank"><img src="images/pers-05.jpg" alt="パース5" loading="lazy"></a>
+    <a href="images/pers-06.jpg" target="_blank"><img src="images/pers-06.jpg" alt="パース6" loading="lazy"></a>
+  </div>
+</section>
+
+<!-- EXTERIOR 3D -->
+<section style="padding-top:0;">
+  <span class="sec-label">3D MODEL</span>
+  <h2>模型を、自分の手で回す。</h2>
+  <p class="lead">設計データそのままの3Dモデル。ドラッグで回転、ホイールでズームできます。</p>
+  <div class="viewer-box">
+    <div id="hero3d" style="position:absolute;inset:0;"></div>
+    <div class="viewer-tag">EXTERIOR — ドラッグで回転</div>
+  </div>
+</section>
+
+<!-- INTERIOR 3D -->
+<section style="padding-top:0;">
+  <span class="sec-label">INSIDE</span>
+  <h2>ドールハウスでのぞく、中のようす。</h2>
+  <p class="lead">1階のダイナーとキッチン、螺旋階段、2階の吹き抜けとグッズ売り場までまるごと3Dで。ボタンで「2階を外した1Fプランビュー」にも切り替えられます。</p>
+  <div class="viewer-switch">
+    <button class="vbtn active" data-glb="./poc2planb.glb">フル内装（2F付き）</button>
+    <button class="vbtn" data-glb="./poc2planb1f.glb">1Fプラン（2F取り外し）</button>
+  </div>
+  <div class="viewer-box">
+    <div id="plan3d" style="position:absolute;inset:0;"></div>
+    <div class="viewer-tag">INTERIOR — ドラッグで回転</div>
+  </div>
+</section>
+
+<!-- SPEC DIAGRAMS -->
+<section style="padding-top:0;">
+  <span class="sec-label">DIAGRAM</span>
+  <h2>解説図でみる、設計のすべて。</h2>
+  <p class="lead">1F内装の要素番号解説と、建物全体のブランド仕様をまとめた解説図です（クリックで拡大）。</p>
+  <div class="pers-grid">
+    <a class="pers-wide" href="images/diagram-1f.jpg" target="_blank"><img src="images/diagram-1f.jpg" alt="KURICHI LAND 1F 内装解説図" loading="lazy"></a>
+    <a class="pers-wide" href="images/diagram-overview.jpg" target="_blank"><img src="images/diagram-overview.jpg" alt="KURICHI LAND 全体解説図" loading="lazy"></a>
+  </div>
+</section>
+
+<footer>
+  <div class="logo">KURICHI LAND</div>
+  RETRO DINER × CIRCUS — VSW co.,ltd
+</footer>
+
+<script type="module">
+import * as THREE from './lib/three.module.js';
+import { OrbitControls } from './lib/jsm/controls/OrbitControls.js';
+import { GLTFLoader } from './lib/jsm/loaders/GLTFLoader.js';
+
+const VER = "?v=87";
+
+function initViewer(el, url, opts = {}) {
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(45, 1, 10, 300000);
+  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+  renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+  renderer.outputColorSpace = THREE.SRGBColorSpace;
+  el.appendChild(renderer.domElement);
+
+  scene.add(new THREE.HemisphereLight(0xfffaf0, 0xcabfa8, 1.1));
+  const sun = new THREE.DirectionalLight(0xffffff, 1.6);
+  sun.position.set(18000, 26000, 22000);
+  scene.add(sun);
+  const fill = new THREE.DirectionalLight(0xfff2dd, 0.5);
+  fill.position.set(-20000, 14000, -16000);
+  scene.add(fill);
+
+  const controls = new OrbitControls(camera, renderer.domElement);
+  controls.enableDamping = true;
+  controls.dampingFactor = 0.06;
+  controls.autoRotate = !!opts.autoRotate;
+  controls.autoRotateSpeed = 0.9;
+  controls.maxPolarAngle = Math.PI * 0.495;
+
+  let currentRoot = null;
+  function loadModel(u) {
+    new GLTFLoader().load(u + VER, (g) => {
+      if (currentRoot) scene.remove(currentRoot);
+      const root = g.scene;
+      // Z-up (ForgeCAD) -> Y-up
+      root.rotation.x = -Math.PI / 2;
+      scene.add(root);
+      currentRoot = root;
+      const box = new THREE.Box3().setFromObject(root);
+      const c = box.getCenter(new THREE.Vector3());
+      const size = box.getSize(new THREE.Vector3()).length();
+      controls.target.copy(c);
+      const d = size * (opts.dist || 0.62);
+      camera.position.set(c.x + d * 0.72, c.y + d * (opts.height || 0.5), c.z + d * 0.72);
+      camera.near = size / 500; camera.far = size * 6;
+      camera.updateProjectionMatrix();
+    });
+  }
+  loadModel(url);
+
+  function resize() {
+    const w = el.clientWidth, h = el.clientHeight;
+    renderer.setSize(w, h);
+    camera.aspect = w / h;
+    camera.updateProjectionMatrix();
+  }
+  new ResizeObserver(resize).observe(el);
+  resize();
+
+  renderer.setAnimationLoop(() => { controls.update(); renderer.render(scene, camera); });
+  return { loadModel };
+}
+
+initViewer(document.getElementById('hero3d'), './planext.glb', { autoRotate: true, dist: 1.15, height: 0.5 });
+const planViewer = initViewer(document.getElementById('plan3d'), './poc2planb.glb', { dist: 1.05, height: 0.75 });
+
+// 内装ビューアの モデル切替（フル内装 ⇄ 1Fプラン）
+document.querySelectorAll('.vbtn').forEach((btn) => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.vbtn').forEach((b) => b.classList.remove('active'));
+    btn.classList.add('active');
+    planViewer.loadModel(btn.dataset.glb);
+  });
+});
+</script>
+</body>
+</html>

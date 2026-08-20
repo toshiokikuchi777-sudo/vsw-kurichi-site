@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>クリチランド ｜ フロア別 実寸平面図（schematic）</title>
+<style>
+  :root{ --red:#E3261D; --yellow:#FFC20E; --ink:#241f1a; --paper:#fbf7ee; }
+  *{box-sizing:border-box}
+  body{ margin:0; background:var(--paper); color:var(--ink);
+        font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Hiragino Sans","Yu Gothic",sans-serif; }
+  header{ padding:26px 24px 8px; }
+  header h1{ margin:0 0 4px; font-size:22px; }
+  header h1 b{ color:var(--red); }
+  header p{ margin:2px 0; font-size:13px; color:#5a5048; }
+  .note{ display:inline-block; margin-top:8px; font-size:12px; background:#fff; border:1.5px solid var(--yellow); border-radius:999px; padding:6px 14px; }
+  .grid{ display:grid; grid-template-columns:1fr 1fr; gap:18px; padding:16px 24px 40px; max-width:1280px; }
+  @media(max-width:980px){ .grid{ grid-template-columns:1fr; } }
+  .plan{ background:#fff; border:2px solid var(--ink); border-radius:16px; padding:16px 16px 10px; box-shadow:6px 6px 0 rgba(36,31,26,.12); }
+  .plan h2{ margin:0 0 2px; font-size:17px; }
+  .plan h2 span{ color:var(--red); }
+  .plan .meta{ font-size:12px; color:#5a5048; margin:0 0 10px; }
+  svg{ width:100%; height:auto; display:block; }
+  .legend{ display:flex; flex-wrap:wrap; gap:10px 16px; padding:0 24px 40px; max-width:1280px; font-size:12px; }
+  .legend i{ display:inline-block; width:14px; height:14px; border-radius:3px; border:1px solid rgba(0,0,0,.25); vertical-align:-2px; margin-right:5px; }
+</style>
+</head>
+<body>
+<header>
+  <h1>クリチランド ｜ フロア別 実寸平面図 <b>（schematic）</b></h1>
+  <p>石家庄 Neverland 滹沱河集 ／ 建物 footprint 約14.0m × 14.4m ≒ 200㎡ ＋ テラス 450㎡（敷地 約26m × 25m ＝ 650㎡）</p>
+  <p>2階建て（屋上利用なし／エレベーターなし）。各室は実寸ベースの概念配置（construction前の検討用）。寸法はメートル定義から自動作図。</p>
+  <span class="note">⚠️「建物200㎡＝建築面積(footprint)」前提。先方確認後に実寸確定。</span>
+</header>
+
+<div class="grid" id="grid"></div>
+
+<div class="legend" id="legend"></div>
+
+<script>
+const COLORS = {
+  building:{f:'#ffe9c0',s:'#caa45a',t:'#5a4612'},
+  factory: {f:'#ffd9a8',s:'#E3261D',t:'#7a2a14'},
+  counter: {f:'#ffe08a',s:'#d49a00',t:'#5a4612'},
+  diner:   {f:'#fff0bf',s:'#d9b53c',t:'#5a4612'},
+  star:    {f:'#ffd2cc',s:'#E3261D',t:'#7a2a14'},
+  retail:  {f:'#e7f0d6',s:'#79a049',t:'#33491e'},
+  seat:    {f:'#f3ecdd',s:'#c3b594',t:'#4a4030'},
+  hall:    {f:'#f5efe3',s:'#cfc3a6',t:'#4a4030'},
+  boh:     {f:'#e3ddd4',s:'#a89e90',t:'#4a4338'},
+  cold:    {f:'#d7e8f2',s:'#6f9fbf',t:'#244b60'},
+  core:    {f:'#d6d0c6',s:'#9a9080',t:'#4a4338'},
+  wc:      {f:'#e7e6ef',s:'#9d9bb0',t:'#3a3a4a'},
+  garden:  {f:'#e2efd2',s:'#79a049',t:'#33491e'},
+  plaza:   {f:'#eef3de',s:'#a9bf6a',t:'#445223'},
+  deck:    {f:'#efe5cf',s:'#bda87f',t:'#5a4a2a'},
+};
+
+const LEGEND = [
+  ['factory','見せる仕上げ/FACTORY'],['counter','カウンター/サービス'],['diner','飲食席'],
+  ['star','象徴/フォト/エントランス'],['retail','物販・展示'],['cold','冷凍・冷蔵'],
+  ['boh','BOH（厨房・事務・設備）'],['core','垂直動線'],['wc','トイレ'],
+  ['garden','植栽・回遊'],['plaza','広場/イベント'],
+];
+
+// ---- floors (meters) ----
+const FLOORS = [
+  { title:'配置図（敷地 26.0 × 25.0 m ＝ 650㎡）', sub:'建物 約200㎡ ＋ テラス 450㎡', W:26, H:25, S:17, entryX:13, back:true,
+    rooms:[
+      {x:0, y:0, w:6, h:25, label:'ガーデン・フォト回遊路（植栽帯）', t:'garden'},
+      {x:20,y:0, w:6, h:25, label:'イベント／マルシェ広場', t:'plaza'},
+      {x:6, y:0, w:14,h:2,  label:'搬入ヤード（冷凍トラック）', t:'boh'},
+      {x:6, y:2, w:14,h:14.4,label:'建物（1F〜2F）', t:'building'},
+      {x:6, y:16.4,w:14,h:2.6,label:'グリーティング広場', t:'star'},
+      {x:6, y:19,w:14,h:6,  label:'テラス飲食ゾーン', t:'diner'},
+    ]},
+  { title:'1F ｜ KURICHI FACTORY', sub:'約200㎡・水/火/冷凍を集約（オペの心臓）', W:14, H:14.4, S:26, entryX:2.7,
+    rooms:[
+      {x:0, y:0, w:3.0, h:4.5, label:'搬入・ゴミ・通用口', t:'boh'},
+      {x:3.0,y:0, w:2.5, h:4.5, label:'冷凍ストック／冷蔵', t:'cold'},
+      {x:5.5,y:0, w:5.0, h:4.5, label:'厨房（解凍・仕上げ・洗浄）', t:'boh'},
+      {x:10.5,y:0,w:1.5, h:4.5, label:'WC', t:'wc'},
+      {x:12.0,y:0,w:2.0, h:4.5, label:'階段（EVなし）', t:'core'},
+      {x:5.5,y:4.5,w:5.0,h:4.0, label:'KURICHI FACTORY（見せる仕上げ）', t:'factory'},
+      {x:0, y:4.5,w:5.5, h:5.5, label:'屋内スタンディング／少数席', t:'seat'},
+      {x:10.5,y:4.5,w:3.5,h:9.9,label:'物販＋キャラ展示', t:'retail'},
+      {x:5.5,y:8.5,w:5.0,h:2.5, label:'メインカウンター・受渡し', t:'counter'},
+      {x:5.5,y:11,w:5.0, h:3.4, label:'入口ホール／受取待ち', t:'hall'},
+      {x:0, y:10,w:5.5, h:4.4, label:'エントランス＋車顔ショーケース', t:'star'},
+    ]},
+  { title:'2F ｜ KURICHI DINER & MUSEUM', sub:'約185㎡・通年/冬の主力（火・水なし）', W:14, H:14.4, S:26, upX:13,
+    rooms:[
+      {x:0, y:0, w:5.5, h:3.0, label:'事務・更衣・休憩・在庫', t:'boh'},
+      {x:5.5,y:0, w:5.0, h:3.0, label:'軽ドリンク（無火）', t:'counter'},
+      {x:10.5,y:0,w:1.5, h:4.5, label:'WC', t:'wc'},
+      {x:12.0,y:0,w:2.0, h:4.5, label:'階段（EVなし）', t:'core'},
+      {x:0, y:3.0,w:6.0, h:6.0, label:'キャラ展示・模型・販売ぬいぐるみ(大中小)', t:'star'},
+      {x:0, y:9.0,w:6.0, h:5.4, label:'グッズショップ', t:'retail'},
+      {x:6.0,y:3.0,w:4.5, h:1.5, label:'回廊', t:'hall'},
+      {x:6.0,y:4.5,w:8.0, h:9.9, label:'屋内ダイナー席（川ビュー・約60席）', t:'diner'},
+      {x:8.0,y:4.7,w:5.8, h:3.3, label:'イベント／WS（可動）', t:'diner', dashed:true},
+    ]},
+];
+
+const NS='http://www.w3.org/2000/svg';
+function el(tag,attrs){ const e=document.createElementNS(NS,tag); for(const k in attrs) e.setAttribute(k,attrs[k]); return e; }
+function splitLabel(s){ // up to 2 lines on （ or ／
+  if(s.length<=9) return [s];
+  let i = s.indexOf('（'); if(i<0) i=s.indexOf('／'); if(i<0) i=Math.ceil(s.length/2);
+  return [s.slice(0,i), s.slice(i)];
+}
+
+function drawFloor(f){
+  const M=46; // margin for dims
+  const S=f.S;
+  const w=f.W*S, h=f.H*S;
+  const VW=w+M*2, VH=h+M*2+26;
+  const svg=el('svg',{viewBox:`0 0 ${VW} ${VH}`, role:'img'});
+  const ox=M, oy=M;
+
+  // base / footprint
+  const baseCol = f.base==='deck' ? COLORS.deck : {f:'#fffdf8',s:'#241f1a'};
+  svg.appendChild(el('rect',{x:ox,y:oy,width:w,height:h,fill:baseCol.f,stroke:'#241f1a','stroke-width':3,rx:4}));
+
+  // rooms: rectangles
+  f.rooms.forEach(r=>{
+    const c=COLORS[r.t]||COLORS.boh;
+    const rx=ox+r.x*S, ry=oy+r.y*S, rw=r.w*S, rh=r.h*S;
+    svg.appendChild(el('rect',{x:rx,y:ry,width:rw,height:rh,fill:c.f,stroke:c.s,'stroke-width':r.dashed?1.5:1.4,'stroke-dasharray':r.dashed?'5 4':'',rx:3,'fill-opacity':r.dashed?0.0:1}));
+  });
+
+  // rooms: labels + area
+  f.rooms.forEach(r=>{
+    const c=COLORS[r.t]||COLORS.boh;
+    const rx=ox+r.x*S, ry=oy+r.y*S, rw=r.w*S, rh=r.h*S, cx=rx+rw/2, cy=ry+rh/2;
+    const lines=splitLabel(r.label);
+    const fs=Math.max(8.5, Math.min(10.5, rw/(Math.max(...lines.map(l=>l.length))*0.62)));
+    const area=Math.round(r.w*r.h);
+    const totLines=lines.length+1; // + area line
+    let ty=cy-((totLines-1)/2)*(fs*1.18);
+    lines.forEach(ln=>{
+      const t=el('text',{x:cx,y:ty,'text-anchor':'middle','font-size':fs,'font-weight':700,fill:c.t}); t.textContent=ln; svg.appendChild(t); ty+=fs*1.18;
+    });
+    const ta=el('text',{x:cx,y:ty,'text-anchor':'middle','font-size':fs*0.82,fill:c.t,'fill-opacity':.75}); ta.textContent='約'+area+'㎡'; svg.appendChild(ta);
+  });
+
+  // overall dimensions (top width / left height)
+  const dimCol='#7a7268';
+  // top
+  svg.appendChild(el('line',{x1:ox,y1:oy-16,x2:ox+w,y2:oy-16,stroke:dimCol,'stroke-width':1}));
+  ['',''].forEach((_,i)=>svg.appendChild(el('line',{x1:ox+i*w,y1:oy-20,x2:ox+i*w,y2:oy-12,stroke:dimCol,'stroke-width':1})));
+  const tw=el('text',{x:ox+w/2,y:oy-20,'text-anchor':'middle','font-size':11,fill:dimCol}); tw.textContent=f.W.toFixed(1)+' m'; svg.appendChild(tw);
+  // left
+  svg.appendChild(el('line',{x1:ox-16,y1:oy,x2:ox-16,y2:oy+h,stroke:dimCol,'stroke-width':1}));
+  const th=el('text',{x:ox-20,y:oy+h/2,'text-anchor':'middle','font-size':11,fill:dimCol,transform:`rotate(-90 ${ox-20} ${oy+h/2})`}); th.textContent=f.H.toFixed(1)+' m'; svg.appendChild(th);
+
+  // scale bar (5 m)
+  const sb=5*S, sx=ox, sy=oy+h+18;
+  svg.appendChild(el('rect',{x:sx,y:sy,width:sb,height:6,fill:'#241f1a'}));
+  svg.appendChild(el('rect',{x:sx,y:sy,width:sb/5,height:6,fill:'#fff',stroke:'#241f1a','stroke-width':1}));
+  const sl=el('text',{x:sx+sb+8,y:sy+6,'font-size':10.5,fill:'#5a5048'}); sl.textContent='5 m'; svg.appendChild(sl);
+
+  // north arrow
+  const nx=ox+w-14, ny=oy+h+12;
+  svg.appendChild(el('path',{d:`M${nx} ${ny-12} L${nx-5} ${ny} L${nx} ${ny-3} L${nx+5} ${ny} Z`,fill:'#241f1a'}));
+  const nt=el('text',{x:nx,y:ny+12,'text-anchor':'middle','font-size':10,'font-weight':700,fill:'#241f1a'}); nt.textContent='N'; svg.appendChild(nt);
+
+  // entry arrow (front = bottom)
+  if(f.entryX!=null){
+    const ex=ox+f.entryX*S, ey=oy+h;
+    svg.appendChild(el('path',{d:`M${ex} ${ey+22} L${ex-7} ${ey+8} L${ex+7} ${ey+8} Z`,fill:'#E3261D'}));
+    const et=el('text',{x:ex,y:ey+34,'text-anchor':'middle','font-size':10,'font-weight':700,fill:'#E3261D'}); et.textContent='入口'; svg.appendChild(et);
+  }
+  if(f.upX!=null){
+    const ex=ox+f.upX*S, ey=oy;
+    const ut=el('text',{x:ex,y:ey-30,'text-anchor':'middle','font-size':10,'font-weight':700,fill:'#2f8f87'}); ut.textContent='↑ 上階へ'; svg.appendChild(ut);
+  }
+  return svg;
+}
+
+const grid=document.getElementById('grid');
+FLOORS.forEach(f=>{
+  const card=document.createElement('div'); card.className='plan';
+  const h2=document.createElement('h2'); h2.innerHTML=f.title.replace('｜','<span>｜</span>'); card.appendChild(h2);
+  const meta=document.createElement('p'); meta.className='meta'; meta.textContent=f.sub; card.appendChild(meta);
+  card.appendChild(drawFloor(f));
+  grid.appendChild(card);
+});
+
+const lg=document.getElementById('legend');
+LEGEND.forEach(([k,label])=>{
+  const span=document.createElement('span');
+  span.innerHTML=`<i style="background:${COLORS[k].f};border-color:${COLORS[k].s}"></i>${label}`;
+  lg.appendChild(span);
+});
+</script>
+</body>
+</html>

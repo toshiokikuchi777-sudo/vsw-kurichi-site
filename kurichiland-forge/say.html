@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<meta name="theme-color" content="#0a0014">
+<title>ことばを送る｜ForgeCADテキストスパイラル</title>
+<style>
+  :root {
+    color-scheme: dark;
+  }
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    background: #0a0014;
+    overscroll-behavior: none;
+  }
+  body {
+    min-height: 100vh;
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: env(safe-area-inset-top, 20px) 20px calc(env(safe-area-inset-bottom, 20px) + 12px);
+    font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Yu Gothic", sans-serif;
+    color: #fff;
+    background:
+      radial-gradient(circle at 20% 15%, rgba(255, 0, 200, 0.35), transparent 45%),
+      radial-gradient(circle at 85% 10%, rgba(0, 220, 255, 0.30), transparent 50%),
+      radial-gradient(circle at 50% 90%, rgba(140, 0, 255, 0.35), transparent 55%),
+      #0a0014;
+    position: relative;
+    overflow: hidden;
+    touch-action: manipulation;
+  }
+
+  /* ふわっと漂うネオン粒子の背景演出 */
+  .bg-orb {
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(2px);
+    opacity: 0.55;
+    pointer-events: none;
+    animation: float 9s ease-in-out infinite;
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0) translateX(0); }
+    50% { transform: translateY(-18px) translateX(10px); }
+  }
+
+  .card {
+    width: 100%;
+    max-width: 420px;
+    position: relative;
+    z-index: 2;
+    text-align: center;
+  }
+
+  .logo {
+    font-size: 13px;
+    letter-spacing: 0.14em;
+    color: #ff7bd8;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+    text-shadow: 0 0 12px rgba(255, 123, 216, 0.8);
+  }
+
+  h1 {
+    font-size: clamp(22px, 6.5vw, 30px);
+    line-height: 1.35;
+    margin: 0 0 6px;
+    font-weight: 800;
+    background: linear-gradient(90deg, #ff7bd8, #7be1ff, #b98bff);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .sub {
+    font-size: 14px;
+    color: #cbb8ff;
+    margin-bottom: 26px;
+    opacity: 0.9;
+  }
+
+  form { width: 100%; }
+
+  .input-wrap {
+    position: relative;
+    width: 100%;
+  }
+
+  #wordInput {
+    width: 100%;
+    font-size: clamp(22px, 7vw, 30px);
+    font-weight: 700;
+    text-align: center;
+    padding: 22px 16px;
+    border-radius: 22px;
+    border: 2px solid rgba(255, 123, 216, 0.55);
+    background: rgba(20, 8, 40, 0.65);
+    color: #fff;
+    outline: none;
+    backdrop-filter: blur(6px);
+    box-shadow: 0 0 0 0 rgba(255, 123, 216, 0);
+    transition: box-shadow 0.25s ease, border-color 0.25s ease, transform 0.15s ease;
+    caret-color: #ff7bd8;
+  }
+  #wordInput::placeholder {
+    color: rgba(255, 255, 255, 0.35);
+    font-weight: 500;
+  }
+  #wordInput:focus {
+    border-color: #7be1ff;
+    box-shadow: 0 0 0 6px rgba(123, 225, 255, 0.18), 0 0 30px rgba(123, 225, 255, 0.35);
+  }
+
+  .counter {
+    margin-top: 10px;
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.55);
+    letter-spacing: 0.04em;
+  }
+  .counter.warn { color: #ffb14e; }
+  .counter.over { color: #ff5c7a; }
+
+  #sendBtn {
+    margin-top: 22px;
+    width: 100%;
+    padding: 20px;
+    font-size: clamp(18px, 5.5vw, 22px);
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    color: #0a0014;
+    background: linear-gradient(90deg, #ff7bd8, #7be1ff);
+    border: none;
+    border-radius: 999px;
+    cursor: pointer;
+    box-shadow: 0 8px 26px rgba(255, 123, 216, 0.4);
+    transition: transform 0.12s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+    touch-action: manipulation;
+  }
+  #sendBtn:active {
+    transform: scale(0.97);
+  }
+  #sendBtn:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+    box-shadow: none;
+  }
+
+  .status {
+    margin-top: 18px;
+    min-height: 26px;
+    font-size: 15px;
+    font-weight: 700;
+    transition: opacity 0.25s ease;
+  }
+  .status.ok { color: #7bffb0; text-shadow: 0 0 10px rgba(123, 255, 176, 0.6); }
+  .status.wait { color: #ffb14e; }
+  .status.err { color: #ff5c7a; }
+
+  footer {
+    position: relative;
+    z-index: 2;
+    margin-top: 34px;
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.35);
+    letter-spacing: 0.05em;
+    text-align: center;
+  }
+
+  /* 紙吹雪演出 */
+  .confetti-layer {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 5;
+  }
+  .confetti {
+    position: absolute;
+    top: -10vh;
+    font-size: 22px;
+    will-change: transform, opacity;
+    animation: fall linear forwards;
+  }
+  @keyframes fall {
+    0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(115vh) rotate(360deg); opacity: 0.9; }
+  }
+
+  @media (max-width: 340px) {
+    #wordInput { padding: 18px 14px; }
+  }
+</style>
+</head>
+<body>
+
+  <div class="bg-orb" style="width:180px;height:180px;top:8%;left:-40px;background:radial-gradient(circle,#ff7bd8,transparent 70%);"></div>
+  <div class="bg-orb" style="width:220px;height:220px;bottom:6%;right:-60px;background:radial-gradient(circle,#7be1ff,transparent 70%);animation-delay:2s;"></div>
+  <div class="bg-orb" style="width:140px;height:140px;top:55%;left:70%;background:radial-gradient(circle,#b98bff,transparent 70%);animation-delay:4s;"></div>
+
+  <div class="card">
+    <div class="logo">Kurichiland &times; ForgeCAD</div>
+    <h1>あなたの「ことば」を<br>会場のスクリーンへ</h1>
+    <div class="sub">思いついた言葉を送ると、スパイラルに飛び込みます</div>
+
+    <form id="sayForm" autocomplete="off">
+      <div class="input-wrap">
+        <input
+          id="wordInput"
+          type="text"
+          inputmode="text"
+          maxlength="20"
+          placeholder="ことばを入力…"
+          autocomplete="off"
+          autocorrect="off"
+          autocapitalize="off"
+          spellcheck="false"
+        >
+      </div>
+      <div class="counter" id="counter">0 / 20</div>
+      <button type="submit" id="sendBtn">送る 🚀</button>
+    </form>
+
+    <div class="status" id="statusMsg" role="status" aria-live="polite"></div>
+  </div>
+
+  <footer>ForgeCAD テキストスパイラル｜クリチランド</footer>
+
+  <div class="confetti-layer" id="confettiLayer"></div>
+
+<script>
+(function () {
+  "use strict";
+
+  var BRIDGE_PORT = 8788;
+  var MAX_LEN = 20;
+  var COOLDOWN_SEC = 3;
+
+  var form = document.getElementById("sayForm");
+  var input = document.getElementById("wordInput");
+  var counter = document.getElementById("counter");
+  var sendBtn = document.getElementById("sendBtn");
+  var statusMsg = document.getElementById("statusMsg");
+  var confettiLayer = document.getElementById("confettiLayer");
+
+  var cooldownTimer = null;
+  var cooldownRemaining = 0;
+
+  function bridgeUrl(path) {
+    var host = location.hostname || "localhost";
+    return "http://" + host + ":" + BRIDGE_PORT + path;
+  }
+
+  function updateCounter() {
+    var len = input.value.length;
+    counter.textContent = len + " / " + MAX_LEN;
+    counter.className = "counter" + (len >= MAX_LEN ? " over" : len >= MAX_LEN - 4 ? " warn" : "");
+  }
+
+  input.addEventListener("input", function () {
+    if (input.value.length > MAX_LEN) {
+      input.value = input.value.slice(0, MAX_LEN);
+    }
+    updateCounter();
+  });
+
+  function setStatus(text, kind) {
+    statusMsg.textContent = text || "";
+    statusMsg.className = "status" + (kind ? " " + kind : "");
+  }
+
+  function startCooldown(seconds) {
+    cooldownRemaining = seconds;
+    sendBtn.disabled = true;
+    tickCooldown();
+  }
+
+  function tickCooldown() {
+    if (cooldownRemaining <= 0) {
+      sendBtn.disabled = false;
+      sendBtn.textContent = "送る 🚀";
+      clearTimeout(cooldownTimer);
+      return;
+    }
+    sendBtn.textContent = "待ってね… " + cooldownRemaining + "s";
+    cooldownRemaining -= 1;
+    cooldownTimer = setTimeout(tickCooldown, 1000);
+  }
+
+  var CONFETTI_EMOJI = ["🎉", "✨", "🌈", "💫", "🎊", "⭐️", "💖"];
+
+  function launchConfetti() {
+    var count = 18;
+    for (var i = 0; i < count; i++) {
+      (function (i) {
+        var el = document.createElement("div");
+        el.className = "confetti";
+        el.textContent = CONFETTI_EMOJI[Math.floor(Math.random() * CONFETTI_EMOJI.length)];
+        var left = Math.random() * 100;
+        var duration = 1.6 + Math.random() * 1.4;
+        var delay = Math.random() * 0.4;
+        var size = 16 + Math.random() * 18;
+        el.style.left = left + "vw";
+        el.style.fontSize = size + "px";
+        el.style.animationDuration = duration + "s";
+        el.style.animationDelay = delay + "s";
+        confettiLayer.appendChild(el);
+        setTimeout(function () {
+          if (el.parentNode) el.parentNode.removeChild(el);
+        }, (duration + delay) * 1000 + 200);
+      })(i);
+    }
+  }
+
+  function sendWord(word) {
+    return fetch(bridgeUrl("/say"), {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ word: word })
+    }).then(function (res) {
+      return res.json().catch(function () { return {}; }).then(function (data) {
+        return { status: res.status, data: data };
+      });
+    });
+  }
+
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    var word = input.value.trim();
+    if (!word) {
+      setStatus("ことばを入力してね", "err");
+      input.focus();
+      return;
+    }
+    if (word.length > MAX_LEN) {
+      word = word.slice(0, MAX_LEN);
+    }
+
+    sendBtn.disabled = true;
+    setStatus("送信中…", "");
+
+    sendWord(word)
+      .then(function (result) {
+        if (result.status === 200 && result.data && result.data.ok) {
+          setStatus("スクリーンを見てね！ ✨", "ok");
+          launchConfetti();
+          input.value = "";
+          updateCounter();
+          startCooldown(COOLDOWN_SEC);
+        } else if (result.status === 429) {
+          setStatus((result.data && result.data.error) || "ちょっと待ってね⏳", "wait");
+          startCooldown(COOLDOWN_SEC);
+        } else {
+          setStatus((result.data && result.data.error) || "送信に失敗しました。もう一度お試しください", "err");
+          sendBtn.disabled = false;
+        }
+      })
+      .catch(function () {
+        setStatus("通信エラー。会場Wi-Fiを確認してね", "err");
+        sendBtn.disabled = false;
+      });
+  });
+
+  updateCounter();
+})();
+</script>
+
+</body>
+</html>

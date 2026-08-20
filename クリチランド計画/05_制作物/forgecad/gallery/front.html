@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex,nofollow">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>クリチランド ｜ 正面イメージ（Codexプロンプト＋生成画像）</title>
+<style>
+  :root{ --red:#E3261D; --yellow:#FFC20E; --ink:#241f1a; --paper:#fbf7ee; }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Hiragino Sans",sans-serif;padding:20px 22px 60px}
+  h1{font-size:20px;margin:0 0 4px} h1 b{color:var(--red)}
+  .sub{font-size:12.5px;color:#5a5048;margin:0 0 16px;line-height:1.7}
+  h2{font-size:15px;margin:26px 0 8px;border-left:5px solid var(--red);padding-left:9px}
+  /* 画像グリッド */
+  #imgs{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:14px}
+  .shot{background:#fff;border:2px solid var(--ink);border-radius:14px;overflow:hidden;box-shadow:5px 5px 0 rgba(36,31,26,.10)}
+  .shot img{width:100%;display:block;cursor:zoom-in}
+  .shot .cap{font-size:11.5px;font-weight:800;padding:7px 10px}
+  #noimg{font-size:12.5px;background:#fff;border:1.5px dashed #c9bfa8;border-radius:12px;padding:14px 16px;line-height:1.8}
+  #noimg code{background:#f1eee6;padding:1px 6px;border-radius:5px;font-size:11.5px}
+  /* プロンプト */
+  #md{white-space:pre-wrap;font-size:12px;line-height:1.75;background:#fff;border:2px solid var(--ink);border-radius:14px;padding:16px;box-shadow:5px 5px 0 rgba(36,31,26,.10);max-height:520px;overflow:auto}
+  .btn{cursor:pointer;border:none;border-radius:999px;padding:8px 16px;font-weight:900;font-size:12px;background:var(--red);color:#fff;margin:8px 8px 0 0}
+  /* ライトボックス */
+  #lb{position:fixed;inset:0;background:rgba(20,16,12,.9);display:none;align-items:center;justify-content:center;z-index:50;cursor:zoom-out}
+  #lb.show{display:flex} #lb img{max-width:96vw;max-height:94vh;border-radius:8px}
+</style>
+</head>
+<body>
+<h1>正面イメージ <b>（案E サーカス×ダイナー）</b></h1>
+<p class="sub">Codexで最適化した画像生成プロンプトと、それで生成した正面イメージ。<br>
+生成した画像は <b>kurichiland-forge/images/</b> に <code>front-day.png</code>（昼）・<code>front-night.png</code>（夜）・<code>front-1.png〜front-6.png</code>（追加案）の名前で保存すると、ここに自動で並びます。</p>
+
+<h2>生成画像</h2>
+<div id="imgs"></div>
+<div id="noimg" style="display:none">まだ画像がありません。下のプロンプトを Midjourney / ChatGPT(画像生成) に貼って生成 → 画像を <code>kurichiland-forge/images/front-day.png</code> 等の名前で保存 → このページをリロードしてください。</div>
+
+<h2>Codex最適化プロンプト</h2>
+<button class="btn" id="copyBtn">プロンプト全文をコピー</button>
+<div id="md">読み込み中…</div>
+
+<div id="lb" onclick="this.classList.remove('show')"><img id="lbImg"></div>
+
+<script>
+// ---- 画像（固定ファイル名を試し、存在するものだけ表示） ----
+const SLOTS = [
+  ['images/front-day.png','昼景'], ['images/front-night.png','夜景'],
+  ['images/front-1.png','案1'], ['images/front-2.png','案2'], ['images/front-3.png','案3'],
+  ['images/front-4.png','案4'], ['images/front-5.png','案5'], ['images/front-6.png','案6'],
+];
+const grid = document.getElementById('imgs');
+let shown = 0, tried = 0;
+SLOTS.forEach(([src,cap])=>{
+  const probe = new Image();
+  probe.onload = ()=>{
+    shown++;
+    const d=document.createElement('div'); d.className='shot';
+    d.innerHTML = '<img src="'+src+'?t='+Date.now()+'"><div class="cap">'+cap+'</div>';
+    d.querySelector('img').onclick=()=>{ document.getElementById('lbImg').src=src; document.getElementById('lb').classList.add('show'); };
+    grid.appendChild(d);
+    done();
+  };
+  probe.onerror = done;
+  probe.src = src + '?t=' + Date.now();
+  function done(){ tried++; if(tried===SLOTS.length && shown===0) document.getElementById('noimg').style.display='block'; }
+});
+
+// ---- プロンプトmd読み込み ----
+const MD_URL = encodeURI('/クリチランド計画/05_制作物/正面イメージ_プロンプト_codex.md');
+let mdText = '';
+fetch(MD_URL + '?t=' + Date.now()).then(r=>{
+  if(!r.ok) throw 0; return r.text();
+}).then(t=>{ mdText=t; document.getElementById('md').textContent=t; })
+.catch(()=>{ document.getElementById('md').textContent='プロンプト文書がまだありません（Codex処理中か、未保存）。パス: クリチランド計画/05_制作物/正面イメージ_プロンプト_codex.md'; });
+document.getElementById('copyBtn').onclick=async()=>{
+  try{ await navigator.clipboard.writeText(mdText||''); document.getElementById('copyBtn').textContent='コピーしました ✓'; }
+  catch(e){ document.getElementById('copyBtn').textContent='コピー失敗（手動で選択してください）'; }
+  setTimeout(()=>document.getElementById('copyBtn').textContent='プロンプト全文をコピー',2000);
+};
+</script>
+</body>
+</html>
