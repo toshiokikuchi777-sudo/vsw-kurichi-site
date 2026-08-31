@@ -60,6 +60,11 @@
     font-size:17px;line-height:2;letter-spacing:.04em;
     color:rgba(255,255,255,.9);margin:0 0 40px;
   }
+  .kdb-hero-movie{
+    max-width:720px;margin:0 auto 36px;border-radius:24px;overflow:hidden;background:#0f0f1a;
+    box-shadow:0 40px 80px -20px rgba(0,0,0,.7),0 0 0 1px rgba(255,255,255,.08);
+  }
+  .kdb-hero-movie video{width:100%;height:auto;display:block}
   .kdb-cta{
     display:inline-flex;align-items:center;gap:10px;
     background:var(--tomato);color:#fff!important;text-decoration:none;
@@ -118,13 +123,6 @@
     background:var(--tomato);color:#fff;font-family:"Playfair Display",serif;font-weight:900;font-size:22px;
   }
   .kdb-step p{font-size:14px;line-height:1.8;color:#3a3026;margin:0}
-
-  /* TRAILER */
-  .kdb-trailer{
-    max-width:1000px;margin:0 auto;border-radius:20px;overflow:hidden;background:#0f0f1a;
-    box-shadow:0 30px 60px -18px rgba(0,0,0,.6),0 0 0 1px rgba(255,255,255,.08);
-  }
-  .kdb-trailer video{width:100%;height:auto;display:block}
 
   /* GAMEPLAY */
   .kdb-videos{display:grid;grid-template-columns:1fr 1fr;gap:28px;max-width:1000px;margin:0 auto}
@@ -254,26 +252,15 @@
     <div class="kdb-hero-inner">
       <div class="kdb-badge">🎮 ROBLOX</div>
       <h1>Kurichi Thief</h1>
+      <div class="kdb-hero-movie">
+        <video src="../../../assets/kurichi-dorobou/trailer.mp4" poster="../../../assets/kurichi-dorobou/key-art.webp" autoplay muted loop playsinline controls preload="metadata"></video>
+      </div>
       <p class="kdb-hero-desc">
         潜入只在夜里醒来的点心之城「Kurichiland」！<br>你是甜食小偷——集齐五种「口味」，从发光的拱门逃出去！
       </p>
       <a href="https://www.roblox.com/ja/games/78000285047137/" target="_blank" rel="noopener" class="kdb-cta">
         在 Roblox 上游玩 <span class="arrow">→</span>
       </a>
-    </div>
-  </section>
-
-  <!-- TRAILER -->
-  <section class="kdb-section kdb-section-dark">
-    <div class="container">
-      <div class="kdb-section-header kdb-reveal">
-        <span class="kdb-tag cream">🎬 TRAILER</span>
-        <h2 class="kdb-title">30秒<em>预告片</em></h2>
-      </div>
-      <figure class="kdb-trailer kdb-video-card kdb-reveal" style="max-width:1000px">
-        <video src="../../../assets/kurichi-dorobou/trailer.mp4" poster="../../../assets/kurichi-dorobou/key-art.webp" controls playsinline preload="metadata"></video>
-        <figcaption>有声音哦！点 ▶ 看30秒的深夜捉迷藏！</figcaption>
-      </figure>
     </div>
   </section>
 
