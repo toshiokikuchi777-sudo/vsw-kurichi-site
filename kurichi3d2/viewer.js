@@ -149,16 +149,13 @@ async function start() {
   const rowHeight = outerH / 3;
   const rowCenters = [rowHeight, 0, -rowHeight];
   const uHeight = rowHeight;
-  const armLength = outerW / 2;
   rowCenters.forEach((y, index) => {
     const top = y + uHeight / 2 - rail / 2;
     const bottom = y - uHeight / 2 + rail / 2;
     addBox('frame', `左反転コの字 ${index + 1} 縦`, -outerW / 2, y, 0, rail, uHeight, 8, -42, (1 - index) * 28, 85);
-    addBox('frame', `左反転コの字 ${index + 1} 上`, -outerW / 2 + armLength / 2, top, 0, armLength, rail, 8, -18, (1 - index) * 28, 85);
-    addBox('frame', `左反転コの字 ${index + 1} 下`, -outerW / 2 + armLength / 2, bottom, 0, armLength, rail, 8, -18, (1 - index) * 28, 85);
     addBox('frame', `右コの字 ${index + 1} 縦`, outerW / 2, y, 0, rail, uHeight, 8, 42, (1 - index) * 28, 85);
-    addBox('frame', `右コの字 ${index + 1} 上`, outerW / 2 - armLength / 2, top, 0, armLength, rail, 8, 18, (1 - index) * 28, 85);
-    addBox('frame', `右コの字 ${index + 1} 下`, outerW / 2 - armLength / 2, bottom, 0, armLength, rail, 8, 18, (1 - index) * 28, 85);
+    addBox('frame', `横棒 ${index + 1} 上`, 0, top, 0, outerW, rail, 8, 0, (1 - index) * 28, 85);
+    addBox('frame', `横棒 ${index + 1} 下`, 0, bottom, 0, outerW, rail, 8, 0, (1 - index) * 28, 85);
   });
 
   rowY.forEach((y, rowIndex) => {
