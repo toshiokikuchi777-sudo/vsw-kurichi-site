@@ -163,7 +163,6 @@ async function start() {
       const product = productNames[(rowIndex * columns + col) % productNames.length];
       const x = -outerW / 2 + colW / 2 + col * colW;
       addPlate('label', `商品札 ${rowIndex + 1}-${col + 1}`, x, y, 7, 75, 23, 4, product, { font: '800 44px sans-serif', lineGap: 48 }, (col - 2) * 18, (1 - rowIndex) * 30, 130);
-      addPlate('price', `価格 ${rowIndex + 1}-${col + 1}`, x + 23, y - 35, 11, 38, 22, 3, ['¥' + priceSelect.value], { font: '800 72px sans-serif', width: 420, height: 180 }, (col - 2) * 18, (1 - rowIndex) * 30, 150);
     }
   });
 
@@ -175,6 +174,11 @@ async function start() {
       width: 620,
       height: 180
     }, (index - 2.5) * 12, 35, 145);
+    addPlate('price', `価格 ${category.label}`, category.x + 28, category.y - 27, 17, 38, 22, 3, ['¥' + priceSelect.value], {
+      font: '800 72px sans-serif',
+      width: 420,
+      height: 180
+    }, (index - 2.5) * 12, 18, 155);
   });
 
   addBox('connector', '縦仕切りなし確認用ベース', 0, 0, -7, outerW - 18, outerH - 18, 3, 0, 0, -45, shadow);

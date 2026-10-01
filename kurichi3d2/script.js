@@ -1,6 +1,6 @@
 'use strict';
 
-const planImage = '09_five_column_plan.svg?v=20261001-full-rails';
+const planImage = '09_five_column_plan.svg?v=20261001-category-price';
 const views = {
   overview: {
     image: planImage,
@@ -39,10 +39,10 @@ const views = {
   },
   price: {
     image: planImage,
-    caption: '価格札 / 各列に配置',
-    alt: '5列の商品札それぞれに価格札を配置した図',
-    title: '価格は各商品列の下に置く。',
-    copy: '写真の売場に合わせ、価格札は商品札の近くに配置します。Ver.2のモックでは¥550を初期表示にし、必要に応じて¥600へ切り替えられる想定です。'
+    caption: '価格札 / カテゴリー札の下に配置',
+    alt: 'カテゴリー札それぞれの下に価格札を配置した図',
+    title: '価格は前の設計と同じく、カテゴリー札の下に置く。',
+    copy: '価格札は商品札ごとではなく、前の設計と同じようにカテゴリー札の下へ配置します。Ver.2のモックでは¥550を初期表示にし、必要に応じて¥600へ切り替えられる想定です。'
   },
   keeper: {
     image: planImage,
