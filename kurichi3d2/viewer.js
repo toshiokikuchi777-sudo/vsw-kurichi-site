@@ -117,12 +117,12 @@ async function start() {
     return face;
   };
 
-  const outerW = 500;
+  const outerW = 470;
   const outerH = 458;
-  const rail = 9;
+  const rail = 15;
   const columns = 5;
   const colW = outerW / columns;
-  const rowY = [120, -28, -176];
+  const rowY = [108, -44, -196];
   const productNames = [
     ['NY', '#クリチ'],
     ['抹茶', 'あんこ'],
@@ -133,22 +133,22 @@ async function start() {
     ['米粉', '#クリチ']
   ];
   const categories = [
-    { label: 'クラシック', x: -166, y: 202, accent: false },
+    { label: 'クラシック', x: -156, y: 196, accent: false },
     { label: 'クラシック', x: 0, y: 202, accent: false },
-    { label: 'クラシック', x: 166, y: 202, accent: false },
-    { label: 'ふわもち', x: -166, y: 58, accent: false },
-    { label: 'ふわもち', x: 0, y: 58, accent: false },
-    { label: 'ふわもち', x: 166, y: 58, accent: false },
-    { label: 'ウーピー', x: -166, y: -94, accent: false },
-    { label: 'ウーピー', x: 0, y: -94, accent: false },
-    { label: 'ウーピー', x: 166, y: -94, accent: false },
-    { label: '限定', x: -62, y: -214, accent: false },
-    { label: '米粉', x: 62, y: -214, accent: true }
+    { label: 'クラシック', x: 156, y: 196, accent: false },
+    { label: 'ふわもち', x: -156, y: 44, accent: false },
+    { label: 'ふわもち', x: 0, y: 44, accent: false },
+    { label: 'ふわもち', x: 156, y: 44, accent: false },
+    { label: 'ウーピー', x: -156, y: -108, accent: false },
+    { label: 'ウーピー', x: 0, y: -108, accent: false },
+    { label: 'ウーピー', x: 156, y: -108, accent: false },
+    { label: '限定', x: -52, y: -214, accent: false },
+    { label: '米粉', x: 52, y: -214, accent: true }
   ];
 
-  const rowCenters = [152, 0, -152];
-  const uHeight = 124;
-  const armLength = 232;
+  const rowCenters = [152.667, 0, -152.667];
+  const uHeight = 122.667;
+  const armLength = 220;
   rowCenters.forEach((y, index) => {
     const top = y + uHeight / 2;
     const bottom = y - uHeight / 2;
@@ -164,13 +164,13 @@ async function start() {
     for (let col = 0; col < columns; col++) {
       const product = productNames[(rowIndex * columns + col) % productNames.length];
       const x = -outerW / 2 + colW / 2 + col * colW;
-      addPlate('label', `商品札 ${rowIndex + 1}-${col + 1}`, x, y, 7, 78, 48, 4, product, { font: '800 50px sans-serif', lineGap: 54 }, (col - 2) * 18, (1 - rowIndex) * 30, 130);
+      addPlate('label', `商品札 ${rowIndex + 1}-${col + 1}`, x, y, 7, 75, 23, 4, product, { font: '800 44px sans-serif', lineGap: 48 }, (col - 2) * 18, (1 - rowIndex) * 30, 130);
       addPlate('price', `価格 ${rowIndex + 1}-${col + 1}`, x + 23, y - 35, 11, 38, 22, 3, ['¥' + priceSelect.value], { font: '800 72px sans-serif', width: 420, height: 180 }, (col - 2) * 18, (1 - rowIndex) * 30, 150);
     }
   });
 
   categories.forEach((category, index) => {
-    addPlate('bar', `カテゴリー ${category.label}`, category.x, category.y, 13, 124, 25, 4, [category.label], {
+    addPlate('bar', `カテゴリー ${category.label}`, category.x, category.y, 13, 100, 28, 4, [category.label], {
       background: category.accent ? '#f7f2d0' : '#ffffff',
       border: '#d9232e',
       font: '800 52px sans-serif',
@@ -257,7 +257,7 @@ async function start() {
   });
 
   [...buttons, ...toggles, reset, explode, priceSelect].forEach(el => { el.disabled = false; });
-  status.textContent = `${meshes.length}パーツ / 左右コの字パーツ各3個・縦仕切りなし`;
+  status.textContent = `${meshes.length}パーツ / 470×458mm基準・左右コの字各3個`;
   status.dataset.ready = 'true';
   canvas.dataset.ready = 'true';
   canvas.dataset.partCount = String(meshes.length);
