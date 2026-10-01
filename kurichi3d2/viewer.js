@@ -146,12 +146,13 @@ async function start() {
     { label: '米粉', x: 52, y: -214, accent: true }
   ];
 
-  const rowCenters = [152.667, 0, -152.667];
-  const uHeight = 122.667;
+  const rowHeight = outerH / 3;
+  const rowCenters = [rowHeight, 0, -rowHeight];
+  const uHeight = rowHeight;
   const armLength = 220;
   rowCenters.forEach((y, index) => {
-    const top = y + uHeight / 2;
-    const bottom = y - uHeight / 2;
+    const top = y + uHeight / 2 - rail / 2;
+    const bottom = y - uHeight / 2 + rail / 2;
     addBox('frame', `左反転コの字 ${index + 1} 縦`, -outerW / 2, y, 0, rail, uHeight, 8, -42, (1 - index) * 28, 85);
     addBox('frame', `左反転コの字 ${index + 1} 上`, -outerW / 2 + armLength / 2, top, 0, armLength, rail, 8, -18, (1 - index) * 28, 85);
     addBox('frame', `左反転コの字 ${index + 1} 下`, -outerW / 2 + armLength / 2, bottom, 0, armLength, rail, 8, -18, (1 - index) * 28, 85);
