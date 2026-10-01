@@ -1,6 +1,6 @@
 'use strict';
 
-const planImage = '09_five_column_plan.svg';
+const planImage = '09_five_column_plan.svg?v=20261001-full-rails';
 const views = {
   overview: {
     image: planImage,
