@@ -149,7 +149,7 @@ async function start() {
   const rowHeight = outerH / 3;
   const rowCenters = [rowHeight, 0, -rowHeight];
   const uHeight = rowHeight;
-  const armLength = 220;
+  const armLength = outerW / 2;
   rowCenters.forEach((y, index) => {
     const top = y + uHeight / 2 - rail / 2;
     const bottom = y - uHeight / 2 + rail / 2;

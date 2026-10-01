@@ -15,23 +15,23 @@
     <rect x="0" y="0" width="470" height="458" fill="#f7faf8" stroke="#d9ddd9" stroke-width="0.35"/>
     <g fill="#d9232e">
       <rect x="0" y="0" width="15" height="152.667"/>
-      <rect x="0" y="0" width="220" height="15"/>
-      <rect x="0" y="137.667" width="220" height="15"/>
+      <rect x="0" y="0" width="235" height="15"/>
+      <rect x="0" y="137.667" width="235" height="15"/>
       <rect x="0" y="152.667" width="15" height="152.667"/>
-      <rect x="0" y="152.667" width="220" height="15"/>
-      <rect x="0" y="290.334" width="220" height="15"/>
+      <rect x="0" y="152.667" width="235" height="15"/>
+      <rect x="0" y="290.334" width="235" height="15"/>
       <rect x="0" y="305.334" width="15" height="152.666"/>
-      <rect x="0" y="305.334" width="220" height="15"/>
-      <rect x="0" y="443" width="220" height="15"/>
+      <rect x="0" y="305.334" width="235" height="15"/>
+      <rect x="0" y="443" width="235" height="15"/>
       <rect x="455" y="0" width="15" height="152.667"/>
-      <rect x="250" y="0" width="220" height="15"/>
-      <rect x="250" y="137.667" width="220" height="15"/>
+      <rect x="235" y="0" width="235" height="15"/>
+      <rect x="235" y="137.667" width="235" height="15"/>
       <rect x="455" y="152.667" width="15" height="152.667"/>
-      <rect x="250" y="152.667" width="220" height="15"/>
-      <rect x="250" y="290.334" width="220" height="15"/>
+      <rect x="235" y="152.667" width="235" height="15"/>
+      <rect x="235" y="290.334" width="235" height="15"/>
       <rect x="455" y="305.334" width="15" height="152.666"/>
-      <rect x="250" y="305.334" width="220" height="15"/>
-      <rect x="250" y="443" width="220" height="15"/>
+      <rect x="235" y="305.334" width="235" height="15"/>
+      <rect x="235" y="443" width="235" height="15"/>
     </g>
 
     <g stroke="#d9232e" stroke-width="0.4" stroke-dasharray="2 2" fill="none">
