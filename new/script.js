@@ -26,7 +26,9 @@ const flavors = {
   plain: { name: 'PLAIN', image: 'assets/plain.webp', alt: 'プレーンのWoopee #kurichi', description: 'クリームチーズのコクを、まっすぐ楽しむ。まずはここから、王道のひとくち。', index: '01' },
   lemon: { name: 'LEMON', image: 'assets/lemon.webp', alt: 'レモンのWoopee #kurichi', description: 'レモンの爽やかさで、後味まで軽やか。気分を切り替えたい日に。', index: '02' },
   cranberry: { name: 'CRANBERRY NUTS', image: 'assets/cranberry.webp', alt: 'クランベリーナッツのWoopee #kurichi', description: '果実の甘酸っぱさと、クルミの食感。ちょっと欲張りな組み合わせ。', index: '03' },
-  rumraisin: { name: 'RUM RAISIN', image: 'assets/rumraisin.webp', alt: 'ラムレーズンのWoopee #kurichi', description: 'ラムレーズンの風味が広がる、ゆっくり味わいたいひとくち。', index: '04' }
+  rumraisin: { name: 'RUM RAISIN', image: 'assets/rumraisin.webp', alt: 'ラムレーズンのWoopee #kurichi', description: 'ラムレーズンの風味が広がる、ゆっくり味わいたいひとくち。', index: '04' },
+  chocolate: { name: 'CHOCOLATE', image: 'assets/chocolate.webp', alt: 'チョコのWoopee #kurichi', description: 'チョコのコクと、クリームチーズのなめらかさ。甘いひとときを、ひとくちに。', index: '05' },
+  strawberry: { name: 'STRAWBERRY', image: 'assets/strawberry.webp', alt: 'いちごのWoopee #kurichi', description: 'いちごの甘酸っぱさと、クリームチーズのまろやかさ。やさしいピンクのひとくち。', index: '06' }
 };
 
 const flavorSection = document.querySelector('.flavors');
@@ -53,7 +55,7 @@ function selectFlavor(tab, focus = false) {
   flavorImage.alt = flavor.alt;
   flavorName.textContent = flavor.name;
   flavorDescription.textContent = flavor.description;
-  flavorIndex.textContent = `${flavor.index} / 04`;
+  flavorIndex.textContent = `${flavor.index} / ${String(Object.keys(flavors).length).padStart(2, '0')}`;
   flavorOverline.textContent = `YOUR CURRENT CRAVING / ${flavor.index}`;
   if (focus) tab.focus();
 }
