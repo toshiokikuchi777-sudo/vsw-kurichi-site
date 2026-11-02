@@ -1494,3 +1494,6 @@ h1,h2,h3 {
   .battle-feature-checker { margin-top:26px }
   .battle-feature-media { max-width:340px }
 }
+
+.hero-sticker-link { margin-top:18px; gap:12px; max-width:100% }
+.hero-sticker-link:hover { gap:16px }
