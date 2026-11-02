@@ -1505,26 +1505,13 @@ h1,h2,h3 {
 .hero-sticker-link:hover { gap:16px }
 
 /* Sticker collection banner */
-.sticker-banner-art {
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  min-width:0;
-  padding:clamp(26px,5vw,60px) clamp(18px,4vw,48px);
-  background:linear-gradient(130deg,#e6e4e7 0%,#fff7df 22%,#d7e7e8 48%,#f1dce3 72%,#ecece7 100%);
-}
-.crew-feature .sticker-card {
+.crew-feature .sticker-banner-image {
   display:block;
-  width:32%;
+  width:100%;
   height:auto;
   max-height:none;
   align-self:center;
-  object-fit:contain;
-  box-shadow:0 10px 22px rgba(33,29,25,.22);
 }
-.crew-feature .sticker-card:first-child { transform:rotate(-7deg) translateY(8%); }
-.crew-feature .sticker-card:nth-child(2) { position:relative; z-index:1; transform:translateY(-5%); }
-.crew-feature .sticker-card:last-child { transform:rotate(7deg) translateY(8%); }
 @media(max-width:760px) {
-  .sticker-banner-art { margin-top:24px; padding:38px 22px; }
+  .crew-feature .sticker-banner-image { margin-top:24px; }
 }
