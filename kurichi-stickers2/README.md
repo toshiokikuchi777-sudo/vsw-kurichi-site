@@ -27,3 +27,7 @@ Filter by borough; the dialog's previous/next controls wrap inside the active fi
 ## Validation
 
 JavaScript syntax and local asset references checked. Browser QA at desktop and 390px mobile covered borough filters, front/back switching, previous/next wrapping, related characters, and dialog scroll reset. Print-production assets and white masks are delivered separately under `output/imagegen/ny-cyber-kurichi-final-20261118/`; they are not part of the public website.
+
+## Artwork update: 2.2-head version
+
+All11 front/back portraits and hero characters use the approved approximately2.2-head proportions. The isolated lower-left Whoopie Kurichi product is now placed beside the front name on its right; it is included in the name print layer and matching white mask. Cache-version query:2p2-20261118. Print data: `output/imagegen/ny-cyber-kurichi-2p2-final-20261118/`.
