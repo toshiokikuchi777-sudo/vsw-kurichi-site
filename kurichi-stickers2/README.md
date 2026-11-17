@@ -1,0 +1,29 @@
+# NY KURICHI STICKER COLLECTION
+
+Static page for `https://vsw.co.jp/kurichi-stickers2/`. Open `index.html` through a local HTTP server or serve this directory at `/kurichi-stickers2/`.
+
+## Content
+
+- `assets/characters.json` is the editable character data. `assets/characters.js` exposes the same array to the static page as `window.NY_CHARACTERS`; keep them in sync when editing.
+- The HTML contains an 11-person `<noscript>` profile fallback. Update it when character copy changes.
+- The 11 profiles are based on `output/ny-cyber-kurichi-character-settings-20261117/character-bible.json`.
+- The product image and favicon are reused from the existing `../kurichi-stickers/assets/` directory.
+
+## Artwork paths
+
+The final illustrated assets are included at these paths:
+
+- `assets/hero-city.webp`
+- `assets/01-character.webp` through `assets/11-character.webp` (the hero uses 01, 11, and 04)
+- `assets/stickers/01-front.webp`, `01-back.webp`, `01-thumb.webp` through the corresponding `11-*.webp`
+- `assets/og-image.jpg` (1200 × 630)
+
+Sticker cards and the dialog retain a typographic fallback for image-loading failures. The collection uses the large front image; thumbs remain available for future responsive variants.
+
+## Behavior
+
+Filter by borough; the dialog's previous/next controls wrap inside the active filter. Related-character links open that person, resetting the filter if needed. Escape closes the native dialog; arrow keys move between people. Reduced-motion settings disable transitions.
+
+## Validation
+
+JavaScript syntax and local asset references checked. Browser QA at desktop and 390px mobile covered borough filters, front/back switching, previous/next wrapping, related characters, and dialog scroll reset. Print-production assets and white masks are delivered separately under `output/imagegen/ny-cyber-kurichi-final-20261118/`; they are not part of the public website.
