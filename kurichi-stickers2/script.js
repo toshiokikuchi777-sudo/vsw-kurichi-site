@@ -64,6 +64,7 @@
     document.querySelector('#dialog-role').textContent = person.role;
     document.querySelector('#dialog-neighborhood').textContent = `${person.neighborhood} / ${boroughJa[person.borough]}`;
     document.querySelector('#dialog-hobby').textContent = person.hobby;
+    document.querySelector('#dialog-favorite-kurichi').textContent = person.favorite_kurichi;
     document.querySelector('#dialog-personality').textContent = person.personality;
     document.querySelector('#dialog-story').textContent = person.back_text;
     document.querySelectorAll('[data-face]').forEach(button => button.setAttribute('aria-pressed', String(button.dataset.face === face)));

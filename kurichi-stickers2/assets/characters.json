@@ -22,9 +22,10 @@
     "neighborhood": "ソーホー",
     "neighborhoodEn": "SoHo",
     "front": "assets/stickers/01-front.webp?v=2p2-20261118",
-    "back": "assets/stickers/01-back.webp?v=2p2-20261118",
+    "back": "assets/stickers/01-back.webp?v=favorites-20261118",
     "thumb": "assets/stickers/01-thumb.webp",
-    "character": "assets/01-character.webp"
+    "character": "assets/01-character.webp",
+    "favorite_kurichi": "いちご"
   },
   {
     "id": "02",
@@ -49,9 +50,10 @@
     "neighborhood": "ローワー・イースト・サイド",
     "neighborhoodEn": "Lower East Side",
     "front": "assets/stickers/02-front.webp?v=2p2-20261118",
-    "back": "assets/stickers/02-back.webp?v=2p2-20261118",
+    "back": "assets/stickers/02-back.webp?v=favorites-20261118",
     "thumb": "assets/stickers/02-thumb.webp",
-    "character": "assets/02-character.webp"
+    "character": "assets/02-character.webp",
+    "favorite_kurichi": "チョコ"
   },
   {
     "id": "03",
@@ -76,9 +78,10 @@
     "neighborhood": "ハーレム",
     "neighborhoodEn": "Harlem",
     "front": "assets/stickers/03-front.webp?v=2p2-20261118",
-    "back": "assets/stickers/03-back.webp?v=2p2-20261118",
+    "back": "assets/stickers/03-back.webp?v=favorites-20261118",
     "thumb": "assets/stickers/03-thumb.webp",
-    "character": "assets/03-character.webp"
+    "character": "assets/03-character.webp",
+    "favorite_kurichi": "レモンピール"
   },
   {
     "id": "04",
@@ -99,9 +102,10 @@
     "neighborhood": "アストリア",
     "neighborhoodEn": "Astoria",
     "front": "assets/stickers/04-front.webp?v=2p2-20261118",
-    "back": "assets/stickers/04-back.webp?v=2p2-20261118",
+    "back": "assets/stickers/04-back.webp?v=favorites-20261118",
     "thumb": "assets/stickers/04-thumb.webp",
-    "character": "assets/04-character.webp"
+    "character": "assets/04-character.webp",
+    "favorite_kurichi": "抹茶"
   },
   {
     "id": "05",
@@ -122,9 +126,10 @@
     "neighborhood": "イースト・ヴィレッジ",
     "neighborhoodEn": "East Village",
     "front": "assets/stickers/05-front.webp?v=2p2-20261118",
-    "back": "assets/stickers/05-back.webp?v=2p2-20261118",
+    "back": "assets/stickers/05-back.webp?v=favorites-20261118",
     "thumb": "assets/stickers/05-thumb.webp",
-    "character": "assets/05-character.webp"
+    "character": "assets/05-character.webp",
+    "favorite_kurichi": "ラムレーズン"
   },
   {
     "id": "06",
@@ -149,9 +154,10 @@
     "neighborhood": "グリニッジ・ヴィレッジ",
     "neighborhoodEn": "Greenwich Village",
     "front": "assets/stickers/06-front.webp?v=2p2-20261118",
-    "back": "assets/stickers/06-back.webp?v=2p2-20261118",
+    "back": "assets/stickers/06-back.webp?v=favorites-20261118",
     "thumb": "assets/stickers/06-thumb.webp",
-    "character": "assets/06-character.webp"
+    "character": "assets/06-character.webp",
+    "favorite_kurichi": "クランベリーナッツ"
   },
   {
     "id": "07",
@@ -176,9 +182,10 @@
     "neighborhood": "ロングアイランドシティ",
     "neighborhoodEn": "Long Island City",
     "front": "assets/stickers/07-front.webp?v=2p2-20261118",
-    "back": "assets/stickers/07-back.webp?v=2p2-20261118",
+    "back": "assets/stickers/07-back.webp?v=favorites-20261118",
     "thumb": "assets/stickers/07-thumb.webp",
-    "character": "assets/07-character.webp"
+    "character": "assets/07-character.webp",
+    "favorite_kurichi": "抹茶"
   },
   {
     "id": "08",
@@ -203,9 +210,10 @@
     "neighborhood": "パークスロープ",
     "neighborhoodEn": "Park Slope",
     "front": "assets/stickers/08-front.webp?v=2p2-20261118",
-    "back": "assets/stickers/08-back.webp?v=2p2-20261118",
+    "back": "assets/stickers/08-back.webp?v=favorites-20261118",
     "thumb": "assets/stickers/08-thumb.webp",
-    "character": "assets/08-character.webp"
+    "character": "assets/08-character.webp",
+    "favorite_kurichi": "いちご"
   },
   {
     "id": "09",
@@ -226,9 +234,10 @@
     "neighborhood": "アッパー・ウエスト・サイド",
     "neighborhoodEn": "Upper West Side",
     "front": "assets/stickers/09-front.webp?v=2p2-20261118",
-    "back": "assets/stickers/09-back.webp?v=2p2-20261118",
+    "back": "assets/stickers/09-back.webp?v=favorites-20261118",
     "thumb": "assets/stickers/09-thumb.webp",
-    "character": "assets/09-character.webp"
+    "character": "assets/09-character.webp",
+    "favorite_kurichi": "レモンピール"
   },
   {
     "id": "10",
@@ -253,9 +262,10 @@
     "neighborhood": "ウィリアムズバーグ",
     "neighborhoodEn": "Williamsburg",
     "front": "assets/stickers/10-front.webp?v=2p2-20261118",
-    "back": "assets/stickers/10-back.webp?v=2p2-20261118",
+    "back": "assets/stickers/10-back.webp?v=favorites-20261118",
     "thumb": "assets/stickers/10-thumb.webp",
-    "character": "assets/10-character.webp"
+    "character": "assets/10-character.webp",
+    "favorite_kurichi": "チョコ"
   },
   {
     "id": "11",
@@ -280,8 +290,9 @@
     "neighborhood": "チェルシー",
     "neighborhoodEn": "Chelsea",
     "front": "assets/stickers/11-front.webp?v=2p2-20261118",
-    "back": "assets/stickers/11-back.webp?v=2p2-20261118",
+    "back": "assets/stickers/11-back.webp?v=favorites-20261118",
     "thumb": "assets/stickers/11-thumb.webp",
-    "character": "assets/11-character.webp"
+    "character": "assets/11-character.webp",
+    "favorite_kurichi": "プレーン"
   }
 ]
