@@ -35,3 +35,7 @@ All11 front/back portraits and hero characters use the approved approximately2.2
 ## Favorite Kurichi field
 
 Each character includes `favorite_kurichi`, matching the product depicted beside the front name. It is shown on the physical reverse, dialog profile, and no-script profile. Updated reverse artwork version: `favorites-20261118`.
+
+## Front title design
+
+The front title is `NYクリチ` plus the existing character name, stored as `front_title`. Headers use bold outlined lettering and a gold plate; the favorite-flavor product remains to the right. Character portraits and printed backs are unchanged. Front/thumb/OG cache version: `ny-title-20261118`.

@@ -21,11 +21,12 @@
     "borough": "Manhattan",
     "neighborhood": "ソーホー",
     "neighborhoodEn": "SoHo",
-    "front": "assets/stickers/01-front.webp?v=2p2-20261118",
+    "front": "assets/stickers/01-front.webp?v=ny-title-20261118",
     "back": "assets/stickers/01-back.webp?v=favorites-20261118",
-    "thumb": "assets/stickers/01-thumb.webp",
+    "thumb": "assets/stickers/01-thumb.webp?v=ny-title-20261118",
     "character": "assets/01-character.webp",
-    "favorite_kurichi": "いちご"
+    "favorite_kurichi": "いちご",
+    "front_title": "NYクリチ樹乃"
   },
   {
     "id": "02",
@@ -49,11 +50,12 @@
     "borough": "Manhattan",
     "neighborhood": "ローワー・イースト・サイド",
     "neighborhoodEn": "Lower East Side",
-    "front": "assets/stickers/02-front.webp?v=2p2-20261118",
+    "front": "assets/stickers/02-front.webp?v=ny-title-20261118",
     "back": "assets/stickers/02-back.webp?v=favorites-20261118",
-    "thumb": "assets/stickers/02-thumb.webp",
+    "thumb": "assets/stickers/02-thumb.webp?v=ny-title-20261118",
     "character": "assets/02-character.webp",
-    "favorite_kurichi": "チョコ"
+    "favorite_kurichi": "チョコ",
+    "front_title": "NYクリチ舞路"
   },
   {
     "id": "03",
@@ -77,11 +79,12 @@
     "borough": "Manhattan",
     "neighborhood": "ハーレム",
     "neighborhoodEn": "Harlem",
-    "front": "assets/stickers/03-front.webp?v=2p2-20261118",
+    "front": "assets/stickers/03-front.webp?v=ny-title-20261118",
     "back": "assets/stickers/03-back.webp?v=favorites-20261118",
-    "thumb": "assets/stickers/03-thumb.webp",
+    "thumb": "assets/stickers/03-thumb.webp?v=ny-title-20261118",
     "character": "assets/03-character.webp",
-    "favorite_kurichi": "レモンピール"
+    "favorite_kurichi": "レモンピール",
+    "front_title": "NYクリチ瑠比"
   },
   {
     "id": "04",
@@ -101,11 +104,12 @@
     "borough": "Queens",
     "neighborhood": "アストリア",
     "neighborhoodEn": "Astoria",
-    "front": "assets/stickers/04-front.webp?v=2p2-20261118",
+    "front": "assets/stickers/04-front.webp?v=ny-title-20261118",
     "back": "assets/stickers/04-back.webp?v=favorites-20261118",
-    "thumb": "assets/stickers/04-thumb.webp",
+    "thumb": "assets/stickers/04-thumb.webp?v=ny-title-20261118",
     "character": "assets/04-character.webp",
-    "favorite_kurichi": "抹茶"
+    "favorite_kurichi": "抹茶",
+    "front_title": "NYクリチ凱"
   },
   {
     "id": "05",
@@ -125,11 +129,12 @@
     "borough": "Manhattan",
     "neighborhood": "イースト・ヴィレッジ",
     "neighborhoodEn": "East Village",
-    "front": "assets/stickers/05-front.webp?v=2p2-20261118",
+    "front": "assets/stickers/05-front.webp?v=ny-title-20261118",
     "back": "assets/stickers/05-back.webp?v=favorites-20261118",
-    "thumb": "assets/stickers/05-thumb.webp",
+    "thumb": "assets/stickers/05-thumb.webp?v=ny-title-20261118",
     "character": "assets/05-character.webp",
-    "favorite_kurichi": "ラムレーズン"
+    "favorite_kurichi": "ラムレーズン",
+    "front_title": "NYクリチ玲夢"
   },
   {
     "id": "06",
@@ -153,11 +158,12 @@
     "borough": "Manhattan",
     "neighborhood": "グリニッジ・ヴィレッジ",
     "neighborhoodEn": "Greenwich Village",
-    "front": "assets/stickers/06-front.webp?v=2p2-20261118",
+    "front": "assets/stickers/06-front.webp?v=ny-title-20261118",
     "back": "assets/stickers/06-back.webp?v=favorites-20261118",
-    "thumb": "assets/stickers/06-thumb.webp",
+    "thumb": "assets/stickers/06-thumb.webp?v=ny-title-20261118",
     "character": "assets/06-character.webp",
-    "favorite_kurichi": "クランベリーナッツ"
+    "favorite_kurichi": "クランベリーナッツ",
+    "front_title": "NYクリチ藍美"
   },
   {
     "id": "07",
@@ -181,11 +187,12 @@
     "borough": "Queens",
     "neighborhood": "ロングアイランドシティ",
     "neighborhoodEn": "Long Island City",
-    "front": "assets/stickers/07-front.webp?v=2p2-20261118",
+    "front": "assets/stickers/07-front.webp?v=ny-title-20261118",
     "back": "assets/stickers/07-back.webp?v=favorites-20261118",
-    "thumb": "assets/stickers/07-thumb.webp",
+    "thumb": "assets/stickers/07-thumb.webp?v=ny-title-20261118",
     "character": "assets/07-character.webp",
-    "favorite_kurichi": "抹茶"
+    "favorite_kurichi": "抹茶",
+    "front_title": "NYクリチ乃亜"
   },
   {
     "id": "08",
@@ -209,11 +216,12 @@
     "borough": "Brooklyn",
     "neighborhood": "パークスロープ",
     "neighborhoodEn": "Park Slope",
-    "front": "assets/stickers/08-front.webp?v=2p2-20261118",
+    "front": "assets/stickers/08-front.webp?v=ny-title-20261118",
     "back": "assets/stickers/08-back.webp?v=favorites-20261118",
-    "thumb": "assets/stickers/08-thumb.webp",
+    "thumb": "assets/stickers/08-thumb.webp?v=ny-title-20261118",
     "character": "assets/08-character.webp",
-    "favorite_kurichi": "いちご"
+    "favorite_kurichi": "いちご",
+    "front_title": "NYクリチ芙楼羅"
   },
   {
     "id": "09",
@@ -233,11 +241,12 @@
     "borough": "Manhattan",
     "neighborhood": "アッパー・ウエスト・サイド",
     "neighborhoodEn": "Upper West Side",
-    "front": "assets/stickers/09-front.webp?v=2p2-20261118",
+    "front": "assets/stickers/09-front.webp?v=ny-title-20261118",
     "back": "assets/stickers/09-back.webp?v=favorites-20261118",
-    "thumb": "assets/stickers/09-thumb.webp",
+    "thumb": "assets/stickers/09-thumb.webp?v=ny-title-20261118",
     "character": "assets/09-character.webp",
-    "favorite_kurichi": "レモンピール"
+    "favorite_kurichi": "レモンピール",
+    "front_title": "NYクリチ蓮"
   },
   {
     "id": "10",
@@ -261,11 +270,12 @@
     "borough": "Brooklyn",
     "neighborhood": "ウィリアムズバーグ",
     "neighborhoodEn": "Williamsburg",
-    "front": "assets/stickers/10-front.webp?v=2p2-20261118",
+    "front": "assets/stickers/10-front.webp?v=ny-title-20261118",
     "back": "assets/stickers/10-back.webp?v=favorites-20261118",
-    "thumb": "assets/stickers/10-thumb.webp",
+    "thumb": "assets/stickers/10-thumb.webp?v=ny-title-20261118",
     "character": "assets/10-character.webp",
-    "favorite_kurichi": "チョコ"
+    "favorite_kurichi": "チョコ",
+    "front_title": "NYクリチ瑠玖珠"
   },
   {
     "id": "11",
@@ -289,10 +299,11 @@
     "borough": "Manhattan",
     "neighborhood": "チェルシー",
     "neighborhoodEn": "Chelsea",
-    "front": "assets/stickers/11-front.webp?v=2p2-20261118",
+    "front": "assets/stickers/11-front.webp?v=ny-title-20261118",
     "back": "assets/stickers/11-back.webp?v=favorites-20261118",
-    "thumb": "assets/stickers/11-thumb.webp",
+    "thumb": "assets/stickers/11-thumb.webp?v=ny-title-20261118",
     "character": "assets/11-character.webp",
-    "favorite_kurichi": "プレーン"
+    "favorite_kurichi": "プレーン",
+    "front_title": "NYクリチ心々"
   }
 ]
