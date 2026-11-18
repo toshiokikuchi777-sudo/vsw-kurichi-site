@@ -38,4 +38,4 @@ Each character includes `favorite_kurichi`, matching the product depicted beside
 
 ## Front title design
 
-The front title is `NYクリチ` plus the existing character name, stored as `front_title`. Headers use bold outlined lettering and a gold plate; the favorite-flavor product remains to the right. Character portraits and printed backs are unchanged. Front/thumb/OG cache version: `ny-title-20261118`.
+The front title is `NYクリチ` plus the existing character name, stored as `front_title`. Headers follow a circular arch with bold outlined lettering; the favorite-flavor product remains to the right. Character portraits and printed backs are unchanged. Front/thumb/OG cache version: `ny-title-arc-20261118`.
