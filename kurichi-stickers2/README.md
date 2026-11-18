@@ -6,7 +6,7 @@ Static page for `https://vsw.co.jp/kurichi-stickers2/`. Open `index.html` throug
 
 - `assets/characters.json` is the editable character data. `assets/characters.js` exposes the same array to the static page as `window.NY_CHARACTERS`; keep them in sync when editing.
 - The HTML contains an 11-person `<noscript>` profile fallback. Update it when character copy changes.
-- The 11 profiles are based on `output/ny-cyber-kurichi-character-settings-20261117/character-bible.json`.
+- The 11 profiles are based on `output/imagegen/ny-cyber-kurichi-voxel-hold-20261118/character-bible.json`.
 - The product image and favicon are reused from the existing `../kurichi-stickers/assets/` directory.
 
 ## Artwork paths
@@ -26,16 +26,14 @@ Filter by borough; the dialog's previous/next controls wrap inside the active fi
 
 ## Validation
 
-JavaScript syntax and local asset references checked. Browser QA at desktop and 390px mobile covered borough filters, front/back switching, previous/next wrapping, related characters, and dialog scroll reset. Print-production assets and white masks are delivered separately under `output/imagegen/ny-cyber-kurichi-final-20261118/`; they are not part of the public website.
+JavaScript syntax and local asset references checked. Browser QA at desktop and 390px mobile covered borough filters, front/back switching, previous/next wrapping, related characters, and dialog scroll reset. Print-production assets and white masks are delivered separately under `output/imagegen/ny-cyber-kurichi-voxel-hold-20261118/`; they are not part of the public website.
 
-## Artwork update: 2.2-head version
+## Current artwork
 
-All11 front/back portraits and hero characters use the approved approximately2.2-head proportions. The isolated lower-left Whoopie Kurichi product is now placed beside the front name on its right; it is included in the name print layer and matching white mask. Cache-version query:2p2-20261118. Print data: `output/imagegen/ny-cyber-kurichi-2p2-final-20261118/`.
+All 11 main characters retain the approved approximately 2.2-head proportions. One of the two side voxel hedgehogs holds a single Whoopie Kurichi product; there is no separate product beside the front title. The chosen holder and filling are recorded in `product_holder` and `favorite_kurichi`. The held product belongs to the character color layer and its aligned white mask.
 
-## Favorite Kurichi field
+The front title is `NYクリチ` plus the character name, stored as `front_title`. It follows a circular arch in DotGothic16 lettering with stepped block extrusion, black outlines and a pale outer edge. The font is rasterized locally; the font file is not included in the delivered assets. The name print layer contains only lettering and its outline/extrusion.
 
-Each character includes `favorite_kurichi`, matching the product depicted beside the front name. It is shown on the physical reverse, dialog profile, and no-script profile. Updated reverse artwork version: `favorites-20261118`.
+Each reverse includes 住む街, 仕事, 好きなこと and 好きなクリチ. The names, settings, stories and favorite flavors are retained. Updated portraits are used on both sides and in the hero. Image/data cache version: `voxel-hold-20261118`.
 
-## Front title design
-
-The front title is `NYクリチ` plus the existing character name, stored as `front_title`. Headers follow a circular arch with bold outlined lettering; the favorite-flavor product remains to the right. Character portraits and printed backs are unchanged. Front/thumb/OG cache version: `ny-title-arc-20261118`.
+The separate print delivery is `output/imagegen/ny-cyber-kurichi-voxel-hold-20261118/ny-crew-voxel-hold-print-delivery.zip`. It contains full-aligned background, character and name PNGs, one white mask each, back artwork and proofs; print files are not deployed to the public site.
