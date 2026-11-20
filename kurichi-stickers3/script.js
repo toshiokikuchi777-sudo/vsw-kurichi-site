@@ -10,6 +10,8 @@
   const close = dialog.querySelector(".close");
   let selected = 0;
   let opener = null;
+  let side = "front";
+  const sideButtons = [...dialog.querySelectorAll(".side-switch button")];
 
   function applyFilter(borough) {
     for (const card of cards) card.hidden = borough !== "all" && card.dataset.borough !== borough;
@@ -23,13 +25,25 @@
   filterBar.hidden = false;
   if (typeof dialog.showModal !== "function") return;
 
-  function show(card, trigger) {
+  function updateSide(card) {
+    const info = card.dataset;
+    image.src = side === "back"
+      ? card.querySelector(".profile-back-link").getAttribute("href")
+      : info.image;
+    image.alt = info.reading + "のシール" + (side === "back" ? "裏面" : "表面");
+    for (const button of sideButtons)
+      button.setAttribute("aria-pressed", String(button.dataset.side === side));
+  }
+
+  function show(card, trigger, initialSide = "front") {
     if (!card) return;
-    if (!dialog.open) opener = trigger || card.querySelector("summary");
+    if (!dialog.open) {
+      opener = trigger || card.querySelector("summary");
+      side = initialSide;
+    }
     selected = cards.indexOf(card);
     const info = card.dataset;
-    image.src = info.image;
-    image.alt = info.reading + "のシール表面";
+    updateSide(card);
     document.querySelector("#profile-roman").textContent = info.roman;
     const reading = document.createElement("small");
     reading.textContent = info.reading;
@@ -57,9 +71,15 @@
       if (!card) return;
       event.preventDefault();
       if (card.hidden) applyFilter("all");
-      show(card, link);
+      show(card, link, link.dataset.side || "front");
     });
   }
+
+  for (const button of sideButtons)
+    button.addEventListener("click", () => {
+      side = button.dataset.side;
+      updateSide(cards[selected]);
+    });
 
   function step(offset) {
     const visible = cards.filter((item) => !item.hidden);
@@ -91,10 +111,13 @@
     if (opener?.isConnected) opener.focus({ preventScroll: true });
   });
   function showLinkedProfile() {
-    const card = cards.find((item) => "#" + item.id === location.hash);
+    const isBack = location.hash.endsWith("-back");
+    const id = location.hash.slice(1).replace(/-back$/, "");
+    const card = cards.find((item) => item.id === id);
     if (!card) return;
     if (card.hidden) applyFilter("all");
-    show(card);
+    if (dialog.open) side = isBack ? "back" : "front";
+    show(card, null, isBack ? "back" : "front");
   }
   window.addEventListener("hashchange", showLinkedProfile);
   showLinkedProfile();

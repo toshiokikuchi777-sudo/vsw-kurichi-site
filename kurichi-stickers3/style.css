@@ -835,3 +835,60 @@ body:has(dialog[open]) {
     animation: none !important;
   }
 }
+
+/* The same controls are available with a keyboard or touch. */
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 44px;
+  margin-inline-start: 14px;
+  color: white;
+  font-weight: 750;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+.back-link:hover {
+  color: var(--acid);
+}
+.profile-back-link {
+  display: inline-block;
+  margin-bottom: 12px;
+  font-weight: 700;
+  text-decoration: underline;
+}
+.side-switch {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 12px;
+}
+.side-switch button {
+  min-width: 5rem;
+  min-height: 44px;
+  border: 1px solid var(--ink);
+  background: var(--paper);
+  color: var(--ink);
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+.side-switch button[aria-pressed="true"] {
+  background: var(--ink);
+  color: white;
+}
+.side-switch button:focus-visible {
+  outline: 3px solid var(--violet);
+  outline-offset: 3px;
+}
+@media (max-width: 680px) {
+  .dialog-inner {
+    padding-top: 55px;
+  }
+  .dialog-art img {
+    width: min(100%, 380px);
+  }
+  .back-link {
+    margin-inline-start: 8px;
+  }
+}
