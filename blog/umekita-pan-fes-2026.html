@@ -24,6 +24,11 @@
 .poster-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px}.poster-grid figure{margin:0;min-width:0}.poster-grid img{width:100%;height:auto}.poster-grid figcaption{font-size:16px;font-weight:700;line-height:1.6;margin-top:10px}@media(max-width:700px){.poster-grid{grid-template-columns:1fr}}
 .pop-jump{display:inline-block;margin-top:8px;color:var(--red);font-weight:700;text-underline-offset:3px}.woopee-pop{margin-top:0;padding-top:0}.woopee-pop .section-heading{margin-bottom:36px}#woopee-pop-heading{scroll-margin-top:24px}.woopee-menu{max-width:620px;margin:0 auto 36px}.woopee-menu img{width:100%;height:auto}.woopee-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px}.woopee-grid figure{margin:0;min-width:0}.woopee-grid img{width:100%;height:auto}.woopee-grid figcaption{font-size:16px;font-weight:700;line-height:1.6;margin-top:10px}.woopee-downloads{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-top:32px}.woopee-downloads a{display:inline-block;padding:12px 18px;border:1px solid var(--red);color:var(--red);font-size:14px;font-weight:700;text-decoration:none}.woopee-downloads a:hover,.woopee-downloads a:focus-visible{background:var(--red);color:#fff}@media(max-width:700px){.woopee-grid{grid-template-columns:1fr;gap:24px}.woopee-downloads{flex-direction:column;text-align:center}}
 @media(max-width:700px){.grid{grid-template-columns:1fr;gap:18px}.product{padding:0}.product-info{padding:20px 22px 26px}.product h3{font-size:28px}.product .price{font-size:36px}.feature h3{font-size:32px}.feature .price{font-size:48px}.hero-lead{font-size:18px}.event-value{font-size:18px}.event-note{font-size:15px}.product-visual{aspect-ratio:4/3}}
+.brooklyn-pop{display:grid;grid-template-columns:minmax(0,420px) minmax(0,1fr);align-items:center;gap:clamp(24px,5vw,60px);padding:clamp(18px,3vw,36px);margin:0 0 36px;background:var(--paper);scroll-margin-top:20px}
+.brooklyn-pop img{width:100%;height:auto}
+.brooklyn-pop h3{margin:0;font-size:clamp(24px,3vw,36px);line-height:1.45}
+.brooklyn-pop p{margin:14px 0;max-width:26em;line-height:1.9}
+@media(max-width:700px){.brooklyn-pop{grid-template-columns:1fr;gap:20px}}
 </style>
 </head>
 <body>
@@ -33,9 +38,19 @@
 <section class="event" aria-label="開催情報"><div class="wrap"><div class="event-grid"><div><div class="event-label">DATE / 日程</div><div class="event-value">2026年12月11日（金）〜13日（日）<br>11:00〜18:00（予定）</div></div><div><div class="event-label">PLACE / 会場</div><div class="event-value">グラングリーン大阪 うめきた公園<br>ロートハートスクエアうめきた</div></div><div><div class="event-label">SHOP / 出店名</div><div class="event-value">#クリチ Vsw CREAM CHEESE<br>3日間出店</div></div></div><p class="event-note">※パン屋さんエリアは時間帯により有料です。開催情報：パンのフェス公式発表（2026年11月17日確認）</p></div></section>
 <section class="section"><div class="wrap"><div class="section-heading"><p class="eyebrow">SPECIAL PICKS</p><h2>まずは、このふたつ。</h2><p>うめきたで出会う、とっておきの味わい。</p></div><div class="features">
 <article class="feature"><div class="product-visual"><img class="ingredient" src="../assets/blog/umekita-pan-fes-2026/pop-v3/background-purichi.webp" alt="" loading="lazy"><img class="food" src="../assets/blog/umekita-pan-fes-2026/pop-v3/image-purichi.webp" alt="プリチ" loading="lazy"></div><div class="feature-copy"><span class="tag">おすすめ</span><h3>クラシック ブリュレ #プリチ</h3><div class="en">CLASSIC BRÛLÉE #プリチ / プリチ</div><p>ふんわりバンズに、濃厚プリン。</p><div class="price">¥500<span class="tax">税込</span></div></div></article>
-<article class="feature"><div class="product-visual"><img class="ingredient" src="../assets/blog/umekita-pan-fes-2026/pop-v3/background-brooklyn.webp" alt="" loading="lazy"><img class="food" src="../assets/blog/umekita-pan-fes-2026/pop-v4/image-brooklyn.webp" alt="ブルックリン" loading="lazy"></div><div class="feature-copy"><span class="tag">限定</span><h3>BROOKLYN BERRY XMAS #クリチ</h3><div class="en">ブルックリン</div><p>チョコとベリー、濃厚な生クリチ。</p><div class="price">¥650<span class="tax">税込</span></div></div></article>
+<article class="feature"><div class="product-visual"><img class="ingredient" src="../assets/blog/umekita-pan-fes-2026/pop-v3/background-brooklyn.webp" alt="" loading="lazy"><img class="food" src="../assets/blog/umekita-pan-fes-2026/pop-v4/image-brooklyn.webp" alt="ブルックリン" loading="lazy"></div><div class="feature-copy"><span class="tag">限定</span><h3>BROOKLYN BERRY XMAS #クリチ</h3><div class="en">ブルックリン</div><p>チョコとベリー、濃厚な生クリチ。</p><div class="price">¥650<span class="tax">税込</span></div><a class="pop-jump" href="#brooklyn-pop">ブルックリンのクリスマスPOPを見る ↓</a></div></article>
 </div></div></section>
-<section class="section" aria-labelledby="shop-pop-heading"><div class="wrap"><div class="section-heading"><p class="eyebrow">SHOP POP</p><h2 id="shop-pop-heading">全8商品のPOP</h2><a class="pop-jump" href="#woopee-pop-heading">ウーピー#クリチのPOPを見る ↓</a></div><div class="poster-grid">
+<section class="section" aria-labelledby="shop-pop-heading"><div class="wrap"><div class="section-heading"><p class="eyebrow">SHOP POP</p><h2 id="shop-pop-heading">全8商品のPOP</h2><a class="pop-jump" href="#woopee-pop-heading">ウーピー#クリチのPOPを見る ↓</a></div>
+<figure class="brooklyn-pop" id="brooklyn-pop">
+  <img src="../assets/blog/umekita-pan-fes-2026/brooklyn-pop/berry-xmas-sage.webp" width="1055" height="1491" alt="緑のテーブルに並ぶチョコとベリー、クラフト袋からのぞくブルックリンポップオーバーのクリスマスPOP" loading="lazy" decoding="async">
+  <figcaption>
+    <h3>ブルックリンポップオーバー</h3>
+    <p>ザクザクのチョコクランチをまとった生地に、濃厚な生クリチクリームとブルーベリー、クランベリーをサンド。</p>
+    <div class="price">650円<span class="tax">（税込）</span></div>
+    <a class="pop-jump" href="../assets/blog/umekita-pan-fes-2026/brooklyn-pop/berry-xmas-sage-A4.pdf">クリスマスPOPを開く（A4 PDF）</a>
+  </figcaption>
+</figure>
+<div class="poster-grid">
 <figure><img src="../assets/blog/umekita-pan-fes-2026/pop-v5/brooklyn-vintage-a4.webp" width="1055" height="1491" alt="ブルックリンのPOP、650円（税込）" loading="lazy" decoding="async"><figcaption>ブルックリン / 650円（税込）</figcaption></figure>
 <figure><img src="../assets/blog/umekita-pan-fes-2026/pop-v5/purichi-vintage-a4.webp" width="1055" height="1491" alt="クラシック ブリュレ #プリチのPOP、500円（税込）" loading="lazy" decoding="async"><figcaption>クラシック ブリュレ #プリチ / 500円（税込）</figcaption></figure>
 <figure><img src="../assets/blog/umekita-pan-fes-2026/pop-v6/rum-raisin-vintage-a4.webp" width="1055" height="1491" alt="ラムレーズンのPOP、500円（税込）" loading="lazy" decoding="async"><figcaption>ラムレーズン / 500円（税込）</figcaption></figure>
