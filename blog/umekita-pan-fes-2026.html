@@ -65,18 +65,9 @@
 .category-section, #shop-pop-heading { scroll-margin-top: 16px; }
 .category-section + .category-section { border-top: 1px solid #ded2c4; }
 #category-brooklyn, #category-woopee { background: var(--paper); }
-.category-pair {
-  display: grid;
-  grid-template-columns: minmax(0, 1.3fr) minmax(0, .85fr);
-  align-items: start;
-  gap: clamp(24px, 4vw, 60px);
-  max-width: 980px;
-  margin: 0 auto;
-}
-.category-pair .feature, .category-pair figure { min-width: 0; margin: 0; }
-.category-pair .feature { background: var(--paper); border: 1px solid #e5d9ca; }
-.category-pair figure img { width: 100%; height: auto; }
-.category-pair figcaption { margin-top: 8px; font-weight: 700; }
+.purichi-poster { width: min(100%, 460px); margin: 0 auto; }
+.purichi-poster img { width: 100%; height: auto; }
+.purichi-poster figcaption { margin-top: 8px; font-weight: 700; }
 #brooklyn-pop { margin: 44px auto 0; border: 1px solid #e5d9ca; }
 .back-index, .hero-jump {
   display: inline-flex;
@@ -104,24 +95,12 @@
 @media (max-width: 700px) {
   .category-index { padding: 32px 0; }
   .category-nav { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .category-nav a { padding: 10px; font-size: 15px; }
-  .category-pair { grid-template-columns: 1fr; }
+  .category-nav a { padding: 10px; font-size: 14px; }
   #brooklyn-pop { padding: 14px; margin-top: 28px; }
 }
-.brooklyn-feature {
-  display: grid;
-  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
-  align-items: center;
-  border: 1px solid #e5d9ca;
-}
-.brooklyn-photo { width: 100%; height: auto; }
 .category-nav .name { color: inherit; }
 .category-nav .name > b { font-weight: inherit; }
 .category-nav .name > b, #brooklyn-heading span { white-space: nowrap; }
-@media (max-width: 700px) {
-  .brooklyn-feature { grid-template-columns: minmax(0, 1fr); }
-  .category-nav a { font-size: 14px; }
-}
 </style>
 </head>
 <body>
@@ -129,6 +108,10 @@
 <main>
 <section class="hero"><div class="wrap hero-grid"><div><p class="eyebrow">OSAKA UMEKITA / 2026.12.11 — 13</p><h1>うめきたで、<br><em>おいしい出会い。</em></h1><p class="hero-lead">「パンのフェス2026 in うめきた公園」に、<br>#クリチ Vsw CREAM CHEESEが出店します。<br>大阪・梅田で初開催のパンのフェスへ、3日間お届けします。</p><a class="hero-jump" href="#shop-pop-heading">商品カテゴリーを見る ↓</a></div><div class="hero-image"><div class="product-visual hero-visual"><img class="ingredient" src="../assets/blog/umekita-pan-fes-2026/pop-v3/background-purichi.webp" alt=""><img class="food" src="../assets/blog/umekita-pan-fes-2026/pop-v3/image-purichi.webp" alt="バンズを開いたクラシック ブリュレ #プリチ" fetchpriority="high"></div><div class="hero-stamp">HELLO!<br>UMEKITA</div></div></div></section>
 <section class="event" aria-label="開催情報"><div class="wrap"><div class="event-grid"><div><div class="event-label">DATE / 日程</div><div class="event-value">2026年12月11日（金）〜13日（日）<br>11:00〜18:00（予定）</div></div><div><div class="event-label">PLACE / 会場</div><div class="event-value">グラングリーン大阪 うめきた公園<br>ロートハートスクエアうめきた</div></div><div><div class="event-label">SHOP / 出店名</div><div class="event-value">#クリチ Vsw CREAM CHEESE<br>3日間出店</div></div></div><p class="event-note">※パン屋さんエリアは時間帯により有料です。開催情報：パンのフェス公式発表（2026年11月17日確認）</p></div></section>
+<section class="section" id="special-picks" aria-labelledby="special-picks-heading"><div class="wrap"><div class="section-heading"><p class="eyebrow">SPECIAL PICKS</p><h2 id="special-picks-heading">まずは、このふたつ。</h2><p>うめきたで出会う、とっておきの味わい。</p></div><div class="features">
+<article class="feature"><div class="product-visual"><img class="ingredient" src="../assets/blog/umekita-pan-fes-2026/pop-v3/background-purichi.webp" alt="" loading="lazy"><img class="food" src="../assets/blog/umekita-pan-fes-2026/pop-v3/image-purichi.webp" alt="プリチ" loading="lazy"></div><div class="feature-copy"><span class="tag">おすすめ</span><h3>クラシック ブリュレ <span style="white-space:nowrap">#プリチ</span></h3><div class="en">CLASSIC BRÛLÉE #プリチ / プリチ</div><p>ふんわりバンズに、濃厚プリン。</p><div class="price">¥500<span class="tax">税込</span></div></div></article>
+<article class="feature"><div class="product-visual"><img class="ingredient" src="../assets/blog/umekita-pan-fes-2026/pop-v3/background-brooklyn.webp" alt="" loading="lazy"><img class="food" src="../assets/blog/umekita-pan-fes-2026/brooklyn-pop/berry-xmas-cutout.webp" alt="チョコクランチと赤いベリーをまとったブルックリンポップオーバー" loading="lazy"></div><div class="feature-copy"><span class="tag">限定</span><h3>BROOKLYN BERRY XMAS #クリチ</h3><div class="en">ブルックリン</div><p>チョコとベリー、濃厚な生クリチ。</p><div class="price">¥650<span class="tax">税込</span></div><a class="pop-jump" href="#brooklyn-pop">ブルックリンのクリスマスPOPを見る ↓</a></div></article>
+</div></div></section>
 <section class="category-index" aria-labelledby="shop-pop-heading">
   <div class="wrap">
     <h2 id="shop-pop-heading">商品カテゴリー</h2>
@@ -141,16 +124,9 @@
   </div>
 </section>
 <section class="section category-section" id="category-purichi" aria-labelledby="purichi-heading"><div class="wrap"><div class="section-heading"><h2 id="purichi-heading">プリチ</h2></div>
-<div class="category-pair">
-<article class="feature"><div class="product-visual"><img class="ingredient" src="../assets/blog/umekita-pan-fes-2026/pop-v3/background-purichi.webp" alt="" loading="lazy"><img class="food" src="../assets/blog/umekita-pan-fes-2026/pop-v3/image-purichi.webp" alt="プリチ" loading="lazy"></div><div class="feature-copy"><span class="tag">おすすめ</span><h3>クラシック ブリュレ <span style="white-space:nowrap">#プリチ</span></h3><div class="en">CLASSIC BRÛLÉE #プリチ / プリチ</div><p>ふんわりバンズに、濃厚プリン。</p><div class="price">¥500<span class="tax">税込</span></div></div></article>
-<figure><img src="../assets/blog/umekita-pan-fes-2026/pop-v5/purichi-vintage-a4.webp" width="1055" height="1491" alt="クラシック ブリュレ #プリチのPOP、500円（税込）" loading="lazy" decoding="async"><figcaption>クラシック ブリュレ #プリチ / 500円（税込）</figcaption></figure>
-</div>
-
+<figure class="purichi-poster"><img src="../assets/blog/umekita-pan-fes-2026/pop-v5/purichi-vintage-a4.webp" width="1055" height="1491" alt="クラシック ブリュレ #プリチのPOP、500円（税込）" loading="lazy" decoding="async"><figcaption>クラシック ブリュレ #プリチ / 500円（税込）</figcaption></figure>
 <a class="back-index" href="#shop-pop-heading">カテゴリー一覧へ ↑</a></div></section>
-<section class="section category-section" id="category-brooklyn" aria-labelledby="brooklyn-heading"><div class="wrap"><div class="section-heading"><h2 id="brooklyn-heading"><span>ブルックリン</span><wbr><span>ポップオーバー</span></h2></div>
-<article class="feature brooklyn-feature">
-  <img class="brooklyn-photo" src="../assets/blog/umekita-pan-fes-2026/brooklyn-pop/berry-xmas-wood.jpg" width="1477" height="1108" alt="木のテーブルに置いた、チョコと赤いベリーをまとったブルックリンポップオーバー" loading="lazy" decoding="async">
-  <div class="feature-copy"><span class="tag">限定</span><h3>BROOKLYN BERRY XMAS #クリチ</h3><div class="en">ブルックリン</div><p>ザクザクのチョコクランチをまとった生地に、濃厚な生クリチクリームとブルーベリー、クランベリーをサンド。</p><div class="price">¥650<span class="tax">税込</span></div><a class="pop-jump" href="#brooklyn-pop">ブルックリンのクリスマスPOPを見る ↓</a></div></article>
+<section class="section category-section" id="category-brooklyn" aria-labelledby="brooklyn-heading"><div class="wrap"><div class="section-heading"><h2 id="brooklyn-heading"><span>ブルックリン</span><wbr><span>ポップオーバー</span></h2><p>ザクザクのチョコクランチをまとった生地に、濃厚な生クリチクリームとブルーベリー、クランベリーをサンド。</p></div>
 <section class="brooklyn-pop" id="brooklyn-pop" aria-labelledby="brooklyn-pop-title">
   <h3 id="brooklyn-pop-title">ブルックリンのクリスマスPOP</h3>
   <div class="brooklyn-posters">
