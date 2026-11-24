@@ -4,11 +4,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>パンのフェス2026 in うめきた公園に #クリチが出店 | Vsw</title>
-<meta name="description" content="2026年12月11日〜13日、パンのフェス2026 in うめきた公園に #クリチ Vsw CREAM CHEESEが出店。クラシック ブリュレ #プリチやブルックリンなど8商品をご紹介します。">
+<meta name="description" content="2026年12月11日〜13日、パンのフェス2026 in うめきた公園に #クリチ Vsw CREAM CHEESEが出店。プリチ、ブルックリン、CLASSIC#クリチ、ウーピー#クリチをご紹介します。">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="Vsw / #KURICHI">
 <meta property="og:title" content="パンのフェス2026 in うめきた公園に #クリチが出店">
-<meta property="og:description" content="12月11日〜13日、うめきた公園に #クリチが登場。プリチやブルックリンなど8商品をご紹介。">
+<meta property="og:description" content="12月11日〜13日、うめきた公園に #クリチが登場。プリチ、ブルックリン、CLASSIC#クリチ、ウーピー#クリチをご紹介。">
 <meta property="og:url" content="https://vsw.co.jp/blog/umekita-pan-fes-2026.html">
 <meta property="og:image" content="https://vsw.co.jp/purichi/assets/pudding-open.jpg">
 <meta name="twitter:card" content="summary_large_image">
@@ -31,22 +31,128 @@
 .brooklyn-pop h3{margin:0;font-size:clamp(24px,3vw,36px);line-height:1.45}
 .brooklyn-pop p{margin:10px 0;line-height:1.9}
 @media(max-width:700px){.brooklyn-posters{grid-template-columns:1fr}}
+
+.category-index {
+  padding: 44px 0 48px;
+  background: var(--paper);
+  border-bottom: 1px solid #d9ccbc;
+}
+.category-index h2 {
+  margin: 0 0 18px;
+  font-size: clamp(22px, 2.7vw, 32px);
+  letter-spacing: -.03em;
+}
+.category-nav {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+}
+.category-nav a {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  min-height: 56px;
+  padding: 12px 16px;
+  border: 1px solid #bbab99;
+  border-radius: 4px;
+  color: var(--ink);
+  text-decoration: none;
+  font-weight: 700;
+}
+.category-nav a span { color: var(--red); }
+.category-nav a:hover, .category-nav a:focus-visible { border-color: var(--red); background: #faf0df; }
+.category-section, #shop-pop-heading { scroll-margin-top: 16px; }
+.category-section + .category-section { border-top: 1px solid #ded2c4; }
+#category-brooklyn, #category-woopee { background: var(--paper); }
+.category-pair {
+  display: grid;
+  grid-template-columns: minmax(0, 1.3fr) minmax(0, .85fr);
+  align-items: start;
+  gap: clamp(24px, 4vw, 60px);
+  max-width: 980px;
+  margin: 0 auto;
+}
+.category-pair .feature, .category-pair figure { min-width: 0; margin: 0; }
+.category-pair .feature { background: var(--paper); border: 1px solid #e5d9ca; }
+.category-pair figure img { width: 100%; height: auto; }
+.category-pair figcaption { margin-top: 8px; font-weight: 700; }
+#brooklyn-pop { margin: 44px auto 0; border: 1px solid #e5d9ca; }
+.back-index, .hero-jump {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  color: var(--red);
+  font-weight: 700;
+  text-underline-offset: 4px;
+}
+.back-index { margin-top: 24px; }
+.hero-jump { margin-top: 12px; }
+.product details { padding: 0 22px 18px; }
+.product summary {
+  min-height: 44px;
+  padding: 10px 0;
+  border-top: 1px solid #d4c5b2;
+  cursor: pointer;
+  color: var(--red);
+  font-weight: 700;
+}
+.product details figure { margin: 8px 0 0; }
+.product details img { aspect-ratio: auto; }
+.product details figcaption { font-size: 14px; font-weight: 700; line-height: 1.6; margin-top: 8px; }
+#category-woopee .woopee-downloads { margin: 0 0 28px; }
+@media (max-width: 700px) {
+  .category-index { padding: 32px 0; }
+  .category-nav { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .category-nav a { padding: 10px; font-size: 15px; }
+  .category-pair { grid-template-columns: 1fr; }
+  #brooklyn-pop { padding: 14px; margin-top: 28px; }
+}
+.brooklyn-feature {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+  align-items: center;
+  border: 1px solid #e5d9ca;
+}
+.brooklyn-photo { width: 100%; height: auto; }
+.category-nav .name { color: inherit; }
+.category-nav .name > b { font-weight: inherit; }
+.category-nav .name > b, #brooklyn-heading span { white-space: nowrap; }
+@media (max-width: 700px) {
+  .brooklyn-feature { grid-template-columns: minmax(0, 1fr); }
+  .category-nav a { font-size: 14px; }
+}
 </style>
 </head>
 <body>
 <header class="masthead"><div class="wrap"><div class="brand"><img src="../assets/logo-vsw.png" alt="" width="42" height="42"> Vsw <span>/ #KURICHI</span></div><div class="mast-label">NEWS / 2026.11.17</div></div></header>
 <main>
-<section class="hero"><div class="wrap hero-grid"><div><p class="eyebrow">OSAKA UMEKITA / 2026.12.11 — 13</p><h1>うめきたで、<br><em>おいしい出会い。</em></h1><p class="hero-lead">「パンのフェス2026 in うめきた公園」に、<br>#クリチ Vsw CREAM CHEESEが出店します。<br>大阪・梅田で初開催のパンのフェスへ、3日間お届けします。</p></div><div class="hero-image"><div class="product-visual hero-visual"><img class="ingredient" src="../assets/blog/umekita-pan-fes-2026/pop-v3/background-purichi.webp" alt=""><img class="food" src="../assets/blog/umekita-pan-fes-2026/pop-v3/image-purichi.webp" alt="バンズを開いたクラシック ブリュレ #プリチ" fetchpriority="high"></div><div class="hero-stamp">HELLO!<br>UMEKITA</div></div></div></section>
+<section class="hero"><div class="wrap hero-grid"><div><p class="eyebrow">OSAKA UMEKITA / 2026.12.11 — 13</p><h1>うめきたで、<br><em>おいしい出会い。</em></h1><p class="hero-lead">「パンのフェス2026 in うめきた公園」に、<br>#クリチ Vsw CREAM CHEESEが出店します。<br>大阪・梅田で初開催のパンのフェスへ、3日間お届けします。</p><a class="hero-jump" href="#shop-pop-heading">商品カテゴリーを見る ↓</a></div><div class="hero-image"><div class="product-visual hero-visual"><img class="ingredient" src="../assets/blog/umekita-pan-fes-2026/pop-v3/background-purichi.webp" alt=""><img class="food" src="../assets/blog/umekita-pan-fes-2026/pop-v3/image-purichi.webp" alt="バンズを開いたクラシック ブリュレ #プリチ" fetchpriority="high"></div><div class="hero-stamp">HELLO!<br>UMEKITA</div></div></div></section>
 <section class="event" aria-label="開催情報"><div class="wrap"><div class="event-grid"><div><div class="event-label">DATE / 日程</div><div class="event-value">2026年12月11日（金）〜13日（日）<br>11:00〜18:00（予定）</div></div><div><div class="event-label">PLACE / 会場</div><div class="event-value">グラングリーン大阪 うめきた公園<br>ロートハートスクエアうめきた</div></div><div><div class="event-label">SHOP / 出店名</div><div class="event-value">#クリチ Vsw CREAM CHEESE<br>3日間出店</div></div></div><p class="event-note">※パン屋さんエリアは時間帯により有料です。開催情報：パンのフェス公式発表（2026年11月17日確認）</p></div></section>
-<section class="section"><div class="wrap"><div class="section-heading"><p class="eyebrow">SPECIAL PICKS</p><h2>まずは、このふたつ。</h2><p>うめきたで出会う、とっておきの味わい。</p></div><div class="features">
-<article class="feature"><div class="product-visual"><img class="ingredient" src="../assets/blog/umekita-pan-fes-2026/pop-v3/background-purichi.webp" alt="" loading="lazy"><img class="food" src="../assets/blog/umekita-pan-fes-2026/pop-v3/image-purichi.webp" alt="プリチ" loading="lazy"></div><div class="feature-copy"><span class="tag">おすすめ</span><h3>クラシック ブリュレ #プリチ</h3><div class="en">CLASSIC BRÛLÉE #プリチ / プリチ</div><p>ふんわりバンズに、濃厚プリン。</p><div class="price">¥500<span class="tax">税込</span></div></div></article>
-<article class="feature"><div class="product-visual"><img class="ingredient" src="../assets/blog/umekita-pan-fes-2026/pop-v3/background-brooklyn.webp" alt="" loading="lazy"><img class="food" src="../assets/blog/umekita-pan-fes-2026/pop-v4/image-brooklyn.webp" alt="ブルックリン" loading="lazy"></div><div class="feature-copy"><span class="tag">限定</span><h3>BROOKLYN BERRY XMAS #クリチ</h3><div class="en">ブルックリン</div><p>チョコとベリー、濃厚な生クリチ。</p><div class="price">¥650<span class="tax">税込</span></div><a class="pop-jump" href="#brooklyn-pop">ブルックリンのクリスマスPOPを見る ↓</a></div></article>
-</div></div></section>
-<section class="section" aria-labelledby="shop-pop-heading"><div class="wrap"><div class="section-heading"><p class="eyebrow">SHOP POP</p><h2 id="shop-pop-heading">全8商品のPOP</h2><a class="pop-jump" href="#woopee-pop-heading">ウーピー#クリチのPOPを見る ↓</a></div>
+<section class="category-index" aria-labelledby="shop-pop-heading">
+  <div class="wrap">
+    <h2 id="shop-pop-heading">商品カテゴリー</h2>
+    <nav class="category-nav" aria-label="商品カテゴリー">
+      <a href="#category-purichi">プリチ<span aria-hidden="true">↓</span></a>
+      <a href="#category-brooklyn">ブルックリン<span aria-hidden="true">↓</span></a>
+      <a href="#category-classic"><span class="name"><b>CLASSIC</b><wbr><b>#クリチ</b></span><span aria-hidden="true">↓</span></a>
+      <a href="#category-woopee"><span class="name"><b>ウーピー</b><wbr><b>#クリチ</b></span><span aria-hidden="true">↓</span></a>
+    </nav>
+  </div>
+</section>
+<section class="section category-section" id="category-purichi" aria-labelledby="purichi-heading"><div class="wrap"><div class="section-heading"><h2 id="purichi-heading">プリチ</h2></div>
+<div class="category-pair">
+<article class="feature"><div class="product-visual"><img class="ingredient" src="../assets/blog/umekita-pan-fes-2026/pop-v3/background-purichi.webp" alt="" loading="lazy"><img class="food" src="../assets/blog/umekita-pan-fes-2026/pop-v3/image-purichi.webp" alt="プリチ" loading="lazy"></div><div class="feature-copy"><span class="tag">おすすめ</span><h3>クラシック ブリュレ <span style="white-space:nowrap">#プリチ</span></h3><div class="en">CLASSIC BRÛLÉE #プリチ / プリチ</div><p>ふんわりバンズに、濃厚プリン。</p><div class="price">¥500<span class="tax">税込</span></div></div></article>
+<figure><img src="../assets/blog/umekita-pan-fes-2026/pop-v5/purichi-vintage-a4.webp" width="1055" height="1491" alt="クラシック ブリュレ #プリチのPOP、500円（税込）" loading="lazy" decoding="async"><figcaption>クラシック ブリュレ #プリチ / 500円（税込）</figcaption></figure>
+</div>
+
+<a class="back-index" href="#shop-pop-heading">カテゴリー一覧へ ↑</a></div></section>
+<section class="section category-section" id="category-brooklyn" aria-labelledby="brooklyn-heading"><div class="wrap"><div class="section-heading"><h2 id="brooklyn-heading"><span>ブルックリン</span><wbr><span>ポップオーバー</span></h2></div>
+<article class="feature brooklyn-feature">
+  <img class="brooklyn-photo" src="../assets/blog/umekita-pan-fes-2026/brooklyn-pop/berry-xmas-wood.jpg" width="1477" height="1108" alt="木のテーブルに置いた、チョコと赤いベリーをまとったブルックリンポップオーバー" loading="lazy" decoding="async">
+  <div class="feature-copy"><span class="tag">限定</span><h3>BROOKLYN BERRY XMAS #クリチ</h3><div class="en">ブルックリン</div><p>ザクザクのチョコクランチをまとった生地に、濃厚な生クリチクリームとブルーベリー、クランベリーをサンド。</p><div class="price">¥650<span class="tax">税込</span></div><a class="pop-jump" href="#brooklyn-pop">ブルックリンのクリスマスPOPを見る ↓</a></div></article>
 <section class="brooklyn-pop" id="brooklyn-pop" aria-labelledby="brooklyn-pop-title">
-  <h3 id="brooklyn-pop-title">ブルックリンポップオーバー</h3>
-  <p>ザクザクのチョコクランチをまとった生地に、濃厚な生クリチクリームとブルーベリー、クランベリーをサンド。</p>
-  <div class="price">650円<span class="tax">（税込）</span></div>
+  <h3 id="brooklyn-pop-title">ブルックリンのクリスマスPOP</h3>
   <div class="brooklyn-posters">
     <figure>
       <img src="../assets/blog/umekita-pan-fes-2026/brooklyn-pop/berry-xmas-sage.webp" width="1055" height="1491" alt="緑のテーブルに並ぶチョコとベリー、クラフト袋からのぞくブルックリンポップオーバーのクリスマスPOP" loading="lazy" decoding="async">
@@ -58,32 +164,24 @@
     </figure>
   </div>
 </section>
-<div class="poster-grid">
-<figure><img src="../assets/blog/umekita-pan-fes-2026/pop-v5/brooklyn-vintage-a4.webp" width="1055" height="1491" alt="ブルックリンのPOP、650円（税込）" loading="lazy" decoding="async"><figcaption>ブルックリン / 650円（税込）</figcaption></figure>
-<figure><img src="../assets/blog/umekita-pan-fes-2026/pop-v5/purichi-vintage-a4.webp" width="1055" height="1491" alt="クラシック ブリュレ #プリチのPOP、500円（税込）" loading="lazy" decoding="async"><figcaption>クラシック ブリュレ #プリチ / 500円（税込）</figcaption></figure>
-<figure><img src="../assets/blog/umekita-pan-fes-2026/pop-v6/rum-raisin-vintage-a4.webp" width="1055" height="1491" alt="ラムレーズンのPOP、500円（税込）" loading="lazy" decoding="async"><figcaption>ラムレーズン / 500円（税込）</figcaption></figure>
-<figure><img src="../assets/blog/umekita-pan-fes-2026/pop-v6/marron-vintage-a4.webp" width="1055" height="1491" alt="マロンのPOP、500円（税込）" loading="lazy" decoding="async"><figcaption>マロン / 500円（税込）</figcaption></figure>
-<figure><img src="../assets/blog/umekita-pan-fes-2026/pop-v6/matcha-vintage-a4.webp" width="1055" height="1491" alt="抹茶あんこのPOP、500円（税込）" loading="lazy" decoding="async"><figcaption>抹茶あんこ / 500円（税込）</figcaption></figure>
-<figure><img src="../assets/blog/umekita-pan-fes-2026/pop-v6/strawberry-vintage-a4.webp" width="1055" height="1491" alt="いちごのPOP、500円（税込）" loading="lazy" decoding="async"><figcaption>いちご / 500円（税込）</figcaption></figure>
-<figure><img src="../assets/blog/umekita-pan-fes-2026/pop-v6/chocolate-vintage-a4.webp" width="1055" height="1491" alt="チョコのPOP、500円（税込）" loading="lazy" decoding="async"><figcaption>チョコ / 500円（税込）</figcaption></figure>
-<figure><img src="../assets/blog/umekita-pan-fes-2026/pop-v6/vanilla-maple-vintage-a4.webp" width="1055" height="1491" alt="バニラメープルのPOP、500円（税込）" loading="lazy" decoding="async"><figcaption>バニラメープル / 500円（税込）</figcaption></figure>
-</div></div></section>
-<section class="section woopee-pop" aria-labelledby="woopee-pop-heading"><div class="wrap"><div class="section-heading"><p class="eyebrow">WOOPEE POP</p><h2 id="woopee-pop-heading">ウーピー#クリチの3つの味</h2><p>いちご・チョコ・ラムレーズン / 各500円（税込）</p><p>3種類とも、フィリングにクリームチーズを混ぜています。</p></div>
+<a class="back-index" href="#shop-pop-heading">カテゴリー一覧へ ↑</a></div></section>
+<section class="section lineup category-section" id="category-classic" aria-labelledby="classic-heading"><div class="wrap"><div class="section-heading"><h2 id="classic-heading">CLASSIC#クリチの6つの味</h2></div><div class="grid">
+<article class="product"><div class="product-visual"><img class="ingredient" src="../assets/blog/umekita-pan-fes-2026/pop-v3/background-rum-raisin.webp" alt="" loading="lazy"><img class="food" src="../assets/blog/umekita-pan-fes-2026/pop-v3/image-rum-raisin.webp" alt="ラムレーズン" loading="lazy"></div><div class="product-info"><div class="en">RUM RAISIN</div><h3>ラムレーズン</h3><p>ラムの香りと、レーズンの甘み。</p><span class="price">¥500<span class="tax">税込</span></span></div><details><summary>ラムレーズンのPOPを見る</summary><figure><img src="../assets/blog/umekita-pan-fes-2026/pop-v6/rum-raisin-vintage-a4.webp" width="1055" height="1491" alt="ラムレーズンのPOP、500円（税込）" loading="lazy" decoding="async"><figcaption>ラムレーズン / 500円（税込）</figcaption></figure></details></article>
+<article class="product"><div class="product-visual"><img class="ingredient" src="../assets/blog/umekita-pan-fes-2026/pop-v3/background-marron.webp" alt="" loading="lazy"><img class="food" src="../assets/blog/umekita-pan-fes-2026/pop-v3/image-marron.webp" alt="マロン" loading="lazy"></div><div class="product-info"><div class="en">MARRON</div><h3>マロン</h3><p>やさしい栗の風味を、ひとくちに。</p><span class="price">¥500<span class="tax">税込</span></span></div><details><summary>マロンのPOPを見る</summary><figure><img src="../assets/blog/umekita-pan-fes-2026/pop-v6/marron-vintage-a4.webp" width="1055" height="1491" alt="マロンのPOP、500円（税込）" loading="lazy" decoding="async"><figcaption>マロン / 500円（税込）</figcaption></figure></details></article>
+<article class="product"><div class="product-visual"><img class="ingredient" src="../assets/blog/umekita-pan-fes-2026/pop-v3/background-matcha.webp" alt="" loading="lazy"><img class="food" src="../assets/blog/umekita-pan-fes-2026/pop-v3/image-matcha.webp" alt="抹茶あんこ" loading="lazy"></div><div class="product-info"><div class="en">MATCHA &amp; ANKO</div><h3>抹茶あんこ</h3><p>抹茶のほろ苦さ、あんこの甘み。</p><span class="price">¥500<span class="tax">税込</span></span></div><details><summary>抹茶あんこのPOPを見る</summary><figure><img src="../assets/blog/umekita-pan-fes-2026/pop-v6/matcha-vintage-a4.webp" width="1055" height="1491" alt="抹茶あんこのPOP、500円（税込）" loading="lazy" decoding="async"><figcaption>抹茶あんこ / 500円（税込）</figcaption></figure></details></article>
+<article class="product"><div class="product-visual"><img class="ingredient" src="../assets/blog/umekita-pan-fes-2026/pop-v3/background-strawberry.webp" alt="" loading="lazy"><img class="food" src="../assets/blog/umekita-pan-fes-2026/pop-v3/image-strawberry.webp" alt="いちご" loading="lazy"></div><div class="product-info"><div class="en">STRAWBERRY</div><h3>いちご</h3><p>いちごの甘酸っぱさ、クリーミーに。</p><span class="price">¥500<span class="tax">税込</span></span></div><details><summary>いちごのPOPを見る</summary><figure><img src="../assets/blog/umekita-pan-fes-2026/pop-v6/strawberry-vintage-a4.webp" width="1055" height="1491" alt="いちごのPOP、500円（税込）" loading="lazy" decoding="async"><figcaption>いちご / 500円（税込）</figcaption></figure></details></article>
+<article class="product"><div class="product-visual"><img class="ingredient" src="../assets/blog/umekita-pan-fes-2026/pop-v3/background-chocolate.webp" alt="" loading="lazy"><img class="food" src="../assets/blog/umekita-pan-fes-2026/pop-v3/image-chocolate.webp" alt="チョコ" loading="lazy"></div><div class="product-info"><div class="en">CHOCOLATE</div><h3>チョコ</h3><p>チョコのコク、まろやかな口どけ。</p><span class="price">¥500<span class="tax">税込</span></span></div><details><summary>チョコのPOPを見る</summary><figure><img src="../assets/blog/umekita-pan-fes-2026/pop-v6/chocolate-vintage-a4.webp" width="1055" height="1491" alt="チョコのPOP、500円（税込）" loading="lazy" decoding="async"><figcaption>チョコ / 500円（税込）</figcaption></figure></details></article>
+<article class="product"><div class="product-visual"><img class="ingredient" src="../assets/blog/umekita-pan-fes-2026/pop-v3/background-vanilla-maple.webp" alt="" loading="lazy"><img class="food" src="../assets/blog/umekita-pan-fes-2026/pop-v3/image-vanilla-maple.webp" alt="バニラメープル" loading="lazy"></div><div class="product-info"><div class="en">VANILLA MAPLE</div><h3>バニラメープル</h3><p>バニラの香りと、メープルの甘さ。</p><span class="price">¥500<span class="tax">税込</span></span></div><details><summary>バニラメープルのPOPを見る</summary><figure><img src="../assets/blog/umekita-pan-fes-2026/pop-v6/vanilla-maple-vintage-a4.webp" width="1055" height="1491" alt="バニラメープルのPOP、500円（税込）" loading="lazy" decoding="async"><figcaption>バニラメープル / 500円（税込）</figcaption></figure></details></article>
+</div><a class="back-index" href="#shop-pop-heading">カテゴリー一覧へ ↑</a></div></section>
+<section class="section category-section" id="category-woopee" aria-labelledby="woopee-pop-heading"><div class="wrap"><div class="section-heading"><h2 id="woopee-pop-heading">ウーピー#クリチの3つの味</h2><p>いちご・チョコ・ラムレーズン / 各500円（税込）</p><p>3種類とも、フィリングにクリームチーズを混ぜています。</p></div>
+<div class="woopee-downloads"><a href="../assets/blog/umekita-pan-fes-2026/woopee-pop/menu-A4.pdf?v=4">メニューPOP（A4 PDF）</a><a href="../assets/blog/umekita-pan-fes-2026/woopee-pop/flavors-A4.pdf?v=4">単品POP 3枚（A4 PDF）</a></div>
 <figure class="woopee-menu"><img src="../assets/blog/umekita-pan-fes-2026/woopee-pop/menu.webp?v=4" width="1039" height="1513" alt="ウーピー#クリチの3つの味を紹介するメニューPOP。いちご、チョコ、ラムレーズンは各500円（税込）" loading="lazy" decoding="async"></figure>
 <div class="woopee-grid">
 <figure><img src="../assets/blog/umekita-pan-fes-2026/woopee-pop/strawberry.webp?v=2" width="1055" height="1491" alt="ウーピー#クリチ いちごのPOP、500円（税込）" loading="lazy" decoding="async"><figcaption>いちご / 500円（税込）</figcaption></figure>
 <figure><img src="../assets/blog/umekita-pan-fes-2026/woopee-pop/chocolate.webp" width="1055" height="1491" alt="ウーピー#クリチ チョコのPOP、500円（税込）" loading="lazy" decoding="async"><figcaption>チョコ / 500円（税込）</figcaption></figure>
 <figure><img src="../assets/blog/umekita-pan-fes-2026/woopee-pop/rum-raisin.webp?v=4" width="1055" height="1491" alt="ウーピー#クリチ ラムレーズンのPOP、500円（税込）" loading="lazy" decoding="async"><figcaption>ラムレーズン / 500円（税込）</figcaption></figure>
-</div><div class="woopee-downloads"><a href="../assets/blog/umekita-pan-fes-2026/woopee-pop/menu-A4.pdf?v=4">メニューPOP（A4 PDF）</a><a href="../assets/blog/umekita-pan-fes-2026/woopee-pop/flavors-A4.pdf?v=4">単品POP 3枚（A4 PDF）</a></div>
-</div></section>
-<section class="section lineup"><div class="wrap"><div class="section-heading"><p class="eyebrow">MORE FLAVORS</p><h2>選ぶ楽しさ、あと6つ。</h2><p>CLASSIC#クリチの6つの味。気になる味を見つけてください。</p></div><div class="grid">
-<article class="product"><div class="product-visual"><img class="ingredient" src="../assets/blog/umekita-pan-fes-2026/pop-v3/background-rum-raisin.webp" alt="" loading="lazy"><img class="food" src="../assets/blog/umekita-pan-fes-2026/pop-v3/image-rum-raisin.webp" alt="ラムレーズン" loading="lazy"></div><div class="product-info"><div class="en">RUM RAISIN</div><h3>ラムレーズン</h3><p>ラムの香りと、レーズンの甘み。</p><span class="price">¥500<span class="tax">税込</span></span></div></article>
-<article class="product"><div class="product-visual"><img class="ingredient" src="../assets/blog/umekita-pan-fes-2026/pop-v3/background-marron.webp" alt="" loading="lazy"><img class="food" src="../assets/blog/umekita-pan-fes-2026/pop-v3/image-marron.webp" alt="マロン" loading="lazy"></div><div class="product-info"><div class="en">MARRON</div><h3>マロン</h3><p>やさしい栗の風味を、ひとくちに。</p><span class="price">¥500<span class="tax">税込</span></span></div></article>
-<article class="product"><div class="product-visual"><img class="ingredient" src="../assets/blog/umekita-pan-fes-2026/pop-v3/background-matcha.webp" alt="" loading="lazy"><img class="food" src="../assets/blog/umekita-pan-fes-2026/pop-v3/image-matcha.webp" alt="抹茶あんこ" loading="lazy"></div><div class="product-info"><div class="en">MATCHA &amp; ANKO</div><h3>抹茶あんこ</h3><p>抹茶のほろ苦さ、あんこの甘み。</p><span class="price">¥500<span class="tax">税込</span></span></div></article>
-<article class="product"><div class="product-visual"><img class="ingredient" src="../assets/blog/umekita-pan-fes-2026/pop-v3/background-strawberry.webp" alt="" loading="lazy"><img class="food" src="../assets/blog/umekita-pan-fes-2026/pop-v3/image-strawberry.webp" alt="いちご" loading="lazy"></div><div class="product-info"><div class="en">STRAWBERRY</div><h3>いちご</h3><p>いちごの甘酸っぱさ、クリーミーに。</p><span class="price">¥500<span class="tax">税込</span></span></div></article>
-<article class="product"><div class="product-visual"><img class="ingredient" src="../assets/blog/umekita-pan-fes-2026/pop-v3/background-chocolate.webp" alt="" loading="lazy"><img class="food" src="../assets/blog/umekita-pan-fes-2026/pop-v3/image-chocolate.webp" alt="チョコ" loading="lazy"></div><div class="product-info"><div class="en">CHOCOLATE</div><h3>チョコ</h3><p>チョコのコク、まろやかな口どけ。</p><span class="price">¥500<span class="tax">税込</span></span></div></article>
-<article class="product"><div class="product-visual"><img class="ingredient" src="../assets/blog/umekita-pan-fes-2026/pop-v3/background-vanilla-maple.webp" alt="" loading="lazy"><img class="food" src="../assets/blog/umekita-pan-fes-2026/pop-v3/image-vanilla-maple.webp" alt="バニラメープル" loading="lazy"></div><div class="product-info"><div class="en">VANILLA MAPLE</div><h3>バニラメープル</h3><p>バニラの香りと、メープルの甘さ。</p><span class="price">¥500<span class="tax">税込</span></span></div></article>
-</div></div></section>
+</div>
+<a class="back-index" href="#shop-pop-heading">カテゴリー一覧へ ↑</a></div></section>
 <section class="closing"><h2>うめきたで、お会いしましょう。</h2><p>パンと、クリチと、楽しいひとときを。<br>みなさまのお越しをお待ちしています。</p></section>
 </main>
 <footer class="footer"><div class="wrap"><span>Vsw / #KURICHI</span><span>© 2026 Vsw Inc.</span></div></footer>
