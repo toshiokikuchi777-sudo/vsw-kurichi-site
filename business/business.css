@@ -228,6 +228,24 @@
 }
 .lineup-body p{font-size:13px;line-height:1.8;color:#5a4d45;margin:0}
 
+/* ---------- WOOPEE ---------- */
+.woopee-discovery{text-align:center;margin:24px 0 0;font-size:13px;font-weight:700}
+.woopee-discovery a,.woopee-contact{color:var(--tomato);text-decoration:none}
+.woopee-discovery a:hover,.woopee-contact:hover{text-decoration:underline}
+.woopee-feature{display:grid;grid-template-columns:1fr 1fr;overflow:hidden;margin-top:64px;background:#fff;border-radius:22px;box-shadow:0 20px 60px -30px rgba(44,24,16,.25);scroll-margin-top:100px}
+.woopee-image img{display:block;width:100%;height:100%;min-height:300px;object-fit:cover}
+.woopee-copy{padding:clamp(28px,4vw,52px);align-self:center}
+.woopee-copy h3{font-size:clamp(24px,3vw,34px);margin:0 0 16px;color:var(--char)}
+.woopee-copy p{font-size:14px;line-height:1.9;color:#5a4d45}
+.woopee-flavors{display:flex;flex-wrap:wrap;gap:8px;list-style:none;padding:0;margin:20px 0 24px}
+.woopee-flavors li{padding:4px 12px;border-radius:20px;background:var(--cream);color:var(--char);font-size:13px}
+.woopee-actions{display:flex;align-items:center;flex-wrap:wrap;gap:18px}
+.woopee-contact{font-size:13px;font-weight:700}
+@media (max-width:700px){
+  .woopee-feature{grid-template-columns:1fr;margin-top:48px}
+  .woopee-image img{height:240px;min-height:0}
+}
+
 /* ---------- PRICING ---------- */
 .price-grid{display:grid;grid-template-columns:1fr 1fr;gap:30px}
 .price-card{
