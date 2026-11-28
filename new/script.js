@@ -23,12 +23,12 @@ document.addEventListener('click', (event) => {
 });
 
 const flavors = {
-  plain: { name: 'PLAIN', image: 'assets/plain.webp', alt: 'プレーンのWoopee #kurichi', description: 'クリームチーズのコクを、まっすぐ楽しむ。まずはここから、王道のひとくち。', index: '01' },
-  lemon: { name: 'LEMON', image: 'assets/lemon.webp', alt: 'レモンのWoopee #kurichi', description: 'レモンの爽やかさで、後味まで軽やか。気分を切り替えたい日に。', index: '02' },
-  cranberry: { name: 'CRANBERRY NUTS', image: 'assets/cranberry.webp', alt: 'クランベリーナッツのWoopee #kurichi', description: '果実の甘酸っぱさと、クルミの食感。ちょっと欲張りな組み合わせ。', index: '03' },
-  rumraisin: { name: 'RUM RAISIN', image: 'assets/rumraisin.webp', alt: 'ラムレーズンのWoopee #kurichi', description: 'ラムレーズンの風味が広がる、ゆっくり味わいたいひとくち。', index: '04' },
-  chocolate: { name: 'CHOCOLATE', image: 'assets/chocolate.webp', alt: 'チョコのWoopee #kurichi', description: 'チョコのコクと、クリームチーズのなめらかさ。甘いひとときを、ひとくちに。', index: '05' },
-  strawberry: { name: 'STRAWBERRY', image: 'assets/strawberry.webp', alt: 'いちごのWoopee #kurichi', description: 'いちごの甘酸っぱさと、クリームチーズのまろやかさ。やさしいピンクのひとくち。', index: '06' }
+  strawberry: { name: 'STRAWBERRY', image: 'assets/strawberry.webp?v=woopee6-20261128', alt: 'いちごのWoopee #kurichi', description: 'いちごの甘酸っぱさと、クリームチーズのまろやかさ。', index: '01' },
+  rumraisin: { name: 'RUM RAISIN', image: 'assets/rumraisin.webp?v=woopee6-20261128', alt: 'ラムレーズンのWoopee #kurichi', description: 'ラムの香るレーズンを、まろやかなクリームチーズに合わせました。', index: '02' },
+  chocolate: { name: 'CHOCOLATE', image: 'assets/chocolate.webp?v=woopee6-20261128', alt: 'チョコのWoopee #kurichi', description: 'なめらかなクリームチーズにチョコチップを混ぜました。', index: '03' },
+  marron: { name: 'MARRON', image: 'assets/marron.webp?v=woopee6-20261128', alt: 'マロンのWoopee #kurichi', description: 'マロンクリームとクリームチーズに、栗の粒とパイクラムを混ぜました。', index: '04' },
+  plain: { name: 'PLAIN', image: 'assets/plain.webp?v=woopee6-20261128', alt: 'プレーンのWoopee #kurichi', description: 'クリームチーズのコクを、まっすぐ楽しむ。王道のひとくち。', index: '05' },
+  cranberry: { name: 'CRANBERRY NUTS', image: 'assets/cranberry.webp?v=woopee6-20261128', alt: 'クランベリーナッツのWoopee #kurichi', description: 'クリームチーズに、甘酸っぱいクランベリーと香ばしいくるみを合わせました。', index: '06' }
 };
 
 const flavorSection = document.querySelector('.flavors');

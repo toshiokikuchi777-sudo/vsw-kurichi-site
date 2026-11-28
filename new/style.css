@@ -328,8 +328,8 @@ h1,h2,h3 {
   background:#f3d6a5;
   transition:background-color .35s
 }
-.flavors[data-flavor=lemon] {
-  background:#f3e686
+.flavors[data-flavor=marron] {
+  background:#d9bd9d
 }
 .flavors[data-flavor=cranberry] {
   background:#edb6b2
@@ -1504,14 +1504,17 @@ h1,h2,h3 {
 .hero-sticker-link { margin-top:18px; gap:12px; max-width:100% }
 .hero-sticker-link:hover { gap:16px }
 
-/* Sticker collection banner */
-.crew-feature .sticker-banner-image {
-  display:block;
-  width:100%;
-  height:auto;
-  max-height:none;
-  align-self:center;
+/* Coco's sticker, front and back */
+.sticker-pair {
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:clamp(8px,2vw,24px);
+  padding:clamp(18px,3vw,40px);
 }
-@media(max-width:760px) {
-  .crew-feature .sticker-banner-image { margin-top:24px; }
+.sticker-pair img {
+  width:calc(50% - 12px);
+  max-width:300px;
+  height:auto;
+  box-shadow:4px 6px 0 rgba(56,36,26,.15);
 }
