@@ -24,22 +24,22 @@
 <meta name="twitter:image" content="https://vsw.co.jp/business2/woopee-trio-share.jpg" />
 <meta name="twitter:image:alt" content="ウーピー#クリチのいちご・チョコ・ラムレーズン。法人・店舗向け商品案内" />
 
-<link rel="icon" type="image/gif" href="../assets/favicon.gif">
+<link rel="icon" type="image/svg+xml" href="../new/assets/vsw-logo.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&family=Playfair+Display:ital,wght@0,700;1,700&family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=DM+Sans:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../style.css">
 <link rel="stylesheet" href="../business/business.css?v=f4a4a1106f">
-<link rel="stylesheet" href="woopee.css?v=69adcf1a3e">
+<link rel="stylesheet" href="woopee.css?v=735a3b469b">
+<link rel="stylesheet" href="sections.css?v=25e2a3b766">
 </head>
 <body>
 
-<nav class="nav">
+<a class="diner-skip" href="#main">本文へスキップ</a>
+<div class="diner-announcement">VSW <span aria-hidden="true">✳</span> 法人・店舗向け商品案内</div>
+<nav class="nav" aria-label="サイトナビゲーション">
   <div class="container nav-inner">
-    <a href="../index.html#top" class="brand">
-      <span class="brand-mark" style="background-image:url('../assets/3d/vsw-logo-animated.gif')"></span>
-      <span class="brand-text">Vsw <em class="brand-hash">#KURICHI</em></span>
-    </a>
+    <a href="../index.html#top" class="brand"><img src="../new/assets/vsw-logo.svg" alt="Vsw トップ" width="42" height="64"></a>
     <div class="nav-links" id="biz-nav-links">
       <a href="../index.html#products">Products</a>
       <a href="../index.html#story">Story</a>
@@ -52,32 +52,43 @@
       <a href="../collaboration.html">Partnership</a>
       <a href="../index.html#shop">Shop</a>
     </div>
-    <a href="../index.html#contact" class="cta">Contact →</a>
+    <a href="#contact" class="cta">導入を相談する <span aria-hidden="true">↗</span></a>
     <button class="nav-toggle" type="button" aria-label="メニュー" aria-controls="biz-nav-links" aria-expanded="false">☰</button>
   </div>
 </nav>
 
+<main id="main">
 <header class="woo-hero" aria-labelledby="woopee-title">
-  <div class="woo-hero-copy">
-    <p class="woo-intro">法人・店舗向けのご案内</p>
-    <h1 id="woopee-title"><i lang="en" aria-hidden="true">Woopee</i>ウーピー#クリチ</h1>
-    <p class="woo-lead"><strong>いちご・チョコ・ラムレーズン。</strong><br>しっとりクッキーとクリームチーズで楽しむ、ウーピーの定番3種です。</p>
-    <div class="woo-links">
-      <a class="woo-consult" href="#contact">導入を相談する <span aria-hidden="true">→</span></a>
-      <a class="woo-text-link" href="#woopee">6種類の味を見る <span aria-hidden="true">↓</span></a>
+  <div class="woo-stage">
+    <div class="woo-hero-copy">
+      <p class="woo-intro" lang="en">WOOPEE BY #KURICHI</p>
+      <h1 id="woopee-title"><span lang="en" aria-hidden="true">WOOPEE</span>ウーピー#クリチを、お店へ。</h1>
+      <p class="woo-lead">しっとりクッキーに、ひんやりクリームチーズ。<br>ウーピーを代表する3つの味をご紹介します。</p>
+      <ul class="woo-signatures" aria-label="ウーピーの定番3種">
+        <li><a href="#woo-strawberry">いちご</a></li>
+        <li><a href="#woo-chocolate">チョコ</a></li>
+        <li><a href="#woo-rumraisin">ラムレーズン</a></li>
+      </ul>
+      <div class="woo-links">
+        <a class="woo-consult" href="#contact">導入を相談する <span aria-hidden="true">↗</span></a>
+        <a class="woo-text-link" href="#woopee">6種類の味を見る <span aria-hidden="true">↓</span></a>
+      </div>
+    </div>
+    <div class="woo-stage-art">
+      <ul class="woo-stack" aria-label="商品写真から味を選ぶ">
+        <li><a href="#woo-strawberry"><img src="../new/assets/strawberry.webp?v=woopee6-20261128" width="463" height="380" alt="いちごの商品紹介へ" fetchpriority="high"></a></li>
+        <li><a href="#woo-chocolate"><img src="../new/assets/chocolate.webp?v=woopee6-20261128" width="950" height="691" alt="チョコの商品紹介へ"></a></li>
+        <li><a href="#woo-rumraisin"><img src="../new/assets/rumraisin.webp?v=woopee6-20261128" width="534" height="422" alt="ラムレーズンの商品紹介へ"></a></li>
+      </ul>
+      <img class="woo-hosts" src="../new/assets/diner-hosts.webp" alt="" width="1254" height="1254">
     </div>
   </div>
-  <ul class="woo-posters" aria-label="ウーピーのメインフレーバー">
-    <li><a href="#woo-strawberry"><img src="../assets/blog/umekita-pan-fes-2026/woopee-pop/strawberry-no-price.webp" width="1055" height="1491" alt="いちごの商品紹介へ"></a></li>
-    <li><a href="#woo-chocolate"><img src="../assets/blog/umekita-pan-fes-2026/woopee-pop/chocolate-no-price.webp" width="1055" height="1491" alt="チョコの商品紹介へ"></a></li>
-    <li><a href="#woo-rumraisin"><img src="../assets/blog/umekita-pan-fes-2026/woopee-pop/rum-raisin-no-price.webp" width="1055" height="1491" alt="ラムレーズンの商品紹介へ"></a></li>
-  </ul>
 </header>
 
 <section class="woo-range" id="woopee" aria-labelledby="woo-flavors-title">
   <div class="container">
     <div class="woo-range-head">
-      <h2 id="woo-flavors-title">ウーピーの<span>6つの味</span></h2>
+      <h2 id="woo-flavors-title"><span class="woo-section-name" lang="en" aria-hidden="true">FLAVORS<span>.</span></span>ウーピーの6つの味</h2>
       <a class="woo-text-link" href="../new/#flavors">商品ページを見る <span aria-hidden="true">↗</span></a>
     </div>
     <ul class="woo-grid woo-main-flavors" aria-label="メインの3種類">
@@ -540,6 +551,7 @@
   </div>
 </section>
 
+</main>
 <footer>
   <div class="container">
     <div class="foot-grid">
