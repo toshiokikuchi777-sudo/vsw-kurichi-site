@@ -79,7 +79,8 @@
 }
 .back-index { margin-top: 24px; }
 .hero-jump { margin-top: 12px; }
-#category-woopee .woopee-downloads { margin: 0 0 28px; }
+.woopee-pdf-list{max-width:620px;margin:0 auto 28px}.woopee-pdf-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px solid #d9ccbc}.woopee-pdf-row strong{font-size:14px}.woopee-pdf-links{display:flex;gap:8px;flex-wrap:wrap}.woopee-pdf-links a{padding:8px 12px;border:1px solid var(--red);color:var(--red);font-size:14px;font-weight:700;text-decoration:none}.woopee-pdf-links a:hover,.woopee-pdf-links a:focus-visible{background:var(--red);color:#fff}@media(max-width:480px){.woopee-pdf-row{align-items:flex-start;flex-direction:column;gap:6px}}
+.woopee-preview-switch{text-align:center;margin:0 0 28px;font-size:14px}.woopee-preview-switch button{padding:8px 14px;border:1px solid var(--red);background:#fff;color:var(--red);cursor:pointer}.woopee-preview-switch button[aria-pressed="true"]{background:var(--red);color:#fff}
 @media (max-width: 700px) {
   .category-index { padding: 32px 0; }
   .category-nav { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -181,9 +182,13 @@
 <article class="product"><div class="product-visual"><img class="ingredient" src="../assets/blog/umekita-pan-fes-2026/pop-v3/background-chocolate.webp" alt="" loading="lazy"><img class="food" src="../assets/blog/umekita-pan-fes-2026/pop-v3/image-chocolate.webp" alt="チョコ" loading="lazy"></div><div class="product-info"><div class="en">CHOCOLATE</div><h3>チョコ</h3><p>チョコのコク、まろやかな口どけ。</p><span class="price">¥500<span class="tax">税込</span></span></div></article>
 <article class="product"><div class="product-visual"><img class="ingredient" src="../assets/blog/umekita-pan-fes-2026/pop-v3/background-vanilla-maple.webp" alt="" loading="lazy"><img class="food" src="../assets/blog/umekita-pan-fes-2026/pop-v3/image-vanilla-maple.webp" alt="バニラメープル" loading="lazy"></div><div class="product-info"><div class="en">VANILLA MAPLE</div><h3>バニラメープル</h3><p>バニラの香りと、メープルの甘さ。</p><span class="price">¥500<span class="tax">税込</span></span></div></article>
 </div><a class="back-index" href="#shop-pop-heading">カテゴリー一覧へ ↑</a></div></section>
-<section class="section category-section" id="category-woopee" aria-labelledby="woopee-pop-heading"><div class="wrap"><div class="section-heading"><h2 id="woopee-pop-heading">ウーピー#クリチの6つの味</h2><p>いちご・ラムレーズン・チョコ（チョコチップ入り）・マロン・プレーン・クランベリーナッツ（くるみ入り） / 各500円（税込）</p><p>6種類とも、フィリングにクリームチーズを混ぜています。</p></div>
-<div class="woopee-downloads"><a href="../assets/blog/umekita-pan-fes-2026/woopee-pop/menu-six-vintage-A4.pdf?v=20261128b">ヴィンテージデザイン 6種メニュー（A4 PDF）</a><a href="../assets/blog/umekita-pan-fes-2026/woopee-pop/flavors-six-A4.pdf?v=20261128b">単品POP 6枚（A4 PDF）</a></div>
-<p style="text-align:center;font-size:14px;margin:0 0 28px"><a href="../assets/blog/umekita-pan-fes-2026/woopee-pop/menu-six-A4.pdf?v=20261128b">シンプルデザインの6種メニュー（A4 PDF）</a></p>
+<section class="section category-section" id="category-woopee" aria-labelledby="woopee-pop-heading"><div class="wrap"><div class="section-heading"><h2 id="woopee-pop-heading">ウーピー#クリチの6つの味</h2><p>いちご・ラムレーズン・チョコ（チョコチップ入り）・マロン・プレーン・クランベリーナッツ（くるみ入り）<span id="woopee-heading-price"> / 各500円（税込）</span></p><p>6種類とも、フィリングにクリームチーズを混ぜています。</p></div>
+<div class="woopee-pdf-list" role="group" aria-label="POPのPDFダウンロード">
+<div class="woopee-pdf-row"><strong>ヴィンテージ 6種メニュー（A4 PDF）</strong><div class="woopee-pdf-links"><a href="../assets/blog/umekita-pan-fes-2026/woopee-pop/menu-six-vintage-A4.pdf?v=20261128b" aria-label="ヴィンテージ 6種メニュー 価格あり">価格あり</a><a href="../assets/blog/umekita-pan-fes-2026/woopee-pop/menu-six-vintage-no-price-A4.pdf" aria-label="ヴィンテージ 6種メニュー 価格なし">価格なし</a></div></div>
+<div class="woopee-pdf-row"><strong>単品POP 6枚（A4 PDF）</strong><div class="woopee-pdf-links"><a href="../assets/blog/umekita-pan-fes-2026/woopee-pop/flavors-six-A4.pdf?v=20261128b" aria-label="単品POP 6枚 価格あり">価格あり</a><a href="../assets/blog/umekita-pan-fes-2026/woopee-pop/flavors-six-no-price-A4.pdf" aria-label="単品POP 6枚 価格なし">価格なし</a></div></div>
+<div class="woopee-pdf-row"><strong>シンプル 6種メニュー（A4 PDF）</strong><div class="woopee-pdf-links"><a href="../assets/blog/umekita-pan-fes-2026/woopee-pop/menu-six-A4.pdf?v=20261128b" aria-label="シンプル 6種メニュー 価格あり">価格あり</a><a href="../assets/blog/umekita-pan-fes-2026/woopee-pop/menu-six-no-price-A4.pdf" aria-label="シンプル 6種メニュー 価格なし">価格なし</a></div></div>
+</div>
+<div class="woopee-preview-switch" role="group" aria-label="POPのプレビュー表示" hidden><span>プレビュー　</span><button type="button" data-price="with" aria-pressed="true">価格あり</button><button type="button" data-price="without" aria-pressed="false">価格なし</button></div>
 <figure class="woopee-menu" id="woopee-vintage-menu"><img src="../assets/blog/umekita-pan-fes-2026/woopee-pop/menu-six-vintage.webp?v=20261128b" width="1039" height="1513" alt="ウーピー#クリチの6つの味を紹介するヴィンテージデザインのメニューPOP。いちご、ラムレーズン、チョコ（チョコチップ入り）、マロン、プレーン、クランベリーナッツ（くるみ入り）は各500円（税込）" loading="lazy" decoding="async"></figure>
 <div class="woopee-grid" id="woopee-flavor-pops">
 <figure><img src="../assets/blog/umekita-pan-fes-2026/woopee-pop/strawberry.webp?v=2" width="1055" height="1491" alt="ウーピー#クリチ いちごのPOP、500円（税込）" loading="lazy" decoding="async"><figcaption>いちご / 500円（税込）</figcaption></figure>
@@ -197,5 +202,30 @@
 <section class="closing"><h2>うめきたで、お会いしましょう。</h2><p>パンと、クリチと、楽しいひとときを。<br>みなさまのお越しをお待ちしています。</p></section>
 </main>
 <footer class="footer"><div class="wrap"><span>Vsw / #KURICHI</span><span>© 2026 Vsw Inc.</span></div></footer>
+<script>
+(() => {
+  const controls = document.querySelector('.woopee-preview-switch');
+  const images = document.querySelectorAll('#woopee-vintage-menu img, #woopee-flavor-pops img');
+  const captions = document.querySelectorAll('#woopee-flavor-pops figcaption');
+  const originals = Array.from(images, img => ({ src: img.getAttribute('src'), alt: img.alt }));
+  const originalCaptions = Array.from(captions, caption => caption.textContent);
+  controls.hidden = false;
+  const setPrice = without => {
+    const button = controls.querySelector(`[data-price="${without ? 'without' : 'with'}"]`);
+    document.getElementById('woopee-heading-price').hidden = without;
+    controls.querySelectorAll('button').forEach(item => item.setAttribute('aria-pressed', String(item === button)));
+    images.forEach((img, index) => {
+      img.src = without ? originals[index].src.replace(/\.webp(?:\?.*)?$/, '-no-price.webp') : originals[index].src;
+      img.alt = without ? originals[index].alt.replace('は各500円（税込）', '').replace('、500円（税込）', '') : originals[index].alt;
+    });
+    captions.forEach((caption, index) => { caption.textContent = without ? originalCaptions[index].replace(' / 500円（税込）', '') : originalCaptions[index]; });
+  };
+  controls.addEventListener('click', event => {
+    const button = event.target.closest('button[data-price]');
+    if (button) setPrice(button.dataset.price === 'without');
+  });
+  if (new URLSearchParams(location.search).get('woopee-price') === 'none') setPrice(true);
+})();
+</script>
 </body>
 </html>
