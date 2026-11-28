@@ -45,7 +45,10 @@
 .biz-closing h2{font-family:'Noto Sans JP',sans-serif}
 .biz-closing h2 .tomato{color:var(--diner-yellow)}
 .biz-closing p{color:#fff}
-.biz-contact{background:var(--diner-yellow)}
+#contact.biz-contact{background:var(--diner-yellow);color:var(--diner-ink)}
+#contact.biz-contact::before,#contact.biz-contact::after{content:none}
+#contact .contact-copy h2{font-family:'Noto Sans JP',sans-serif;color:var(--diner-ink);font-size:clamp(28px,4vw,52px);line-height:1.3}
+#contact .contact-copy p{color:var(--diner-ink);opacity:1;font-size:15px;line-height:1.85;margin-bottom:0}
 .contact-box{background:var(--diner-paper);border:2px solid var(--diner-ink);border-radius:0;box-shadow:8px 8px 0 var(--diner-ink)}
 .contact-copy p,.contact-sub{color:var(--diner-ink)}
 footer{background:var(--diner-ink);color:var(--diner-paper)}
